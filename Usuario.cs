@@ -10,13 +10,13 @@
         public string pasword { get; set; }
         public int intentosFallidos { get; set; }
         public Boolean bloqueado { get; set; }
-        private List<ReservaHotel> misReservasHoteles {  get; set; }
-        private List<ReservaVuelo> misReservasVuelo { get; set; }
+        public List<ReservaHotel> misReservasHoteles { get => misReservasHoteles.ToList(); }
+        public List<ReservaVuelo> misReservasVuelo { get; set; }
 
         public Double credito { get; set; }
-        public Boolean esAdmin {  get; set; }
-        private List<Hotel> hotelesVisitados { get; set; }
-        private List<Vuelo> vuelosTomados { get; set; }
+        public Boolean esAdmin { get; set; }
+        public List<Hotel> hotelesVisitados { get; set; }
+        public List<Vuelo> vuelosTomados { get; set; }
 
         //constructres
         public Usuario()
@@ -33,5 +33,12 @@
         }
 
         //metodos
+
+        public void setReservaHotel(ReservaHotel reserva)
+        {
+            misReservasHoteles.Add(reserva);
+        }
+            
+
     }
 }
