@@ -1,6 +1,8 @@
-﻿namespace tpAgencia_Gpo_2
+﻿using System;
+
+namespace tpAgencia_Gpo_2
 {
-    public class Usuario
+    public class Usuario 
     {
         public int id { get; set; }
         public string name { get; set; }
@@ -38,7 +40,7 @@
         {
             misReservasHoteles.Add(reserva);
         }
-            
+
 
     }
 }
