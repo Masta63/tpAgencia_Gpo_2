@@ -9,12 +9,12 @@
         public Ciudad destino { get; set; }
         public int capacidad { get; set; }
         public int vendido { get; set; }
-        public List<Usuario> Pasajeros { get; set; }
+        public List<Usuario> pasajeros { get; set; }
         public double costo { get; set; }
         public DateTime Fecha { get; set; }
         public string aerolinea { get; set; }
         public string avion { get; set; }
-        public List<ReservaVuelo> ReservaVuelo { get; }
+        public List<ReservaVuelo> misReservas { get; }
 
         //metodo constructor
         public Vuelo()

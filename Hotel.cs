@@ -10,20 +10,22 @@ namespace tpAgencia_Gpo_2
     {
         //declaracion de variables publicac on properties
         public int Id { get; set; }
-        public Ciudad Ubicacion { get; set; }
-        public int Capacidad { get; set; }
+        public Ciudad ubicacion { get; set; }
+        public int capacidad { get; set; }
         public double costo { get; set; }
-        public List<Usuario> Huespedes { get; set; }
+        public List<Usuario> huespedes { get; set; }
         public string nombre { get; set; }
+
+        public List<ReservaHotel> misReservas { get; set; }
 
         //metodos constructores
         public Hotel(int id, Ciudad ubicacion, int capacidad, double costo, string nombre)
         {
             Id = id;
-            Ubicacion = ubicacion;
-            Capacidad = capacidad;
+            this.ubicacion = ubicacion;
+            this.capacidad = capacidad;
             this.costo = costo;
-            Huespedes = new List<Usuario>();
+            huespedes = new List<Usuario>();
             this.nombre = nombre;
         }
 

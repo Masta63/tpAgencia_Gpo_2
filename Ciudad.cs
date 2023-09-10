@@ -5,8 +5,8 @@
         //declaracion de variables con properties
         public int Id { get; set; }
         public string nombre {  get; set; }
-        public List<Hotel> Hoteles { get; set; }
-        public List<Vuelo> Vuelos { get; set; }
+        public List<Hotel> hoteles { get; set; }
+        public List<Vuelo> vuelos { get; set; }
 
 
 
@@ -16,8 +16,8 @@
         {
             Id = id++;
             this.nombre = nombre;
-            Hoteles = new List<Hotel>();
-            Vuelos = new List<Vuelo>();
+            hoteles = new List<Hotel>();
+            vuelos = new List<Vuelo>();
         }
 
     }
