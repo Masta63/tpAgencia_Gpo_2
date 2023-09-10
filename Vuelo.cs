@@ -8,6 +8,12 @@
         public Ciudad Origen { get; set; }
         public Ciudad destino { get; set; }
         public int capacidad { get; set; }
+        public int vendido { get; set; }
+        public List<Usuario> Pasajeros { get; set; }
+        public double costo { get; set; }
+        public DateTime Fecha { get; set; }
+        public string aerolinea { get; set; }
+        public string avion { get; set; }
         public int vendido {  get; set; }
         public List<Usuario> Pasajeros { get; set; }
         public double costo {  get; set; }
