@@ -13,7 +13,7 @@ namespace tpAgencia_Gpo_2
         public Ciudad Ubicacion { get; set; }
         public int Capacidad { get; set; }
         public double costo { get; set; }
-        private List<Usuario> Huespedes { get; set; }
+        public List<Usuario> Huespedes { get; set; }
         public string nombre { get; set; }
 
         //metodos constructores

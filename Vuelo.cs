@@ -14,6 +14,12 @@
         public DateTime Fecha { get; set; }
         public string aerolinea { get; set; }
         public string avion { get; set; }
+        public int vendido {  get; set; }
+        public List<Usuario> Pasajeros { get; set; }
+        public double costo {  get; set; }
+        public DateTime Fecha { get; set; }
+        public string aerolinea { get; set; }
+        public string avion {  get; set; }
         public List<ReservaVuelo> ReservaVuelo { get; }
 
         //metodo constructor
