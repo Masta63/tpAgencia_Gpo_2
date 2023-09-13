@@ -17,6 +17,7 @@ namespace tpAgencia_Gpo_2
 
         public Double credito { get; set; }
         public Boolean esAdmin { get; set; }
+
         public List<Hotel> hotelesVisitados { get; set; }
         public List<Vuelo> vuelosTomados { get; set; }
 

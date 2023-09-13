@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace tpAgencia_Gpo_2
 {
-    internal class Hotel
+    public class Hotel
     {
         //declaracion de variables publicac on properties
         public int Id { get; set; }
