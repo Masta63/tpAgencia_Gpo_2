@@ -8,6 +8,7 @@ namespace tpAgencia_Gpo_2
 {
     public class Hotel
     {
+
         private List<Usuario> listHuespedes;
         private List<ReservaHotel> listMisReservas;
 
