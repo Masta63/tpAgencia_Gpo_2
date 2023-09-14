@@ -2,22 +2,28 @@
 {
     public class Ciudad
     {
+        private List<Hotel> listHoteles;
+        private List<Vuelo> listVuelos;
+
         //declaracion de variables con properties
-        public int Id { get; set; }
+        public int id { get; set; }
         public string nombre {  get; set; }
-        public List<Hotel> Hoteles { get; set; }
-        public List<Vuelo> Vuelos { get; set; }
-
-
+        public List<Hotel> hoteles 
+        {
+            get => listHoteles.ToList();
+        }
+        public List<Vuelo> vuelos 
+        { 
+            get => listVuelos.ToList();        
+        }
 
         //Constructores
-
         public Ciudad(int id, string nombre)
         {
-            Id = id++;
+            id = id++;
             this.nombre = nombre;
-            Hoteles = new List<Hotel>();
-            Vuelos = new List<Vuelo>();
+            listHoteles = new List<Hotel>();
+            listVuelos = new List<Vuelo>();
         }
 
     }

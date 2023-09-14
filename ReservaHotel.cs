@@ -4,9 +4,9 @@
     {
         public Hotel miHotel { get; set; }
         public Usuario miUsuario { get; set; }
-        public DateTime FechaDesde { get; set; }
-        public DateTime fechaHasta { get;set; }
-        public Double Pagado {  get; set; }
+        public DateTime fechaDesde { get; set; }
+        public DateTime fechaHasta { get; set; }
+        public double pagado { get; set; }
 
         //constructor
         public ReservaHotel(Hotel miHotel,
@@ -17,13 +17,15 @@
         {
             this.miHotel = miHotel;
             this.miUsuario = miUsuario;
-            FechaDesde = fechaDesde;
+            this.fechaDesde = fechaDesde;
             this.fechaHasta = fechaHasta;
-            Pagado = pagado;
+            this.pagado = pagado;
         }
 
-        
+
         //metodos
+    
+   
 
 
     }

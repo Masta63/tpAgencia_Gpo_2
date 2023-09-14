@@ -1,9 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace tpAgencia_Gpo_2
 {
     public class Usuario 
     {
+        private List<ReservaHotel> listMisReservasHoteles;
+        private List<ReservaVuelo> listMisReservasVuelo;
+        private List<Hotel> listHotelesVisitados;
+        private List<Vuelo> listVuelosTomados;
+
         public int id { get; set; }
         public string name { get; set; }
         public string apellido { get; set; }
@@ -11,19 +17,27 @@ namespace tpAgencia_Gpo_2
         public string mail { get; set; }
         public string pasword { get; set; }
         public int intentosFallidos { get; set; }
-        public Boolean bloqueado { get; set; }
-        public List<ReservaHotel> misReservasHoteles { get => misReservasHoteles.ToList(); }
-        public List<ReservaVuelo> misReservasVuelo { get; set; }
-
-        public Double credito { get; set; }
-        public Boolean esAdmin { get; set; }
-
-        public List<Hotel> hotelesVisitados { get; set; }
-        public List<Vuelo> vuelosTomados { get; set; }
-
-        //constructres
-        public Usuario()
+        public bool bloqueado { get; set; }
+        public List<ReservaHotel> misReservasHoteles
         {
+            get => listMisReservasHoteles.ToList();
+        }
+        public List<ReservaVuelo> misReservasVuelo
+        {
+            get => listMisReservasVuelo.ToList();
+        }
+
+        public double credito { get; set; }
+        public bool esAdmin { get; set; }
+
+        public List<Hotel> hotelesVisitados
+        {
+            get => listHotelesVisitados.ToList();
+        }
+
+        public List<Vuelo> vuelosTomados
+        {
+            get => listVuelosTomados.ToList();
         }
 
         public Usuario(int id, string name, string apellido, int dni, bool esAdmin)
@@ -33,13 +47,17 @@ namespace tpAgencia_Gpo_2
             this.apellido = apellido;
             this.dni = dni;
             this.esAdmin = false;
+            listMisReservasHoteles = new List<ReservaHotel>();
+            listMisReservasVuelo = new List<ReservaVuelo>();
+            listHotelesVisitados = new List<Hotel>();
+            listVuelosTomados = new List<Vuelo>();
         }
 
         //metodos
 
         public void setReservaHotel(ReservaHotel reserva)
         {
-            misReservasHoteles.Add(reserva);
+            listMisReservasHoteles.Add(reserva);
         }
 
 
