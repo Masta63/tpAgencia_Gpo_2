@@ -28,6 +28,7 @@ namespace tpAgencia_Gpo_2
             get => listMisReservas.ToList();
         }
 
+
         //metodos constructores
         public Hotel(int id, Ciudad ubicacion, int capacidad, double costo, string nombre)
         {
