@@ -26,7 +26,9 @@
             listVuelos = new List<Vuelo>();
         }
 
+
     }
+
 
         //metodos
 }
