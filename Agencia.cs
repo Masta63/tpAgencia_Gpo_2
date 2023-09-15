@@ -23,15 +23,15 @@ public class Agencia
         Usuarios.add(usuario);
     }
 
-    public boolean IniciarSesion(String mail, String password)
+    public bool IniciarSesion(String mail, String password)
     {
-        for (Usuario usuario : Usuarios)
+        foreach (Usuario usuario in Usuarios)
         {
-            if (usuario.getMail().equals(mail) && usuario.getPassword().equals(password))
+            if (usuario.mail == mail && usuario.password == password)
             {
-                if (!usuario.isBloqueado())
+                if (!usuario.bloqueado)
                 {
-                    setUsuarioActual(usuario);
+                    //UsuarioActual.usuario; nose
                     return true; // Sesión iniciada con éxito
                 }
                 else
@@ -41,9 +41,9 @@ public class Agencia
             }
         }
         // Si no se encuentra el usuario o la contraseña es incorrecta se agrega un intento fallido
-        for (Usuario usuario : Usuarios)
+        foreach (Usuario usuario in Usuarios)
         {
-            if (usuario.getMail().equals(mail))
+            if (usuario.mail == mail))
             {
                 usuario.agregarIntentoFallido();
                 return false;

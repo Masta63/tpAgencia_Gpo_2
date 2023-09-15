@@ -9,12 +9,12 @@
         public string mail { get; set; }
         public string password { get; set; }
         public int intentosFallidos { get; set; }
-        public Boolean bloqueado { get; set; }
+        public bool bloqueado { get; set; }
         private List<ReservaHotel> misReservasHoteles {  get; set; }
         private List<ReservaVuelo> misReservasVuelo { get; set; }
 
         public Double credito { get; set; }
-        public Boolean esAdmin {  get; set; }
+        public bool esAdmin {  get; set; }
         private List<Hotel> hotelesVisitados { get; set; }
         private List<Vuelo> vuelosTomados { get; set; }
 
@@ -25,13 +25,13 @@
 
         public Usuario(int id, string name, string apellido, int dni,string mail,string password, bool esAdmin)
         {
-            this.id = id;
-            this.name = name;
-            this.apellido = apellido;
-            this.dni = dni;
-            this.mail = mail;  
-            this.password = password;   
-            this.esAdmin = false;
+            id = id;
+            name = name;
+            apellido = apellido;
+            dni = dni;
+            mail = mail;  
+            password = password;   
+            esAdmin = false;
         }
 
         //metodos
