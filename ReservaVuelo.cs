@@ -4,7 +4,7 @@
     {
         public Vuelo miVuelo { get; set; }
         public Usuario miUsuario { get; set; }
-        public Double pagado {  get; set; }
+        public double pagado {  get; set; }
 
         //constructor
         public ReservaVuelo(Vuelo miVuelo, Usuario miUsuario, double pagado)
