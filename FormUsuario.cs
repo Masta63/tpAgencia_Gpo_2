@@ -12,9 +12,17 @@ namespace tpAgencia_Gpo_2
 {
     public partial class FormUsuario : Form
     {
-        public FormUsuario()
+        private Agencia RefAgencia;
+        public FormUsuario(Agencia agencia)
         {
             InitializeComponent();
+            this.RefAgencia = agencia;
         }
+
+        private void FormUsuario_Load(object sender, EventArgs e)
+        {
+
+        }
+
     }
 }

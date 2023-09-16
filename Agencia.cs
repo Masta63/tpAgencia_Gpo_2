@@ -24,6 +24,9 @@ public class Agencia
         reservasHotel = new List<ReservaHotel>();
         reservasVuelo = new List<ReservaVuelo>();
     }
+
+    //INICIO METODOS DE USUARIO
+
     public void registrarUsuario(int id, string name, string apellido, int dni, string mail, string password, bool esAdmin)
     {
         Usuario usuario = new Usuario(id, name, apellido, dni, mail, password, esAdmin);
@@ -59,6 +62,11 @@ public class Agencia
 
         return false; // Usuario no encontrado
     }
+
+    //FIN METODOS USUARIO
+
+
+    // INICIO METODOS DE VUELO
 
     //ver lo que explicó el profesor
     public void cargarCredito(int idUsuario, double importe)
@@ -121,4 +129,6 @@ public class Agencia
         ciudades.Add(new Ciudad(3, "Buenos Aires"));
         return ciudades.ToList();
     }
+
+    //FIN METODOS DE VUELO
 }
