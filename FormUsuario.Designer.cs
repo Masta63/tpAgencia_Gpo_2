@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             mostrar_usuario = new Button();
-            this.dataGridView_usuarios = new DataGridView();
             Volver_desde_usuario = new Button();
             label_usuarios = new Label();
             label_id = new Label();
@@ -46,12 +45,13 @@
             textBox_dni = new TextBox();
             textBox_email = new TextBox();
             textBox_contraseña = new TextBox();
-            this.textBox_resHotel = new TextBox();
+            textBox_resHotel = new TextBox();
             textBox_resVuelo = new TextBox();
             button_Agregar = new Button();
             button_Modificar = new Button();
             button_Eliminar = new Button();
-            ((System.ComponentModel.ISupportInitialize)this.dataGridView_usuarios).BeginInit();
+            dataGridView_usuarios = new DataGridView();
+            ((System.ComponentModel.ISupportInitialize)dataGridView_usuarios).BeginInit();
             SuspendLayout();
             // 
             // mostrar_usuario
@@ -64,18 +64,9 @@
             mostrar_usuario.Text = "Mostrar / Actualizar Usuarios";
             mostrar_usuario.UseVisualStyleBackColor = true;
             // 
-            // dataGridView_usuarios
-            // 
-            this.dataGridView_usuarios.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView_usuarios.Location = new Point(25, 184);
-            this.dataGridView_usuarios.Name = "dataGridView_usuarios";
-            this.dataGridView_usuarios.RowTemplate.Height = 25;
-            this.dataGridView_usuarios.Size = new Size(846, 135);
-            this.dataGridView_usuarios.TabIndex = 7;
-            // 
             // Volver_desde_usuario
             // 
-            Volver_desde_usuario.Location = new Point(29, 335);
+            Volver_desde_usuario.Location = new Point(25, 330);
             Volver_desde_usuario.Name = "Volver_desde_usuario";
             Volver_desde_usuario.Size = new Size(75, 23);
             Volver_desde_usuario.TabIndex = 8;
@@ -205,13 +196,6 @@
             textBox_contraseña.Size = new Size(269, 23);
             textBox_contraseña.TabIndex = 25;
             // 
-            // textBox_resHotel
-            // 
-            this.textBox_resHotel.Location = new Point(1077, 281);
-            this.textBox_resHotel.Name = "textBox_resHotel";
-            this.textBox_resHotel.Size = new Size(269, 23);
-            this.textBox_resHotel.TabIndex = 26;
-            // 
             // textBox_resVuelo
             // 
             textBox_resVuelo.Location = new Point(1077, 322);
@@ -246,16 +230,33 @@
             button_Eliminar.Text = "Eliminar";
             button_Eliminar.UseVisualStyleBackColor = true;
             // 
+            // textBox_resHotel
+            // 
+            textBox_resHotel.Location = new Point(1079, 281);
+            textBox_resHotel.Name = "textBox_resHotel";
+            textBox_resHotel.Size = new Size(267, 23);
+            textBox_resHotel.TabIndex = 31;
+            // 
+            // dataGridView_usuarios
+            // 
+            dataGridView_usuarios.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridView_usuarios.Location = new Point(25, 173);
+            dataGridView_usuarios.Name = "dataGridView_usuarios";
+            dataGridView_usuarios.RowTemplate.Height = 25;
+            dataGridView_usuarios.Size = new Size(839, 150);
+            dataGridView_usuarios.TabIndex = 32;
+            // 
             // FormUsuario
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1385, 451);
+            Controls.Add(dataGridView_usuarios);
+            Controls.Add(textBox_resHotel);
             Controls.Add(button_Eliminar);
             Controls.Add(button_Modificar);
             Controls.Add(button_Agregar);
             Controls.Add(textBox_resVuelo);
-            Controls.Add(this.textBox_resHotel);
             Controls.Add(textBox_contraseña);
             Controls.Add(textBox_email);
             Controls.Add(textBox_dni);
@@ -272,12 +273,11 @@
             Controls.Add(label_id);
             Controls.Add(label_usuarios);
             Controls.Add(Volver_desde_usuario);
-            Controls.Add(this.dataGridView_usuarios);
             Controls.Add(mostrar_usuario);
             Name = "FormUsuario";
             Text = "FormUsuario";
             Load += FormUsuario_Load;
-            ((System.ComponentModel.ISupportInitialize)this.dataGridView_usuarios).EndInit();
+            ((System.ComponentModel.ISupportInitialize)dataGridView_usuarios).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -285,6 +285,7 @@
         #endregion
 
         private Button mostrar_usuario;
+        private DataGridView dataGridView_usuarios;
         private DataGridView dataGridView1;
         private Button Volver_desde_usuario;
         private Label label_usuarios;
@@ -309,5 +310,7 @@
         private Button button_Agregar;
         private Button button_Modificar;
         private Button button_Eliminar;
+        private TextBox textBox_resHotel;
+        private DataGridView dataGridView2;
     }
 }
