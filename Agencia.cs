@@ -12,9 +12,10 @@ public class Agencia
 	private List<ReservaVuelo> reservasVuelo;
 	private Usuario usuarioActual { get; set; }
     private int cantVuelos;
+    private int cantUsuarios;
 
-	//metodo constructor
-	public Agencia()
+    //metodo constructor
+    public Agencia()
 	{
         usuarios = new List<Usuario>();
         hoteles = new List<Hotel>();
@@ -63,7 +64,48 @@ public class Agencia
         return false; // Usuario no encontrado
     }
 
+    //-- metodos del formUsuario
+    public List<Usuario> getUsuarios()
+    {
+        return usuarios.ToList();
+    }
 
+    public bool agregarUsuario( string name, string apellido, int dni, string mail)
+    {
+        Usuario usuario = new Usuario(cantUsuarios, name, apellido, dni, mail);
+        cantUsuarios++;
+        usuarios.Add(usuario);
+        return true;
+    }
+
+    public bool modificarUsuario(int id, string name, string apellido, int dni, string mail)
+    {
+        foreach (Usuario user in usuarios)
+        {
+            if (user.id == id)
+            {
+                user.name = name;
+                user.apellido = apellido;
+                user.dni = dni;
+                user.mail = mail;
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public bool eliminarUsuario(int id)
+    {
+        foreach (Usuario user in usuarios)
+        {
+            if (user.id == id)
+            {
+                usuarios.Remove(user);
+                return true;
+            }
+        }
+        return false;
+    }
 
 
 

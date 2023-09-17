@@ -36,7 +36,6 @@
             label_apellido = new Label();
             label_dni = new Label();
             label_email = new Label();
-            label_contraseña = new Label();
             label_reserva_hotel = new Label();
             label_reserva_vuelo = new Label();
             textBox_id = new TextBox();
@@ -44,13 +43,14 @@
             textBox_apellido = new TextBox();
             textBox_dni = new TextBox();
             textBox_email = new TextBox();
-            textBox_contraseña = new TextBox();
             textBox_resHotel = new TextBox();
             textBox_resVuelo = new TextBox();
             button_Agregar = new Button();
             button_Modificar = new Button();
             button_Eliminar = new Button();
             dataGridView_usuarios = new DataGridView();
+            bienvenida = new Label();
+            Bienvenida_usuario = new Label();
             ((System.ComponentModel.ISupportInitialize)dataGridView_usuarios).BeginInit();
             SuspendLayout();
             // 
@@ -63,6 +63,7 @@
             mostrar_usuario.TabIndex = 6;
             mostrar_usuario.Text = "Mostrar / Actualizar Usuarios";
             mostrar_usuario.UseVisualStyleBackColor = true;
+            mostrar_usuario.Click += mostrar_usuario_Click;
             // 
             // Volver_desde_usuario
             // 
@@ -72,6 +73,7 @@
             Volver_desde_usuario.TabIndex = 8;
             Volver_desde_usuario.Text = "Volver";
             Volver_desde_usuario.UseVisualStyleBackColor = true;
+            Volver_desde_usuario.Click += Volver_desde_usuario_Click;
             // 
             // label_usuarios
             // 
@@ -85,7 +87,7 @@
             // label_id
             // 
             label_id.AutoSize = true;
-            label_id.Location = new Point(1044, 62);
+            label_id.Location = new Point(1026, 84);
             label_id.Name = "label_id";
             label_id.Size = new Size(17, 15);
             label_id.TabIndex = 11;
@@ -94,7 +96,7 @@
             // label_nombre
             // 
             label_nombre.AutoSize = true;
-            label_nombre.Location = new Point(1010, 99);
+            label_nombre.Location = new Point(992, 121);
             label_nombre.Name = "label_nombre";
             label_nombre.Size = new Size(51, 15);
             label_nombre.TabIndex = 12;
@@ -103,7 +105,7 @@
             // label_apellido
             // 
             label_apellido.AutoSize = true;
-            label_apellido.Location = new Point(1010, 134);
+            label_apellido.Location = new Point(992, 156);
             label_apellido.Name = "label_apellido";
             label_apellido.Size = new Size(51, 15);
             label_apellido.TabIndex = 13;
@@ -112,7 +114,7 @@
             // label_dni
             // 
             label_dni.AutoSize = true;
-            label_dni.Location = new Point(1036, 165);
+            label_dni.Location = new Point(1018, 187);
             label_dni.Name = "label_dni";
             label_dni.Size = new Size(25, 15);
             label_dni.TabIndex = 14;
@@ -121,25 +123,16 @@
             // label_email
             // 
             label_email.AutoSize = true;
-            label_email.Location = new Point(1025, 207);
+            label_email.Location = new Point(1007, 229);
             label_email.Name = "label_email";
             label_email.Size = new Size(36, 15);
             label_email.TabIndex = 15;
             label_email.Text = "Email";
             // 
-            // label_contraseña
-            // 
-            label_contraseña.AutoSize = true;
-            label_contraseña.Location = new Point(994, 247);
-            label_contraseña.Name = "label_contraseña";
-            label_contraseña.Size = new Size(67, 15);
-            label_contraseña.TabIndex = 16;
-            label_contraseña.Text = "Contraseña";
-            // 
             // label_reserva_hotel
             // 
             label_reserva_hotel.AutoSize = true;
-            label_reserva_hotel.Location = new Point(982, 289);
+            label_reserva_hotel.Location = new Point(964, 268);
             label_reserva_hotel.Name = "label_reserva_hotel";
             label_reserva_hotel.Size = new Size(79, 15);
             label_reserva_hotel.TabIndex = 17;
@@ -148,7 +141,7 @@
             // label_reserva_vuelo
             // 
             label_reserva_vuelo.AutoSize = true;
-            label_reserva_vuelo.Location = new Point(981, 330);
+            label_reserva_vuelo.Location = new Point(963, 309);
             label_reserva_vuelo.Name = "label_reserva_vuelo";
             label_reserva_vuelo.Size = new Size(80, 15);
             label_reserva_vuelo.TabIndex = 18;
@@ -156,49 +149,49 @@
             // 
             // textBox_id
             // 
-            textBox_id.Location = new Point(1077, 54);
+            textBox_id.Location = new Point(1059, 76);
             textBox_id.Name = "textBox_id";
             textBox_id.Size = new Size(269, 23);
             textBox_id.TabIndex = 20;
             // 
             // textBox_nombre
             // 
-            textBox_nombre.Location = new Point(1077, 91);
+            textBox_nombre.Location = new Point(1059, 113);
             textBox_nombre.Name = "textBox_nombre";
             textBox_nombre.Size = new Size(269, 23);
             textBox_nombre.TabIndex = 21;
             // 
             // textBox_apellido
             // 
-            textBox_apellido.Location = new Point(1077, 126);
+            textBox_apellido.Location = new Point(1059, 148);
             textBox_apellido.Name = "textBox_apellido";
             textBox_apellido.Size = new Size(269, 23);
             textBox_apellido.TabIndex = 22;
             // 
             // textBox_dni
             // 
-            textBox_dni.Location = new Point(1077, 162);
+            textBox_dni.Location = new Point(1059, 184);
             textBox_dni.Name = "textBox_dni";
             textBox_dni.Size = new Size(269, 23);
             textBox_dni.TabIndex = 23;
             // 
             // textBox_email
             // 
-            textBox_email.Location = new Point(1077, 199);
+            textBox_email.Location = new Point(1059, 221);
             textBox_email.Name = "textBox_email";
             textBox_email.Size = new Size(269, 23);
             textBox_email.TabIndex = 24;
             // 
-            // textBox_contraseña
+            // textBox_resHotel
             // 
-            textBox_contraseña.Location = new Point(1077, 239);
-            textBox_contraseña.Name = "textBox_contraseña";
-            textBox_contraseña.Size = new Size(269, 23);
-            textBox_contraseña.TabIndex = 25;
+            textBox_resHotel.Location = new Point(1059, 260);
+            textBox_resHotel.Name = "textBox_resHotel";
+            textBox_resHotel.Size = new Size(267, 23);
+            textBox_resHotel.TabIndex = 31;
             // 
             // textBox_resVuelo
             // 
-            textBox_resVuelo.Location = new Point(1077, 322);
+            textBox_resVuelo.Location = new Point(1059, 301);
             textBox_resVuelo.Name = "textBox_resVuelo";
             textBox_resVuelo.Size = new Size(269, 23);
             textBox_resVuelo.TabIndex = 27;
@@ -211,6 +204,7 @@
             button_Agregar.TabIndex = 28;
             button_Agregar.Text = "Agregar";
             button_Agregar.UseVisualStyleBackColor = true;
+            button_Agregar.Click += button_Agregar_Click;
             // 
             // button_Modificar
             // 
@@ -220,6 +214,7 @@
             button_Modificar.TabIndex = 29;
             button_Modificar.Text = "Modificar";
             button_Modificar.UseVisualStyleBackColor = true;
+            button_Modificar.Click += button_Modificar_Click;
             // 
             // button_Eliminar
             // 
@@ -229,13 +224,7 @@
             button_Eliminar.TabIndex = 30;
             button_Eliminar.Text = "Eliminar";
             button_Eliminar.UseVisualStyleBackColor = true;
-            // 
-            // textBox_resHotel
-            // 
-            textBox_resHotel.Location = new Point(1079, 281);
-            textBox_resHotel.Name = "textBox_resHotel";
-            textBox_resHotel.Size = new Size(267, 23);
-            textBox_resHotel.TabIndex = 31;
+            button_Eliminar.Click += button_Eliminar_Click;
             // 
             // dataGridView_usuarios
             // 
@@ -245,19 +234,38 @@
             dataGridView_usuarios.RowTemplate.Height = 25;
             dataGridView_usuarios.Size = new Size(839, 150);
             dataGridView_usuarios.TabIndex = 32;
+            dataGridView_usuarios.CellContentClick += dataGridView_usuarios_CellContentClick;
+            // 
+            // bienvenida
+            // 
+            bienvenida.AutoSize = true;
+            bienvenida.Location = new Point(31, 42);
+            bienvenida.Name = "bienvenida";
+            bienvenida.Size = new Size(72, 15);
+            bienvenida.TabIndex = 33;
+            bienvenida.Text = "Bienvenido: ";
+            // 
+            // Bienvenida_usuario
+            // 
+            Bienvenida_usuario.AutoSize = true;
+            Bienvenida_usuario.Location = new Point(126, 42);
+            Bienvenida_usuario.Name = "Bienvenida_usuario";
+            Bienvenida_usuario.Size = new Size(0, 15);
+            Bienvenida_usuario.TabIndex = 34;
             // 
             // FormUsuario
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1385, 451);
+            ClientSize = new Size(1385, 511);
+            Controls.Add(Bienvenida_usuario);
+            Controls.Add(bienvenida);
             Controls.Add(dataGridView_usuarios);
             Controls.Add(textBox_resHotel);
             Controls.Add(button_Eliminar);
             Controls.Add(button_Modificar);
             Controls.Add(button_Agregar);
             Controls.Add(textBox_resVuelo);
-            Controls.Add(textBox_contraseña);
             Controls.Add(textBox_email);
             Controls.Add(textBox_dni);
             Controls.Add(textBox_apellido);
@@ -265,7 +273,6 @@
             Controls.Add(textBox_id);
             Controls.Add(label_reserva_vuelo);
             Controls.Add(label_reserva_hotel);
-            Controls.Add(label_contraseña);
             Controls.Add(label_email);
             Controls.Add(label_dni);
             Controls.Add(label_apellido);
@@ -289,13 +296,12 @@
         private DataGridView dataGridView1;
         private Button Volver_desde_usuario;
         private Label label_usuarios;
-        private Label label1;
+        private Label Bienvenida_usuario;
         private Label label_id;
         private Label label_nombre;
         private Label label_apellido;
         private Label label_dni;
         private Label label_email;
-        private Label label_contraseña;
         private Label label_reserva_hotel;
         private Label label_reserva_vuelo;
         private TextBox textBox1;
@@ -304,7 +310,6 @@
         private TextBox textBox_apellido;
         private TextBox textBox_dni;
         private TextBox textBox_email;
-        private TextBox textBox_contraseña;
         private TextBox textBox8;
         private TextBox textBox_resVuelo;
         private Button button_Agregar;
@@ -312,5 +317,6 @@
         private Button button_Eliminar;
         private TextBox textBox_resHotel;
         private DataGridView dataGridView2;
+        private Label bienvenida;
     }
 }
