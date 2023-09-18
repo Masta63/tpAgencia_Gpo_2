@@ -41,7 +41,7 @@ namespace tpAgencia_Gpo_2
                 )
                 MessageBox.Show("Debe completar los campos para agregar");
             else
-                if (refAgencia.agregarUsuario(textBox_nombre.Text,textBox_apellido.Text,textBox_dni.Text,textBox_email.Text))
+                if (refAgencia.agregarUsuario(textBox_nombre.Text, textBox_apellido.Text, textBox_dni.Text, textBox_email.Text))
                 MessageBox.Show("Agregado con éxito");
             else
                 MessageBox.Show("Problemas al agregar");
@@ -52,7 +52,7 @@ namespace tpAgencia_Gpo_2
 
             if (usuarioSeleccionado != -1)
             {
-                if (refAgencia.modificarUsuario( usuarioSeleccionado, textBox_nombre.Text,textBox_apellido.Text,textBox_dni.Text,textBox_email.Text))
+                if (refAgencia.modificarUsuario(usuarioSeleccionado, textBox_nombre.Text, textBox_apellido.Text, textBox_dni.Text, textBox_email.Text))
                     MessageBox.Show("Modificado con éxito");
                 else
                     MessageBox.Show("Problemas al modificar");

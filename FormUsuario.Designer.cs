@@ -156,8 +156,10 @@
             // 
             // textBox_id
             // 
+            textBox_id.Enabled = false;
             textBox_id.Location = new Point(993, 75);
             textBox_id.Name = "textBox_id";
+            textBox_id.ReadOnly = true;
             textBox_id.Size = new Size(269, 23);
             textBox_id.TabIndex = 20;
             // 
@@ -256,32 +258,38 @@
             // 
             nombre.HeaderText = "Nombre";
             nombre.Name = "nombre";
+            nombre.ReadOnly = true;
             // 
             // apellido
             // 
             apellido.HeaderText = "Apellido";
             apellido.Name = "apellido";
+            apellido.ReadOnly = true;
             // 
             // dni
             // 
             dni.HeaderText = "Dni";
             dni.Name = "dni";
+            dni.ReadOnly = true;
             // 
             // email
             // 
             email.HeaderText = "Email";
             email.Name = "email";
+            email.ReadOnly = true;
             // 
             // resHotel
             // 
             resHotel.HeaderText = "Reserva de Hotel";
             resHotel.Name = "resHotel";
+            resHotel.ReadOnly = true;
             resHotel.Width = 120;
             // 
             // resVuelo
             // 
             resVuelo.HeaderText = "Reserva de Vuelo";
             resVuelo.Name = "resVuelo";
+            resVuelo.ReadOnly = true;
             resVuelo.Width = 120;
             // 
             // bienvenida
