@@ -49,6 +49,8 @@
             button_Modificar = new Button();
             button_Eliminar = new Button();
             dataGridView_usuarios = new DataGridView();
+            bienvenida = new Label();
+            Bienvenida_usuario = new Label();
             id = new DataGridViewTextBoxColumn();
             nombre = new DataGridViewTextBoxColumn();
             apellido = new DataGridViewTextBoxColumn();
@@ -56,8 +58,6 @@
             email = new DataGridViewTextBoxColumn();
             resHotel = new DataGridViewTextBoxColumn();
             resVuelo = new DataGridViewTextBoxColumn();
-            bienvenida = new Label();
-            Bienvenida_usuario = new Label();
             ((System.ComponentModel.ISupportInitialize)dataGridView_usuarios).BeginInit();
             SuspendLayout();
             // 
@@ -158,6 +158,7 @@
             // 
             textBox_id.Location = new Point(993, 75);
             textBox_id.Name = "textBox_id";
+            textBox_id.ReadOnly = true;
             textBox_id.Size = new Size(269, 23);
             textBox_id.TabIndex = 20;
             // 
@@ -245,45 +246,6 @@
             dataGridView_usuarios.CellContentClick += dataGridView_usuarios_CellContentClick;
             dataGridView_usuarios.CellDoubleClick += dataGridView_usuarios_CellContentClick;
             // 
-            // id
-            // 
-            id.HeaderText = "ID de usuario";
-            id.Name = "id";
-            id.ReadOnly = true;
-            id.Width = 110;
-            // 
-            // nombre
-            // 
-            nombre.HeaderText = "Nombre";
-            nombre.Name = "nombre";
-            // 
-            // apellido
-            // 
-            apellido.HeaderText = "Apellido";
-            apellido.Name = "apellido";
-            // 
-            // dni
-            // 
-            dni.HeaderText = "Dni";
-            dni.Name = "dni";
-            // 
-            // email
-            // 
-            email.HeaderText = "Email";
-            email.Name = "email";
-            // 
-            // resHotel
-            // 
-            resHotel.HeaderText = "Reserva de Hotel";
-            resHotel.Name = "resHotel";
-            resHotel.Width = 120;
-            // 
-            // resVuelo
-            // 
-            resVuelo.HeaderText = "Reserva de Vuelo";
-            resVuelo.Name = "resVuelo";
-            resVuelo.Width = 120;
-            // 
             // bienvenida
             // 
             bienvenida.AutoSize = true;
@@ -300,6 +262,51 @@
             Bienvenida_usuario.Name = "Bienvenida_usuario";
             Bienvenida_usuario.Size = new Size(0, 15);
             Bienvenida_usuario.TabIndex = 34;
+            // 
+            // id
+            // 
+            id.HeaderText = "ID de usuario";
+            id.Name = "id";
+            id.ReadOnly = true;
+            id.Width = 110;
+            // 
+            // nombre
+            // 
+            nombre.HeaderText = "Nombre";
+            nombre.Name = "nombre";
+            nombre.ReadOnly = true;
+            // 
+            // apellido
+            // 
+            apellido.HeaderText = "Apellido";
+            apellido.Name = "apellido";
+            apellido.ReadOnly = true;
+            // 
+            // dni
+            // 
+            dni.HeaderText = "Dni";
+            dni.Name = "dni";
+            dni.ReadOnly = true;
+            // 
+            // email
+            // 
+            email.HeaderText = "Email";
+            email.Name = "email";
+            email.ReadOnly = true;
+            // 
+            // resHotel
+            // 
+            resHotel.HeaderText = "Reserva de Hotel";
+            resHotel.Name = "resHotel";
+            resHotel.ReadOnly = true;
+            resHotel.Width = 120;
+            // 
+            // resVuelo
+            // 
+            resVuelo.HeaderText = "Reserva de Vuelo";
+            resVuelo.Name = "resVuelo";
+            resVuelo.ReadOnly = true;
+            resVuelo.Width = 120;
             // 
             // FormUsuario
             // 
