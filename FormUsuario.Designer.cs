@@ -49,6 +49,13 @@
             button_Modificar = new Button();
             button_Eliminar = new Button();
             dataGridView_usuarios = new DataGridView();
+            id = new DataGridViewTextBoxColumn();
+            nombre = new DataGridViewTextBoxColumn();
+            apellido = new DataGridViewTextBoxColumn();
+            dni = new DataGridViewTextBoxColumn();
+            email = new DataGridViewTextBoxColumn();
+            resHotel = new DataGridViewTextBoxColumn();
+            resVuelo = new DataGridViewTextBoxColumn();
             bienvenida = new Label();
             Bienvenida_usuario = new Label();
             ((System.ComponentModel.ISupportInitialize)dataGridView_usuarios).BeginInit();
@@ -87,7 +94,7 @@
             // label_id
             // 
             label_id.AutoSize = true;
-            label_id.Location = new Point(1026, 84);
+            label_id.Location = new Point(960, 83);
             label_id.Name = "label_id";
             label_id.Size = new Size(17, 15);
             label_id.TabIndex = 11;
@@ -96,7 +103,7 @@
             // label_nombre
             // 
             label_nombre.AutoSize = true;
-            label_nombre.Location = new Point(992, 121);
+            label_nombre.Location = new Point(926, 120);
             label_nombre.Name = "label_nombre";
             label_nombre.Size = new Size(51, 15);
             label_nombre.TabIndex = 12;
@@ -105,7 +112,7 @@
             // label_apellido
             // 
             label_apellido.AutoSize = true;
-            label_apellido.Location = new Point(992, 156);
+            label_apellido.Location = new Point(926, 155);
             label_apellido.Name = "label_apellido";
             label_apellido.Size = new Size(51, 15);
             label_apellido.TabIndex = 13;
@@ -114,7 +121,7 @@
             // label_dni
             // 
             label_dni.AutoSize = true;
-            label_dni.Location = new Point(1018, 187);
+            label_dni.Location = new Point(952, 186);
             label_dni.Name = "label_dni";
             label_dni.Size = new Size(25, 15);
             label_dni.TabIndex = 14;
@@ -123,7 +130,7 @@
             // label_email
             // 
             label_email.AutoSize = true;
-            label_email.Location = new Point(1007, 229);
+            label_email.Location = new Point(941, 228);
             label_email.Name = "label_email";
             label_email.Size = new Size(36, 15);
             label_email.TabIndex = 15;
@@ -132,7 +139,7 @@
             // label_reserva_hotel
             // 
             label_reserva_hotel.AutoSize = true;
-            label_reserva_hotel.Location = new Point(964, 268);
+            label_reserva_hotel.Location = new Point(898, 267);
             label_reserva_hotel.Name = "label_reserva_hotel";
             label_reserva_hotel.Size = new Size(79, 15);
             label_reserva_hotel.TabIndex = 17;
@@ -141,7 +148,7 @@
             // label_reserva_vuelo
             // 
             label_reserva_vuelo.AutoSize = true;
-            label_reserva_vuelo.Location = new Point(963, 309);
+            label_reserva_vuelo.Location = new Point(897, 308);
             label_reserva_vuelo.Name = "label_reserva_vuelo";
             label_reserva_vuelo.Size = new Size(80, 15);
             label_reserva_vuelo.TabIndex = 18;
@@ -149,56 +156,56 @@
             // 
             // textBox_id
             // 
-            textBox_id.Location = new Point(1059, 76);
+            textBox_id.Location = new Point(993, 75);
             textBox_id.Name = "textBox_id";
             textBox_id.Size = new Size(269, 23);
             textBox_id.TabIndex = 20;
             // 
             // textBox_nombre
             // 
-            textBox_nombre.Location = new Point(1059, 113);
+            textBox_nombre.Location = new Point(993, 112);
             textBox_nombre.Name = "textBox_nombre";
             textBox_nombre.Size = new Size(269, 23);
             textBox_nombre.TabIndex = 21;
             // 
             // textBox_apellido
             // 
-            textBox_apellido.Location = new Point(1059, 148);
+            textBox_apellido.Location = new Point(993, 147);
             textBox_apellido.Name = "textBox_apellido";
             textBox_apellido.Size = new Size(269, 23);
             textBox_apellido.TabIndex = 22;
             // 
             // textBox_dni
             // 
-            textBox_dni.Location = new Point(1059, 184);
+            textBox_dni.Location = new Point(993, 183);
             textBox_dni.Name = "textBox_dni";
             textBox_dni.Size = new Size(269, 23);
             textBox_dni.TabIndex = 23;
             // 
             // textBox_email
             // 
-            textBox_email.Location = new Point(1059, 221);
+            textBox_email.Location = new Point(993, 220);
             textBox_email.Name = "textBox_email";
             textBox_email.Size = new Size(269, 23);
             textBox_email.TabIndex = 24;
             // 
             // textBox_resHotel
             // 
-            textBox_resHotel.Location = new Point(1059, 260);
+            textBox_resHotel.Location = new Point(993, 259);
             textBox_resHotel.Name = "textBox_resHotel";
             textBox_resHotel.Size = new Size(267, 23);
             textBox_resHotel.TabIndex = 31;
             // 
             // textBox_resVuelo
             // 
-            textBox_resVuelo.Location = new Point(1059, 301);
+            textBox_resVuelo.Location = new Point(993, 300);
             textBox_resVuelo.Name = "textBox_resVuelo";
             textBox_resVuelo.Size = new Size(269, 23);
             textBox_resVuelo.TabIndex = 27;
             // 
             // button_Agregar
             // 
-            button_Agregar.Location = new Point(1025, 375);
+            button_Agregar.Location = new Point(959, 374);
             button_Agregar.Name = "button_Agregar";
             button_Agregar.Size = new Size(75, 23);
             button_Agregar.TabIndex = 28;
@@ -208,7 +215,7 @@
             // 
             // button_Modificar
             // 
-            button_Modificar.Location = new Point(1152, 375);
+            button_Modificar.Location = new Point(1086, 374);
             button_Modificar.Name = "button_Modificar";
             button_Modificar.Size = new Size(75, 23);
             button_Modificar.TabIndex = 29;
@@ -218,7 +225,7 @@
             // 
             // button_Eliminar
             // 
-            button_Eliminar.Location = new Point(1271, 375);
+            button_Eliminar.Location = new Point(1205, 374);
             button_Eliminar.Name = "button_Eliminar";
             button_Eliminar.Size = new Size(75, 23);
             button_Eliminar.TabIndex = 30;
@@ -229,12 +236,53 @@
             // dataGridView_usuarios
             // 
             dataGridView_usuarios.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridView_usuarios.Columns.AddRange(new DataGridViewColumn[] { id, nombre, apellido, dni, email, resHotel, resVuelo });
             dataGridView_usuarios.Location = new Point(25, 173);
             dataGridView_usuarios.Name = "dataGridView_usuarios";
             dataGridView_usuarios.RowTemplate.Height = 25;
-            dataGridView_usuarios.Size = new Size(839, 150);
+            dataGridView_usuarios.Size = new Size(792, 150);
             dataGridView_usuarios.TabIndex = 32;
             dataGridView_usuarios.CellContentClick += dataGridView_usuarios_CellContentClick;
+            dataGridView_usuarios.CellDoubleClick += dataGridView_usuarios_CellContentClick;
+            // 
+            // id
+            // 
+            id.HeaderText = "ID de usuario";
+            id.Name = "id";
+            id.ReadOnly = true;
+            id.Width = 110;
+            // 
+            // nombre
+            // 
+            nombre.HeaderText = "Nombre";
+            nombre.Name = "nombre";
+            // 
+            // apellido
+            // 
+            apellido.HeaderText = "Apellido";
+            apellido.Name = "apellido";
+            // 
+            // dni
+            // 
+            dni.HeaderText = "Dni";
+            dni.Name = "dni";
+            // 
+            // email
+            // 
+            email.HeaderText = "Email";
+            email.Name = "email";
+            // 
+            // resHotel
+            // 
+            resHotel.HeaderText = "Reserva de Hotel";
+            resHotel.Name = "resHotel";
+            resHotel.Width = 120;
+            // 
+            // resVuelo
+            // 
+            resVuelo.HeaderText = "Reserva de Vuelo";
+            resVuelo.Name = "resVuelo";
+            resVuelo.Width = 120;
             // 
             // bienvenida
             // 
@@ -318,5 +366,12 @@
         private TextBox textBox_resHotel;
         private DataGridView dataGridView2;
         private Label bienvenida;
+        private DataGridViewTextBoxColumn id;
+        private DataGridViewTextBoxColumn nombre;
+        private DataGridViewTextBoxColumn apellido;
+        private DataGridViewTextBoxColumn dni;
+        private DataGridViewTextBoxColumn email;
+        private DataGridViewTextBoxColumn resHotel;
+        private DataGridViewTextBoxColumn resVuelo;
     }
 }

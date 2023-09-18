@@ -12,7 +12,7 @@ public class Agencia
 	private List<ReservaVuelo> reservasVuelo;
 	private Usuario usuarioActual { get; set; }
     private int cantVuelos;
-    private int cantUsuarios;
+    private int cantUsuarios = 0;
 
     //metodo constructor
     public Agencia()
@@ -28,7 +28,7 @@ public class Agencia
 
     //INICIO METODOS DE USUARIO
 
-    public void registrarUsuario(int id, string name, string apellido, int dni, string mail, string password, bool esAdmin)
+    public void registrarUsuario(int id, string name, string apellido, string dni, string mail, string password, bool esAdmin)
     {
         Usuario usuario = new Usuario(id, name, apellido, dni, mail, password, esAdmin);
         usuarios.Add(usuario);
@@ -70,7 +70,14 @@ public class Agencia
         return usuarios.ToList();
     }
 
-    public bool agregarUsuario( string name, string apellido, int dni, string mail)
+    public bool agregarUsuarioobjet(Usuario usuario)
+    {
+        Usuario obj = new Usuario(cantUsuarios,usuario.name,usuario.apellido,usuario.dni,usuario.mail);
+        cantUsuarios++;
+        usuarios.Add(obj);
+        return true;
+    }
+    public bool agregarUsuario(string name, string apellido, string dni, string mail)
     {
         Usuario usuario = new Usuario(cantUsuarios, name, apellido, dni, mail);
         cantUsuarios++;
@@ -78,7 +85,7 @@ public class Agencia
         return true;
     }
 
-    public bool modificarUsuario(int id, string name, string apellido, int dni, string mail)
+    public bool modificarUsuario(int id, string name, string apellido, string dni, string mail)
     {
         foreach (Usuario user in usuarios)
         {
