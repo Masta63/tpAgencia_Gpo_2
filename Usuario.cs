@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net.Mail;
 
 namespace tpAgencia_Gpo_2
 {
@@ -40,13 +41,15 @@ namespace tpAgencia_Gpo_2
             get => listVuelosTomados.ToList();
         }
 
-        public Usuario(int id, string name, string apellido, int dni, bool esAdmin)
+        public Usuario(int id, string name, string apellido, int dni, string mail, string  pass ,bool esAdmin)
         {
             this.id = id;
             this.name = name;
             this.apellido = apellido;
             this.dni = dni;
             this.esAdmin = false;
+            this.mail = mail;
+            this.pasword = pass;
             listMisReservasHoteles = new List<ReservaHotel>();
             listMisReservasVuelo = new List<ReservaVuelo>();
             listHotelesVisitados = new List<Hotel>();
