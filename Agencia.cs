@@ -12,9 +12,10 @@ public class Agencia
 	private List<ReservaVuelo> reservasVuelo;
 	private Usuario usuarioActual { get; set; }
     private int cantVuelos;
+    private int cantUsuarios = 0;
 
-	//metodo constructor
-	public Agencia()
+    //metodo constructor
+    public Agencia()
 	{
         usuarios = new List<Usuario>();
         hoteles = new List<Hotel>();
@@ -24,7 +25,10 @@ public class Agencia
         reservasHotel = new List<ReservaHotel>();
         reservasVuelo = new List<ReservaVuelo>();
     }
-    public void registrarUsuario(int id, string name, string apellido, int dni, string mail, string password, bool esAdmin)
+
+    //INICIO METODOS DE USUARIO
+
+    public void registrarUsuario(int id, string name, string apellido, string dni, string mail, string password, bool esAdmin)
     {
         Usuario usuario = new Usuario(id, name, apellido, dni, mail, password, esAdmin);
         usuarios.Add(usuario);
@@ -59,6 +63,82 @@ public class Agencia
 
         return false; // Usuario no encontrado
     }
+
+    //-- metodos del formUsuario
+    public List<Usuario> getUsuarios()
+    {
+        return usuarios.ToList();
+    }
+
+    public bool agregarUsuarioobjet(Usuario usuario)
+    {
+        Usuario obj = new Usuario(cantUsuarios,usuario.name,usuario.apellido,usuario.dni,usuario.mail);
+        cantUsuarios++;
+        usuarios.Add(obj);
+        return true;
+    }
+    public bool agregarUsuario(string name, string apellido, string dni, string mail)
+    {
+        Usuario usuario = new Usuario(cantUsuarios, name, apellido, dni, mail);
+        cantUsuarios++;
+        usuarios.Add(usuario);
+        return true;
+    }
+
+    public bool modificarUsuario(int id, string name, string apellido, string dni, string mail)
+    {
+        foreach (Usuario user in usuarios)
+        {
+            if (user.id == id)
+            {
+                user.name = name;
+                user.apellido = apellido;
+                user.dni = dni;
+                user.mail = mail;
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public bool eliminarUsuario(int id)
+    {
+        foreach (Usuario user in usuarios)
+        {
+            if (user.id == id)
+            {
+                usuarios.Remove(user);
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+
+
+
+    //FIN METODOS USUARIO
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // INICIO METODOS DE VUELO
 
     //ver lo que explicó el profesor
     public void cargarCredito(int idUsuario, double importe)
@@ -121,4 +201,6 @@ public class Agencia
         ciudades.Add(new Ciudad(3, "Buenos Aires"));
         return ciudades.ToList();
     }
+
+    //FIN METODOS DE VUELO
 }

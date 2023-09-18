@@ -13,7 +13,7 @@ namespace tpAgencia_Gpo_2
         public int id { get; set; }
         public string name { get; set; }
         public string apellido { get; set; }
-        public int dni { get; set; }
+        public string dni { get; set; }
         public string mail { get; set; }
         public string password { get; set; }
         public int intentosFallidos { get; set; }
@@ -40,13 +40,43 @@ namespace tpAgencia_Gpo_2
             get => listVuelosTomados.ToList();
         }
 
-        public Usuario(int id, string name, string apellido, int dni, string mail, string password, bool esAdmin)
+        //constructor para formUsuario
+        public Usuario( string name, string apellido, string dni, string mail)
+        {
+            
+            this.name = name;
+            this.apellido = apellido;
+            this.dni = dni;
+            this.mail = mail;
+            password = "password";
+            esAdmin = false;
+            listMisReservasHoteles = new List<ReservaHotel>();
+            listMisReservasVuelo = new List<ReservaVuelo>();
+            listHotelesVisitados = new List<Hotel>();
+            listVuelosTomados = new List<Vuelo>();
+        }
+        //constructor para formUsuario
+        public Usuario(int id,string name, string apellido, string dni, string mail)
         {
             this.id = id;
             this.name = name;
             this.apellido = apellido;
             this.dni = dni;
-            this.esAdmin = false;
+            this.mail = mail;
+            password = "password";
+            esAdmin = false;
+            listMisReservasHoteles = new List<ReservaHotel>();
+            listMisReservasVuelo = new List<ReservaVuelo>();
+            listHotelesVisitados = new List<Hotel>();
+            listVuelosTomados = new List<Vuelo>();
+        }
+        public Usuario(int id, string name, string apellido, string dni, string mail, string password, bool esAdmin)
+        {
+            this.id = id;
+            this.name = name;
+            this.apellido = apellido;
+            this.dni = dni;
+            this.esAdmin = esAdmin;
             listMisReservasHoteles = new List<ReservaHotel>();
             listMisReservasVuelo = new List<ReservaVuelo>();
             listHotelesVisitados = new List<Hotel>();
