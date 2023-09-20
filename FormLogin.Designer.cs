@@ -117,6 +117,7 @@
             // 
             // FormLogin
             // 
+            AccessibleRole = AccessibleRole.None;
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
@@ -129,7 +130,7 @@
             Controls.Add(textoUsuario);
             Controls.Add(checkBoxAdmin);
             Name = "FormLogin";
-            Text = "FormLogin";
+            Text = "Sesión de inicio";
             Load += FormLogin_Load;
             ResumeLayout(false);
             PerformLayout();
