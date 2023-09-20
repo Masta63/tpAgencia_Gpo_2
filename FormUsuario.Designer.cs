@@ -74,20 +74,22 @@
             // 
             // Volver_desde_usuario
             // 
+            Volver_desde_usuario.BackColor = Color.FromArgb(192, 255, 255);
             Volver_desde_usuario.Location = new Point(25, 330);
             Volver_desde_usuario.Name = "Volver_desde_usuario";
             Volver_desde_usuario.Size = new Size(75, 23);
             Volver_desde_usuario.TabIndex = 8;
             Volver_desde_usuario.Text = "Volver";
-            Volver_desde_usuario.UseVisualStyleBackColor = true;
+            Volver_desde_usuario.UseVisualStyleBackColor = false;
             Volver_desde_usuario.Click += Volver_desde_usuario_Click;
             // 
             // label_usuarios
             // 
             label_usuarios.AutoSize = true;
-            label_usuarios.Location = new Point(671, 33);
+            label_usuarios.Font = new Font("Segoe UI", 19F, FontStyle.Bold, GraphicsUnit.Point);
+            label_usuarios.Location = new Point(680, 33);
             label_usuarios.Name = "label_usuarios";
-            label_usuarios.Size = new Size(52, 15);
+            label_usuarios.Size = new Size(119, 36);
             label_usuarios.TabIndex = 9;
             label_usuarios.Text = "Usuarios";
             // 
@@ -156,6 +158,7 @@
             // 
             // textBox_id
             // 
+            textBox_id.Enabled = false;
             textBox_id.Location = new Point(993, 75);
             textBox_id.Name = "textBox_id";
             textBox_id.ReadOnly = true;
@@ -206,32 +209,35 @@
             // 
             // button_Agregar
             // 
+            button_Agregar.BackColor = Color.LightGreen;
             button_Agregar.Location = new Point(959, 374);
             button_Agregar.Name = "button_Agregar";
             button_Agregar.Size = new Size(75, 23);
             button_Agregar.TabIndex = 28;
             button_Agregar.Text = "Agregar";
-            button_Agregar.UseVisualStyleBackColor = true;
+            button_Agregar.UseVisualStyleBackColor = false;
             button_Agregar.Click += button_Agregar_Click;
             // 
             // button_Modificar
             // 
+            button_Modificar.BackColor = Color.FromArgb(255, 255, 192);
             button_Modificar.Location = new Point(1086, 374);
             button_Modificar.Name = "button_Modificar";
             button_Modificar.Size = new Size(75, 23);
             button_Modificar.TabIndex = 29;
             button_Modificar.Text = "Modificar";
-            button_Modificar.UseVisualStyleBackColor = true;
+            button_Modificar.UseVisualStyleBackColor = false;
             button_Modificar.Click += button_Modificar_Click;
             // 
             // button_Eliminar
             // 
+            button_Eliminar.BackColor = Color.LightCoral;
             button_Eliminar.Location = new Point(1205, 374);
             button_Eliminar.Name = "button_Eliminar";
             button_Eliminar.Size = new Size(75, 23);
             button_Eliminar.TabIndex = 30;
             button_Eliminar.Text = "Eliminar";
-            button_Eliminar.UseVisualStyleBackColor = true;
+            button_Eliminar.UseVisualStyleBackColor = false;
             button_Eliminar.Click += button_Eliminar_Click;
             // 
             // dataGridView_usuarios
@@ -308,11 +314,31 @@
             resVuelo.ReadOnly = true;
             resVuelo.Width = 120;
             // 
+            // bienvenida
+            // 
+            bienvenida.AutoSize = true;
+            bienvenida.Font = new Font("Segoe UI", 19F, FontStyle.Bold, GraphicsUnit.Point);
+            bienvenida.Location = new Point(24, 33);
+            bienvenida.Name = "bienvenida";
+            bienvenida.Size = new Size(166, 36);
+            bienvenida.TabIndex = 33;
+            bienvenida.Text = "Bienvenido: ";
+            // 
+            // Bienvenida_usuario
+            // 
+            Bienvenida_usuario.AutoSize = true;
+            Bienvenida_usuario.Font = new Font("Segoe UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
+            Bienvenida_usuario.Location = new Point(206, 41);
+            Bienvenida_usuario.Name = "Bienvenida_usuario";
+            Bienvenida_usuario.Size = new Size(0, 25);
+            Bienvenida_usuario.TabIndex = 34;
+            // 
             // FormUsuario
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1385, 511);
+            ControlBox = false;
             Controls.Add(Bienvenida_usuario);
             Controls.Add(bienvenida);
             Controls.Add(dataGridView_usuarios);
