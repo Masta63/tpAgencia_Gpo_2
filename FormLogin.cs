@@ -63,9 +63,9 @@ namespace tpAgencia_Gpo_2
 
         private void btnNuevoUsuario_Click(object sender, EventArgs e)
         {
-            Form1 form1 = new Form1();//va a la pagina para crear nuevo cliente/usuario
+            FormLoginNuevoUsuario formLoginNuevoUsuario = new FormLoginNuevoUsuario();//va a la pagina para crear nuevo cliente/usuario
             this.Hide();
-            form1.ShowDialog();
+            formLoginNuevoUsuario.ShowDialog();
         }
     }
 }

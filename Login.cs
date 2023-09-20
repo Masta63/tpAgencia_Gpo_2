@@ -8,6 +8,6 @@ namespace tpAgencia_Gpo_2
 {
     internal class Login
     {
-        int a = 1;
+        
     }
 }

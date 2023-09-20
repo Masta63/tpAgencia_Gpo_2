@@ -40,13 +40,13 @@ namespace tpAgencia_Gpo_2
             get => listVuelosTomados.ToList();
         }
 
-        public Usuario(int id, string name, string apellido, int dni, bool esAdmin)
+        public Usuario(int id, string name, string apellido, int dni, string mail, string password, bool esAdmin)
         {
             this.id = id;
             this.name = name;
             this.apellido = apellido;
             this.dni = dni;
-            this.esAdmin = false;
+            this.esAdmin = esAdmin;
             listMisReservasHoteles = new List<ReservaHotel>();
             listMisReservasVuelo = new List<ReservaVuelo>();
             listHotelesVisitados = new List<Hotel>();
