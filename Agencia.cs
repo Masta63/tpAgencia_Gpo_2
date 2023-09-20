@@ -4,7 +4,8 @@ using tpAgencia_Gpo_2;
 
 public class Agencia
 {
-	private List<Usuario> usuarios;
+    private List<Usuario> listUsuarios;
+    private List<Usuario> usuarios;
 	private List<Hotel> hoteles;
 	private List<Vuelo> vuelos;
 	private List<Ciudad> ciudades;
@@ -13,6 +14,7 @@ public class Agencia
 	private Usuario usuarioActual { get; set; }
     private int cantVuelos;
     private int cantUsuarios = 0;
+    private Usuario UsuarioActual;
 
     //metodo constructor
     public Agencia()
@@ -24,6 +26,7 @@ public class Agencia
         ciudades = new List<Ciudad>();
         reservasHotel = new List<ReservaHotel>();
         reservasVuelo = new List<ReservaVuelo>();
+        listUsuarios = new List<Usuario>();
     }
 
     //INICIO METODOS DE USUARIO
@@ -33,36 +36,60 @@ public class Agencia
         Usuario usuario = new Usuario(id, name, apellido, dni, mail, password, esAdmin);
         usuarios.Add(usuario);
     }
-
-    public bool IniciarSesion(String mail, String password)
+    public List<Usuario> Usuarios
     {
-        foreach (Usuario usuario in usuarios)
-        {
-            if (usuario.mail.Equals(mail) && usuario.password.Equals(password))
-            {
-                if (!usuario.bloqueado)
-                {
-                    usuarioActual = usuario;
-                    return true; // Sesión iniciada con éxito
-                }
-                else
-                {
-                    return false; // Usuario bloqueado
-                }
-            }
-        }
-        // Si no se encuentra el usuario o la contraseña es incorrecta se agrega un intento fallido
-        foreach (Usuario usuario in usuarios)
-        {
-            if (usuario.mail.Equals(mail))
-            {
-                usuario.agregarIntentoFallido();
-                return false;
-            }
-        }
-
-        return false; // Usuario no encontrado
+        get => listUsuarios.ToList();
     }
+
+    public void setUsuario(Usuario usuario)
+    {
+        listUsuarios.Add(usuario);
+    }
+
+    public bool iniciarSesion(string pass, string mail)
+    {
+        bool encontre = false;
+        foreach (Usuario user in listUsuarios)
+        {
+            if (user.password.Equals(pass) && user.mail.Equals(mail))
+            {
+                encontre = true;
+                UsuarioActual = user;
+            }
+        }
+        return encontre;
+    }
+
+
+    //public bool IniciarSesion(String mail, String password)
+    //{
+    //    foreach (Usuario usuario in usuarios)
+    //    {
+    //        if (usuario.mail.Equals(mail) && usuario.password.Equals(password))
+    //        {
+    //            if (!usuario.bloqueado)
+    //            {
+    //                usuarioActual = usuario;
+    //                return true; // Sesión iniciada con éxito
+    //            }
+    //            else
+    //            {
+    //                return false; // Usuario bloqueado
+    //            }
+    //        }
+    //    }
+    //    // Si no se encuentra el usuario o la contraseña es incorrecta se agrega un intento fallido
+    //    foreach (Usuario usuario in usuarios)
+    //    {
+    //        if (usuario.mail.Equals(mail))
+    //        {
+    //            usuario.agregarIntentoFallido();
+    //            return false;
+    //        }
+    //    }
+
+    //    return false; // Usuario no encontrado
+    //}
 
     //-- metodos del formUsuario
     public List<Usuario> getUsuarios()
@@ -116,6 +143,10 @@ public class Agencia
 
 
 
+    public string nombreLogueado()
+    {
+        return UsuarioActual.name;
+    }
 
 
     //FIN METODOS USUARIO
