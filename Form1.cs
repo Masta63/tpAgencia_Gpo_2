@@ -6,5 +6,10 @@ namespace tpAgencia_Gpo_2
         {
             InitializeComponent();
         }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }
