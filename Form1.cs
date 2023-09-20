@@ -11,7 +11,7 @@ namespace tpAgencia_Gpo_2
         {
             InitializeComponent();
             Agencia = new Agencia();
-            Agencia.setUsuario(new Usuario(1, "pepe", "popo", 1234, "Juan@pepe.com", "1234", true));
+            Agencia.setUsuario(new Usuario(1, "pepe", "popo", "29111222", "Juan@pepe.com", "1234", true));
 
             Login = new Login(Agencia);
             Login.MdiParent = this;
