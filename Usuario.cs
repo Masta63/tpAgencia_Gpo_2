@@ -77,11 +77,14 @@ namespace tpAgencia_Gpo_2
             this.apellido = apellido;
             this.dni = dni;
             this.esAdmin = esAdmin;
+            this.password = password;
+            this.mail = mail;
             listMisReservasHoteles = new List<ReservaHotel>();
             listMisReservasVuelo = new List<ReservaVuelo>();
             listHotelesVisitados = new List<Hotel>();
             listVuelosTomados = new List<Vuelo>();
         }
+
 
         //metodos
 
@@ -98,5 +101,6 @@ namespace tpAgencia_Gpo_2
                 bloqueado = true;
             }
         }
+
     }
 }
