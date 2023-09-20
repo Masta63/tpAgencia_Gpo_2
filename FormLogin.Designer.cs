@@ -113,6 +113,7 @@
             btnNuevoUsuario.TabIndex = 7;
             btnNuevoUsuario.Text = "Nuevo Usuario";
             btnNuevoUsuario.UseVisualStyleBackColor = true;
+            btnNuevoUsuario.Click += btnNuevoUsuario_Click;
             // 
             // FormLogin
             // 
