@@ -1,11 +1,9 @@
 ﻿using System;
 using tpAgencia_Gpo_2;
-//hola
 
 public class Agencia
 {
     private List<Usuario> listUsuarios;
-    //private List<Usuario> usuarios;
     private List<Hotel> hoteles;
     private List<Vuelo> vuelos;
     private List<Ciudad> ciudades;
@@ -19,7 +17,6 @@ public class Agencia
     //metodo constructor
     public Agencia()
     {
-        //usuarios = new List<Usuario>();
         hoteles = new List<Hotel>();
         vuelos = new List<Vuelo>();
         cantVuelos = 0;
@@ -50,12 +47,6 @@ public class Agencia
     {
         return UsuarioActual;
     }
-
-
-    //public void setListUsuario(List<Usuario> listUsuarios)
-   // {
-   //     usuarios = listUsuarios;
-   // }
 
     public List<Usuario> getListUsuario()
     {
@@ -168,21 +159,6 @@ public class Agencia
 
 
     //FIN METODOS USUARIO
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

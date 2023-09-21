@@ -23,7 +23,7 @@ namespace tpAgencia_Gpo_2
             InitializeComponent();
             this.agencia = agencia;
             List<Ciudad> ciudades = agencia.GetCiudades();
-            this.Form1 = Form1;
+            this.Form1 = form1;
             foreach (Ciudad c in ciudades)
             {
                 comboBox1.Items.Add(c.nombre);

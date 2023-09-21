@@ -16,7 +16,6 @@ namespace tpAgencia_Gpo_2
     {
         private Agencia refAgencia;
         private int usuarioSeleccionado;
-        private Usuario usuario;
         public TransfDelegadoFormUsuario TransfEventoFormUsuario;
         private Form1 form1;
         public FormUsuario(Agencia agencia, Form1 form1)
