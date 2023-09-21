@@ -6,19 +6,19 @@ public class Agencia
 {
     private List<Usuario> listUsuarios;
     private List<Usuario> usuarios;
-	private List<Hotel> hoteles;
-	private List<Vuelo> vuelos;
-	private List<Ciudad> ciudades;
-	private List<ReservaHotel> reservasHotel;
-	private List<ReservaVuelo> reservasVuelo;
-	private Usuario usuarioActual { get; set; }
+    private List<Hotel> hoteles;
+    private List<Vuelo> vuelos;
+    private List<Ciudad> ciudades;
+    private List<ReservaHotel> reservasHotel;
+    private List<ReservaVuelo> reservasVuelo;
+    private Usuario usuarioActual { get; set; }
     private int cantVuelos;
     private int cantUsuarios = 0;
     private Usuario UsuarioActual;
 
     //metodo constructor
     public Agencia()
-	{
+    {
         usuarios = new List<Usuario>();
         hoteles = new List<Hotel>();
         vuelos = new List<Vuelo>();
@@ -45,6 +45,23 @@ public class Agencia
     {
         listUsuarios.Add(usuario);
     }
+
+    public Usuario getUsuarioActual()
+    {
+        return UsuarioActual;
+    }
+
+
+    public void setListUsuario(List<Usuario> listUsuarios)
+    {
+        usuarios = listUsuarios;
+    }
+
+    public List<Usuario> getListUsuario()
+    {
+        return listUsuarios;
+    }
+
 
     public bool iniciarSesion(string pass, string mail)
     {
@@ -99,7 +116,7 @@ public class Agencia
 
     public bool agregarUsuarioobjet(Usuario usuario)
     {
-        Usuario obj = new Usuario(cantUsuarios,usuario.name,usuario.apellido,usuario.dni,usuario.mail);
+        Usuario obj = new Usuario(cantUsuarios, usuario.name, usuario.apellido, usuario.dni, usuario.mail);
         cantUsuarios++;
         usuarios.Add(obj);
         return true;
@@ -174,23 +191,23 @@ public class Agencia
     //ver lo que explicó el profesor
     public void cargarCredito(int idUsuario, double importe)
     {
-     
+
         usuarioActual.credito += importe;
-      
+
     }
-    public bool agregarVuelo(Ciudad origen, Ciudad destino, int capacidad, double costo, DateTime fecha, string aerolinea, string avion )
+    public bool agregarVuelo(Ciudad origen, Ciudad destino, int capacidad, double costo, DateTime fecha, string aerolinea, string avion)
     {
-       
-        vuelos.Add(new Vuelo(cantVuelos,origen, destino, capacidad, costo, fecha, aerolinea, avion));
+
+        vuelos.Add(new Vuelo(cantVuelos, origen, destino, capacidad, costo, fecha, aerolinea, avion));
         cantVuelos++;
         return true;
     }
 
-    public bool modificarVuelo(int id, Ciudad origen, Ciudad destino, int capacidad,double costo, DateTime fecha, string aerolinea, string avion)
+    public bool modificarVuelo(int id, Ciudad origen, Ciudad destino, int capacidad, double costo, DateTime fecha, string aerolinea, string avion)
     {
         foreach (Vuelo vuelo in vuelos)
         {
-            if(vuelo.id == id)
+            if (vuelo.id == id)
             {
                 vuelo.origen = origen;
                 vuelo.destino = destino;
@@ -207,11 +224,11 @@ public class Agencia
 
     public bool eliminarVuelo(int id)
     {
-        foreach(Vuelo vuelo in vuelos)
-        { 
-            if(vuelo.id == id)
+        foreach (Vuelo vuelo in vuelos)
+        {
+            if (vuelo.id == id)
 
-            { 
+            {
                 vuelos.Remove(vuelo);
                 return true;
             }
@@ -219,7 +236,7 @@ public class Agencia
         return false;
     }
 
-    public List<Vuelo> getVuelos() 
+    public List<Vuelo> getVuelos()
     {
         return vuelos.ToList();
     }

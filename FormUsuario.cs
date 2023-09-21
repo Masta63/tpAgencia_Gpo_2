@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using static tpAgencia_Gpo_2.Login;
 
 namespace tpAgencia_Gpo_2
 {
@@ -16,24 +17,25 @@ namespace tpAgencia_Gpo_2
         private Agencia refAgencia;
         private int usuarioSeleccionado;
         private Usuario usuario;
-
-        public FormUsuario(Agencia agencia)
+        public TransfDelegadoFormUsuario TransfEventoFormUsuario;
+        private Form1 form1;
+        public FormUsuario(Agencia agencia, Form1 form1)
         {
             InitializeComponent();
             this.refAgencia = agencia;
-            usuario = new Usuario("juan", "garcia", "22333444", "juan@mail.com");
-            agencia.agregarUsuarioobjet(usuario);
-            agencia.agregarUsuarioobjet(usuario);
-            agencia.agregarUsuarioobjet(usuario);
-            Bienvenida_usuario.Text = usuario.name + " " + usuario.apellido;
-
+            if (agencia.getUsuarioActual() != null)
+            {
+                agencia.setListUsuario(agencia.getListUsuario());
+                Bienvenida_usuario.Text = agencia.getUsuarioActual().name + " " + agencia.getUsuarioActual().apellido;
+            }
+            this.form1 = form1;
         }
 
         private void FormUsuario_Load(object sender, EventArgs e)
         {
 
         }
-
+        public delegate void TransfDelegadoFormUsuario();
         private void button_Agregar_Click(object sender, EventArgs e)
         {
             if (textBox_nombre.Text == " " || textBox_apellido.Text == " " || textBox_dni.Text == " " || textBox_email.Text == " " ||
@@ -102,7 +104,10 @@ namespace tpAgencia_Gpo_2
 
         private void Volver_desde_usuario_Click(object sender, EventArgs e)
         {
-            //aca va el metodo delegado para navegar entre paginas
+            this.Close();
+            MenuAgencia MenuAgencia = new MenuAgencia(refAgencia, form1);
+            MenuAgencia.MdiParent = form1;
+            MenuAgencia.Show();
         }
 
         private void dataGridView_usuarios_CellContentClick(object sender, DataGridViewCellEventArgs e)

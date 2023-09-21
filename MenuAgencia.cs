@@ -7,16 +7,23 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.DataFormats;
 
 namespace tpAgencia_Gpo_2
 {
     public partial class MenuAgencia : Form
     {
         private Agencia Agencia;
-        public MenuAgencia(Agencia agencia)
+        FormUsuario FormUsuario;
+        private Form1 Form1;
+        public MenuAgencia(Agencia agencia, Form1 form1)
         {
             InitializeComponent();
             this.Agencia = agencia;
+            this.Form1 = form1;
+            FormUsuario = new FormUsuario(Agencia, form1);
+            FormUsuario.MdiParent = form1;
+            FormUsuario.TransfEventoFormUsuario += TransfDelegadoFormUsuario;
         }
 
         private void altasToolStripMenuItem_Click(object sender, EventArgs e)
@@ -47,6 +54,18 @@ namespace tpAgencia_Gpo_2
         private void cerrarSesionToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
+        }
+        private void TransfDelegadoFormUsuario()
+        {
+            this.MdiParent = Form1;
+            this.Close();
+            FormUsuario = new FormUsuario(Agencia, Form1);
+            FormUsuario.Show();
+        }
+
+        private void usuariosToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.TransfDelegadoFormUsuario();
         }
     }
 }

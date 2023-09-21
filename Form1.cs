@@ -12,6 +12,8 @@ namespace tpAgencia_Gpo_2
             InitializeComponent();
             Agencia = new Agencia();
             Agencia.setUsuario(new Usuario(1, "pepe", "popo", "29111222", "Juan@pepe.com", "1234", true));
+            Agencia.setUsuario(new Usuario(1, "juana", "lola", "33333333", "Juana@lola.com", "1234", true));
+            Agencia.setUsuario(new Usuario(1, "pablo", "lopez", "22222222", "Pablo@lopez.com", "1234", true));
 
             Login = new Login(Agencia);
             Login.MdiParent = this;
@@ -25,7 +27,7 @@ namespace tpAgencia_Gpo_2
         {
             MessageBox.Show("Log correcto, Usuario: " + Agencia.nombreLogueado(), "Inicio de Sesión", MessageBoxButtons.OK, MessageBoxIcon.Information);
             Login.Close();
-            MenuAgencia = new MenuAgencia(Agencia);
+            MenuAgencia = new MenuAgencia(Agencia, this);
             MenuAgencia.MdiParent = this;
             MenuAgencia.Show();
         }

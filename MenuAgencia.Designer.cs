@@ -151,26 +151,27 @@
             // vuelosToolStripMenuItem
             // 
             vuelosToolStripMenuItem.Name = "vuelosToolStripMenuItem";
-            vuelosToolStripMenuItem.Size = new Size(123, 22);
+            vuelosToolStripMenuItem.Size = new Size(180, 22);
             vuelosToolStripMenuItem.Text = "Vuelos";
             // 
             // hotelesToolStripMenuItem1
             // 
             hotelesToolStripMenuItem1.Name = "hotelesToolStripMenuItem1";
-            hotelesToolStripMenuItem1.Size = new Size(123, 22);
+            hotelesToolStripMenuItem1.Size = new Size(180, 22);
             hotelesToolStripMenuItem1.Text = "Hoteles";
             // 
             // ciudadesToolStripMenuItem1
             // 
             ciudadesToolStripMenuItem1.Name = "ciudadesToolStripMenuItem1";
-            ciudadesToolStripMenuItem1.Size = new Size(123, 22);
+            ciudadesToolStripMenuItem1.Size = new Size(180, 22);
             ciudadesToolStripMenuItem1.Text = "Ciudades";
             // 
             // usuariosToolStripMenuItem
             // 
             usuariosToolStripMenuItem.Name = "usuariosToolStripMenuItem";
-            usuariosToolStripMenuItem.Size = new Size(123, 22);
+            usuariosToolStripMenuItem.Size = new Size(180, 22);
             usuariosToolStripMenuItem.Text = "Usuarios";
+            usuariosToolStripMenuItem.Click += usuariosToolStripMenuItem_Click;
             // 
             // reservasToolStripMenuItem
             // 
