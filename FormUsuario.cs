@@ -23,11 +23,7 @@ namespace tpAgencia_Gpo_2
         {
             InitializeComponent();
             this.refAgencia = agencia;
-            if (agencia.getUsuarioActual() != null)
-            {
-                agencia.setListUsuario(agencia.getListUsuario());
-                Bienvenida_usuario.Text = agencia.getUsuarioActual().name + " " + agencia.getUsuarioActual().apellido;
-            }
+            Bienvenida_usuario.Text = agencia.getUsuarioActual().name + " " + agencia.getUsuarioActual().apellido;
             this.form1 = form1;
         }
 

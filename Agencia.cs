@@ -5,7 +5,7 @@ using tpAgencia_Gpo_2;
 public class Agencia
 {
     private List<Usuario> listUsuarios;
-    private List<Usuario> usuarios;
+    //private List<Usuario> usuarios;
     private List<Hotel> hoteles;
     private List<Vuelo> vuelos;
     private List<Ciudad> ciudades;
@@ -19,7 +19,7 @@ public class Agencia
     //metodo constructor
     public Agencia()
     {
-        usuarios = new List<Usuario>();
+        //usuarios = new List<Usuario>();
         hoteles = new List<Hotel>();
         vuelos = new List<Vuelo>();
         cantVuelos = 0;
@@ -34,7 +34,7 @@ public class Agencia
     public void registrarUsuario(int id, string name, string apellido, string dni, string mail, string password, bool esAdmin)
     {
         Usuario usuario = new Usuario(id, name, apellido, dni, mail, password, esAdmin);
-        usuarios.Add(usuario);
+        listUsuarios.Add(usuario);
     }
     public List<Usuario> Usuarios
     {
@@ -52,10 +52,10 @@ public class Agencia
     }
 
 
-    public void setListUsuario(List<Usuario> listUsuarios)
-    {
-        usuarios = listUsuarios;
-    }
+    //public void setListUsuario(List<Usuario> listUsuarios)
+   // {
+   //     usuarios = listUsuarios;
+   // }
 
     public List<Usuario> getListUsuario()
     {
@@ -111,27 +111,28 @@ public class Agencia
     //-- metodos del formUsuario
     public List<Usuario> getUsuarios()
     {
-        return usuarios.ToList();
+        return listUsuarios.ToList();
     }
 
     public bool agregarUsuarioobjet(Usuario usuario)
     {
         Usuario obj = new Usuario(cantUsuarios, usuario.name, usuario.apellido, usuario.dni, usuario.mail);
         cantUsuarios++;
-        usuarios.Add(obj);
+        listUsuarios.Add(obj);
         return true;
     }
     public bool agregarUsuario(string name, string apellido, string dni, string mail)
     {
         Usuario usuario = new Usuario(cantUsuarios, name, apellido, dni, mail);
         cantUsuarios++;
-        usuarios.Add(usuario);
+        usuario.id = listUsuarios != null ? listUsuarios.OrderByDescending(x => x.id).FirstOrDefault().id + 1 : 1;
+        listUsuarios.Add(usuario);
         return true;
     }
 
     public bool modificarUsuario(int id, string name, string apellido, string dni, string mail)
     {
-        foreach (Usuario user in usuarios)
+        foreach (Usuario user in listUsuarios)
         {
             if (user.id == id)
             {
@@ -147,11 +148,11 @@ public class Agencia
 
     public bool eliminarUsuario(int id)
     {
-        foreach (Usuario user in usuarios)
+        foreach (Usuario user in listUsuarios)
         {
             if (user.id == id)
             {
-                usuarios.Remove(user);
+                listUsuarios.Remove(user);
                 return true;
             }
         }
