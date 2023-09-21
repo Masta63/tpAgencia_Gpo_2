@@ -36,6 +36,7 @@ namespace tpAgencia_Gpo_2
 
         }
         public delegate void TransfDelegadoFormUsuario();
+
         private void button_Agregar_Click(object sender, EventArgs e)
         {
             if (textBox_nombre.Text == " " || textBox_apellido.Text == " " || textBox_dni.Text == " " || textBox_email.Text == " " ||
@@ -90,7 +91,7 @@ namespace tpAgencia_Gpo_2
             //agrego
             foreach (Usuario us in refAgencia.getUsuarios())//para cada usuario en el clon de listado de usuarios de mi referencia de agencia
             {
-                dataGridView_usuarios.Rows.Add(new string[] { us.id.ToString(), us.name, us.apellido, us.dni.ToString(), us.mail, us.misReservasHoteles.ToString(), us.misReservasVuelo.ToString() });
+                dataGridView_usuarios.Rows.Add(new string[] { us.id.ToString(), us.name, us.apellido, us.dni.ToString(), us.mail, "falta las reservas de hoteles", "falta las reservas de hoteles" });
 
                 textBox_id.Text = " ";
                 textBox_nombre.Text = " ";

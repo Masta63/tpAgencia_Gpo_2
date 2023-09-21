@@ -71,7 +71,7 @@
             // 
             // Aceptar
             // 
-            Aceptar.Location = new Point(99, 143);
+            Aceptar.Location = new Point(200, 143);
             Aceptar.Name = "Aceptar";
             Aceptar.Size = new Size(75, 23);
             Aceptar.TabIndex = 4;

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.DataFormats;
 
 namespace tpAgencia_Gpo_2
 {
@@ -14,14 +15,15 @@ namespace tpAgencia_Gpo_2
     {
         private Agencia agencia;
         private int vueloSeleccionado;
+        public TransfDelegadoFormVuelo TransfEventoFormVuelo;
+        private Form1 Form1;
 
-
-
-        public FormVuelo(Agencia agencia)
+        public FormVuelo(Agencia agencia, Form1 form1)
         {
             InitializeComponent();
             this.agencia = agencia;
             List<Ciudad> ciudades = agencia.GetCiudades();
+            this.Form1 = Form1;
             foreach (Ciudad c in ciudades)
             {
                 comboBox1.Items.Add(c.nombre);
@@ -58,7 +60,7 @@ namespace tpAgencia_Gpo_2
 
             }
         }
-
+        public delegate void TransfDelegadoFormVuelo();
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             string id = dataGridView1[0, e.RowIndex].Value.ToString();
@@ -172,6 +174,14 @@ namespace tpAgencia_Gpo_2
             }
             else
                 MessageBox.Show("Debe seleccionar un vuelo");
+        }
+
+        private void Volver_desde_usuario_Click(object sender, EventArgs e)
+        {
+            this.Close();
+            MenuAgencia MenuAgencia = new MenuAgencia(agencia, Form1);
+            MenuAgencia.MdiParent = Form1;
+            MenuAgencia.Show();
         }
     }
 }

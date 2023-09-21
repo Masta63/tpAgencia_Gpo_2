@@ -15,6 +15,7 @@ namespace tpAgencia_Gpo_2
     {
         private Agencia Agencia;
         FormUsuario FormUsuario;
+        FormVuelo FormVuelo;
         private Form1 Form1;
         public MenuAgencia(Agencia agencia, Form1 form1)
         {
@@ -24,6 +25,10 @@ namespace tpAgencia_Gpo_2
             FormUsuario = new FormUsuario(Agencia, form1);
             FormUsuario.MdiParent = form1;
             FormUsuario.TransfEventoFormUsuario += TransfDelegadoFormUsuario;
+
+            FormVuelo = new FormVuelo(agencia, form1);
+            FormVuelo.MdiParent = form1;
+            FormVuelo.TransfEventoFormVuelo += TransfDelegadoFormVuelo;
         }
 
         private void altasToolStripMenuItem_Click(object sender, EventArgs e)
@@ -53,6 +58,8 @@ namespace tpAgencia_Gpo_2
 
         private void cerrarSesionToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            this.Close();
+            Form1.Close();
 
         }
         private void TransfDelegadoFormUsuario()
@@ -63,9 +70,22 @@ namespace tpAgencia_Gpo_2
             FormUsuario.Show();
         }
 
+        private void TransfDelegadoFormVuelo()
+        {
+            this.MdiParent = Form1;
+            this.Close();
+            FormVuelo = new FormVuelo(Agencia, Form1);
+            FormVuelo.Show();
+        }
+
         private void usuariosToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.TransfDelegadoFormUsuario();
+        }
+
+        private void vuelosToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.TransfDelegadoFormVuelo();
         }
     }
 }

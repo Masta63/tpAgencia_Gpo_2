@@ -153,6 +153,7 @@
             vuelosToolStripMenuItem.Name = "vuelosToolStripMenuItem";
             vuelosToolStripMenuItem.Size = new Size(180, 22);
             vuelosToolStripMenuItem.Text = "Vuelos";
+            vuelosToolStripMenuItem.Click += vuelosToolStripMenuItem_Click;
             // 
             // hotelesToolStripMenuItem1
             // 
