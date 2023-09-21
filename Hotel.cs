@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,6 +11,7 @@ namespace tpAgencia_Gpo_2
     {
         //declaracion de variables publicac on properties
         public int Id { get; set; }
+        [Browsable(true)]
         public Ciudad Ubicacion { get; set; }
         public int Capacidad { get; set; }
         public double costo { get; set; }
@@ -32,5 +34,12 @@ namespace tpAgencia_Gpo_2
         }
 
         //metodos
+
+        private void buscarHoteles()
+        {
+            
+        }
+
+
     }
 }
