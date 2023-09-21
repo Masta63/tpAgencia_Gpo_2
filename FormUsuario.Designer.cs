@@ -58,12 +58,16 @@
             resVuelo = new DataGridViewTextBoxColumn();
             bienvenida = new Label();
             Bienvenida_usuario = new Label();
+            textBox_credito = new TextBox();
+            label_Credito = new Label();
+            btn_agregarCredito = new Button();
+            btn_modificarCredito = new Button();
             ((System.ComponentModel.ISupportInitialize)dataGridView_usuarios).BeginInit();
             SuspendLayout();
             // 
             // mostrar_usuario
             // 
-            mostrar_usuario.Location = new Point(25, 136);
+            mostrar_usuario.Location = new Point(35, 169);
             mostrar_usuario.Margin = new Padding(2);
             mostrar_usuario.Name = "mostrar_usuario";
             mostrar_usuario.Size = new Size(181, 32);
@@ -75,7 +79,7 @@
             // Volver_desde_usuario
             // 
             Volver_desde_usuario.BackColor = Color.FromArgb(192, 255, 255);
-            Volver_desde_usuario.Location = new Point(25, 330);
+            Volver_desde_usuario.Location = new Point(35, 405);
             Volver_desde_usuario.Name = "Volver_desde_usuario";
             Volver_desde_usuario.Size = new Size(75, 23);
             Volver_desde_usuario.TabIndex = 8;
@@ -244,10 +248,10 @@
             // 
             dataGridView_usuarios.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridView_usuarios.Columns.AddRange(new DataGridViewColumn[] { id, nombre, apellido, dni, email, resHotel, resVuelo });
-            dataGridView_usuarios.Location = new Point(25, 173);
+            dataGridView_usuarios.Location = new Point(35, 220);
             dataGridView_usuarios.Name = "dataGridView_usuarios";
             dataGridView_usuarios.RowTemplate.Height = 25;
-            dataGridView_usuarios.Size = new Size(792, 150);
+            dataGridView_usuarios.Size = new Size(792, 178);
             dataGridView_usuarios.TabIndex = 32;
             dataGridView_usuarios.CellContentClick += dataGridView_usuarios_CellContentClick;
             dataGridView_usuarios.CellDoubleClick += dataGridView_usuarios_CellContentClick;
@@ -316,12 +320,52 @@
             Bienvenida_usuario.Size = new Size(0, 25);
             Bienvenida_usuario.TabIndex = 34;
             // 
+            // textBox_credito
+            // 
+            textBox_credito.Location = new Point(560, 170);
+            textBox_credito.Name = "textBox_credito";
+            textBox_credito.Size = new Size(100, 23);
+            textBox_credito.TabIndex = 35;
+            textBox_credito.TextChanged += textBox_credito_TextChanged;
+            // 
+            // label_Credito
+            // 
+            label_Credito.AutoSize = true;
+            label_Credito.Location = new Point(560, 140);
+            label_Credito.Name = "label_Credito";
+            label_Credito.Size = new Size(46, 15);
+            label_Credito.TabIndex = 36;
+            label_Credito.Text = "Credito";
+            // 
+            // btn_agregarCredito
+            // 
+            btn_agregarCredito.Location = new Point(680, 132);
+            btn_agregarCredito.Name = "btn_agregarCredito";
+            btn_agregarCredito.Size = new Size(75, 23);
+            btn_agregarCredito.TabIndex = 37;
+            btn_agregarCredito.Text = "Agregar";
+            btn_agregarCredito.UseVisualStyleBackColor = true;
+            // 
+            // btn_modificarCredito
+            // 
+            btn_modificarCredito.Location = new Point(680, 170);
+            btn_modificarCredito.Name = "btn_modificarCredito";
+            btn_modificarCredito.Size = new Size(75, 23);
+            btn_modificarCredito.TabIndex = 38;
+            btn_modificarCredito.Text = "Modificar";
+            btn_modificarCredito.UseVisualStyleBackColor = true;
+            btn_modificarCredito.Click += btn_modificarCredito_Click;
+            // 
             // FormUsuario
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1385, 511);
             ControlBox = false;
+            Controls.Add(btn_modificarCredito);
+            Controls.Add(btn_agregarCredito);
+            Controls.Add(label_Credito);
+            Controls.Add(textBox_credito);
             Controls.Add(Bienvenida_usuario);
             Controls.Add(bienvenida);
             Controls.Add(dataGridView_usuarios);
@@ -389,5 +433,9 @@
         private DataGridViewTextBoxColumn email;
         private DataGridViewTextBoxColumn resHotel;
         private DataGridViewTextBoxColumn resVuelo;
+        private TextBox textBox_credito;
+        private Label label_Credito;
+        private Button btn_agregarCredito;
+        private Button btn_modificarCredito;
     }
 }

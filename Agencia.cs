@@ -114,7 +114,31 @@ public class Agencia
         return false;
     }
 
+    public bool modificarCredito(int id, double monto)
+    {
+        foreach (Usuario user in usuarios)
+        {
+            if (user.id == id)
+            {
+                user.credito = monto;
+                return true;
+            }
+        }
+        return false;
+    }
 
+    public bool agregarCredito(int id, double monto)
+    {
+        foreach (Usuario user in usuarios)
+        {
+            if (user.id == id)
+            {
+                user.credito += monto;
+                return true;
+            }
+        }
+        return false;
+    }
 
 
 

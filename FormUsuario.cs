@@ -97,6 +97,7 @@ namespace tpAgencia_Gpo_2
                 textBox_dni.Text = " ";
                 textBox_resHotel.Text = " ";
                 textBox_resVuelo.Text = " ";
+
             }
         }
 
@@ -122,8 +123,30 @@ namespace tpAgencia_Gpo_2
             textBox_resHotel.Text = resHotel;
             textBox_resVuelo.Text = resVuelo;
 
+
             usuarioSeleccionado = int.Parse(id);
 
+        }
+
+        private void btn_modificarCredito_Click(object sender, EventArgs e)
+        {
+            if (usuarioSeleccionado != -1)
+            {
+                if (refAgencia.modificarCredito(usuarioSeleccionado, double.Parse(textBox_credito.Text)))
+                    MessageBox.Show("Modificado con éxito");
+                else
+                    MessageBox.Show("Problemas al modificar");
+            }
+            else
+                MessageBox.Show("Debe seleccionar un usuario");
+        }
+
+        private void textBox_credito_TextChanged(object sender, EventArgs e)
+        {
+            foreach (Usuario us in refAgencia.getUsuarios())
+            {
+                textBox_credito.Text = us.credito.ToString();
+            }
         }
     }
 }
