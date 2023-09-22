@@ -63,12 +63,14 @@
             textBox_credito = new TextBox();
             btn_agregarCredito = new Button();
             btn_modificarCredito = new Button();
+            btn_buscarUsuario = new Button();
+            textBox_buscarUsuario = new TextBox();
             ((System.ComponentModel.ISupportInitialize)dataGridView_usuarios).BeginInit();
             SuspendLayout();
             // 
             // mostrar_usuario
             // 
-            mostrar_usuario.Location = new Point(35, 169);
+            mostrar_usuario.Location = new Point(35, 121);
             mostrar_usuario.Margin = new Padding(2);
             mostrar_usuario.Name = "mostrar_usuario";
             mostrar_usuario.Size = new Size(181, 32);
@@ -330,7 +332,7 @@
             // label_Credito
             // 
             label_Credito.AutoSize = true;
-            label_Credito.Location = new Point(340, 138);
+            label_Credito.Location = new Point(572, 144);
             label_Credito.Name = "label_Credito";
             label_Credito.Size = new Size(46, 15);
             label_Credito.TabIndex = 38;
@@ -338,7 +340,7 @@
             // 
             // textBox_credito
             // 
-            textBox_credito.Location = new Point(340, 169);
+            textBox_credito.Location = new Point(572, 175);
             textBox_credito.Name = "textBox_credito";
             textBox_credito.Size = new Size(114, 23);
             textBox_credito.TabIndex = 37;
@@ -346,7 +348,7 @@
             // btn_agregarCredito
             // 
             btn_agregarCredito.BackColor = Color.LightGreen;
-            btn_agregarCredito.Location = new Point(502, 130);
+            btn_agregarCredito.Location = new Point(734, 136);
             btn_agregarCredito.Name = "btn_agregarCredito";
             btn_agregarCredito.Size = new Size(75, 23);
             btn_agregarCredito.TabIndex = 39;
@@ -357,7 +359,7 @@
             // btn_modificarCredito
             // 
             btn_modificarCredito.BackColor = Color.FromArgb(255, 255, 192);
-            btn_modificarCredito.Location = new Point(502, 174);
+            btn_modificarCredito.Location = new Point(734, 180);
             btn_modificarCredito.Name = "btn_modificarCredito";
             btn_modificarCredito.Size = new Size(75, 23);
             btn_modificarCredito.TabIndex = 40;
@@ -365,12 +367,32 @@
             btn_modificarCredito.UseVisualStyleBackColor = false;
             btn_modificarCredito.Click += btn_modificarCredito_Click_1;
             // 
+            // btn_buscarUsuario
+            // 
+            btn_buscarUsuario.Location = new Point(35, 169);
+            btn_buscarUsuario.Margin = new Padding(2);
+            btn_buscarUsuario.Name = "btn_buscarUsuario";
+            btn_buscarUsuario.Size = new Size(181, 32);
+            btn_buscarUsuario.TabIndex = 41;
+            btn_buscarUsuario.Text = "Buscar Usuarios";
+            btn_buscarUsuario.UseVisualStyleBackColor = true;
+            btn_buscarUsuario.Click += btn_buscarUsuario_Click;
+            // 
+            // textBox_buscarUsuario
+            // 
+            textBox_buscarUsuario.Location = new Point(233, 178);
+            textBox_buscarUsuario.Name = "textBox_buscarUsuario";
+            textBox_buscarUsuario.Size = new Size(155, 23);
+            textBox_buscarUsuario.TabIndex = 42;
+            // 
             // FormUsuario
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1385, 511);
             ControlBox = false;
+            Controls.Add(textBox_buscarUsuario);
+            Controls.Add(btn_buscarUsuario);
             Controls.Add(btn_modificarCredito);
             Controls.Add(btn_agregarCredito);
             Controls.Add(label_Credito);
@@ -421,7 +443,7 @@
         private Label label_email;
         private Label label_reserva_hotel;
         private Label label_reserva_vuelo;
-        private TextBox textBox1;
+        private TextBox textBox_buscarUsuario;
         private TextBox textBox_id;
         private TextBox textBox_nombre;
         private TextBox textBox_apellido;
@@ -447,5 +469,6 @@
         private TextBox textBox_credito;
         private Button btn_agregarCredito;
         private Button btn_modificarCredito;
+        private Button btn_buscarUsuario;
     }
 }

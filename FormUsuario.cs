@@ -23,7 +23,9 @@ namespace tpAgencia_Gpo_2
             this.refAgencia = agencia;
             usuario = new Usuario("juan", "garcia", "22333444", "juan@mail.com");
             agencia.agregarUsuarioobjet(usuario);
+            usuario = new Usuario("pedro", "pascal", "33444555", "pedro@mail.com");
             agencia.agregarUsuarioobjet(usuario);
+            usuario = new Usuario("florencia", "pereyra", "3555444", "flor@mail.com");
             agencia.agregarUsuarioobjet(usuario);
             Bienvenida_usuario.Text = usuario.name + " " + usuario.apellido;
 
@@ -164,6 +166,30 @@ namespace tpAgencia_Gpo_2
             }
             else
                 MessageBox.Show("Debe seleccionar un usuario");
+        }
+
+        private void btn_buscarUsuario_Click(object sender, EventArgs e)
+        {
+            string dniABuscar = textBox_buscarUsuario.Text;
+            BuscarUsuarioPorDNI(dniABuscar);
+        }
+
+        private void BuscarUsuarioPorDNI(string dni)
+        {
+            // Lógica de búsqueda de usuario por DNI
+            
+            foreach (Usuario us in refAgencia.getUsuarios())
+            {
+                if (us.dni == dni )
+                {
+                    dataGridView_usuarios.Rows.Clear();
+                    dataGridView_usuarios.Rows.Add(new string[] { us.id.ToString(), us.name, us.apellido, us.dni.ToString(), us.credito.ToString(), us.mail, us.misReservasHoteles.ToString(), us.misReservasVuelo.ToString() });
+                }
+            }
+                
+
+
+
         }
     }
 }
