@@ -118,8 +118,8 @@ namespace tpAgencia_Gpo_2
         {
             try
             {
-                string id = dgvCiudad[0, e.RowIndex].Value.ToString();
-                string name = dgvCiudad[1, e.RowIndex].Value.ToString();
+                string? id = dgvCiudad[0, e.RowIndex]?.Value?.ToString();
+                string? name = dgvCiudad[1, e.RowIndex]?.Value?.ToString();
                 textCiudadId.Text = id;
                 txtNombre.Text = name;
                 int.Parse(id);

@@ -66,14 +66,14 @@ namespace tpAgencia_Gpo_2
         {
             try
             {
-                string id = dataGridView1[0, e.RowIndex].Value.ToString();
-                string Origen = dataGridView1[1, e.RowIndex].Value.ToString();
-                string Destino = dataGridView1[2, e.RowIndex].Value.ToString();
-                string Capacidad = dataGridView1[3, e.RowIndex].Value.ToString();
-                string Costo = dataGridView1[4, e.RowIndex].Value.ToString();
-                string Fecha = dataGridView1[5, e.RowIndex].Value.ToString();
-                string Aerolinea = dataGridView1[6, e.RowIndex].Value.ToString();
-                string Avion = dataGridView1[7, e.RowIndex].Value.ToString();
+                string? id = dataGridView1[0, e.RowIndex]?.Value?.ToString();
+                string? Origen = dataGridView1[1, e.RowIndex]?.Value?.ToString();
+                string? Destino = dataGridView1[2, e.RowIndex]?.Value?.ToString();
+                string? Capacidad = dataGridView1[3, e.RowIndex]?.Value?.ToString();
+                string? Costo = dataGridView1[4, e.RowIndex]?.Value?.ToString();
+                string? Fecha = dataGridView1[5, e.RowIndex]?.Value?.ToString();
+                string? Aerolinea = dataGridView1[6, e.RowIndex]?.Value?.ToString();
+                string? Avion = dataGridView1[7, e.RowIndex]?.Value?.ToString();
                 textBox8.Text = id;
                 comboBox1.Text = Origen;
                 comboBox2.Text = Destino;
