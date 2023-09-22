@@ -9,7 +9,7 @@ public class Agencia
     private List<Ciudad> ciudades;
     private List<ReservaHotel> reservasHotel;
     private List<ReservaVuelo> reservasVuelo;
-    private Usuario usuarioActual { get; set; }
+    private Usuario? usuarioActual { get; set; }
     private int cantVuelos;
     private int cantUsuarios = 0;
     private Usuario UsuarioActual;
@@ -58,51 +58,37 @@ public class Agencia
         return listUsuarios;
     }
 
-
-    public bool iniciarSesion(string pass, string mail)
+    public void cerrarSesion()
     {
-        bool encontre = false;
-        foreach (Usuario user in listUsuarios)
-        {
-            if (user.password.Equals(pass) && user.mail.Equals(mail))
-            {
-                encontre = true;
-                UsuarioActual = user;
-            }
-        }
-        return encontre;
+        usuarioActual = null;
     }
 
-
-    //public bool IniciarSesion(String mail, String password)
-    //{
-    //    foreach (Usuario usuario in usuarios)
-    //    {
-    //        if (usuario.mail.Equals(mail) && usuario.password.Equals(password))
-    //        {
-    //            if (!usuario.bloqueado)
-    //            {
-    //                usuarioActual = usuario;
-    //                return true; // Sesión iniciada con éxito
-    //            }
-    //            else
-    //            {
-    //                return false; // Usuario bloqueado
-    //            }
-    //        }
-    //    }
-    //    // Si no se encuentra el usuario o la contraseña es incorrecta se agrega un intento fallido
-    //    foreach (Usuario usuario in usuarios)
-    //    {
-    //        if (usuario.mail.Equals(mail))
-    //        {
-    //            usuario.agregarIntentoFallido();
-    //            return false;
-    //        }
-    //    }
-
-    //    return false; // Usuario no encontrado
-    //}
+    public string iniciarSesion(List<Usuario> usuariosSeleccionados, string InputMail, string Inputpass)
+    {
+        string codigoReturn = string.Empty;
+        foreach (Usuario user in usuariosSeleccionados)
+        {
+            if (user.mail.Equals(InputMail) && user.password == Inputpass)
+            {
+                codigoReturn = "OK";
+                UsuarioActual = user;
+            }
+            else
+            {
+                user.intentosFallidos++;
+                if (user.intentosFallidos == 3)
+                {
+                    user.bloqueado = true;
+                    codigoReturn = "BLOQUEADO";
+                }
+                else
+                {
+                    codigoReturn = "MAILERROR";
+                }
+            }
+        }
+        return codigoReturn;
+    }
 
     //-- metodos del formUsuario
     public List<Usuario> getUsuarios()

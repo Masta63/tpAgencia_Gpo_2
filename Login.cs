@@ -47,13 +47,44 @@ namespace tpAgencia_Gpo_2
             string mail = textMail.Text;
             if (cont != null && mail != "" && cont != null && mail != "")
             {
-                if (agencia.iniciarSesion(cont, mail))
-                    this.TransfEventoLogin();
-                else
-                    MessageBox.Show("Error, usuario o contraseña incorrectos");
+                var usuariosSeleccionados = agencia.getListUsuario().Where(x => x.mail == mail).ToList();
+                validacionEstadoUsuario(usuariosSeleccionados, mail, cont);
             }
             else
                 MessageBox.Show("Debe ingresar un usuario y contraseña!");
         }
+
+
+        private void validacionEstadoUsuario(List<Usuario> usuariosSeleccionados, string mailInput, string Inputpass)
+        {
+            if (usuariosSeleccionados.Count == 0)
+            {
+                MessageBox.Show("Error, debe ingresar un usuario existente");
+            }
+            else
+            {
+                string respLogin = agencia.iniciarSesion(usuariosSeleccionados, mailInput, Inputpass);
+                switch (respLogin)
+                {
+                    case "OK":
+                        this.TransfEventoLogin();
+                        break;
+                    case "BLOQUEADO":
+                        MessageBox.Show("Error, usuario bloqueado");
+                        textContrasenia.Enabled = false;
+                        textMail.Enabled = false;
+                        Aceptar.Enabled = false;
+                        break;
+                    case "MAILERROR":
+                        MessageBox.Show("Error, usuario o contraseña incorrectos");
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+
     }
+
 }
+

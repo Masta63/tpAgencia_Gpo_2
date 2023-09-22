@@ -63,9 +63,9 @@ namespace tpAgencia_Gpo_2
 
         private void cerrarSesionToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            Agencia.cerrarSesion();
             this.Close();
             Form1.Close();
-
         }
         private void TransfDelegadoFormUsuario()
         {
