@@ -66,6 +66,7 @@
             // 
             textContrasenia.Location = new Point(150, 66);
             textContrasenia.Name = "textContrasenia";
+            textContrasenia.PasswordChar = '*';
             textContrasenia.Size = new Size(125, 23);
             textContrasenia.TabIndex = 3;
             textContrasenia.TextChanged += textContrasenia_TextChanged;
