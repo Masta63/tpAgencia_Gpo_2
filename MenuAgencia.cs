@@ -24,6 +24,10 @@ namespace tpAgencia_Gpo_2
             InitializeComponent();
             this.Agencia = agencia;
             this.Form1 = form1;
+
+            validacionPermisos();
+
+
             FormUsuario = new FormUsuario(Agencia, form1);
             FormUsuario.MdiParent = form1;
             FormUsuario.TransfEventoFormUsuario += TransfDelegadoFormUsuario;
@@ -40,6 +44,16 @@ namespace tpAgencia_Gpo_2
             buscadorVuelos.MdiParent = form1;
             buscadorVuelos.TransfEventoBuscadorVuelos += TransfDelegadoBuscadorVuelos;
         }
+
+        private void validacionPermisos()
+        {
+            Usuario? ua = Agencia.getUsuarioActual();
+            if (ua != null && !ua.esAdmin)
+            {
+                aBMToolStripMenuItem.Enabled = false;
+            }
+        }
+
 
         private void altasToolStripMenuItem_Click(object sender, EventArgs e)
         {

@@ -33,6 +33,7 @@
             textMail = new TextBox();
             textContrasenia = new TextBox();
             Aceptar = new Button();
+            checkBoxEsAdmin = new CheckBox();
             SuspendLayout();
             // 
             // label1
@@ -79,11 +80,22 @@
             Aceptar.UseVisualStyleBackColor = true;
             Aceptar.Click += Aceptar_Click;
             // 
+            // checkBoxEsAdmin
+            // 
+            checkBoxEsAdmin.AutoSize = true;
+            checkBoxEsAdmin.Location = new Point(12, 119);
+            checkBoxEsAdmin.Name = "checkBoxEsAdmin";
+            checkBoxEsAdmin.Size = new Size(73, 19);
+            checkBoxEsAdmin.TabIndex = 5;
+            checkBoxEsAdmin.Text = "esAdmin";
+            checkBoxEsAdmin.UseVisualStyleBackColor = true;
+            // 
             // Login
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(286, 178);
+            Controls.Add(checkBoxEsAdmin);
             Controls.Add(Aceptar);
             Controls.Add(textContrasenia);
             Controls.Add(textMail);
@@ -103,5 +115,6 @@
         private TextBox textMail;
         private TextBox textContrasenia;
         private Button Aceptar;
+        private CheckBox checkBoxEsAdmin;
     }
 }

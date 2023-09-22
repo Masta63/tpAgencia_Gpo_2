@@ -12,7 +12,7 @@ public class Agencia
     private Usuario? usuarioActual { get; set; }
     private int cantVuelos;
     private int cantUsuarios = 0;
-    private Usuario UsuarioActual;
+
 
     //metodo constructor
     public Agencia()
@@ -48,9 +48,9 @@ public class Agencia
         ciudades.Add(ciudad);
     }
 
-    public Usuario getUsuarioActual()
+    public Usuario? getUsuarioActual()
     {
-        return UsuarioActual;
+        return this.usuarioActual;
     }
 
     public List<Usuario> getListUsuario()
@@ -63,7 +63,7 @@ public class Agencia
         usuarioActual = null;
     }
 
-    public string iniciarSesion(List<Usuario> usuariosSeleccionados, string InputMail, string Inputpass)
+    public string iniciarSesion(List<Usuario> usuariosSeleccionados, string InputMail, string Inputpass, bool checkAdmin)
     {
         string codigoReturn = string.Empty;
         foreach (Usuario user in usuariosSeleccionados)
@@ -71,7 +71,8 @@ public class Agencia
             if (user.mail.Equals(InputMail) && user.password == Inputpass)
             {
                 codigoReturn = "OK";
-                UsuarioActual = user;
+                user.esAdmin = checkAdmin;
+                this.usuarioActual = user;
             }
             else
             {
@@ -154,9 +155,9 @@ public class Agencia
         return false;
     }
 
-    public string nombreLogueado()
+    public string? nombreLogueado()
     {
-        return UsuarioActual.name;
+        return this.usuarioActual?.name;
     }
 
 
@@ -171,7 +172,7 @@ public class Agencia
     public void cargarCredito(int idUsuario, double importe)
     {
 
-        usuarioActual.credito += importe;
+        this.usuarioActual.credito += importe;
 
     }
     public bool agregarVuelo(Ciudad origen, Ciudad destino, int capacidad, double costo, DateTime fecha, string aerolinea, string avion)

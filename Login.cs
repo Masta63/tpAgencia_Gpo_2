@@ -63,7 +63,7 @@ namespace tpAgencia_Gpo_2
             }
             else
             {
-                string respLogin = agencia.iniciarSesion(usuariosSeleccionados, mailInput, Inputpass);
+                string respLogin = agencia.iniciarSesion(usuariosSeleccionados, mailInput, Inputpass, checkBoxEsAdmin.Checked);
                 switch (respLogin)
                 {
                     case "OK":
