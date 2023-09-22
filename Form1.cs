@@ -10,6 +10,7 @@ namespace tpAgencia_Gpo_2
         public Form1()
         {
             InitializeComponent();
+            this.WindowState = FormWindowState.Maximized;
             Agencia = new Agencia();
             Agencia.setUsuario(new Usuario(1, "pepe", "popo", "29111222", "Juan@pepe.com", "1234", true));
             Agencia.setUsuario(new Usuario(2, "juana", "lola", "33333333", "Juana@lola.com", "1234", true));

@@ -21,6 +21,7 @@ namespace tpAgencia_Gpo_2
         public FormUsuario(Agencia agencia, Form1 form1)
         {
             InitializeComponent();
+            this.WindowState = FormWindowState.Maximized;
             this.refAgencia = agencia;
             Bienvenida_usuario.Text = agencia.getUsuarioActual().name + " " + agencia.getUsuarioActual().apellido;
             this.form1 = form1;

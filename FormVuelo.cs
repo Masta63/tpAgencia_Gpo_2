@@ -21,6 +21,7 @@ namespace tpAgencia_Gpo_2
         public FormVuelo(Agencia agencia, Form1 form1)
         {
             InitializeComponent();
+            this.WindowState = FormWindowState.Maximized;
             this.agencia = agencia;
             List<Ciudad> ciudades = agencia.GetCiudades();
             this.Form1 = form1;

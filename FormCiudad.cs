@@ -22,6 +22,7 @@ namespace tpAgencia_Gpo_2
         public FormCiudad(Agencia agencia, Form1 form1)
         {
             InitializeComponent();
+            this.WindowState = FormWindowState.Maximized;
             this.Agencia = agencia;
             this.form1 = form1;
             MostrarDGV();
