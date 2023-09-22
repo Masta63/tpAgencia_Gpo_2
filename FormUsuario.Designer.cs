@@ -382,6 +382,7 @@
             // 
             textBox_buscarUsuario.Location = new Point(233, 178);
             textBox_buscarUsuario.Name = "textBox_buscarUsuario";
+            textBox_buscarUsuario.PlaceholderText = "ingrese dni para buscar";
             textBox_buscarUsuario.Size = new Size(155, 23);
             textBox_buscarUsuario.TabIndex = 42;
             // 

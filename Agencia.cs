@@ -140,6 +140,11 @@ public class Agencia
         return false;
     }
 
+    public string  mostarUsuarioActual()
+    {
+        return usuarioActual.name + " " + usuarioActual.apellido;
+            
+    }
 
 
     //FIN METODOS USUARIO
