@@ -14,9 +14,10 @@ namespace tpAgencia_Gpo_2
     public partial class MenuAgencia : Form
     {
         private Agencia Agencia;
-        FormUsuario FormUsuario;
-        FormVuelo FormVuelo;
+        private FormUsuario FormUsuario;
+        private FormVuelo FormVuelo;
         private Form1 Form1;
+        private FormCiudad formCiudad;
         public MenuAgencia(Agencia agencia, Form1 form1)
         {
             InitializeComponent();
@@ -29,6 +30,10 @@ namespace tpAgencia_Gpo_2
             FormVuelo = new FormVuelo(agencia, form1);
             FormVuelo.MdiParent = form1;
             FormVuelo.TransfEventoFormVuelo += TransfDelegadoFormVuelo;
+
+            formCiudad = new FormCiudad();
+            formCiudad.MdiParent = form1;
+            formCiudad.TransfEventoFormCiudad += TransfDelegadoFormCiudad;
         }
 
         private void altasToolStripMenuItem_Click(object sender, EventArgs e)
@@ -78,6 +83,14 @@ namespace tpAgencia_Gpo_2
             FormVuelo.Show();
         }
 
+        private void TransfDelegadoFormCiudad()
+        {
+            this.MdiParent = Form1;
+            this.Close();
+            formCiudad = new FormCiudad();
+            formCiudad.Show();
+        }
+
         private void usuariosToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.TransfDelegadoFormUsuario();
@@ -86,6 +99,11 @@ namespace tpAgencia_Gpo_2
         private void vuelosToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.TransfDelegadoFormVuelo();
+        }
+
+        private void ciudadesToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            this.TransfDelegadoFormCiudad();
         }
     }
 }
