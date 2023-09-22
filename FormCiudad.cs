@@ -4,35 +4,39 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml.Linq;
+using static System.Windows.Forms.DataFormats;
 
 namespace tpAgencia_Gpo_2
 {
     public partial class FormCiudad : Form
     {
-        List<Ciudad> listaCiudades = new List<Ciudad>();
+        private Agencia Agencia;
         public TransfDelegadoFormCiudad TransfEventoFormCiudad;
-        public FormCiudad()
+        private int ciudadSeleccionada;
+        private Form1 form1;
+        public FormCiudad(Agencia agencia, Form1 form1)
         {
             InitializeComponent();
+            this.Agencia = agencia;
+            this.form1 = form1;
+            MostrarDGV();
         }
 
         private void btnAlta_Click(object sender, EventArgs e)
         {
-            int codigo = Convert.ToInt32(this.numericID.Value);
-            if (listaCiudades.Any(c => c.id == codigo))
-            {
-                MessageBox.Show("Ya existe una ciudad con este codigo asignado, reintente", "Error");
-                return;
-            }
 
             try
             {
-                Ciudad oCiudad = new Ciudad(Convert.ToInt32(numericID.Value), txtNombre.Text);
-                listaCiudades.Add(oCiudad);
+                int id = Agencia.GetCiudades().OrderByDescending(x => x.id).FirstOrDefault().id + 1;
 
+                Ciudad oCiudad = new Ciudad(Convert.ToInt32(id), txtNombre.Text);
+                Agencia.setCiudad(oCiudad);
+                textCiudadId.Text = Convert.ToString(id);
                 //Validacion para verificar que se cargo correctamente la ciudad
                 string mensaje = $"Ciudad: {oCiudad.nombre}\n";
 
@@ -52,25 +56,30 @@ namespace tpAgencia_Gpo_2
         public delegate void TransfDelegadoFormCiudad();
         public void MostrarDGV()
         {
-            this.dgvCiudad.DataSource = null;
-            this.dgvCiudad.DataSource = listaCiudades;
+            dgvCiudad.Rows.Clear();
+            foreach (var itemCiudad in Agencia.GetCiudades())
+            {
+                dgvCiudad.Rows.Add(new string[] { itemCiudad.id.ToString(), itemCiudad.nombre });
+            }
         }
 
         private void btnBaja_Click(object sender, EventArgs e)
         {
             try
             {
-                if (dgvCiudad.SelectedRows.Count > 0)
+                if (Agencia.GetCiudades().Count > 1)
                 {
-                    Ciudad seleccionadoC = (Ciudad)dgvCiudad.CurrentRow.DataBoundItem;
-                    foreach (Ciudad item in listaCiudades.ToArray())
+                    if (Agencia.eliminarCiudad(Convert.ToInt32(ciudadSeleccionada)))
                     {
-                        if (item.id == seleccionadoC.id)
-                        {
-                            listaCiudades.Remove(item);
-                        }
+                        textCiudadId.Text = " ";
+                        txtNombre.Text = "";
+                        MessageBox.Show("Eliminado con éxito");
                     }
+                    else
+                        MessageBox.Show("Problemas al eliminar");
                 }
+                else
+                    MessageBox.Show("Debe seleccionar un usuario");
             }
             catch (Exception ex)
             {
@@ -87,12 +96,13 @@ namespace tpAgencia_Gpo_2
         {
             try
             {
-                if (dgvCiudad.SelectedRows.Count > 0)
+                if (ciudadSeleccionada != -1)
                 {
-                    Ciudad seleccionadoC = (Ciudad)dgvCiudad.CurrentRow.DataBoundItem;
-
-                    seleccionadoC.id = Convert.ToInt32(numericID.Value);
-                    seleccionadoC.nombre = txtNombre.Text;
+                    foreach (Ciudad itemCiudad in Agencia.GetCiudades())
+                    {
+                        if (itemCiudad.id == ciudadSeleccionada)
+                            itemCiudad.nombre = txtNombre.Text;
+                    }
 
                     MostrarDGV();
                 }
@@ -101,6 +111,29 @@ namespace tpAgencia_Gpo_2
             {
                 MessageBox.Show(ex.Message);
             }
+        }
+
+        private void dgvCiudad_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            string id = dgvCiudad[0, e.RowIndex].Value.ToString();
+            string name = dgvCiudad[1, e.RowIndex].Value.ToString();
+            textCiudadId.Text = id;
+            txtNombre.Text = name;
+            int.Parse(id);
+            ciudadSeleccionada = int.Parse(id);
+        }
+
+        private void FormCiudad_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Volver_desde_usuario_Click(object sender, EventArgs e)
+        {
+            this.Close();
+            MenuAgencia MenuAgencia = new MenuAgencia(Agencia, form1);
+            MenuAgencia.MdiParent = form1;
+            MenuAgencia.Show();
         }
     }
 }

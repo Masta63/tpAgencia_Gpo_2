@@ -32,11 +32,14 @@
             btnBaja = new Button();
             btnAlta = new Button();
             txtNombre = new TextBox();
-            numericID = new NumericUpDown();
             label3 = new Label();
             label1 = new Label();
             dgvCiudad = new DataGridView();
-            ((System.ComponentModel.ISupportInitialize)numericID).BeginInit();
+            idLabel = new Label();
+            textCiudadId = new TextBox();
+            Volver_desde_usuario = new Button();
+            id = new DataGridViewTextBoxColumn();
+            nombre = new DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)dgvCiudad).BeginInit();
             SuspendLayout();
             // 
@@ -88,15 +91,6 @@
             txtNombre.Size = new Size(106, 26);
             txtNombre.TabIndex = 12;
             // 
-            // numericID
-            // 
-            numericID.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            numericID.Location = new Point(502, 117);
-            numericID.Margin = new Padding(2);
-            numericID.Name = "numericID";
-            numericID.Size = new Size(126, 26);
-            numericID.TabIndex = 11;
-            // 
             // label3
             // 
             label3.AutoSize = true;
@@ -122,6 +116,7 @@
             // dgvCiudad
             // 
             dgvCiudad.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvCiudad.Columns.AddRange(new DataGridViewColumn[] { id, nombre });
             dgvCiudad.Location = new Point(11, 73);
             dgvCiudad.Margin = new Padding(2);
             dgvCiudad.Name = "dgvCiudad";
@@ -129,23 +124,67 @@
             dgvCiudad.RowTemplate.Height = 33;
             dgvCiudad.Size = new Size(438, 193);
             dgvCiudad.TabIndex = 8;
+            dgvCiudad.CellContentClick += dgvCiudad_CellContentClick;
+            // 
+            // idLabel
+            // 
+            idLabel.AutoSize = true;
+            idLabel.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            idLabel.Location = new Point(507, 122);
+            idLabel.Margin = new Padding(2, 0, 2, 0);
+            idLabel.Name = "idLabel";
+            idLabel.Size = new Size(0, 20);
+            idLabel.TabIndex = 16;
+            // 
+            // textCiudadId
+            // 
+            textCiudadId.Enabled = false;
+            textCiudadId.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            textCiudadId.Location = new Point(483, 119);
+            textCiudadId.Margin = new Padding(2);
+            textCiudadId.Name = "textCiudadId";
+            textCiudadId.Size = new Size(106, 26);
+            textCiudadId.TabIndex = 17;
+            // 
+            // Volver_desde_usuario
+            // 
+            Volver_desde_usuario.BackColor = Color.FromArgb(192, 255, 255);
+            Volver_desde_usuario.Location = new Point(12, 317);
+            Volver_desde_usuario.Name = "Volver_desde_usuario";
+            Volver_desde_usuario.Size = new Size(75, 23);
+            Volver_desde_usuario.TabIndex = 18;
+            Volver_desde_usuario.Text = "Volver";
+            Volver_desde_usuario.UseVisualStyleBackColor = false;
+            Volver_desde_usuario.Click += Volver_desde_usuario_Click;
+            // 
+            // id
+            // 
+            id.HeaderText = "id";
+            id.Name = "id";
+            // 
+            // nombre
+            // 
+            nombre.HeaderText = "nombre";
+            nombre.Name = "nombre";
+            nombre.Width = 200;
             // 
             // FormCiudad
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(848, 450);
+            Controls.Add(Volver_desde_usuario);
+            Controls.Add(textCiudadId);
+            Controls.Add(idLabel);
             Controls.Add(btnModificar);
             Controls.Add(btnBaja);
             Controls.Add(btnAlta);
             Controls.Add(txtNombre);
-            Controls.Add(numericID);
             Controls.Add(label3);
             Controls.Add(label1);
             Controls.Add(dgvCiudad);
             Name = "FormCiudad";
             Text = "FormCiudad";
-            ((System.ComponentModel.ISupportInitialize)numericID).EndInit();
             ((System.ComponentModel.ISupportInitialize)dgvCiudad).EndInit();
             ResumeLayout(false);
             PerformLayout();
@@ -157,9 +196,13 @@
         private Button btnBaja;
         private Button btnAlta;
         private TextBox txtNombre;
-        private NumericUpDown numericID;
         private Label label3;
         private Label label1;
         private DataGridView dgvCiudad;
+        private Label idLabel;
+        private TextBox textCiudadId;
+        private Button Volver_desde_usuario;
+        private DataGridViewTextBoxColumn id;
+        private DataGridViewTextBoxColumn nombre;
     }
 }

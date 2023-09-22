@@ -31,7 +31,7 @@ namespace tpAgencia_Gpo_2
             FormVuelo.MdiParent = form1;
             FormVuelo.TransfEventoFormVuelo += TransfDelegadoFormVuelo;
 
-            formCiudad = new FormCiudad();
+            formCiudad = new FormCiudad(agencia, form1);
             formCiudad.MdiParent = form1;
             formCiudad.TransfEventoFormCiudad += TransfDelegadoFormCiudad;
         }
@@ -87,7 +87,7 @@ namespace tpAgencia_Gpo_2
         {
             this.MdiParent = Form1;
             this.Close();
-            formCiudad = new FormCiudad();
+            formCiudad = new FormCiudad(Agencia, Form1);
             formCiudad.Show();
         }
 

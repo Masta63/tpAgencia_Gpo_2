@@ -43,6 +43,11 @@ public class Agencia
         listUsuarios.Add(usuario);
     }
 
+    public void setCiudad(Ciudad ciudad)
+    {
+        ciudades.Add(ciudad);
+    }
+
     public Usuario getUsuarioActual()
     {
         return UsuarioActual;
@@ -150,7 +155,18 @@ public class Agencia
         return false;
     }
 
-
+    public bool eliminarCiudad(int id)
+    {
+        foreach (Ciudad itemCiudad in ciudades)
+        {
+            if (itemCiudad.id == id)
+            {
+                ciudades.Remove(itemCiudad);
+                return true;
+            }
+        }
+        return false;
+    }
 
     public string nombreLogueado()
     {
@@ -221,9 +237,6 @@ public class Agencia
     //Método solo para las pruebas de vuelo, hay que borrarlo y agregar el que pase Nati
     public List<Ciudad> GetCiudades()
     {
-        ciudades.Add(new Ciudad(1, "Bariloche"));
-        ciudades.Add(new Ciudad(2, "Mendoza"));
-        ciudades.Add(new Ciudad(3, "Buenos Aires"));
         return ciudades.ToList();
     }
 

@@ -15,6 +15,10 @@ namespace tpAgencia_Gpo_2
             Agencia.setUsuario(new Usuario(2, "juana", "lola", "33333333", "Juana@lola.com", "1234", true));
             Agencia.setUsuario(new Usuario(3, "pablo", "lopez", "22222222", "Pablo@lopez.com", "1234", true));
 
+            Agencia.setCiudad(new Ciudad(1, "Bariloche"));
+            Agencia.setCiudad(new Ciudad(2, "Mendoza"));
+            Agencia.setCiudad(new Ciudad(3, "Buenos Aires"));
+
             Login = new Login(Agencia);
             Login.MdiParent = this;
             Login.TransfEventoLogin += TransfDelegadoLogin;
