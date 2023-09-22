@@ -116,12 +116,19 @@ namespace tpAgencia_Gpo_2
 
         private void dgvCiudad_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            string id = dgvCiudad[0, e.RowIndex].Value.ToString();
-            string name = dgvCiudad[1, e.RowIndex].Value.ToString();
-            textCiudadId.Text = id;
-            txtNombre.Text = name;
-            int.Parse(id);
-            ciudadSeleccionada = int.Parse(id);
+            try
+            {
+                string id = dgvCiudad[0, e.RowIndex].Value.ToString();
+                string name = dgvCiudad[1, e.RowIndex].Value.ToString();
+                textCiudadId.Text = id;
+                txtNombre.Text = name;
+                int.Parse(id);
+                ciudadSeleccionada = int.Parse(id);
+            }
+            catch(Exception)
+            {
+
+            }
         }
 
         private void FormCiudad_Load(object sender, EventArgs e)

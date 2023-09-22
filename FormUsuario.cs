@@ -109,23 +109,28 @@ namespace tpAgencia_Gpo_2
 
         private void dataGridView_usuarios_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            string id = dataGridView_usuarios[0, e.RowIndex].Value.ToString();
-            string nombre = dataGridView_usuarios[1, e.RowIndex].Value.ToString();
-            string apellido = dataGridView_usuarios[2, e.RowIndex].Value.ToString();
-            string dni = dataGridView_usuarios[3, e.RowIndex].Value.ToString();
-            string email = dataGridView_usuarios[4, e.RowIndex].Value.ToString();
-            string resHotel = dataGridView_usuarios[5, e.RowIndex].Value.ToString();
-            string resVuelo = dataGridView_usuarios[6, e.RowIndex].Value.ToString();
-            textBox_id.Text = id;
-            textBox_nombre.Text = nombre;
-            textBox_apellido.Text = apellido;
-            textBox_email.Text = email;
-            textBox_dni.Text = dni;
-            textBox_resHotel.Text = resHotel;
-            textBox_resVuelo.Text = resVuelo;
+            try
+            {
+                string id = dataGridView_usuarios[0, e.RowIndex].Value.ToString();
+                string nombre = dataGridView_usuarios[1, e.RowIndex].Value.ToString();
+                string apellido = dataGridView_usuarios[2, e.RowIndex].Value.ToString();
+                string dni = dataGridView_usuarios[3, e.RowIndex].Value.ToString();
+                string email = dataGridView_usuarios[4, e.RowIndex].Value.ToString();
+                string resHotel = dataGridView_usuarios[5, e.RowIndex].Value.ToString();
+                string resVuelo = dataGridView_usuarios[6, e.RowIndex].Value.ToString();
+                textBox_id.Text = id;
+                textBox_nombre.Text = nombre;
+                textBox_apellido.Text = apellido;
+                textBox_email.Text = email;
+                textBox_dni.Text = dni;
+                textBox_resHotel.Text = resHotel;
+                textBox_resVuelo.Text = resVuelo;
 
-            usuarioSeleccionado = int.Parse(id);
-
+                usuarioSeleccionado = int.Parse(id);
+            }
+            catch(Exception)
+            {
+            }
         }
     }
 }

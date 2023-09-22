@@ -20,6 +20,7 @@ namespace tpAgencia_Gpo_2
         public BuscadorVuelos(Agencia agencia, Form1 form1)
         {
             InitializeComponent();
+            this.WindowState = FormWindowState.Maximized;
             this.agencia = agencia;
             this.form1 = form1;
             List<Ciudad> ciudades = agencia.GetCiudades();

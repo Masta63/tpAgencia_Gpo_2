@@ -35,11 +35,12 @@
             label3 = new Label();
             label1 = new Label();
             dgvCiudad = new DataGridView();
+            id = new DataGridViewTextBoxColumn();
+            nombre = new DataGridViewTextBoxColumn();
             idLabel = new Label();
             textCiudadId = new TextBox();
             Volver_desde_usuario = new Button();
-            id = new DataGridViewTextBoxColumn();
-            nombre = new DataGridViewTextBoxColumn();
+            bienvenida = new Label();
             ((System.ComponentModel.ISupportInitialize)dgvCiudad).BeginInit();
             SuspendLayout();
             // 
@@ -115,6 +116,7 @@
             // 
             // dgvCiudad
             // 
+            dgvCiudad.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgvCiudad.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvCiudad.Columns.AddRange(new DataGridViewColumn[] { id, nombre });
             dgvCiudad.Location = new Point(11, 73);
@@ -125,6 +127,16 @@
             dgvCiudad.Size = new Size(438, 193);
             dgvCiudad.TabIndex = 8;
             dgvCiudad.CellContentClick += dgvCiudad_CellContentClick;
+            // 
+            // id
+            // 
+            id.HeaderText = "id";
+            id.Name = "id";
+            // 
+            // nombre
+            // 
+            nombre.HeaderText = "nombre";
+            nombre.Name = "nombre";
             // 
             // idLabel
             // 
@@ -157,22 +169,22 @@
             Volver_desde_usuario.UseVisualStyleBackColor = false;
             Volver_desde_usuario.Click += Volver_desde_usuario_Click;
             // 
-            // id
+            // bienvenida
             // 
-            id.HeaderText = "id";
-            id.Name = "id";
-            // 
-            // nombre
-            // 
-            nombre.HeaderText = "nombre";
-            nombre.Name = "nombre";
-            nombre.Width = 200;
+            bienvenida.AutoSize = true;
+            bienvenida.Font = new Font("Segoe UI", 19F, FontStyle.Bold, GraphicsUnit.Point);
+            bienvenida.Location = new Point(24, 18);
+            bienvenida.Name = "bienvenida";
+            bienvenida.Size = new Size(139, 36);
+            bienvenida.TabIndex = 34;
+            bienvenida.Text = "Ciudades: ";
             // 
             // FormCiudad
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(848, 450);
+            Controls.Add(bienvenida);
             Controls.Add(Volver_desde_usuario);
             Controls.Add(textCiudadId);
             Controls.Add(idLabel);
@@ -204,5 +216,6 @@
         private Button Volver_desde_usuario;
         private DataGridViewTextBoxColumn id;
         private DataGridViewTextBoxColumn nombre;
+        private Label bienvenida;
     }
 }
