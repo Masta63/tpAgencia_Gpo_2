@@ -88,10 +88,11 @@ namespace tpAgencia_Gpo_2
             //agrego
             foreach (Usuario us in refAgencia.getUsuarios())//para cada usuario en el clon de listado de usuarios de mi referencia de agencia
             {
-                dataGridView_usuarios.Rows.Add(new string[] { us.id.ToString(), us.name, us.apellido, us.dni.ToString(), us.mail, us.misReservasHoteles.ToString(), us.misReservasVuelo.ToString() });
+                dataGridView_usuarios.Rows.Add(new string[] { us.id.ToString(), us.name, us.apellido, us.dni.ToString(), us.credito.ToString(), us.mail, us.misReservasHoteles.ToString(), us.misReservasVuelo.ToString() });
 
                 textBox_id.Text = " ";
                 textBox_nombre.Text = " ";
+                textBox_credito.Text = " ";
                 textBox_apellido.Text = " ";
                 textBox_email.Text = " ";
                 textBox_dni.Text = " ";
@@ -112,14 +113,16 @@ namespace tpAgencia_Gpo_2
             string nombre = dataGridView_usuarios[1, e.RowIndex].Value.ToString();
             string apellido = dataGridView_usuarios[2, e.RowIndex].Value.ToString();
             string dni = dataGridView_usuarios[3, e.RowIndex].Value.ToString();
-            string email = dataGridView_usuarios[4, e.RowIndex].Value.ToString();
-            string resHotel = dataGridView_usuarios[5, e.RowIndex].Value.ToString();
-            string resVuelo = dataGridView_usuarios[6, e.RowIndex].Value.ToString();
+            string credito = dataGridView_usuarios[4, e.RowIndex].Value.ToString();
+            string email = dataGridView_usuarios[5, e.RowIndex].Value.ToString();
+            string resHotel = dataGridView_usuarios[6, e.RowIndex].Value.ToString();
+            string resVuelo = dataGridView_usuarios[7, e.RowIndex].Value.ToString();
             textBox_id.Text = id;
             textBox_nombre.Text = nombre;
             textBox_apellido.Text = apellido;
             textBox_email.Text = email;
             textBox_dni.Text = dni;
+            textBox_credito.Text = credito;
             textBox_resHotel.Text = resHotel;
             textBox_resVuelo.Text = resVuelo;
 
@@ -128,7 +131,29 @@ namespace tpAgencia_Gpo_2
 
         }
 
-        private void btn_modificarCredito_Click(object sender, EventArgs e)
+
+        private void textBox_credito_TextChanged(object sender, EventArgs e)
+        {
+            foreach (Usuario us in refAgencia.getUsuarios())
+            {
+                textBox_credito.Text = us.credito.ToString();
+            }
+        }
+
+        private void btn_agregarCredito_Click(object sender, EventArgs e)
+        {
+            if (usuarioSeleccionado != -1)
+            {
+                if (refAgencia.agregarCredito(usuarioSeleccionado, double.Parse(textBox_credito.Text)))
+                    MessageBox.Show("Modificado con éxito");
+                else
+                    MessageBox.Show("Problemas al modificar");
+            }
+            else
+                MessageBox.Show("Debe seleccionar un usuario");
+        }
+
+        private void btn_modificarCredito_Click_1(object sender, EventArgs e)
         {
             if (usuarioSeleccionado != -1)
             {
@@ -139,14 +164,6 @@ namespace tpAgencia_Gpo_2
             }
             else
                 MessageBox.Show("Debe seleccionar un usuario");
-        }
-
-        private void textBox_credito_TextChanged(object sender, EventArgs e)
-        {
-            foreach (Usuario us in refAgencia.getUsuarios())
-            {
-                textBox_credito.Text = us.credito.ToString();
-            }
         }
     }
 }
