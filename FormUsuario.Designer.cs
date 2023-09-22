@@ -49,6 +49,8 @@
             button_Modificar = new Button();
             button_Eliminar = new Button();
             dataGridView_usuarios = new DataGridView();
+            bienvenida = new Label();
+            Bienvenida_usuario = new Label();
             id = new DataGridViewTextBoxColumn();
             nombre = new DataGridViewTextBoxColumn();
             apellido = new DataGridViewTextBoxColumn();
@@ -255,6 +257,23 @@
             dataGridView_usuarios.TabIndex = 32;
             dataGridView_usuarios.CellContentClick += dataGridView_usuarios_CellContentClick;
             dataGridView_usuarios.CellDoubleClick += dataGridView_usuarios_CellContentClick;
+            // 
+            // bienvenida
+            // 
+            bienvenida.AutoSize = true;
+            bienvenida.Location = new Point(31, 42);
+            bienvenida.Name = "bienvenida";
+            bienvenida.Size = new Size(72, 15);
+            bienvenida.TabIndex = 33;
+            bienvenida.Text = "Bienvenido: ";
+            // 
+            // Bienvenida_usuario
+            // 
+            Bienvenida_usuario.AutoSize = true;
+            Bienvenida_usuario.Location = new Point(126, 42);
+            Bienvenida_usuario.Name = "Bienvenida_usuario";
+            Bienvenida_usuario.Size = new Size(0, 15);
+            Bienvenida_usuario.TabIndex = 34;
             // 
             // id
             // 
