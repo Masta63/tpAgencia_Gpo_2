@@ -225,6 +225,22 @@ public class Agencia
     {
         return ciudades.ToList();
     }
+    // Reporte de vuelos
+    public List<Vuelo> buscarVuelos(Ciudad origen, Ciudad destino,  DateTime fecha, int cantidadPax)
+    {
+        List<Vuelo> vuelosDisponibles = new List<Vuelo>();
+        foreach(Vuelo vuelo in vuelos) 
+        {
+
+            if(vuelo.origen.nombre == origen.nombre && vuelo.destino.nombre == destino.nombre && vuelo.fecha.Date == fecha.Date && vuelo.capacidad >= cantidadPax)
+            {
+                vuelosDisponibles.Add(vuelo);
+            }
+            
+        }
+        return vuelosDisponibles.ToList();
+
+    }
 
     //FIN METODOS DE VUELO
 }

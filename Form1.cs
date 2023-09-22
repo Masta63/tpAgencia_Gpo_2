@@ -24,6 +24,11 @@ namespace tpAgencia_Gpo_2
             Login.TransfEventoLogin += TransfDelegadoLogin;
             Login.Show();
 
+            //Vuelos hardcodeados
+
+            Agencia.agregarVuelo(Agencia.GetCiudades()[0], Agencia.GetCiudades()[1], 20, 50000, DateTime.Now, "AA", "Airbus");
+            Agencia.agregarVuelo(Agencia.GetCiudades()[1], Agencia.GetCiudades()[2], 50, 100000, DateTime.Now, "AA", "Airbus320");
+
         }
 
 
