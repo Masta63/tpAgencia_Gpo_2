@@ -144,7 +144,7 @@ public class Agencia
 
     public bool modificarCredito(int id, double monto)
     {
-        foreach (Usuario user in usuarios)
+        foreach (Usuario user in listUsuarios)
         {
             if (user.id == id)
             {
@@ -157,7 +157,7 @@ public class Agencia
 
     public bool agregarCredito(int id, double monto)
     {
-        foreach (Usuario user in usuarios)
+        foreach (Usuario user in listUsuarios)
         {
             if (user.id == id)
             {
