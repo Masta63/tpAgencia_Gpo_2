@@ -1,6 +1,6 @@
 ﻿namespace tpAgencia_Gpo_2
 {
-    partial class Form2
+    partial class FormReporteHoteles
     {
         /// <summary>
         /// Required designer variable.

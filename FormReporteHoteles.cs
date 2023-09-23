@@ -12,9 +12,9 @@ using System.Windows.Forms;
 
 namespace tpAgencia_Gpo_2
 {
-    public partial class Form2 : Form
+    public partial class FormReporteHoteles : Form
     {
-        public Form2()
+        public FormReporteHoteles()
         {
             InitializeComponent();
         }
