@@ -23,8 +23,20 @@ namespace tpAgencia_Gpo_2
             InitializeComponent();
             this.WindowState = FormWindowState.Maximized;
             this.refAgencia = agencia;
+
+            //usuario = new Usuario("juan", "garcia", "22333444", "juan@mail.com");
+            //agencia.agregarUsuarioobjet(usuario);
+            //usuario = new Usuario("pedro", "pascal", "33444555", "pedro@mail.com");
+            //agencia.agregarUsuarioobjet(usuario);
+            //usuario = new Usuario("florencia", "pereyra", "3555444", "flor@mail.com");
+            //agencia.agregarUsuarioobjet(usuario);
+            //cuando este iniciada la sesion y el usuario que inicio se guarde en la variable usuario actual deberia mostrarse el nombre y apellido
+            //Bienvenida_usuario.Text = refAgencia.mostarUsuarioActual();
+
+
             Bienvenida_usuario.Text = agencia.getUsuarioActual().name + " " + agencia.getUsuarioActual().apellido;
             this.form1 = form1;
+
         }
 
         private void FormUsuario_Load(object sender, EventArgs e)
@@ -87,15 +99,19 @@ namespace tpAgencia_Gpo_2
             //agrego
             foreach (Usuario us in refAgencia.getUsuarios())//para cada usuario en el clon de listado de usuarios de mi referencia de agencia
             {
-                dataGridView_usuarios.Rows.Add(new string[] { us.id.ToString(), us.name, us.apellido, us.dni.ToString(), us.mail, "falta las reservas de hoteles", "falta las reservas de hoteles" });
+
+                dataGridView_usuarios.Rows.Add(new string[] { us.id.ToString(), us.name, us.apellido, us.dni.ToString(), us.credito.ToString(), us.mail, us.misReservasHoteles.ToString(), us.misReservasVuelo.ToString() });
+
 
                 textBox_id.Text = " ";
                 textBox_nombre.Text = " ";
+                textBox_credito.Text = " ";
                 textBox_apellido.Text = " ";
                 textBox_email.Text = " ";
                 textBox_dni.Text = " ";
                 textBox_resHotel.Text = " ";
                 textBox_resVuelo.Text = " ";
+
             }
         }
 
@@ -109,27 +125,100 @@ namespace tpAgencia_Gpo_2
 
         private void dataGridView_usuarios_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
+
+
+
             try
             {
-                string? id = dataGridView_usuarios[0, e.RowIndex]?.Value?.ToString();
-                string? nombre = dataGridView_usuarios[1, e.RowIndex]?.Value?.ToString();
-                string? apellido = dataGridView_usuarios[2, e.RowIndex]?.Value?.ToString();
-                string? dni = dataGridView_usuarios[3, e.RowIndex]?.Value?.ToString();
-                string? email = dataGridView_usuarios[4, e.RowIndex]?.Value?.ToString();
-                string? resHotel = dataGridView_usuarios[5, e.RowIndex]?.Value?.ToString();
-                string? resVuelo = dataGridView_usuarios[6, e.RowIndex]?.Value?.ToString();
-                textBox_id.Text = id;
-                textBox_nombre.Text = nombre;
-                textBox_apellido.Text = apellido;
-                textBox_email.Text = email;
-                textBox_dni.Text = dni;
-                textBox_resHotel.Text = resHotel;
-                textBox_resVuelo.Text = resVuelo;
+            string id = dataGridView_usuarios[0, e.RowIndex].Value.ToString();
+            string nombre = dataGridView_usuarios[1, e.RowIndex].Value.ToString();
+            string apellido = dataGridView_usuarios[2, e.RowIndex].Value.ToString();
+            string dni = dataGridView_usuarios[3, e.RowIndex].Value.ToString();
+            string credito = dataGridView_usuarios[4, e.RowIndex].Value.ToString();
+            string email = dataGridView_usuarios[5, e.RowIndex].Value.ToString();
+            string resHotel = dataGridView_usuarios[6, e.RowIndex].Value.ToString();
+            string resVuelo = dataGridView_usuarios[7, e.RowIndex].Value.ToString();
+            textBox_id.Text = id;
+            textBox_nombre.Text = nombre;
+            textBox_apellido.Text = apellido;
+            textBox_email.Text = email;
+            textBox_dni.Text = dni;
+            textBox_credito.Text = credito;
+            textBox_resHotel.Text = resHotel;
+            textBox_resVuelo.Text = resVuelo;
 
-                usuarioSeleccionado = int.Parse(id);
+
+            usuarioSeleccionado = int.Parse(id);
             }
             catch(Exception)
             {
+            }
+
+        }
+
+
+        private void textBox_credito_TextChanged(object sender, EventArgs e)
+        {
+            foreach (Usuario us in refAgencia.getUsuarios())
+            {
+                textBox_credito.Text = us.credito.ToString();
+            }
+        }
+
+        private void btn_agregarCredito_Click(object sender, EventArgs e)
+        {
+            if (usuarioSeleccionado != -1)
+            {
+                if (refAgencia.agregarCredito(usuarioSeleccionado, double.Parse(textBox_credito.Text)))
+                    MessageBox.Show("Modificado con éxito");
+                else
+                    MessageBox.Show("Problemas al modificar");
+            }
+            else
+                MessageBox.Show("Debe seleccionar un usuario");
+        }
+
+        private void btn_modificarCredito_Click_1(object sender, EventArgs e)
+        {
+            if (usuarioSeleccionado != -1)
+            {
+                if (refAgencia.modificarCredito(usuarioSeleccionado, double.Parse(textBox_credito.Text)))
+                    MessageBox.Show("Modificado con éxito");
+                else
+                    MessageBox.Show("Problemas al modificar");
+            }
+            else
+                MessageBox.Show("Debe seleccionar un usuario");
+        }
+
+        private void btn_buscarUsuario_Click(object sender, EventArgs e)
+        {
+
+            string dniABuscar = textBox_buscarUsuario.Text;
+
+            BuscarUsuarioPorDNI(dniABuscar);
+        }
+
+        private void BuscarUsuarioPorDNI(string dni)
+        {
+            // Lógica de búsqueda de usuario por DNI
+            bool usuarioEncontrado = false;
+
+            foreach (Usuario us in refAgencia.getUsuarios())
+            {
+                if (us.dni == dni)
+                {
+                    dataGridView_usuarios.Rows.Clear();
+                    dataGridView_usuarios.Rows.Add(new string[] { us.id.ToString(), us.name, us.apellido, us.dni.ToString(), us.credito.ToString(), us.mail, us.misReservasHoteles.ToString(), us.misReservasVuelo.ToString() });
+
+                    usuarioEncontrado = true;
+                    break; // Como se encontró el usuario, podemos salir del bucle.
+                }
+            }
+
+            if (!usuarioEncontrado)
+            {
+                MessageBox.Show("Debe introducir un DNI de usuario válido");
             }
         }
     }

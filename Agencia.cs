@@ -142,6 +142,32 @@ public class Agencia
         return false;
     }
 
+    public bool modificarCredito(int id, double monto)
+    {
+        foreach (Usuario user in usuarios)
+        {
+            if (user.id == id)
+            {
+                user.credito = monto;
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public bool agregarCredito(int id, double monto)
+    {
+        foreach (Usuario user in usuarios)
+        {
+            if (user.id == id)
+            {
+                user.credito += monto;
+                return true;
+            }
+        }
+        return false;
+    }
+
     public bool eliminarCiudad(int id)
     {
         foreach (Ciudad itemCiudad in ciudades)
@@ -149,15 +175,18 @@ public class Agencia
             if (itemCiudad.id == id)
             {
                 ciudades.Remove(itemCiudad);
+
                 return true;
             }
         }
         return false;
     }
 
+
     public string? nombreLogueado()
     {
         return this.usuarioActual?.name;
+
     }
 
 

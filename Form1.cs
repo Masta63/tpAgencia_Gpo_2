@@ -3,6 +3,8 @@ namespace tpAgencia_Gpo_2
     public partial class Form1 : Form
     {
 
+
+
         private Agencia Agencia;
         private Login Login;
         private MenuAgencia MenuAgencia;
@@ -30,17 +32,24 @@ namespace tpAgencia_Gpo_2
             Agencia.agregarVuelo(Agencia.GetCiudades()[0], Agencia.GetCiudades()[1], 20, 50000, DateTime.Now, "AA", "Airbus");
             Agencia.agregarVuelo(Agencia.GetCiudades()[1], Agencia.GetCiudades()[2], 50, 100000, DateTime.Now, "AA", "Airbus320");
 
+
+            //hijoVuelo = new FormVuelo(agencia);
+            //hijoVuelo.MdiParent = this;
+            ////hijoVuelo.TransfEvento += TransfDelegado;
+            //hijoVuelo.Show();
         }
+
 
 
         private void TransfDelegadoLogin()
         {
-            MessageBox.Show("Log correcto, Usuario: " + Agencia.nombreLogueado(), "Inicio de Sesión", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show("Log correcto, Usuario: " + Agencia.nombreLogueado(), "Inicio de SesiÃ³n", MessageBoxButtons.OK, MessageBoxIcon.Information);
             Login.Close();
             MenuAgencia = new MenuAgencia(Agencia, this);
             MenuAgencia.MdiParent = this;
             MenuAgencia.Show();
         }
 
+
     }
-} 
+}
