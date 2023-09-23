@@ -22,7 +22,7 @@ namespace tpAgencia_Gpo_2
         //Constructores
         public Ciudad(int id, string nombre)
         {
-            id = id++;
+            this.id = id;
             this.nombre = nombre;
             listHoteles = new List<Hotel>();
             listVuelos = new List<Vuelo>();

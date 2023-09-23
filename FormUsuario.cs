@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using static tpAgencia_Gpo_2.Login;
 
 namespace tpAgencia_Gpo_2
 {
@@ -15,20 +16,26 @@ namespace tpAgencia_Gpo_2
     {
         private Agencia refAgencia;
         private int usuarioSeleccionado;
-        private Usuario usuario;
-
-        public FormUsuario(Agencia agencia)
+        public TransfDelegadoFormUsuario TransfEventoFormUsuario;
+        private Form1 form1;
+        public FormUsuario(Agencia agencia, Form1 form1)
         {
             InitializeComponent();
+            this.WindowState = FormWindowState.Maximized;
             this.refAgencia = agencia;
-            usuario = new Usuario("juan", "garcia", "22333444", "juan@mail.com");
-            agencia.agregarUsuarioobjet(usuario);
-            usuario = new Usuario("pedro", "pascal", "33444555", "pedro@mail.com");
-            agencia.agregarUsuarioobjet(usuario);
-            usuario = new Usuario("florencia", "pereyra", "3555444", "flor@mail.com");
-            agencia.agregarUsuarioobjet(usuario);
+
+            //usuario = new Usuario("juan", "garcia", "22333444", "juan@mail.com");
+            //agencia.agregarUsuarioobjet(usuario);
+            //usuario = new Usuario("pedro", "pascal", "33444555", "pedro@mail.com");
+            //agencia.agregarUsuarioobjet(usuario);
+            //usuario = new Usuario("florencia", "pereyra", "3555444", "flor@mail.com");
+            //agencia.agregarUsuarioobjet(usuario);
             //cuando este iniciada la sesion y el usuario que inicio se guarde en la variable usuario actual deberia mostrarse el nombre y apellido
             //Bienvenida_usuario.Text = refAgencia.mostarUsuarioActual();
+
+
+            Bienvenida_usuario.Text = agencia.getUsuarioActual().name + " " + agencia.getUsuarioActual().apellido;
+            this.form1 = form1;
 
         }
 
@@ -36,6 +43,7 @@ namespace tpAgencia_Gpo_2
         {
 
         }
+        public delegate void TransfDelegadoFormUsuario();
 
         private void button_Agregar_Click(object sender, EventArgs e)
         {
@@ -91,7 +99,9 @@ namespace tpAgencia_Gpo_2
             //agrego
             foreach (Usuario us in refAgencia.getUsuarios())//para cada usuario en el clon de listado de usuarios de mi referencia de agencia
             {
+
                 dataGridView_usuarios.Rows.Add(new string[] { us.id.ToString(), us.name, us.apellido, us.dni.ToString(), us.credito.ToString(), us.mail, us.misReservasHoteles.ToString(), us.misReservasVuelo.ToString() });
+
 
                 textBox_id.Text = " ";
                 textBox_nombre.Text = " ";
@@ -107,11 +117,19 @@ namespace tpAgencia_Gpo_2
 
         private void Volver_desde_usuario_Click(object sender, EventArgs e)
         {
-            //aca va el metodo delegado para navegar entre paginas
+            this.Close();
+            MenuAgencia MenuAgencia = new MenuAgencia(refAgencia, form1);
+            MenuAgencia.MdiParent = form1;
+            MenuAgencia.Show();
         }
 
         private void dataGridView_usuarios_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
+
+
+
+            try
+            {
             string id = dataGridView_usuarios[0, e.RowIndex].Value.ToString();
             string nombre = dataGridView_usuarios[1, e.RowIndex].Value.ToString();
             string apellido = dataGridView_usuarios[2, e.RowIndex].Value.ToString();
@@ -131,6 +149,10 @@ namespace tpAgencia_Gpo_2
 
 
             usuarioSeleccionado = int.Parse(id);
+            }
+            catch(Exception)
+            {
+            }
 
         }
 

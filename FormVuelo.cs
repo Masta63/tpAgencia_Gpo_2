@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.DataFormats;
 
 namespace tpAgencia_Gpo_2
 {
@@ -14,14 +15,16 @@ namespace tpAgencia_Gpo_2
     {
         private Agencia agencia;
         private int vueloSeleccionado;
+        public TransfDelegadoFormVuelo TransfEventoFormVuelo;
+        private Form1 Form1;
 
-
-
-        public FormVuelo(Agencia agencia)
+        public FormVuelo(Agencia agencia, Form1 form1)
         {
             InitializeComponent();
+            this.WindowState = FormWindowState.Maximized;
             this.agencia = agencia;
             List<Ciudad> ciudades = agencia.GetCiudades();
+            this.Form1 = form1;
             foreach (Ciudad c in ciudades)
             {
                 comboBox1.Items.Add(c.nombre);
@@ -58,27 +61,33 @@ namespace tpAgencia_Gpo_2
 
             }
         }
-
+        public delegate void TransfDelegadoFormVuelo();
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            string id = dataGridView1[0, e.RowIndex].Value.ToString();
-            string Origen = dataGridView1[1, e.RowIndex].Value.ToString();
-            string Destino = dataGridView1[2, e.RowIndex].Value.ToString();
-            string Capacidad = dataGridView1[3, e.RowIndex].Value.ToString();
-            string Costo = dataGridView1[4, e.RowIndex].Value.ToString();
-            string Fecha = dataGridView1[5, e.RowIndex].Value.ToString();
-            string Aerolinea = dataGridView1[6, e.RowIndex].Value.ToString();
-            string Avion = dataGridView1[7, e.RowIndex].Value.ToString();
-            textBox8.Text = id;
-            comboBox1.Text = Origen;
-            comboBox2.Text = Destino;
-            textBox3.Text = Capacidad;
-            textBox4.Text = Costo;
-            dateTimePicker1.Text = Fecha;
-            textBox6.Text = Aerolinea;
-            textBox7.Text = Avion;
+            try
+            {
+                string? id = dataGridView1[0, e.RowIndex]?.Value?.ToString();
+                string? Origen = dataGridView1[1, e.RowIndex]?.Value?.ToString();
+                string? Destino = dataGridView1[2, e.RowIndex]?.Value?.ToString();
+                string? Capacidad = dataGridView1[3, e.RowIndex]?.Value?.ToString();
+                string? Costo = dataGridView1[4, e.RowIndex]?.Value?.ToString();
+                string? Fecha = dataGridView1[5, e.RowIndex]?.Value?.ToString();
+                string? Aerolinea = dataGridView1[6, e.RowIndex]?.Value?.ToString();
+                string? Avion = dataGridView1[7, e.RowIndex]?.Value?.ToString();
+                textBox8.Text = id;
+                comboBox1.Text = Origen;
+                comboBox2.Text = Destino;
+                textBox3.Text = Capacidad;
+                textBox4.Text = Costo;
+                dateTimePicker1.Text = Fecha;
+                textBox6.Text = Aerolinea;
+                textBox7.Text = Avion;
 
-            vueloSeleccionado = int.Parse(id);
+                vueloSeleccionado = int.Parse(id);
+            }
+            catch(Exception)
+            {
+            }
 
         }
 
@@ -172,6 +181,14 @@ namespace tpAgencia_Gpo_2
             }
             else
                 MessageBox.Show("Debe seleccionar un vuelo");
+        }
+
+        private void Volver_desde_usuario_Click(object sender, EventArgs e)
+        {
+            this.Close();
+            MenuAgencia MenuAgencia = new MenuAgencia(agencia, Form1);
+            MenuAgencia.MdiParent = Form1;
+            MenuAgencia.Show();
         }
     }
 }

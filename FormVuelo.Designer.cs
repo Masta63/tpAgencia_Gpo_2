@@ -58,6 +58,7 @@
             dateTimePicker1 = new DateTimePicker();
             comboBox1 = new ComboBox();
             comboBox2 = new ComboBox();
+            Volver_desde_usuario = new Button();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
             // 
@@ -65,7 +66,7 @@
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Cascadia Code", 26F, FontStyle.Bold, GraphicsUnit.Point);
-            label1.Location = new Point(857, 9);
+            label1.Location = new Point(857, 8);
             label1.Name = "label1";
             label1.Size = new Size(210, 69);
             label1.TabIndex = 0;
@@ -77,32 +78,32 @@
             button1.BackColor = Color.FromArgb(192, 255, 192);
             button1.Location = new Point(1433, 653);
             button1.Name = "button1";
-            button1.Size = new Size(135, 47);
+            button1.Size = new Size(134, 47);
             button1.TabIndex = 1;
             button1.Text = "Agregar";
-            button1.UseVisualStyleBackColor = false;
+            button1.UseVisualStyleBackColor = true;
             button1.Click += button1_Click;
             // 
             // button2
             // 
             button2.BackColor = Color.FromArgb(255, 192, 192);
-            button2.Location = new Point(1762, 653);
+            button2.Location = new Point(1761, 653);
             button2.Name = "button2";
-            button2.Size = new Size(135, 47);
+            button2.Size = new Size(134, 47);
             button2.TabIndex = 2;
             button2.Text = "Eliminar";
-            button2.UseVisualStyleBackColor = false;
+            button2.UseVisualStyleBackColor = true;
             button2.Click += button2_Click;
             // 
             // button3
             // 
             button3.BackColor = Color.FromArgb(255, 255, 192);
-            button3.Location = new Point(1602, 653);
+            button3.Location = new Point(1601, 653);
             button3.Name = "button3";
-            button3.Size = new Size(135, 47);
+            button3.Size = new Size(134, 47);
             button3.TabIndex = 3;
             button3.Text = "Modificar";
-            button3.UseVisualStyleBackColor = false;
+            button3.UseVisualStyleBackColor = true;
             button3.Click += button3_Click;
             // 
             // dataGridView1
@@ -205,28 +206,28 @@
             // 
             textBox3.Location = new Point(1546, 308);
             textBox3.Name = "textBox3";
-            textBox3.Size = new Size(322, 31);
+            textBox3.Size = new Size(323, 31);
             textBox3.TabIndex = 8;
             // 
             // textBox4
             // 
-            textBox4.Location = new Point(1546, 376);
+            textBox4.Location = new Point(1546, 377);
             textBox4.Name = "textBox4";
-            textBox4.Size = new Size(322, 31);
+            textBox4.Size = new Size(323, 31);
             textBox4.TabIndex = 9;
             // 
             // textBox6
             // 
-            textBox6.Location = new Point(1546, 504);
+            textBox6.Location = new Point(1546, 503);
             textBox6.Name = "textBox6";
-            textBox6.Size = new Size(322, 31);
+            textBox6.Size = new Size(323, 31);
             textBox6.TabIndex = 11;
             // 
             // textBox7
             // 
             textBox7.Location = new Point(1546, 557);
             textBox7.Name = "textBox7";
-            textBox7.Size = new Size(322, 31);
+            textBox7.Size = new Size(323, 31);
             textBox7.TabIndex = 12;
             // 
             // label2
@@ -241,7 +242,7 @@
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(1446, 244);
+            label3.Location = new Point(1446, 243);
             label3.Name = "label3";
             label3.Size = new Size(73, 25);
             label3.TabIndex = 14;
@@ -250,7 +251,7 @@
             // label4
             // 
             label4.AutoSize = true;
-            label4.Location = new Point(1424, 314);
+            label4.Location = new Point(1424, 313);
             label4.Name = "label4";
             label4.Size = new Size(95, 25);
             label4.TabIndex = 15;
@@ -268,7 +269,7 @@
             // label6
             // 
             label6.AutoSize = true;
-            label6.Location = new Point(1462, 447);
+            label6.Location = new Point(1461, 447);
             label6.Name = "label6";
             label6.Size = new Size(57, 25);
             label6.TabIndex = 17;
@@ -277,7 +278,7 @@
             // label7
             // 
             label7.AutoSize = true;
-            label7.Location = new Point(1433, 504);
+            label7.Location = new Point(1433, 503);
             label7.Name = "label7";
             label7.Size = new Size(86, 25);
             label7.TabIndex = 18;
@@ -307,7 +308,7 @@
             textBox8.Location = new Point(1546, 122);
             textBox8.Name = "textBox8";
             textBox8.ReadOnly = true;
-            textBox8.Size = new Size(322, 31);
+            textBox8.Size = new Size(323, 31);
             textBox8.TabIndex = 20;
             // 
             // dateTimePicker1
@@ -315,7 +316,7 @@
             dateTimePicker1.Format = DateTimePickerFormat.Short;
             dateTimePicker1.Location = new Point(1546, 442);
             dateTimePicker1.Name = "dateTimePicker1";
-            dateTimePicker1.Size = new Size(322, 31);
+            dateTimePicker1.Size = new Size(323, 31);
             dateTimePicker1.TabIndex = 22;
             // 
             // comboBox1
@@ -323,22 +324,35 @@
             comboBox1.FormattingEnabled = true;
             comboBox1.Location = new Point(1546, 180);
             comboBox1.Name = "comboBox1";
-            comboBox1.Size = new Size(322, 33);
+            comboBox1.Size = new Size(323, 33);
             comboBox1.TabIndex = 23;
             // 
             // comboBox2
             // 
             comboBox2.FormattingEnabled = true;
-            comboBox2.Location = new Point(1546, 241);
+            comboBox2.Location = new Point(1546, 242);
             comboBox2.Name = "comboBox2";
-            comboBox2.Size = new Size(322, 33);
+            comboBox2.Size = new Size(323, 33);
             comboBox2.TabIndex = 24;
+            // 
+            // Volver_desde_usuario
+            // 
+            Volver_desde_usuario.BackColor = Color.FromArgb(192, 255, 255);
+            Volver_desde_usuario.Location = new Point(26, 502);
+            Volver_desde_usuario.Margin = new Padding(4, 5, 4, 5);
+            Volver_desde_usuario.Name = "Volver_desde_usuario";
+            Volver_desde_usuario.Size = new Size(107, 38);
+            Volver_desde_usuario.TabIndex = 25;
+            Volver_desde_usuario.Text = "Volver";
+            Volver_desde_usuario.UseVisualStyleBackColor = false;
+            Volver_desde_usuario.Click += Volver_desde_usuario_Click;
             // 
             // FormVuelo
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1978, 752);
+            ClientSize = new Size(1995, 748);
+            Controls.Add(Volver_desde_usuario);
             Controls.Add(comboBox2);
             Controls.Add(comboBox1);
             Controls.Add(dateTimePicker1);
@@ -401,5 +415,6 @@
         private DataGridViewTextBoxColumn Fecha;
         private DataGridViewTextBoxColumn Aerolinea;
         private DataGridViewTextBoxColumn Avion;
+        private Button Volver_desde_usuario;
     }
 }
