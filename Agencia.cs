@@ -12,6 +12,7 @@ public class Agencia
     private Usuario? usuarioActual { get; set; }
     private int cantVuelos;
     private int cantUsuarios = 0;
+    private int cantHoteles = 0;
 
 
     //metodo constructor
@@ -20,6 +21,7 @@ public class Agencia
         hoteles = new List<Hotel>();
         vuelos = new List<Vuelo>();
         cantVuelos = 0;
+        cantHoteles = 0;
         ciudades = new List<Ciudad>();
         reservasHotel = new List<ReservaHotel>();
         reservasVuelo = new List<ReservaVuelo>();
@@ -227,21 +229,70 @@ public class Agencia
         return ciudades.ToList();
     }
     // Reporte de vuelos
-    public List<Vuelo> buscarVuelos(Ciudad origen, Ciudad destino,  DateTime fecha, int cantidadPax)
+    public List<Vuelo> buscarVuelos(Ciudad origen, Ciudad destino, DateTime fecha, int cantidadPax)
     {
         List<Vuelo> vuelosDisponibles = new List<Vuelo>();
-        foreach(Vuelo vuelo in vuelos) 
+        foreach (Vuelo vuelo in vuelos)
         {
 
-            if(vuelo.origen.nombre == origen.nombre && vuelo.destino.nombre == destino.nombre && vuelo.fecha.Date == fecha.Date && vuelo.capacidad >= cantidadPax)
+            if (vuelo.origen.nombre == origen.nombre && vuelo.destino.nombre == destino.nombre && vuelo.fecha.Date == fecha.Date && vuelo.capacidad >= cantidadPax)
             {
                 vuelosDisponibles.Add(vuelo);
             }
-            
+
         }
         return vuelosDisponibles.ToList();
 
     }
 
     //FIN METODOS DE VUELO
+
+    //INICIO METODOS DE HOTEL
+
+    public bool agregarHotel(int id, Ciudad ubicacion, int capacidad, double costo, string nombre)
+    {
+
+        hoteles.Add(new Hotel(id, ubicacion, capacidad, costo, nombre));
+        cantHoteles++;
+        return true;
+    }
+
+    public bool modificarHotel(int id, Ciudad ubicacion, int capacidad, double costo, string nombre)
+    {
+        foreach (Hotel hotel in hoteles)
+        {
+            if (hotel.id == id)
+            {
+                hotel.ubicacion = ubicacion;
+                hotel.capacidad = capacidad;
+                hotel.costo = costo;
+                hotel.nombre = nombre;
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public bool eliminarHotel(int id)
+    {
+        foreach (Hotel hotel in hoteles)
+        {
+            if (hotel.id == id)
+
+            {
+                hoteles.Remove(hotel);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public List<Hotel> getHotel()
+    {
+        return hoteles.ToList();
+    }
+
+
+
+    //FIN METODOS DE HOTEL
 }
