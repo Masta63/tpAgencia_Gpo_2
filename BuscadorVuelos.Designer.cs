@@ -40,6 +40,7 @@
             Fecha = new DataGridViewTextBoxColumn();
             Aerolinea = new DataGridViewTextBoxColumn();
             Avion = new DataGridViewTextBoxColumn();
+            Comprar = new DataGridViewButtonColumn();
             label3 = new Label();
             label4 = new Label();
             dateTimePicker1 = new DateTimePicker();
@@ -83,13 +84,14 @@
             // dataGridView1
             // 
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { Id, Origen, Destino, Cantidad, Costo, Fecha, Aerolinea, Avion });
+            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { Id, Origen, Destino, Cantidad, Costo, Fecha, Aerolinea, Avion, Comprar });
             dataGridView1.Location = new Point(528, 120);
             dataGridView1.Name = "dataGridView1";
             dataGridView1.RowHeadersWidth = 62;
             dataGridView1.RowTemplate.Height = 33;
-            dataGridView1.Size = new Size(1216, 246);
+            dataGridView1.Size = new Size(1364, 246);
             dataGridView1.TabIndex = 3;
+            dataGridView1.CellContentClick += dataGridView1_CellContentClick;
             // 
             // Id
             // 
@@ -154,6 +156,15 @@
             Avion.Name = "Avion";
             Avion.ReadOnly = true;
             Avion.Width = 150;
+            // 
+            // Comprar
+            // 
+            Comprar.HeaderText = "Comprar";
+            Comprar.MinimumWidth = 8;
+            Comprar.Name = "Comprar";
+            Comprar.ToolTipText = "Comprar";
+            Comprar.Visible = false;
+            Comprar.Width = 150;
             // 
             // label3
             // 
@@ -231,7 +242,7 @@
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1787, 450);
+            ClientSize = new Size(1925, 542);
             Controls.Add(Volver_desde_usuario);
             Controls.Add(numericUpDownPax);
             Controls.Add(comboBoxCdestino);
@@ -266,6 +277,7 @@
         private Label label5;
         private ComboBox comboBoxCdestino;
         private NumericUpDown numericUpDownPax;
+        private Button Volver_desde_usuario;
         private DataGridViewTextBoxColumn Id;
         private DataGridViewTextBoxColumn Origen;
         private DataGridViewTextBoxColumn Destino;
@@ -274,6 +286,7 @@
         private DataGridViewTextBoxColumn Fecha;
         private DataGridViewTextBoxColumn Aerolinea;
         private DataGridViewTextBoxColumn Avion;
-        private Button Volver_desde_usuario;
+        private DataGridViewButtonColumn Comprar;
+        
     }
 }
