@@ -30,7 +30,6 @@
         {
             label1 = new Label();
             textBoxCosto = new TextBox();
-            numericUpDown1 = new NumericUpDown();
             comboBoxHospedaje = new ComboBox();
             label2 = new Label();
             textBoxNombre = new TextBox();
@@ -50,7 +49,7 @@
             buttonCancelar = new Button();
             label6 = new Label();
             buttonVolver = new Button();
-            ((System.ComponentModel.ISupportInitialize)numericUpDown1).BeginInit();
+            textBoxCapacidad = new TextBox();
             ((System.ComponentModel.ISupportInitialize)dataGridViewHoteles).BeginInit();
             SuspendLayout();
             // 
@@ -71,14 +70,6 @@
             textBoxCosto.Size = new Size(179, 23);
             textBoxCosto.TabIndex = 3;
             textBoxCosto.TextChanged += textBoxCosto_TextChanged;
-            // 
-            // numericUpDown1
-            // 
-            numericUpDown1.Location = new Point(556, 272);
-            numericUpDown1.Name = "numericUpDown1";
-            numericUpDown1.Size = new Size(179, 23);
-            numericUpDown1.TabIndex = 4;
-            numericUpDown1.ValueChanged += numericUpDown1_ValueChanged;
             // 
             // comboBoxHospedaje
             // 
@@ -239,11 +230,20 @@
             buttonVolver.UseVisualStyleBackColor = true;
             buttonVolver.Click += buttonVolver_Click;
             // 
+            // textBoxCapacidad
+            // 
+            textBoxCapacidad.Location = new Point(556, 282);
+            textBoxCapacidad.Name = "textBoxCapacidad";
+            textBoxCapacidad.Size = new Size(184, 23);
+            textBoxCapacidad.TabIndex = 19;
+            textBoxCapacidad.TextChanged += textBoxCapacidad_TextChanged;
+            // 
             // FormHotelAbm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(textBoxCapacidad);
             Controls.Add(buttonVolver);
             Controls.Add(label6);
             Controls.Add(buttonCancelar);
@@ -258,13 +258,11 @@
             Controls.Add(textBoxNombre);
             Controls.Add(label2);
             Controls.Add(comboBoxHospedaje);
-            Controls.Add(numericUpDown1);
             Controls.Add(textBoxCosto);
             Controls.Add(label1);
             Name = "FormHotelAbm";
             Text = "Form2";
             Load += FormHotelAbm_Load;
-            ((System.ComponentModel.ISupportInitialize)numericUpDown1).EndInit();
             ((System.ComponentModel.ISupportInitialize)dataGridViewHoteles).EndInit();
             ResumeLayout(false);
             PerformLayout();
@@ -273,7 +271,6 @@
         #endregion
         private Label label1;
         private TextBox textBoxCosto;
-        private NumericUpDown numericUpDown1;
         private ComboBox comboBoxHospedaje;
         private Label label2;
         private TextBox textBoxNombre;
@@ -293,5 +290,6 @@
         private DataGridViewTextBoxColumn Nombre;
         private Label label6;
         private Button buttonVolver;
+        private TextBox textBoxCapacidad;
     }
 }

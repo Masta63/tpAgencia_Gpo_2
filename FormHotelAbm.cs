@@ -45,7 +45,7 @@ namespace tpAgencia_Gpo_2
                 textBoxId.Text = "";
                 textBoxNombre.Text = "";
                 comboBoxHospedaje.Text = "";
-                numericUpDown1 = null;
+                textBoxCapacidad.Text = "";
                 textBoxCosto.Text = "";
             }
         }
@@ -105,7 +105,7 @@ namespace tpAgencia_Gpo_2
 
                 textBoxId.Text = id;
                 comboBoxHospedaje.Text = ubicacion;
-                numericUpDown1.Text = capacidad;
+                textBoxCapacidad.Text = capacidad;
                 textBoxCosto.Text = costo;
                 textBoxNombre.Text = nombre;
 
@@ -134,14 +134,14 @@ namespace tpAgencia_Gpo_2
 
 
 
-            if (ciudadHospedaje == null || string.IsNullOrEmpty(textBoxId.Text) || string.IsNullOrEmpty(numericUpDown1.Text) || string.IsNullOrEmpty(textBoxCosto.Text) || string.IsNullOrEmpty(textBoxNombre.Text))
+            if (ciudadHospedaje == null || string.IsNullOrEmpty(textBoxId.Text) || string.IsNullOrEmpty(textBoxCapacidad.Text) || string.IsNullOrEmpty(textBoxCosto.Text) || string.IsNullOrEmpty(textBoxNombre.Text))
 
                 MessageBox.Show("Debe completar todos los campos para poder agregar un nuevo hotel");
 
             else
             {
                 int capacidad;
-                if (!int.TryParse(numericUpDown1.Text, out capacidad))
+                if (!int.TryParse(textBoxCapacidad.Text, out capacidad))
                 {
                     MessageBox.Show("La capacidad debe ser un número válido");
                 }
@@ -169,13 +169,13 @@ namespace tpAgencia_Gpo_2
 
         private void buttonModificar_Click(object sender, EventArgs e)
         {
-            if (hotelSeleccionado != -1)
+            if (hotelSeleccionado != -10)
             {
                 try
                 {
                     string ubicacion1 = comboBoxHospedaje.Text;
                     Ciudad ciudadHospedaje1 = agencia.GetCiudades().FirstOrDefault(ciudad => ciudad.nombre == ubicacion1);
-                    int capacidad = int.Parse(numericUpDown1.Text);
+                    int capacidad = int.Parse(textBoxCapacidad.Text);
                     double costo = double.Parse(textBoxCosto.Text);
                     int id = int.Parse(textBoxId.Text);
 
@@ -202,7 +202,7 @@ namespace tpAgencia_Gpo_2
 
         private void buttonCancelar_Click(object sender, EventArgs e)
         {
-            if (hotelSeleccionado != -1)
+            if (hotelSeleccionado != -10)
             {
                 if (agencia.eliminarHotel(hotelSeleccionado))
                 {
@@ -223,6 +223,11 @@ namespace tpAgencia_Gpo_2
             MenuAgencia MenuAgencia = new MenuAgencia(agencia, Form1);
             MenuAgencia.MdiParent = Form1;
             MenuAgencia.Show();
+        }
+
+        private void textBoxCapacidad_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

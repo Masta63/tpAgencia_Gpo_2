@@ -19,6 +19,8 @@ namespace tpAgencia_Gpo_2
         private Form1 Form1;
         private FormCiudad formCiudad;
         private BuscadorVuelos buscadorVuelos;
+        private FormHotelAbm formHotel;
+
         public MenuAgencia(Agencia agencia, Form1 form1)
         {
             InitializeComponent();
@@ -36,6 +38,10 @@ namespace tpAgencia_Gpo_2
             FormVuelo = new FormVuelo(agencia, form1);
             FormVuelo.MdiParent = form1;
             FormVuelo.TransfEventoFormVuelo += TransfDelegadoFormVuelo;
+
+            formHotel = new FormHotelAbm(agencia, form1);
+            formHotel.MdiParent = form1;
+            formHotel.TransfEventoFormHotel += TransfDelegadoFormHotel;
 
             formCiudad = new FormCiudad(agencia, form1);
             formCiudad.MdiParent = form1;
@@ -111,6 +117,14 @@ namespace tpAgencia_Gpo_2
             formCiudad.Show();
         }
 
+        private void TransfDelegadoFormHotel()
+        {
+            this.MdiParent = Form1;
+            this.Close();
+            formHotel = new FormHotelAbm(Agencia, Form1);
+            formHotel.Show();
+        }
+
         private void TransfDelegadoBuscadorVuelos()
         {
             this.MdiParent = Form1;
@@ -124,6 +138,7 @@ namespace tpAgencia_Gpo_2
             this.TransfDelegadoFormUsuario();
         }
 
+
         private void vuelosToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.TransfDelegadoFormVuelo();
@@ -132,6 +147,11 @@ namespace tpAgencia_Gpo_2
         private void ciudadesToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             this.TransfDelegadoFormCiudad();
+        }
+
+        private void hotelesToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            this.TransfDelegadoFormHotel();
         }
     }
 }

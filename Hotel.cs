@@ -43,5 +43,10 @@ namespace tpAgencia_Gpo_2
 
 
         //metodos
+        public string[] ToString()
+        {
+            string[] ubicacionArr = ubicacion.ToString();
+            return new string[] { id.ToString(), ubicacionArr[1], capacidad.ToString(), costo.ToString(),nombre.ToString()};
+        }
     }
 }
