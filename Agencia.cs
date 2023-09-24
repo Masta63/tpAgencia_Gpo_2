@@ -256,17 +256,17 @@ public class Agencia
         return ciudades.ToList();
     }
     // Reporte de vuelos
-    public List<Vuelo> buscarVuelos(Ciudad origen, Ciudad destino,  DateTime fecha, int cantidadPax)
+    public List<Vuelo> buscarVuelos(Ciudad origen, Ciudad destino, DateTime fecha, int cantidadPax)
     {
         List<Vuelo> vuelosDisponibles = new List<Vuelo>();
-        foreach(Vuelo vuelo in vuelos) 
+        foreach (Vuelo vuelo in vuelos)
         {
 
-            if(vuelo.origen.nombre == origen.nombre && vuelo.destino.nombre == destino.nombre && vuelo.fecha.Date == fecha.Date && vuelo.capacidad >= cantidadPax)
+            if (vuelo.origen.nombre == origen.nombre && vuelo.destino.nombre == destino.nombre && vuelo.fecha.Date == fecha.Date && vuelo.capacidad >= cantidadPax)
             {
                 vuelosDisponibles.Add(vuelo);
             }
-            
+
         }
         return vuelosDisponibles.ToList();
 
@@ -308,14 +308,23 @@ public class Agencia
 
         foreach (ReservaVuelo reserva in usuario.misReservasVuelo)
         {
-           if(reserva.miVuelo.fecha < fechaActual)
+            if (reserva.miVuelo.fecha < fechaActual)
             {
                 vuelosPasados.Add(reserva.miVuelo);
             }
-                
-           
+
+
         }
         return vuelosPasados;
     }
 
+    public List<Hotel> getHoteles()
+    {
+        return hoteles.ToList();
+    }
+
+    public void setHotel(Hotel hotel)
+    {
+        hoteles.Add(hotel);
+    }
 }

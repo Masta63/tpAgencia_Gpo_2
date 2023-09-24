@@ -36,6 +36,39 @@ namespace tpAgencia_Gpo_2
 
 
 
+
+            Ciudad? ciudadParaHotelBariloche = Agencia.GetCiudades().ToList().Where(x => x.id == 1).FirstOrDefault();
+            Ciudad? ciudadParaHotel2 = Agencia.GetCiudades().ToList().Where(x => x.id == 2).FirstOrDefault();
+            Ciudad? ciudadParaHotel3 = Agencia.GetCiudades().ToList().Where(x => x.id == 3).FirstOrDefault();
+
+
+            List<Usuario> ListHuespedesFaena = new List<Usuario>();
+            Usuario usuarioFaena = Agencia.getUsuarios().ToList().Where(x => x.id == 1).FirstOrDefault();
+            ListHuespedesFaena.Add(usuarioFaena);
+            Usuario usuarioFaena2 = Agencia.getUsuarios().ToList().Where(x => x.id == 2).FirstOrDefault();
+            ListHuespedesFaena.Add(usuarioFaena2);
+
+
+            List<ReservaHotel> reservas = new List<ReservaHotel>();
+            Hotel hotelFaena = new Hotel(1, ciudadParaHotelBariloche, 2, 1000, "Faena", ListHuespedesFaena, reservas);
+
+
+            Hotel hotelHilton = new Hotel(2, ciudadParaHotelBariloche, 2, 1000, "Hilton", ListHuespedesFaena, reservas);
+            ReservaHotel reservaHotel = new ReservaHotel(hotelFaena, usuarioFaena2, new DateTime(2023, 03, 01), new DateTime(2023, 03, 14), 1000);
+            ReservaHotel reservaHotel2 = new ReservaHotel(hotelFaena, usuarioFaena2, new DateTime(2023, 03, 15), new DateTime(2023, 03, 20), 1000);
+            reservas.Add(reservaHotel);
+            reservas.Add(reservaHotel2);
+
+            List<Usuario> ListHuespedesHilton = new List<Usuario>();
+            Usuario usuarioHilton = Agencia.getUsuarios().ToList().Where(x => x.id == 1).FirstOrDefault();
+            ListHuespedesHilton.Add(usuarioHilton);
+            //Hotel hotelHilton = new Hotel(2, ciudadParaHotelBariloche, 2, 1000, "Hilton", ListHuespedesHilton, reservas);
+
+            Agencia.setHotel(hotelFaena);
+            Agencia.setHotel(hotelHilton);
+
+
+
         }
 
 
