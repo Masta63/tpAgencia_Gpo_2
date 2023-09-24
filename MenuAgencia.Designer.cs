@@ -137,6 +137,7 @@
             misvuelosencualviajeToolStripMenuItem.Name = "misvuelosencualviajeToolStripMenuItem";
             misvuelosencualviajeToolStripMenuItem.Size = new Size(303, 34);
             misvuelosencualviajeToolStripMenuItem.Text = "Mis vuelos(en cual viaje)";
+            misvuelosencualviajeToolStripMenuItem.Click += misvuelosencualviajeToolStripMenuItem_Click;
             // 
             // misHotelesquevisiteToolStripMenuItem
             // 

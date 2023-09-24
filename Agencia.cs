@@ -287,7 +287,7 @@ public class Agencia
                 {
                     ReservaVuelo reserva = new ReservaVuelo(vuelo, usuarioActual);
                     vuelo.misReservas.Add(reserva);
-                    usuarioActual.misReservasVuelo.Add(reserva);
+                    usuarioActual.agregarReservaVuelo(reserva);
                 }
 
                 return true;
@@ -301,4 +301,21 @@ public class Agencia
     }
 
     //FIN METODOS DE VUELO
+    public List<Vuelo> misVuelos(Usuario usuario)
+    {
+        DateTime fechaActual = DateTime.Now;
+        List<Vuelo> vuelosPasados = new List<Vuelo>();
+
+        foreach (ReservaVuelo reserva in usuario.misReservasVuelo)
+        {
+           if(reserva.miVuelo.fecha < fechaActual)
+            {
+                vuelosPasados.Add(reserva.miVuelo);
+            }
+                
+           
+        }
+        return vuelosPasados;
+    }
+
 }
