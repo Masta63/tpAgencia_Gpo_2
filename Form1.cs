@@ -29,14 +29,12 @@ namespace tpAgencia_Gpo_2
 
             //Vuelos hardcodeados
 
-            Agencia.agregarVuelo(Agencia.GetCiudades()[0], Agencia.GetCiudades()[1], 20, 50000, DateTime.Now, "AA", "Airbus");
-            Agencia.agregarVuelo(Agencia.GetCiudades()[1], Agencia.GetCiudades()[2], 50, 100000, DateTime.Now, "AA", "Airbus320");
+            Agencia.agregarVuelo(Agencia.GetCiudades()[0], Agencia.GetCiudades()[1], 20, 50000, new DateTime(2023, 10, 30), "AA", "Airbus");
+            Agencia.agregarVuelo(Agencia.GetCiudades()[1], Agencia.GetCiudades()[2], 50, 100000, new DateTime(2023, 10, 20), "AA", "Airbus320");
+            Agencia.agregarVuelo(Agencia.GetCiudades()[2], Agencia.GetCiudades()[0], 2, 200000, new DateTime(2023, 10, 10), "JetSmart", "Airbus300");
 
 
-            //hijoVuelo = new FormVuelo(agencia);
-            //hijoVuelo.MdiParent = this;
-            ////hijoVuelo.TransfEvento += TransfDelegado;
-            //hijoVuelo.Show();
+            
         }
 
 

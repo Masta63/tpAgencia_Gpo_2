@@ -15,7 +15,12 @@
         }
 
         //metodos
-        
+        public ReservaVuelo(Vuelo miVuelo, Usuario miUsuario)
+        {
+            this.miVuelo = miVuelo;
+            this.miUsuario = miUsuario;
+
+        }
 
 
     }

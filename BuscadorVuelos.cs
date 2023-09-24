@@ -70,9 +70,20 @@ namespace tpAgencia_Gpo_2
 
             if (vuelosEncontrados.Count >0)
             {
+                DataGridViewButtonColumn btnclm = new DataGridViewButtonColumn();
+                btnclm.Name = "Comprar";
+                btnclm.Visible = true;
+                btnclm.UseColumnTextForButtonValue = true;
+                btnclm.Text = "Comprar";
+                btnclm.HeaderText = "";
+                dataGridView1.Columns.Add(btnclm);
+
                 foreach (Vuelo vuelo in vuelosEncontrados)
                 {
-                    dataGridView1.Rows.Add(vuelo.ToString());
+                    double costoUnitario = vuelo.costo;
+                    double costoTotal = costoUnitario * cantidadPax;
+                    string fechaFormateada = vuelo.fecha.ToString("dd/MM/yyyy");
+                    dataGridView1.Rows.Add(vuelo.id, vuelo.origen.nombre, vuelo.destino.nombre, vuelo.capacidad, costoTotal.ToString("C"), fechaFormateada, vuelo.aerolinea, vuelo.avion, "Comprar");
                 }
             }
           
@@ -91,6 +102,42 @@ namespace tpAgencia_Gpo_2
             MenuAgencia MenuAgencia = new MenuAgencia(agencia, form1);
             MenuAgencia.MdiParent = form1;
             MenuAgencia.Show();
+        }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            string columnaComprar = "Comprar";
+            if (dataGridView1.Columns[e.ColumnIndex].Name == columnaComprar && e.RowIndex >= 0)
+            {
+                Usuario usuarioActualCompra = agencia.getUsuarioActual();
+                int vueloId = int.Parse(dataGridView1.Rows[e.RowIndex].Cells["Id"].Value.ToString());
+
+                int cantidad = (int)numericUpDownPax.Value;
+
+                if (usuarioActualCompra != null)
+                {
+                    bool compraExitosa = agencia.comprarVuelo(vueloId, usuarioActualCompra, cantidad);
+
+                    if (compraExitosa)
+                    {
+                        Vuelo vueloSeleccionado = agencia.getVuelos().FirstOrDefault(v=> v.id ==vueloId);
+                      
+                        if(vueloSeleccionado != null)
+                        {
+                            vueloSeleccionado.capacidad -= cantidad;
+                        }
+                        int rowIndex = e.RowIndex;
+                        int asientosDisponibles = vueloSeleccionado.capacidad;
+                        dataGridView1.Rows[rowIndex].Cells["Cantidad"].Value = asientosDisponibles;
+                       
+                        
+                        
+                        MessageBox.Show("Reserva realiza con éxito");
+                    }
+                    
+                }
+
+            }
         }
     }
 }

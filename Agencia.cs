@@ -272,5 +272,33 @@ public class Agencia
 
     }
 
+    public bool comprarVuelo(int vueloId, Usuario usuarioActual, int cantidad)
+    {
+        Vuelo vuelo = vuelos.FirstOrDefault(v => v.id == vueloId);
+        if (vuelo != null && cantidad > 0 && cantidad <= vuelo.capacidad - vuelo.vendido)
+        {
+            double costoTotal = vuelo.costo * cantidad;
+            if (usuarioActual.credito >= costoTotal)
+            {
+                usuarioActual.credito -= costoTotal;
+                vuelo.vendido += cantidad;
+
+                for (int i = 0; i < cantidad; i++)
+                {
+                    ReservaVuelo reserva = new ReservaVuelo(vuelo, usuarioActual);
+                    vuelo.misReservas.Add(reserva);
+                    usuarioActual.misReservasVuelo.Add(reserva);
+                }
+
+                return true;
+            }
+            MessageBox.Show("No tienes suficiente crédito para realizar la compra");
+        }
+
+
+        return false;
+
+    }
+
     //FIN METODOS DE VUELO
 }
