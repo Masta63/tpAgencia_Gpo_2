@@ -162,6 +162,7 @@
             button_Modificar.TabIndex = 46;
             button_Modificar.Text = "Modificar";
             button_Modificar.UseVisualStyleBackColor = false;
+            button_Modificar.Click += button_Modificar_Click;
             // 
             // textBox_MiCredito
             // 
