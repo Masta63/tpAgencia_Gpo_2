@@ -49,6 +49,10 @@ namespace tpAgencia_Gpo_2
             buscadorVuelos.MdiParent = form1;
             buscadorVuelos.TransfEventoBuscadorVuelos += TransfDelegadoBuscadorVuelos;
 
+            usuarioSimple = new FormUsuarioSimple(agencia,form1);
+            usuarioSimple.MdiParent = form1;
+            usuarioSimple.TransfEventoFormUsuarioSimple += TransfDelegadoFormUsuarioSimple;
+
             misVuelos = new FormMisVuelos(agencia, form1);
             misVuelos.MdiParent = form1;
             misVuelos.TransfEventoMisVuelos += TransfDelegadoMisVuelos;
@@ -131,6 +135,15 @@ namespace tpAgencia_Gpo_2
             buscadorVuelos.Show();
         }
 
+        private void TransfDelegadoFormUsuarioSimple()
+        {
+            this.MdiParent = Form1;
+            this.Close();
+            usuarioSimple = new FormUsuarioSimple(Agencia,Form1);
+            usuarioSimple.Show();
+            
+        }
+
         private void TransfDelegadoMisVuelos()
         {
             this.MdiParent = Form1;
@@ -159,6 +172,11 @@ namespace tpAgencia_Gpo_2
         private void ciudadesToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             this.TransfDelegadoFormCiudad();
+        }
+
+        private void cargarCreditoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.TransfDelegadoFormUsuarioSimple();
         }
 
         private void misvuelosencualviajeToolStripMenuItem_Click(object sender, EventArgs e)

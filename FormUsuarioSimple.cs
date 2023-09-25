@@ -19,7 +19,7 @@ namespace tpAgencia_Gpo_2
         private Form1 form1;
         private Usuario usuarioActual;
         public TransfDelegadoFormUsuarioSimple TransfEventoFormUsuarioSimple;
-        public FormUsuarioSimple(Agencia agencia)
+        public FormUsuarioSimple(Agencia agencia, Form1 form1)
         {
             InitializeComponent();
             this.refAgencia = agencia;
