@@ -71,7 +71,7 @@ namespace tpAgencia_Gpo_2
             listHotelesVisitados = new List<Hotel>();
             listVuelosTomados = new List<Vuelo>();
         }
-        public Usuario(int id, string name, string apellido, string dni, string mail, string password, bool esAdmin)
+        public Usuario(int id, string name, string apellido, string dni, string mail, string password, bool esAdmin, double credito)
         {
             this.id = id;
             this.name = name;
@@ -84,6 +84,7 @@ namespace tpAgencia_Gpo_2
             listMisReservasVuelo = new List<ReservaVuelo>();
             listHotelesVisitados = new List<Hotel>();
             listVuelosTomados = new List<Vuelo>();
+            this.credito = credito;
         }
 
 

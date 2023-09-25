@@ -19,17 +19,16 @@ namespace tpAgencia_Gpo_2
         private Form1 Form1;
         private FormCiudad formCiudad;
         private BuscadorVuelos buscadorVuelos;
-        private FormUsuarioSimple usuarioSimple;
         private FormMisVuelos misVuelos;
-        private FormReporteHoteles FormReporteHoteles;
-
+        private FormReservasVuelos reservasVuelos;
+       
         public MenuAgencia(Agencia agencia, Form1 form1)
         {
             InitializeComponent();
             this.WindowState = FormWindowState.Maximized;
             this.Agencia = agencia;
             this.Form1 = form1;
-
+            
 
             validacionPermisos();
 
@@ -50,19 +49,13 @@ namespace tpAgencia_Gpo_2
             buscadorVuelos.MdiParent = form1;
             buscadorVuelos.TransfEventoBuscadorVuelos += TransfDelegadoBuscadorVuelos;
 
-
-            usuarioSimple = new FormUsuarioSimple(agencia);
-            usuarioSimple.MdiParent = form1;
-            usuarioSimple.TransfEventoFormUsuarioSimple += TransfDelegadoFormUsuarioSimple;
-
             misVuelos = new FormMisVuelos(agencia, form1);
             misVuelos.MdiParent = form1;
             misVuelos.TransfEventoMisVuelos += TransfDelegadoMisVuelos;
 
-            FormReporteHoteles = new FormReporteHoteles(agencia, form1);
-            FormReporteHoteles.MdiParent = form1;
-            FormReporteHoteles.TransfEventoFormCiudad += TransfDelegadoReporteHoteles;
-
+            reservasVuelos = new FormReservasVuelos(agencia, form1);
+            reservasVuelos.MdiParent = form1;
+            reservasVuelos.TransfEventoReservasVuelos += TransfDelegadoReservasVuelos;
         }
 
         private void validacionPermisos()
@@ -138,16 +131,6 @@ namespace tpAgencia_Gpo_2
             buscadorVuelos.Show();
         }
 
-
-        private void TransfDelegadoFormUsuarioSimple()
-        {
-            this.MdiParent = Form1;
-            this.Close();
-            usuarioSimple = new FormUsuarioSimple(Agencia);
-            usuarioSimple.Show();
-            
-        }
-
         private void TransfDelegadoMisVuelos()
         {
             this.MdiParent = Form1;
@@ -155,15 +138,13 @@ namespace tpAgencia_Gpo_2
             misVuelos = new FormMisVuelos(Agencia, Form1);
             misVuelos.Show();
         }
-
-        private void TransfDelegadoReporteHoteles()
+        private void TransfDelegadoReservasVuelos()
         {
             this.MdiParent = Form1;
             this.Close();
-            FormReporteHoteles = new FormReporteHoteles(Agencia, Form1);
-            FormReporteHoteles.Show();
+            reservasVuelos = new FormReservasVuelos(Agencia, Form1);
+            reservasVuelos.Show();
         }
-
 
         private void usuariosToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -180,20 +161,14 @@ namespace tpAgencia_Gpo_2
             this.TransfDelegadoFormCiudad();
         }
 
-
-        private void cargarCreditoToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            this.TransfDelegadoFormUsuarioSimple();
-
         private void misvuelosencualviajeToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.TransfDelegadoMisVuelos();
         }
 
-        private void hotelesToolStripMenuItem_Click(object sender, EventArgs e)
+        private void misreservasvuelosToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            this.TransfDelegadoReporteHoteles();
-
+            this.TransfDelegadoReservasVuelos();
         }
     }
 }

@@ -1,7 +1,4 @@
-﻿using Microsoft.VisualBasic.ApplicationServices;
-using System;
-using System.Net;
-using System.Xml.Linq;
+﻿using System;
 using tpAgencia_Gpo_2;
 
 public class Agencia
@@ -31,9 +28,9 @@ public class Agencia
 
     //INICIO METODOS DE USUARIO
 
-    public void registrarUsuario(int id, string name, string apellido, string dni, string mail, string password, bool esAdmin)
+    public void registrarUsuario(int id, string name, string apellido, string dni, string mail, string password, bool esAdmin, double credito)
     {
-        Usuario usuario = new Usuario(id, name, apellido, dni, mail, password, esAdmin);
+        Usuario usuario = new Usuario(id, name, apellido, dni, mail, password, esAdmin, credito);
         listUsuarios.Add(usuario);
     }
     public List<Usuario> Usuarios
@@ -54,13 +51,6 @@ public class Agencia
     public Usuario? getUsuarioActual()
     {
         return this.usuarioActual;
-    }
-    
-    public bool setUsuarioActual(Usuario usuarioActual)
-    {
-        //cree este metodo solo para hacer pruebas en mi vista de usuario
-        this.usuarioActual = usuarioActual;
-        return true;
     }
 
     public List<Usuario> getListUsuario()
@@ -196,19 +186,6 @@ public class Agencia
     public string? nombreLogueado()
     {
         return this.usuarioActual?.name;
-    }
-
-    public bool modificarPassword(int id, string pass)
-    {
-        foreach (Usuario user in listUsuarios)
-        {
-            if (user.id == id )
-            {
-                user.password = pass;
-                return true;
-            }
-        }
-        return false;
 
     }
 
@@ -223,7 +200,6 @@ public class Agencia
     //ver lo que explicó el profesor
     public void cargarCredito(int idUsuario, double importe)
     {
-
         this.usuarioActual.credito += importe;
 
     }
@@ -279,17 +255,17 @@ public class Agencia
         return ciudades.ToList();
     }
     // Reporte de vuelos
-    public List<Vuelo> buscarVuelos(Ciudad origen, Ciudad destino, DateTime fecha, int cantidadPax)
+    public List<Vuelo> buscarVuelos(Ciudad origen, Ciudad destino,  DateTime fecha, int cantidadPax)
     {
         List<Vuelo> vuelosDisponibles = new List<Vuelo>();
-        foreach (Vuelo vuelo in vuelos)
+        foreach(Vuelo vuelo in vuelos) 
         {
 
-            if (vuelo.origen.nombre == origen.nombre && vuelo.destino.nombre == destino.nombre && vuelo.fecha.Date == fecha.Date && vuelo.capacidad >= cantidadPax)
+            if(vuelo.origen.nombre == origen.nombre && vuelo.destino.nombre == destino.nombre && vuelo.fecha.Date == fecha.Date && vuelo.capacidad >= cantidadPax)
             {
                 vuelosDisponibles.Add(vuelo);
             }
-
+            
         }
         return vuelosDisponibles.ToList();
 
@@ -331,23 +307,48 @@ public class Agencia
 
         foreach (ReservaVuelo reserva in usuario.misReservasVuelo)
         {
-            if (reserva.miVuelo.fecha < fechaActual)
+           if(reserva.miVuelo.fecha < fechaActual)
             {
                 vuelosPasados.Add(reserva.miVuelo);
             }
-
-
+                
+           
         }
         return vuelosPasados;
     }
 
-    public List<Hotel> getHoteles()
+    public List<Vuelo> misReservasVuelos(Usuario usuario)
     {
-        return hoteles.ToList();
+        DateTime fechaActual = DateTime.Now;
+        List<Vuelo> vuelosReservados = new List<Vuelo>();
+
+        foreach (ReservaVuelo reserva in usuario.misReservasVuelo)
+        {
+            if (reserva.miVuelo.fecha > fechaActual)
+            {
+                vuelosReservados.Add(reserva.miVuelo);
+            }
+
+
+        }
+        return vuelosReservados;
     }
 
-    public void setHotel(Hotel hotel)
+    public List<Hotel> misReservasHoteles(Usuario usuario)
     {
-        hoteles.Add(hotel);
+        DateTime fechaActual = DateTime.Now;
+        List<Hotel> hotelesReservados = new List<Hotel>();
+
+        foreach (ReservaHotel reserva in usuario.misReservasHoteles)
+        {
+            if (reserva.fechaDesde > fechaActual)
+            {
+                hotelesReservados.Add(reserva.miHotel);
+            }
+
+
+        }
+        return hotelesReservados;
     }
+
 }
