@@ -59,12 +59,12 @@
             resVuelo = new DataGridViewTextBoxColumn();
             bienvenida = new Label();
             Bienvenida_usuario = new Label();
+            label_Credito = new Label();
+            textBox_credito = new TextBox();
+            btn_agregarCredito = new Button();
             btn_modificarCredito = new Button();
             btn_buscarUsuario = new Button();
             textBox_buscarUsuario = new TextBox();
-            btn_agregarCredito = new Button();
-            label_Credito = new Label();
-            textBox_credito = new TextBox();
             ((System.ComponentModel.ISupportInitialize)dataGridView_usuarios).BeginInit();
             SuspendLayout();
             // 
@@ -329,6 +329,33 @@
             Bienvenida_usuario.Size = new Size(0, 25);
             Bienvenida_usuario.TabIndex = 34;
             // 
+            // label_Credito
+            // 
+            label_Credito.AutoSize = true;
+            label_Credito.Location = new Point(572, 144);
+            label_Credito.Name = "label_Credito";
+            label_Credito.Size = new Size(46, 15);
+            label_Credito.TabIndex = 38;
+            label_Credito.Text = "Credito";
+            // 
+            // textBox_credito
+            // 
+            textBox_credito.Location = new Point(572, 175);
+            textBox_credito.Name = "textBox_credito";
+            textBox_credito.Size = new Size(114, 23);
+            textBox_credito.TabIndex = 37;
+            // 
+            // btn_agregarCredito
+            // 
+            btn_agregarCredito.BackColor = Color.LightGreen;
+            btn_agregarCredito.Location = new Point(734, 136);
+            btn_agregarCredito.Name = "btn_agregarCredito";
+            btn_agregarCredito.Size = new Size(75, 23);
+            btn_agregarCredito.TabIndex = 39;
+            btn_agregarCredito.Text = "Agregar";
+            btn_agregarCredito.UseVisualStyleBackColor = false;
+            btn_agregarCredito.Click += btn_agregarCredito_Click;
+            // 
             // btn_modificarCredito
             // 
             btn_modificarCredito.BackColor = Color.FromArgb(255, 255, 192);
@@ -358,33 +385,6 @@
             textBox_buscarUsuario.PlaceholderText = "ingrese dni para buscar";
             textBox_buscarUsuario.Size = new Size(155, 23);
             textBox_buscarUsuario.TabIndex = 42;
-            // 
-            // btn_agregarCredito
-            // 
-            btn_agregarCredito.BackColor = Color.LightGreen;
-            btn_agregarCredito.Location = new Point(734, 136);
-            btn_agregarCredito.Name = "btn_agregarCredito";
-            btn_agregarCredito.Size = new Size(75, 23);
-            btn_agregarCredito.TabIndex = 39;
-            btn_agregarCredito.Text = "Agregar";
-            btn_agregarCredito.UseVisualStyleBackColor = false;
-            btn_agregarCredito.Click += btn_agregarCredito_Click;
-            // 
-            // label_Credito
-            // 
-            label_Credito.AutoSize = true;
-            label_Credito.Location = new Point(572, 144);
-            label_Credito.Name = "label_Credito";
-            label_Credito.Size = new Size(46, 15);
-            label_Credito.TabIndex = 38;
-            label_Credito.Text = "Credito";
-            // 
-            // textBox_credito
-            // 
-            textBox_credito.Location = new Point(572, 175);
-            textBox_credito.Name = "textBox_credito";
-            textBox_credito.Size = new Size(114, 23);
-            textBox_credito.TabIndex = 37;
             // 
             // FormUsuario
             // 
@@ -466,10 +466,10 @@
         private DataGridViewTextBoxColumn email;
         private DataGridViewTextBoxColumn resHotel;
         private DataGridViewTextBoxColumn resVuelo;
-        private Button btn_modificarCredito;
-        private Button btn_buscarUsuario;
-        private Button btn_agregarCredito;
         private Label label_Credito;
         private TextBox textBox_credito;
+        private Button btn_agregarCredito;
+        private Button btn_modificarCredito;
+        private Button btn_buscarUsuario;
     }
 }
