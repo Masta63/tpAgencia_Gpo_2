@@ -16,6 +16,7 @@ namespace tpAgencia_Gpo_2
             this.WindowState = FormWindowState.Maximized;
             Agencia = new Agencia();
 
+
             cargaUsuarios();
             cargaCiudades();
 
