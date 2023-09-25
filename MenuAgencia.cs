@@ -51,7 +51,7 @@ namespace tpAgencia_Gpo_2
             buscadorVuelos.TransfEventoBuscadorVuelos += TransfDelegadoBuscadorVuelos;
 
 
-            usuarioSimple = new FormUsuarioSimple(agencia);
+            usuarioSimple = new FormUsuarioSimple(agencia,form1);
             usuarioSimple.MdiParent = form1;
             usuarioSimple.TransfEventoFormUsuarioSimple += TransfDelegadoFormUsuarioSimple;
 
@@ -143,7 +143,7 @@ namespace tpAgencia_Gpo_2
         {
             this.MdiParent = Form1;
             this.Close();
-            usuarioSimple = new FormUsuarioSimple(Agencia);
+            usuarioSimple = new FormUsuarioSimple(Agencia,Form1);
             usuarioSimple.Show();
             
         }
@@ -184,7 +184,7 @@ namespace tpAgencia_Gpo_2
         private void cargarCreditoToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.TransfDelegadoFormUsuarioSimple();
-
+        }
         private void misvuelosencualviajeToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.TransfDelegadoMisVuelos();
