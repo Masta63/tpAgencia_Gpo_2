@@ -103,5 +103,12 @@ namespace tpAgencia_Gpo_2
             }
         }
 
+        public void agregarReservaVuelo(ReservaVuelo reserva)
+        {
+            listMisReservasVuelo.Add(reserva);
+        }
+
+      
+
     }
 }

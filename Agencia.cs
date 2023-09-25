@@ -279,21 +279,75 @@ public class Agencia
         return ciudades.ToList();
     }
     // Reporte de vuelos
-    public List<Vuelo> buscarVuelos(Ciudad origen, Ciudad destino,  DateTime fecha, int cantidadPax)
+    public List<Vuelo> buscarVuelos(Ciudad origen, Ciudad destino, DateTime fecha, int cantidadPax)
     {
         List<Vuelo> vuelosDisponibles = new List<Vuelo>();
-        foreach(Vuelo vuelo in vuelos) 
+        foreach (Vuelo vuelo in vuelos)
         {
 
-            if(vuelo.origen.nombre == origen.nombre && vuelo.destino.nombre == destino.nombre && vuelo.fecha.Date == fecha.Date && vuelo.capacidad >= cantidadPax)
+            if (vuelo.origen.nombre == origen.nombre && vuelo.destino.nombre == destino.nombre && vuelo.fecha.Date == fecha.Date && vuelo.capacidad >= cantidadPax)
             {
                 vuelosDisponibles.Add(vuelo);
             }
-            
+
         }
         return vuelosDisponibles.ToList();
 
     }
 
+    public bool comprarVuelo(int vueloId, Usuario usuarioActual, int cantidad)
+    {
+        Vuelo vuelo = vuelos.FirstOrDefault(v => v.id == vueloId);
+        if (vuelo != null && cantidad > 0 && cantidad <= vuelo.capacidad - vuelo.vendido)
+        {
+            double costoTotal = vuelo.costo * cantidad;
+            if (usuarioActual.credito >= costoTotal)
+            {
+                usuarioActual.credito -= costoTotal;
+                vuelo.vendido += cantidad;
+
+                for (int i = 0; i < cantidad; i++)
+                {
+                    ReservaVuelo reserva = new ReservaVuelo(vuelo, usuarioActual);
+                    vuelo.misReservas.Add(reserva);
+                    usuarioActual.agregarReservaVuelo(reserva);
+                }
+
+                return true;
+            }
+            MessageBox.Show("No tienes suficiente crédito para realizar la compra");
+        }
+
+
+        return false;
+
+    }
+
     //FIN METODOS DE VUELO
+    public List<Vuelo> misVuelos(Usuario usuario)
+    {
+        DateTime fechaActual = DateTime.Now;
+        List<Vuelo> vuelosPasados = new List<Vuelo>();
+
+        foreach (ReservaVuelo reserva in usuario.misReservasVuelo)
+        {
+            if (reserva.miVuelo.fecha < fechaActual)
+            {
+                vuelosPasados.Add(reserva.miVuelo);
+            }
+
+
+        }
+        return vuelosPasados;
+    }
+
+    public List<Hotel> getHoteles()
+    {
+        return hoteles.ToList();
+    }
+
+    public void setHotel(Hotel hotel)
+    {
+        hoteles.Add(hotel);
+    }
 }
