@@ -96,7 +96,9 @@
             // ciudadesToolStripMenuItem
             // 
             ciudadesToolStripMenuItem.Name = "ciudadesToolStripMenuItem";
+
             ciudadesToolStripMenuItem.Size = new Size(180, 22);
+
             ciudadesToolStripMenuItem.Text = "Ciudades";
             // 
             // opcionesUsuarioComunToolStripMenuItem
@@ -119,6 +121,7 @@
             cargarCreditoToolStripMenuItem.Name = "cargarCreditoToolStripMenuItem";
             cargarCreditoToolStripMenuItem.Size = new Size(149, 22);
             cargarCreditoToolStripMenuItem.Text = "Cargar credito";
+            cargarCreditoToolStripMenuItem.Click += cargarCreditoToolStripMenuItem_Click;
             // 
             // misreservashotelesToolStripMenuItem
             // 
@@ -189,13 +192,17 @@
             // reservarVueloToolStripMenuItem
             // 
             reservarVueloToolStripMenuItem.Name = "reservarVueloToolStripMenuItem";
+
             reservarVueloToolStripMenuItem.Size = new Size(150, 22);
+
             reservarVueloToolStripMenuItem.Text = "Reservar vuelo";
             // 
             // reservarHotelToolStripMenuItem
             // 
             reservarHotelToolStripMenuItem.Name = "reservarHotelToolStripMenuItem";
+
             reservarHotelToolStripMenuItem.Size = new Size(150, 22);
+
             reservarHotelToolStripMenuItem.Text = "Reservar Hotel";
             // 
             // cerrarSesionToolStripMenuItem
@@ -209,7 +216,9 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
+
             ClientSize = new Size(959, 449);
+
             Controls.Add(menuStrip1);
             MainMenuStrip = menuStrip1;
             Name = "MenuAgencia";

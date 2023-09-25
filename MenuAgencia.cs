@@ -19,6 +19,7 @@ namespace tpAgencia_Gpo_2
         private Form1 Form1;
         private FormCiudad formCiudad;
         private BuscadorVuelos buscadorVuelos;
+        private FormUsuarioSimple usuarioSimple;
         private FormMisVuelos misVuelos;
         private FormReporteHoteles FormReporteHoteles;
 
@@ -49,6 +50,11 @@ namespace tpAgencia_Gpo_2
             buscadorVuelos.MdiParent = form1;
             buscadorVuelos.TransfEventoBuscadorVuelos += TransfDelegadoBuscadorVuelos;
 
+
+            usuarioSimple = new FormUsuarioSimple(agencia);
+            usuarioSimple.MdiParent = form1;
+            usuarioSimple.TransfEventoFormUsuarioSimple += TransfDelegadoFormUsuarioSimple;
+
             misVuelos = new FormMisVuelos(agencia, form1);
             misVuelos.MdiParent = form1;
             misVuelos.TransfEventoMisVuelos += TransfDelegadoMisVuelos;
@@ -56,6 +62,7 @@ namespace tpAgencia_Gpo_2
             FormReporteHoteles = new FormReporteHoteles(agencia, form1);
             FormReporteHoteles.MdiParent = form1;
             FormReporteHoteles.TransfEventoFormCiudad += TransfDelegadoReporteHoteles;
+
         }
 
         private void validacionPermisos()
@@ -131,6 +138,16 @@ namespace tpAgencia_Gpo_2
             buscadorVuelos.Show();
         }
 
+
+        private void TransfDelegadoFormUsuarioSimple()
+        {
+            this.MdiParent = Form1;
+            this.Close();
+            usuarioSimple = new FormUsuarioSimple(Agencia);
+            usuarioSimple.Show();
+            
+        }
+
         private void TransfDelegadoMisVuelos()
         {
             this.MdiParent = Form1;
@@ -147,6 +164,7 @@ namespace tpAgencia_Gpo_2
             FormReporteHoteles.Show();
         }
 
+
         private void usuariosToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.TransfDelegadoFormUsuario();
@@ -162,6 +180,11 @@ namespace tpAgencia_Gpo_2
             this.TransfDelegadoFormCiudad();
         }
 
+
+        private void cargarCreditoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.TransfDelegadoFormUsuarioSimple();
+
         private void misvuelosencualviajeToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.TransfDelegadoMisVuelos();
@@ -170,6 +193,7 @@ namespace tpAgencia_Gpo_2
         private void hotelesToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.TransfDelegadoReporteHoteles();
+
         }
     }
 }

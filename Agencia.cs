@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Microsoft.VisualBasic.ApplicationServices;
+using System;
+using System.Net;
+using System.Xml.Linq;
 using tpAgencia_Gpo_2;
 
 public class Agencia
@@ -51,6 +54,13 @@ public class Agencia
     public Usuario? getUsuarioActual()
     {
         return this.usuarioActual;
+    }
+    
+    public bool setUsuarioActual(Usuario usuarioActual)
+    {
+        //cree este metodo solo para hacer pruebas en mi vista de usuario
+        this.usuarioActual = usuarioActual;
+        return true;
     }
 
     public List<Usuario> getListUsuario()
@@ -186,6 +196,19 @@ public class Agencia
     public string? nombreLogueado()
     {
         return this.usuarioActual?.name;
+    }
+
+    public bool modificarPassword(int id, string pass)
+    {
+        foreach (Usuario user in listUsuarios)
+        {
+            if (user.id == id )
+            {
+                user.password = pass;
+                return true;
+            }
+        }
+        return false;
 
     }
 
