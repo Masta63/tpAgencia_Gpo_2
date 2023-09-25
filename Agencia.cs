@@ -202,7 +202,7 @@ public class Agencia
     {
         foreach (Usuario user in listUsuarios)
         {
-            if (user.id == id && user.password == pass)
+            if (user.id == id )
             {
                 user.password = pass;
                 return true;

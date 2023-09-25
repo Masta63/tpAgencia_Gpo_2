@@ -16,38 +16,30 @@ namespace tpAgencia_Gpo_2
             this.WindowState = FormWindowState.Maximized;
             Agencia = new Agencia();
             Agencia.setUsuario(new Usuario(1, "pepe", "popo", "29111222", "Juan@pepe.com", "1234", true));
-            Agencia.setUsuarioActual(new Usuario(1, "pepe", "popo", "29111222", "Juan@pepe.com", "1234", true));
-            //verificar si el usuario actual esta bien
+            Agencia.setUsuario(new Usuario(2, "juana", "lola", "33333333", "Juana@lola.com", "1234", true));
+            Agencia.setUsuario(new Usuario(3, "pablo", "lopez", "22222222", "Pablo@lopez.com", "1234", true));
+            Agencia.setUsuario(new Usuario(4, "pablo", "lopez", "22222222", "admin@admin.com", "1234", true));
 
+            Agencia.setCiudad(new Ciudad(1, "Bariloche"));
+            Agencia.setCiudad(new Ciudad(2, "Mendoza"));
+            Agencia.setCiudad(new Ciudad(3, "Buenos Aires"));
 
-            //Agencia.setUsuario(new Usuario(2, "juana", "lola", "33333333", "Juana@lola.com", "1234", true));
-            //Agencia.setUsuario(new Usuario(3, "pablo", "lopez", "22222222", "Pablo@lopez.com", "1234", true));
+            Login = new Login(Agencia);
+            Login.MdiParent = this;
+            Login.TransfEventoLogin += TransfDelegadoLogin;
+            Login.Show();
 
-            //Agencia.setCiudad(new Ciudad(1, "Bariloche"));
-            //Agencia.setCiudad(new Ciudad(2, "Mendoza"));
-            //Agencia.setCiudad(new Ciudad(3, "Buenos Aires"));
-
-            //Login = new Login(Agencia);
-            //Login.MdiParent = this;
-            //Login.TransfEventoLogin += TransfDelegadoLogin;
-            //Login.Show();
-
-            usuarioSimple = new FormUsuarioSimple(Agencia);
-            usuarioSimple.MdiParent = this;
-            //Login.TransfEventoLogin += TransfDelegadoLogin;
-            usuarioSimple.Show();
-
+            
 
             //Vuelos hardcodeados
 
-            //Agencia.agregarVuelo(Agencia.GetCiudades()[0], Agencia.GetCiudades()[1], 20, 50000, DateTime.Now, "AA", "Airbus");
-            //Agencia.agregarVuelo(Agencia.GetCiudades()[1], Agencia.GetCiudades()[2], 50, 100000, DateTime.Now, "AA", "Airbus320");
+            Agencia.agregarVuelo(Agencia.GetCiudades()[0], Agencia.GetCiudades()[1], 20, 50000, new DateTime(2023, 10, 30), "AA", "Airbus");
+            Agencia.agregarVuelo(Agencia.GetCiudades()[1], Agencia.GetCiudades()[2], 50, 100000, new DateTime(2023, 10, 20), "AA", "Airbus320");
+            Agencia.agregarVuelo(Agencia.GetCiudades()[2], Agencia.GetCiudades()[0], 2, 200000, new DateTime(2023, 10, 10), "JetSmart", "Airbus300");
+            Agencia.agregarVuelo(Agencia.GetCiudades()[0], Agencia.GetCiudades()[1], 2, 200000, new DateTime(2023, 09, 10), "JetSmart", "Airbus300");
 
 
-            //hijoVuelo = new FormVuelo(agencia);
-            //hijoVuelo.MdiParent = this;
-            ////hijoVuelo.TransfEvento += TransfDelegado;
-            //hijoVuelo.Show();
+
         }
 
 

@@ -51,6 +51,7 @@
             label_datos_personales = new Label();
             label_ver_saldo_credito = new Label();
             label_set_usuario_actual = new Label();
+            Volver_desde_usuario = new Button();
             SuspendLayout();
             // 
             // label_bienvenido_client
@@ -253,12 +254,24 @@
             label_set_usuario_actual.TabIndex = 54;
             label_set_usuario_actual.Text = "label1";
             // 
+            // Volver_desde_usuario
+            // 
+            Volver_desde_usuario.BackColor = Color.FromArgb(192, 255, 255);
+            Volver_desde_usuario.Location = new Point(38, 393);
+            Volver_desde_usuario.Name = "Volver_desde_usuario";
+            Volver_desde_usuario.Size = new Size(75, 23);
+            Volver_desde_usuario.TabIndex = 55;
+            Volver_desde_usuario.Text = "Volver";
+            Volver_desde_usuario.UseVisualStyleBackColor = false;
+            Volver_desde_usuario.Click += Volver_desde_usuario_Click;
+            // 
             // FormUsuarioSimple
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1204, 450);
             ControlBox = false;
+            Controls.Add(Volver_desde_usuario);
             Controls.Add(label_set_usuario_actual);
             Controls.Add(label_ver_saldo_credito);
             Controls.Add(label_datos_personales);
@@ -314,5 +327,6 @@
         private Label label_datos_personales;
         private Label label_ver_saldo_credito;
         private Label label_set_usuario_actual;
+        private Button Volver_desde_usuario;
     }
 }
