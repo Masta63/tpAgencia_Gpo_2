@@ -30,14 +30,14 @@ namespace tpAgencia_Gpo_2
 
 
         //metodos constructores
-        public Hotel(int id, Ciudad ubicacion, int capacidad, double costo, string nombre, List<Usuario> listHuespedes, List<ReservaHotel> listMisReservas)
+        public Hotel(int id, Ciudad ubicacion, int capacidad, double costo, string nombre)
         {
             this.id = id;
             this.ubicacion = ubicacion;
             this.capacidad = capacidad;
             this.costo = costo;
-            this.listHuespedes = listHuespedes;
-            this.listMisReservas = listMisReservas;
+            listHuespedes = new List<Usuario>();
+            listMisReservas = new List<ReservaHotel>();
             this.nombre = nombre;
         }
 
