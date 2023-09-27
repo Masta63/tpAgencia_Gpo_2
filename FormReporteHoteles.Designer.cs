@@ -51,6 +51,8 @@
             labelTituloComprar = new Label();
             labelIdComprar = new Label();
             labelNombreHotel = new Label();
+            TextMonto = new TextBox();
+            label5 = new Label();
             ((System.ComponentModel.ISupportInitialize)dataGridViewHotel).BeginInit();
             SuspendLayout();
             // 
@@ -80,7 +82,7 @@
             // 
             // botonBuscar
             // 
-            botonBuscar.Location = new Point(614, 244);
+            botonBuscar.Location = new Point(707, 273);
             botonBuscar.Name = "botonBuscar";
             botonBuscar.Size = new Size(75, 23);
             botonBuscar.TabIndex = 5;
@@ -233,11 +235,29 @@
             labelNombreHotel.Size = new Size(0, 15);
             labelNombreHotel.TabIndex = 37;
             // 
+            // TextMonto
+            // 
+            TextMonto.Location = new Point(601, 245);
+            TextMonto.Name = "TextMonto";
+            TextMonto.Size = new Size(100, 23);
+            TextMonto.TabIndex = 38;
+            // 
+            // label5
+            // 
+            label5.AutoSize = true;
+            label5.Location = new Point(552, 248);
+            label5.Name = "label5";
+            label5.Size = new Size(43, 15);
+            label5.TabIndex = 39;
+            label5.Text = "Monto";
+            // 
             // FormReporteHoteles
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(701, 471);
+            ClientSize = new Size(878, 471);
+            Controls.Add(label5);
+            Controls.Add(TextMonto);
             Controls.Add(labelNombreHotel);
             Controls.Add(labelIdComprar);
             Controls.Add(labelTituloComprar);
@@ -287,5 +307,7 @@
         private Label labelTituloComprar;
         private Label labelIdComprar;
         private Label labelNombreHotel;
+        private TextBox TextMonto;
+        private Label label5;
     }
 }

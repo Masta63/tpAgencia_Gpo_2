@@ -19,6 +19,7 @@ namespace tpAgencia_Gpo_2
         public TransfDelegadoFormReporteHoteles TransfEventoFormCiudad;
         private Agencia Agencia;
         private Form1 Form1;
+        private FormReservaHotel FormReservaHotel;
         public FormReporteHoteles(Agencia agencia, Form1 form1)
         {
             InitializeComponent();
@@ -186,17 +187,32 @@ namespace tpAgencia_Gpo_2
 
         }
 
+        private void irAreservar(ReservaHotel reservaHotel)
+        {
+            this.MdiParent = Form1;
+            this.Close();
+            FormReservaHotel = new FormReservaHotel(Agencia, Form1, reservaHotel, textCantPer.Text);
+            FormReservaHotel.Show();
+        }
+
         private void buttonComprar_Click(object sender, EventArgs e)
         {
+            if (string.IsNullOrEmpty(labelIdComprar.Text))
+                MessageBox.Show("Debe seleccionar una reserva para comprar");
 
+            if (string.IsNullOrEmpty(TextMonto.Text))
+                MessageBox.Show("Debe seleccionar una monto para comprar");
 
-
-
+            if (!string.IsNullOrEmpty(labelIdComprar.Text) && !string.IsNullOrEmpty(TextMonto.Text))
+            {
+                Hotel? hotelSeleccionado = Agencia.getHoteles().Where(x => x.id == Convert.ToInt32(labelIdComprar.Text)).FirstOrDefault();
+                ReservaHotel reservaHotel = new ReservaHotel(hotelSeleccionado, Agencia.getUsuarioActual(), fechaDesde.Value, fechaHasta.Value, Convert.ToInt32(TextMonto.Text));
+                this.irAreservar(reservaHotel);
+            }
         }
 
         private void Volver_desde_usuario_Click(object sender, EventArgs e)
         {
-            this.Close();
             MenuAgencia MenuAgencia = new MenuAgencia(Agencia, Form1);
             MenuAgencia.MdiParent = Form1;
             MenuAgencia.Show();

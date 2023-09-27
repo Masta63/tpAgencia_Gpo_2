@@ -17,12 +17,23 @@ namespace tpAgencia_Gpo_2
         public TransfDelegadoFormAltaReserva transfDelegadoFormAltaReserva;
         private Agencia Agencia;
         private Form1 Form1;
-        public FormReservaHotel(Agencia agencia, Form1 form1)
+        public FormReservaHotel(Agencia agencia, Form1 form1, ReservaHotel? reservaHotel, string cantHuesp)
         {
             InitializeComponent();
             this.Agencia = agencia;
             armarComboHoteles();
             this.Form1 = form1;
+
+            if (reservaHotel != null)
+            {
+                boxHoteles.Text = reservaHotel.miHotel.nombre;
+                fechaDesde.Value = reservaHotel.fechaDesde;
+                fechaHasta.Value = reservaHotel.fechaHasta;
+                textBoxMonto.Text = Convert.ToString(reservaHotel.pagado);
+                textCantPer.Text = cantHuesp;
+                dataGridViewHotel.Rows.Add(new string[] { reservaHotel.miHotel.nombre, Convert.ToString(reservaHotel.pagado), Convert.ToString(reservaHotel.miHotel.capacidad), reservaHotel.fechaDesde.ToLongTimeString(), reservaHotel.fechaHasta.ToLongTimeString() });
+            }
+
         }
 
         private void armarComboHoteles()
@@ -83,7 +94,7 @@ namespace tpAgencia_Gpo_2
                 if (!estaRango && Convert.ToInt32(textCantPer.Text) <= hotelSeleccionado.capacidad && hotelSeleccionado.costo == Convert.ToDouble(textBoxMonto.Text))
                 {
                     reservaHotel = new ReservaHotel(hotelSeleccionado, Agencia.getUsuarioActual(), fechaEgreso, fechaIngreso, Convert.ToDouble(textBoxMonto.Text));
-                    hotelSeleccionado.capacidad--;
+                    hotelSeleccionado.capacidad = hotelSeleccionado.capacidad - Convert.ToInt32(textCantPer.Text);
                     Agencia.setReservasHotel(reservaHotel);
                 }
 
