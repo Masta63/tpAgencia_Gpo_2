@@ -180,7 +180,7 @@ namespace tpAgencia_Gpo_2
                     int id = int.Parse(textBoxId.Text);
 
 
-                    if (agencia.modificarHotel(id, ciudadHospedaje1, capacidad, costo, textBoxNombre.Text))
+                    if (agencia.modificarHotel(hotelSeleccionado, ciudadHospedaje1, capacidad, costo, textBoxNombre.Text))
                     {
                         MessageBox.Show("Datos del hotel modificado exitosamente");
                     }
