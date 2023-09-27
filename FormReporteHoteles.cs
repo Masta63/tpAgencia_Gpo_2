@@ -163,7 +163,17 @@ namespace tpAgencia_Gpo_2
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
+            try
+            {
+                string? id = dataGridViewHotel?[0, e.RowIndex]?.Value?.ToString();
+                string? nombre = dataGridViewHotel?[1, e.RowIndex]?.Value?.ToString();
 
+                labelIdComprar.Text = id;
+                labelNombreHotel.Text = nombre;
+            }
+            catch (Exception)
+            {
+            }
         }
 
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
@@ -178,6 +188,9 @@ namespace tpAgencia_Gpo_2
 
         private void buttonComprar_Click(object sender, EventArgs e)
         {
+
+
+
 
         }
 

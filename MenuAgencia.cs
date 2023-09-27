@@ -22,6 +22,7 @@ namespace tpAgencia_Gpo_2
         private FormUsuarioSimple usuarioSimple;
         private FormMisVuelos misVuelos;
         private FormReporteHoteles FormReporteHoteles;
+        private FormReservaHotel FormReservaHotel;
 
         public MenuAgencia(Agencia agencia, Form1 form1)
         {
@@ -51,7 +52,7 @@ namespace tpAgencia_Gpo_2
             buscadorVuelos.TransfEventoBuscadorVuelos += TransfDelegadoBuscadorVuelos;
 
 
-            usuarioSimple = new FormUsuarioSimple(agencia,form1);
+            usuarioSimple = new FormUsuarioSimple(agencia, form1);
             usuarioSimple.MdiParent = form1;
             usuarioSimple.TransfEventoFormUsuarioSimple += TransfDelegadoFormUsuarioSimple;
 
@@ -62,6 +63,10 @@ namespace tpAgencia_Gpo_2
             FormReporteHoteles = new FormReporteHoteles(agencia, form1);
             FormReporteHoteles.MdiParent = form1;
             FormReporteHoteles.TransfEventoFormCiudad += TransfDelegadoReporteHoteles;
+
+            FormReservaHotel = new FormReservaHotel(agencia, form1);
+            FormReporteHoteles.MdiParent = form1;
+            FormReservaHotel.transfDelegadoFormAltaReserva += TransfDelegadoAltaReservaHotel;
 
         }
 
@@ -143,9 +148,9 @@ namespace tpAgencia_Gpo_2
         {
             this.MdiParent = Form1;
             this.Close();
-            usuarioSimple = new FormUsuarioSimple(Agencia,Form1);
+            usuarioSimple = new FormUsuarioSimple(Agencia, Form1);
             usuarioSimple.Show();
-            
+
         }
 
         private void TransfDelegadoMisVuelos()
@@ -162,6 +167,14 @@ namespace tpAgencia_Gpo_2
             this.Close();
             FormReporteHoteles = new FormReporteHoteles(Agencia, Form1);
             FormReporteHoteles.Show();
+        }
+
+        private void TransfDelegadoAltaReservaHotel()
+        {
+            this.MdiParent = Form1;
+            this.Close();
+            FormReservaHotel = new FormReservaHotel(Agencia, Form1);
+            FormReservaHotel.Show();
         }
 
 
@@ -194,6 +207,11 @@ namespace tpAgencia_Gpo_2
         {
             this.TransfDelegadoReporteHoteles();
 
+        }
+
+        private void reservarHotelToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.TransfDelegadoAltaReservaHotel();
         }
     }
 }

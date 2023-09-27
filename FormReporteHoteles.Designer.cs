@@ -48,6 +48,9 @@
             buttonComprar = new Button();
             Volver_desde_usuario = new Button();
             tituloreporte = new Label();
+            labelTituloComprar = new Label();
+            labelIdComprar = new Label();
+            labelNombreHotel = new Label();
             ((System.ComponentModel.ISupportInitialize)dataGridViewHotel).BeginInit();
             SuspendLayout();
             // 
@@ -205,11 +208,39 @@
             tituloreporte.TabIndex = 34;
             tituloreporte.Text = "Reservas hotel";
             // 
+            // labelTituloComprar
+            // 
+            labelTituloComprar.AutoSize = true;
+            labelTituloComprar.Location = new Point(104, 248);
+            labelTituloComprar.Name = "labelTituloComprar";
+            labelTituloComprar.Size = new Size(57, 15);
+            labelTituloComprar.TabIndex = 35;
+            labelTituloComprar.Text = "Comprar:";
+            // 
+            // labelIdComprar
+            // 
+            labelIdComprar.AutoSize = true;
+            labelIdComprar.Location = new Point(167, 248);
+            labelIdComprar.Name = "labelIdComprar";
+            labelIdComprar.Size = new Size(0, 15);
+            labelIdComprar.TabIndex = 36;
+            // 
+            // labelNombreHotel
+            // 
+            labelNombreHotel.AutoSize = true;
+            labelNombreHotel.Location = new Point(204, 248);
+            labelNombreHotel.Name = "labelNombreHotel";
+            labelNombreHotel.Size = new Size(0, 15);
+            labelNombreHotel.TabIndex = 37;
+            // 
             // FormReporteHoteles
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(701, 471);
+            Controls.Add(labelNombreHotel);
+            Controls.Add(labelIdComprar);
+            Controls.Add(labelTituloComprar);
             Controls.Add(tituloreporte);
             Controls.Add(Volver_desde_usuario);
             Controls.Add(buttonComprar);
@@ -253,5 +284,8 @@
         private DataGridViewTextBoxColumn FHasta;
         private Button Volver_desde_usuario;
         private Label tituloreporte;
+        private Label labelTituloComprar;
+        private Label labelIdComprar;
+        private Label labelNombreHotel;
     }
 }

@@ -82,23 +82,21 @@
             // hotelesToolStripMenuItem
             // 
             hotelesToolStripMenuItem.Name = "hotelesToolStripMenuItem";
-            hotelesToolStripMenuItem.Size = new Size(180, 22);
+            hotelesToolStripMenuItem.Size = new Size(123, 22);
             hotelesToolStripMenuItem.Text = "Hoteles";
             hotelesToolStripMenuItem.Click += hotelesToolStripMenuItem_Click;
             // 
             // personasToolStripMenuItem
             // 
             personasToolStripMenuItem.Name = "personasToolStripMenuItem";
-            personasToolStripMenuItem.Size = new Size(180, 22);
+            personasToolStripMenuItem.Size = new Size(123, 22);
             personasToolStripMenuItem.Text = "Vuelos";
             personasToolStripMenuItem.Click += personasToolStripMenuItem_Click;
             // 
             // ciudadesToolStripMenuItem
             // 
             ciudadesToolStripMenuItem.Name = "ciudadesToolStripMenuItem";
-
-            ciudadesToolStripMenuItem.Size = new Size(180, 22);
-
+            ciudadesToolStripMenuItem.Size = new Size(123, 22);
             ciudadesToolStripMenuItem.Text = "Ciudades";
             // 
             // opcionesUsuarioComunToolStripMenuItem
@@ -192,18 +190,15 @@
             // reservarVueloToolStripMenuItem
             // 
             reservarVueloToolStripMenuItem.Name = "reservarVueloToolStripMenuItem";
-
-            reservarVueloToolStripMenuItem.Size = new Size(150, 22);
-
+            reservarVueloToolStripMenuItem.Size = new Size(180, 22);
             reservarVueloToolStripMenuItem.Text = "Reservar vuelo";
             // 
             // reservarHotelToolStripMenuItem
             // 
             reservarHotelToolStripMenuItem.Name = "reservarHotelToolStripMenuItem";
-
-            reservarHotelToolStripMenuItem.Size = new Size(150, 22);
-
+            reservarHotelToolStripMenuItem.Size = new Size(180, 22);
             reservarHotelToolStripMenuItem.Text = "Reservar Hotel";
+            reservarHotelToolStripMenuItem.Click += reservarHotelToolStripMenuItem_Click;
             // 
             // cerrarSesionToolStripMenuItem
             // 
@@ -216,9 +211,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-
             ClientSize = new Size(959, 449);
-
             Controls.Add(menuStrip1);
             MainMenuStrip = menuStrip1;
             Name = "MenuAgencia";

@@ -55,7 +55,7 @@ public class Agencia
     {
         return this.usuarioActual;
     }
-    
+
     public bool setUsuarioActual(Usuario usuarioActual)
     {
         //cree este metodo solo para hacer pruebas en mi vista de usuario
@@ -202,7 +202,7 @@ public class Agencia
     {
         foreach (Usuario user in listUsuarios)
         {
-            if (user.id == id )
+            if (user.id == id)
             {
                 user.password = pass;
                 return true;
@@ -349,5 +349,14 @@ public class Agencia
     public void setHotel(Hotel hotel)
     {
         hoteles.Add(hotel);
+    }
+
+    public void setReservasHotel(ReservaHotel reservaHotel)
+    {
+        reservasHotel.Add(reservaHotel);
+    }
+    public List<ReservaHotel>  getReservasHotel()
+    {
+        return reservasHotel.ToList();
     }
 }
