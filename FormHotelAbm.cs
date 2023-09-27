@@ -173,7 +173,7 @@ namespace tpAgencia_Gpo_2
             {
                 try
                 {
-                    string ubicacion1 = comboBoxHospedaje.Text;
+                    var ubicacion1 = comboBoxHospedaje.Text;
                     Ciudad ciudadHospedaje1 = agencia.GetCiudades().FirstOrDefault(ciudad => ciudad.nombre == ubicacion1);
                     int capacidad = int.Parse(textBoxCapacidad.Text);
                     double costo = double.Parse(textBoxCosto.Text);
