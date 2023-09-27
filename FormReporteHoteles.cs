@@ -187,11 +187,11 @@ namespace tpAgencia_Gpo_2
 
         }
 
-        private void irAreservar(ReservaHotel reservaHotel)
+        private void irAreservar(ReservaHotel reservaHotel, string cantPer)
         {
             this.MdiParent = Form1;
             this.Close();
-            FormReservaHotel = new FormReservaHotel(Agencia, Form1, reservaHotel, textCantPer.Text);
+            FormReservaHotel = new FormReservaHotel(Agencia, Form1, reservaHotel, cantPer);
             FormReservaHotel.Show();
         }
 
@@ -207,7 +207,7 @@ namespace tpAgencia_Gpo_2
             {
                 Hotel? hotelSeleccionado = Agencia.getHoteles().Where(x => x.id == Convert.ToInt32(labelIdComprar.Text)).FirstOrDefault();
                 ReservaHotel reservaHotel = new ReservaHotel(hotelSeleccionado, Agencia.getUsuarioActual(), fechaDesde.Value, fechaHasta.Value, Convert.ToInt32(TextMonto.Text));
-                this.irAreservar(reservaHotel);
+                this.irAreservar(reservaHotel, textCantPer.Text);
             }
         }
 
