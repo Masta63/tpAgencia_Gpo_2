@@ -118,7 +118,7 @@
             // 
             // textBoxId
             // 
-            textBoxId.BackColor = SystemColors.ButtonShadow;
+            textBoxId.BackColor = Color.Silver;
             textBoxId.Enabled = false;
             textBoxId.Location = new Point(561, 46);
             textBoxId.Name = "textBoxId";
