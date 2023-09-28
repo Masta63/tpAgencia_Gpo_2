@@ -185,32 +185,35 @@
             // 
             // buttonAgregar
             // 
+            buttonAgregar.BackColor = Color.FromArgb(128, 255, 128);
             buttonAgregar.Location = new Point(508, 401);
             buttonAgregar.Name = "buttonAgregar";
             buttonAgregar.Size = new Size(75, 23);
             buttonAgregar.TabIndex = 14;
             buttonAgregar.Text = "Agregar";
-            buttonAgregar.UseVisualStyleBackColor = true;
+            buttonAgregar.UseVisualStyleBackColor = false;
             buttonAgregar.Click += buttonAgregar_Click;
             // 
             // buttonModificar
             // 
+            buttonModificar.BackColor = Color.FromArgb(255, 255, 128);
             buttonModificar.Location = new Point(602, 401);
             buttonModificar.Name = "buttonModificar";
             buttonModificar.Size = new Size(75, 23);
             buttonModificar.TabIndex = 15;
             buttonModificar.Text = "Modificar";
-            buttonModificar.UseVisualStyleBackColor = true;
+            buttonModificar.UseVisualStyleBackColor = false;
             buttonModificar.Click += buttonModificar_Click;
             // 
             // buttonCancelar
             // 
+            buttonCancelar.BackColor = Color.FromArgb(255, 128, 128);
             buttonCancelar.Location = new Point(695, 401);
             buttonCancelar.Name = "buttonCancelar";
             buttonCancelar.Size = new Size(75, 23);
             buttonCancelar.TabIndex = 16;
             buttonCancelar.Text = "Eliminar";
-            buttonCancelar.UseVisualStyleBackColor = true;
+            buttonCancelar.UseVisualStyleBackColor = false;
             buttonCancelar.Click += buttonCancelar_Click;
             // 
             // label6
@@ -225,12 +228,13 @@
             // 
             // buttonVolver
             // 
+            buttonVolver.BackColor = Color.FromArgb(128, 255, 255);
             buttonVolver.Location = new Point(21, 401);
             buttonVolver.Name = "buttonVolver";
             buttonVolver.Size = new Size(75, 23);
             buttonVolver.TabIndex = 18;
             buttonVolver.Text = "Volver";
-            buttonVolver.UseVisualStyleBackColor = true;
+            buttonVolver.UseVisualStyleBackColor = false;
             buttonVolver.Click += buttonVolver_Click;
             // 
             // textBoxCapacidad
