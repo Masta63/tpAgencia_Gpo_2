@@ -48,6 +48,11 @@
             buttonComprar = new Button();
             Volver_desde_usuario = new Button();
             tituloreporte = new Label();
+            labelTituloComprar = new Label();
+            labelIdComprar = new Label();
+            labelNombreHotel = new Label();
+            TextMonto = new TextBox();
+            label5 = new Label();
             ((System.ComponentModel.ISupportInitialize)dataGridViewHotel).BeginInit();
             SuspendLayout();
             // 
@@ -77,7 +82,7 @@
             // 
             // botonBuscar
             // 
-            botonBuscar.Location = new Point(614, 244);
+            botonBuscar.Location = new Point(707, 273);
             botonBuscar.Name = "botonBuscar";
             botonBuscar.Size = new Size(75, 23);
             botonBuscar.TabIndex = 5;
@@ -176,7 +181,7 @@
             // 
             // buttonComprar
             // 
-            buttonComprar.Location = new Point(12, 244);
+            buttonComprar.Location = new Point(12, 245);
             buttonComprar.Name = "buttonComprar";
             buttonComprar.Size = new Size(75, 23);
             buttonComprar.TabIndex = 12;
@@ -205,11 +210,57 @@
             tituloreporte.TabIndex = 34;
             tituloreporte.Text = "Reservas hotel";
             // 
+            // labelTituloComprar
+            // 
+            labelTituloComprar.AutoSize = true;
+            labelTituloComprar.Location = new Point(93, 247);
+            labelTituloComprar.Name = "labelTituloComprar";
+            labelTituloComprar.Size = new Size(125, 15);
+            labelTituloComprar.TabIndex = 35;
+            labelTituloComprar.Text = "Comprar por n° Hotel:";
+            // 
+            // labelIdComprar
+            // 
+            labelIdComprar.AutoSize = true;
+            labelIdComprar.Location = new Point(219, 248);
+            labelIdComprar.Name = "labelIdComprar";
+            labelIdComprar.Size = new Size(0, 15);
+            labelIdComprar.TabIndex = 36;
+            // 
+            // labelNombreHotel
+            // 
+            labelNombreHotel.AutoSize = true;
+            labelNombreHotel.Location = new Point(256, 248);
+            labelNombreHotel.Name = "labelNombreHotel";
+            labelNombreHotel.Size = new Size(0, 15);
+            labelNombreHotel.TabIndex = 37;
+            // 
+            // TextMonto
+            // 
+            TextMonto.Location = new Point(601, 245);
+            TextMonto.Name = "TextMonto";
+            TextMonto.Size = new Size(100, 23);
+            TextMonto.TabIndex = 38;
+            // 
+            // label5
+            // 
+            label5.AutoSize = true;
+            label5.Location = new Point(552, 248);
+            label5.Name = "label5";
+            label5.Size = new Size(43, 15);
+            label5.TabIndex = 39;
+            label5.Text = "Monto";
+            // 
             // FormReporteHoteles
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(701, 471);
+            ClientSize = new Size(878, 471);
+            Controls.Add(label5);
+            Controls.Add(TextMonto);
+            Controls.Add(labelNombreHotel);
+            Controls.Add(labelIdComprar);
+            Controls.Add(labelTituloComprar);
             Controls.Add(tituloreporte);
             Controls.Add(Volver_desde_usuario);
             Controls.Add(buttonComprar);
@@ -253,5 +304,10 @@
         private DataGridViewTextBoxColumn FHasta;
         private Button Volver_desde_usuario;
         private Label tituloreporte;
+        private Label labelTituloComprar;
+        private Label labelIdComprar;
+        private Label labelNombreHotel;
+        private TextBox TextMonto;
+        private Label label5;
     }
 }

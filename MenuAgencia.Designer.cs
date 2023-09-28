@@ -47,9 +47,6 @@
             hotelesToolStripMenuItem1 = new ToolStripMenuItem();
             ciudadesToolStripMenuItem1 = new ToolStripMenuItem();
             usuariosToolStripMenuItem = new ToolStripMenuItem();
-            reservasToolStripMenuItem = new ToolStripMenuItem();
-            reservarVueloToolStripMenuItem = new ToolStripMenuItem();
-            reservarHotelToolStripMenuItem = new ToolStripMenuItem();
             cerrarSesionToolStripMenuItem = new ToolStripMenuItem();
             menuStrip1.SuspendLayout();
             SuspendLayout();
@@ -63,7 +60,7 @@
             // menuStrip1
             // 
             menuStrip1.ImageScalingSize = new Size(24, 24);
-            menuStrip1.Items.AddRange(new ToolStripItem[] { altasToolStripMenuItem, opcionesUsuarioComunToolStripMenuItem, aBMToolStripMenuItem, reservasToolStripMenuItem, cerrarSesionToolStripMenuItem });
+            menuStrip1.Items.AddRange(new ToolStripItem[] { altasToolStripMenuItem, opcionesUsuarioComunToolStripMenuItem, aBMToolStripMenuItem, cerrarSesionToolStripMenuItem });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
             menuStrip1.Size = new Size(959, 24);
@@ -119,6 +116,7 @@
             cargarCreditoToolStripMenuItem.Name = "cargarCreditoToolStripMenuItem";
             cargarCreditoToolStripMenuItem.Size = new Size(149, 22);
             cargarCreditoToolStripMenuItem.Text = "Cargar credito";
+            cargarCreditoToolStripMenuItem.Click += cargarCreditoToolStripMenuItem_Click;
             // 
             // misreservashotelesToolStripMenuItem
             // 
@@ -180,25 +178,6 @@
             usuariosToolStripMenuItem.Text = "Usuarios";
             usuariosToolStripMenuItem.Click += usuariosToolStripMenuItem_Click;
             // 
-            // reservasToolStripMenuItem
-            // 
-            reservasToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { reservarVueloToolStripMenuItem, reservarHotelToolStripMenuItem });
-            reservasToolStripMenuItem.Name = "reservasToolStripMenuItem";
-            reservasToolStripMenuItem.Size = new Size(64, 20);
-            reservasToolStripMenuItem.Text = "Reservas";
-            // 
-            // reservarVueloToolStripMenuItem
-            // 
-            reservarVueloToolStripMenuItem.Name = "reservarVueloToolStripMenuItem";
-            reservarVueloToolStripMenuItem.Size = new Size(150, 22);
-            reservarVueloToolStripMenuItem.Text = "Reservar vuelo";
-            // 
-            // reservarHotelToolStripMenuItem
-            // 
-            reservarHotelToolStripMenuItem.Name = "reservarHotelToolStripMenuItem";
-            reservarHotelToolStripMenuItem.Size = new Size(150, 22);
-            reservarHotelToolStripMenuItem.Text = "Reservar Hotel";
-            // 
             // cerrarSesionToolStripMenuItem
             // 
             cerrarSesionToolStripMenuItem.Name = "cerrarSesionToolStripMenuItem";
@@ -242,9 +221,6 @@
         private ToolStripMenuItem hotelesToolStripMenuItem1;
         private ToolStripMenuItem ciudadesToolStripMenuItem1;
         private ToolStripMenuItem usuariosToolStripMenuItem;
-        private ToolStripMenuItem reservasToolStripMenuItem;
-        private ToolStripMenuItem reservarVueloToolStripMenuItem;
-        private ToolStripMenuItem reservarHotelToolStripMenuItem;
         private ToolStripMenuItem cerrarSesionToolStripMenuItem;
     }
 }
