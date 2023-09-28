@@ -58,7 +58,7 @@ public class Agencia
 
     public bool setUsuarioActual(Usuario usuarioActual)
     {
-        //cree este metodo solo para hacer pruebas en mi vista de usuario
+        //cree este metodo solo para hacer pruebas en mi vista de usuario 
         this.usuarioActual = usuarioActual;
         return true;
     }
