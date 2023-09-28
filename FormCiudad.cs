@@ -33,15 +33,17 @@ namespace tpAgencia_Gpo_2
 
             try
             {
-                int id = Agencia.GetCiudades().OrderByDescending(x => x.id).FirstOrDefault().id + 1;
+                if (Agencia.GetCiudades().OrderByDescending(x => x.id).FirstOrDefault() != null)
+                {
+                    int id = Agencia.GetCiudades().OrderByDescending(x => x.id).FirstOrDefault().id + 1;
+                    Ciudad oCiudad = new Ciudad(Convert.ToInt32(id), txtNombre.Text);
+                    Agencia.setCiudad(oCiudad);
+                    textCiudadId.Text = Convert.ToString(id);
+                    //Validacion para verificar que se cargo correctamente la ciudad
+                    string mensaje = $"Ciudad: {oCiudad.nombre}\n";
 
-                Ciudad oCiudad = new Ciudad(Convert.ToInt32(id), txtNombre.Text);
-                Agencia.setCiudad(oCiudad);
-                textCiudadId.Text = Convert.ToString(id);
-                //Validacion para verificar que se cargo correctamente la ciudad
-                string mensaje = $"Ciudad: {oCiudad.nombre}\n";
-
-                MessageBox.Show(mensaje, "Información de Ciudad");
+                    MessageBox.Show(mensaje, "Información de Ciudad");
+                }
 
             }
             catch (Exception ex)
@@ -68,7 +70,7 @@ namespace tpAgencia_Gpo_2
         {
             try
             {
-                if (Agencia.GetCiudades().Count > 1)
+                if (Agencia.GetCiudades().Count >= 1)
                 {
                     if (Agencia.eliminarCiudad(Convert.ToInt32(ciudadSeleccionada)))
                     {
@@ -80,7 +82,7 @@ namespace tpAgencia_Gpo_2
                         MessageBox.Show("Problemas al eliminar");
                 }
                 else
-                    MessageBox.Show("Debe seleccionar un usuario");
+                    MessageBox.Show("Debe seleccionar una ciudad");
             }
             catch (Exception ex)
             {

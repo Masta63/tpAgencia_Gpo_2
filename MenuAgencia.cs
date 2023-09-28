@@ -23,6 +23,7 @@ namespace tpAgencia_Gpo_2
         private FormMisVuelos misVuelos;
         private FormReporteHoteles FormReporteHoteles;
         private FormReservaHotel FormReservaHotel;
+        private FormReporteCiudad FormReporteCiudad;
 
         public MenuAgencia(Agencia agencia, Form1 form1)
         {
@@ -67,6 +68,10 @@ namespace tpAgencia_Gpo_2
             FormReservaHotel = new FormReservaHotel(agencia, form1, null, string.Empty);
             FormReporteHoteles.MdiParent = form1;
             FormReservaHotel.transfDelegadoFormAltaReserva += TransfDelegadoAltaReservaHotel;
+
+            FormReporteCiudad = new FormReporteCiudad(agencia, form1);
+            FormReporteCiudad.MdiParent = form1;
+            FormReporteCiudad.TransfEventoFormReporteCiudad += TransfDelegadoReporteCiudad;
 
         }
 
@@ -177,6 +182,13 @@ namespace tpAgencia_Gpo_2
             FormReservaHotel.Show();
         }
 
+        private void TransfDelegadoReporteCiudad()
+        {
+            this.MdiParent = Form1;
+            this.Close();
+            FormReporteCiudad = new  FormReporteCiudad(Agencia, Form1);
+            FormReporteCiudad.Show();
+        }
 
         private void usuariosToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -212,6 +224,11 @@ namespace tpAgencia_Gpo_2
         private void reservarHotelToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.TransfDelegadoAltaReservaHotel();
+        }
+
+        private void ciudadesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.TransfDelegadoReporteCiudad();
         }
     }
 }

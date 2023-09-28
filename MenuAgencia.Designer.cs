@@ -95,6 +95,7 @@
             ciudadesToolStripMenuItem.Name = "ciudadesToolStripMenuItem";
             ciudadesToolStripMenuItem.Size = new Size(180, 22);
             ciudadesToolStripMenuItem.Text = "Ciudades";
+            ciudadesToolStripMenuItem.Click += ciudadesToolStripMenuItem_Click;
             // 
             // opcionesUsuarioComunToolStripMenuItem
             // 
