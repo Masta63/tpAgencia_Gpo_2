@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Microsoft.VisualBasic.ApplicationServices;
+using System;
+using System.Net;
+using System.Xml.Linq;
 using tpAgencia_Gpo_2;
 
 public class Agencia
@@ -51,6 +54,13 @@ public class Agencia
     public Usuario? getUsuarioActual()
     {
         return this.usuarioActual;
+    }
+
+    public bool setUsuarioActual(Usuario usuarioActual)
+    {
+        //cree este metodo solo para hacer pruebas en mi vista de usuario
+        this.usuarioActual = usuarioActual;
+        return true;
     }
 
     public List<Usuario> getListUsuario()
@@ -186,6 +196,19 @@ public class Agencia
     public string? nombreLogueado()
     {
         return this.usuarioActual?.name;
+    }
+
+    public bool modificarPassword(int id, string pass)
+    {
+        foreach (Usuario user in listUsuarios)
+        {
+            if (user.id == id)
+            {
+                user.password = pass;
+                return true;
+            }
+        }
+        return false;
 
     }
 
@@ -256,17 +279,17 @@ public class Agencia
         return ciudades.ToList();
     }
     // Reporte de vuelos
-    public List<Vuelo> buscarVuelos(Ciudad origen, Ciudad destino,  DateTime fecha, int cantidadPax)
+    public List<Vuelo> buscarVuelos(Ciudad origen, Ciudad destino, DateTime fecha, int cantidadPax)
     {
         List<Vuelo> vuelosDisponibles = new List<Vuelo>();
-        foreach(Vuelo vuelo in vuelos) 
+        foreach (Vuelo vuelo in vuelos)
         {
 
-            if(vuelo.origen.nombre == origen.nombre && vuelo.destino.nombre == destino.nombre && vuelo.fecha.Date == fecha.Date && vuelo.capacidad >= cantidadPax)
+            if (vuelo.origen.nombre == origen.nombre && vuelo.destino.nombre == destino.nombre && vuelo.fecha.Date == fecha.Date && vuelo.capacidad >= cantidadPax)
             {
                 vuelosDisponibles.Add(vuelo);
             }
-            
+
         }
         return vuelosDisponibles.ToList();
 
@@ -308,14 +331,50 @@ public class Agencia
 
         foreach (ReservaVuelo reserva in usuario.misReservasVuelo)
         {
-           if(reserva.miVuelo.fecha < fechaActual)
+            if (reserva.miVuelo.fecha < fechaActual)
             {
                 vuelosPasados.Add(reserva.miVuelo);
             }
-                
-           
+
+
         }
         return vuelosPasados;
     }
 
+    //METODO DE RESERVA DE VUELO DE LUCAS - REVISAR -
+    public List<Vuelo> misReservasVuelos(Usuario usuario)
+    {
+        DateTime fechaActual = DateTime.Now;
+        List<Vuelo> vuelosReservados = new List<Vuelo>();
+
+        foreach (ReservaVuelo reserva in usuario.misReservasVuelo)
+        {
+            if (reserva.miVuelo.fecha > fechaActual)
+            {
+                vuelosReservados.Add(reserva.miVuelo);
+            }
+
+
+        }
+        return vuelosReservados;
+    }
+
+    public List<Hotel> getHoteles()
+    {
+        return hoteles.ToList();
+    }
+
+    public void setHotel(Hotel hotel)
+    {
+        hoteles.Add(hotel);
+    }
+
+    public void setReservasHotel(ReservaHotel reservaHotel)
+    {
+        reservasHotel.Add(reservaHotel);
+    }
+    public List<ReservaHotel>  getReservasHotel()
+    {
+        return reservasHotel.ToList();
+    }
 }
