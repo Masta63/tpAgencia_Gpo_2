@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.33529.622
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ABM Ciudad", "ABM Ciudad\ABM Ciudad.csproj", "{AAF83DA9-A420-4C50-A5B3-E82F8AD8E7EC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AAF83DA9-A420-4C50-A5B3-E82F8AD8E7EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AAF83DA9-A420-4C50-A5B3-E82F8AD8E7EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AAF83DA9-A420-4C50-A5B3-E82F8AD8E7EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AAF83DA9-A420-4C50-A5B3-E82F8AD8E7EC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {320C474E-74F5-4262-8346-A1EBD848120F}
+	EndGlobalSection
+EndGlobal
