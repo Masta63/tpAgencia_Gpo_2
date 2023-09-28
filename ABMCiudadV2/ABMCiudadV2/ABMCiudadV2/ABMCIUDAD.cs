@@ -8,18 +8,23 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace ABM_Ciudad
+namespace ABMCiudadV2
 {
-    public partial class ABMCiudad : Form
+    public partial class ABMCIUDAD : Form
     {
         List<Ciudad> listaCiudades = new List<Ciudad>();
         public Agencia oAgencia { get; set; }
-        public ABMCiudad()
+        public ABMCIUDAD()
         {
             InitializeComponent();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void ABMCIUDAD_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnAlta_Click(object sender, EventArgs e)
         {
             int codigo = Convert.ToInt32(this.numericID.Value);
             if (listaCiudades.Any(c => c.Id == codigo))
@@ -52,12 +57,6 @@ namespace ABM_Ciudad
 
         }
 
-        public void MostrarDGV()
-        {
-            this.dgvCiudad.DataSource = null;
-            this.dgvCiudad.DataSource = listaCiudades;
-        }
-
         private void btnBaja_Click(object sender, EventArgs e)
         {
             try
@@ -77,6 +76,9 @@ namespace ABM_Ciudad
                     }
                 }
             }
+
+            //if(dgvCiudad.SelectedRows.Count>0)
+
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
@@ -108,19 +110,15 @@ namespace ABM_Ciudad
             }
         }
 
-        private void ABMCiudad_Load(object sender, EventArgs e)
+        public void MostrarDGV()
         {
+            this.dgvCiudad.DataSource = null;
+            this.dgvCiudad.DataSource = listaCiudades;
         }
 
         private void numericID_ValueChanged(object sender, EventArgs e)
         {
 
         }
-
-        private void txtNombre_TextChanged(object sender, EventArgs e)
-        {
-
-        }
     }
 }
-

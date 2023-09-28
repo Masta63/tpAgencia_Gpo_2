@@ -1,100 +1,105 @@
 ﻿namespace ABM_Ciudad
 {
-	partial class MDI
-	{
-		/// <summary>
-		/// Required designer variable.
-		/// </summary>
-		private System.ComponentModel.IContainer components = null;
+    partial class MDI
+    {
+        /// <summary>
+        /// Required designer variable.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
 
-		/// <summary>
-		/// Clean up any resources being used.
-		/// </summary>
-		/// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && (components != null))
-			{
-				components.Dispose();
-			}
-			base.Dispose(disposing);
-		}
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
 
-		#region Windows Form Designer generated code
+        #region Windows Form Designer generated code
 
-		/// <summary>
-		/// Required method for Designer support - do not modify
-		/// the contents of this method with the code editor.
-		/// </summary>
-		private void InitializeComponent()
-		{
-			this.menuStrip1 = new System.Windows.Forms.MenuStrip();
-			this.agenciaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.agenciaFormToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.ciudadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.menuStrip1.SuspendLayout();
-			this.SuspendLayout();
-			// 
-			// menuStrip1
-			// 
-			this.menuStrip1.GripMargin = new System.Windows.Forms.Padding(2, 2, 0, 2);
-			this.menuStrip1.ImageScalingSize = new System.Drawing.Size(24, 24);
-			this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.agenciaToolStripMenuItem});
-			this.menuStrip1.Location = new System.Drawing.Point(0, 0);
-			this.menuStrip1.Name = "menuStrip1";
-			this.menuStrip1.Size = new System.Drawing.Size(1168, 33);
-			this.menuStrip1.TabIndex = 1;
-			this.menuStrip1.Text = "menuStrip1";
-			this.menuStrip1.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.menuStrip1_ItemClicked);
-			// 
-			// agenciaToolStripMenuItem
-			// 
-			this.agenciaToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.agenciaFormToolStripMenuItem,
-            this.ciudadToolStripMenuItem});
-			this.agenciaToolStripMenuItem.Name = "agenciaToolStripMenuItem";
-			this.agenciaToolStripMenuItem.Size = new System.Drawing.Size(91, 29);
-			this.agenciaToolStripMenuItem.Text = "Agencia";
-			this.agenciaToolStripMenuItem.Click += new System.EventHandler(this.agenciaToolStripMenuItem_Click);
-			// 
-			// agenciaFormToolStripMenuItem
-			// 
-			this.agenciaFormToolStripMenuItem.Name = "agenciaFormToolStripMenuItem";
-			this.agenciaFormToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
-			this.agenciaFormToolStripMenuItem.Text = "AgenciaForm";
-			this.agenciaFormToolStripMenuItem.Click += new System.EventHandler(this.agenciaFormToolStripMenuItem_Click);
-			// 
-			// ciudadToolStripMenuItem
-			// 
-			this.ciudadToolStripMenuItem.Name = "ciudadToolStripMenuItem";
-			this.ciudadToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
-			this.ciudadToolStripMenuItem.Text = "Ciudad";
-			this.ciudadToolStripMenuItem.Click += new System.EventHandler(this.ciudadToolStripMenuItem_Click);
-			// 
-			// MDI
-			// 
-			this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
-			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(1168, 524);
-			this.Controls.Add(this.menuStrip1);
-			this.IsMdiContainer = true;
-			this.MainMenuStrip = this.menuStrip1;
-			this.Name = "MDI";
-			this.Text = "Form2";
-			this.Load += new System.EventHandler(this.Form2_Load);
-			this.menuStrip1.ResumeLayout(false);
-			this.menuStrip1.PerformLayout();
-			this.ResumeLayout(false);
-			this.PerformLayout();
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
+            menuStrip1 = new MenuStrip();
+            agenciaToolStripMenuItem = new ToolStripMenuItem();
+            agenciaFormToolStripMenuItem = new ToolStripMenuItem();
+            ciudadToolStripMenuItem = new ToolStripMenuItem();
+            toolStripMenuItem1 = new ToolStripMenuItem();
+            menuStrip1.SuspendLayout();
+            SuspendLayout();
+            // 
+            // menuStrip1
+            // 
+            menuStrip1.ImageScalingSize = new Size(24, 24);
+            menuStrip1.Items.AddRange(new ToolStripItem[] { agenciaToolStripMenuItem, toolStripMenuItem1 });
+            menuStrip1.Location = new Point(0, 0);
+            menuStrip1.Name = "menuStrip1";
+            menuStrip1.Padding = new Padding(7, 2, 0, 2);
+            menuStrip1.Size = new Size(1298, 33);
+            menuStrip1.TabIndex = 1;
+            menuStrip1.Text = "menuStrip1";
+            menuStrip1.ItemClicked += menuStrip1_ItemClicked;
+            // 
+            // agenciaToolStripMenuItem
+            // 
+            agenciaToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { agenciaFormToolStripMenuItem, ciudadToolStripMenuItem });
+            agenciaToolStripMenuItem.Name = "agenciaToolStripMenuItem";
+            agenciaToolStripMenuItem.Size = new Size(91, 29);
+            agenciaToolStripMenuItem.Text = "Agencia";
+            agenciaToolStripMenuItem.Click += agenciaToolStripMenuItem_Click;
+            // 
+            // agenciaFormToolStripMenuItem
+            // 
+            agenciaFormToolStripMenuItem.Name = "agenciaFormToolStripMenuItem";
+            agenciaFormToolStripMenuItem.Size = new Size(270, 34);
+            agenciaFormToolStripMenuItem.Text = "AgenciaForm";
+            agenciaFormToolStripMenuItem.Click += agenciaFormToolStripMenuItem_Click;
+            // 
+            // ciudadToolStripMenuItem
+            // 
+            ciudadToolStripMenuItem.Name = "ciudadToolStripMenuItem";
+            ciudadToolStripMenuItem.Size = new Size(270, 34);
+            ciudadToolStripMenuItem.Text = "Ciudad";
+            ciudadToolStripMenuItem.Click += ciudadToolStripMenuItem_Click;
+            // 
+            // toolStripMenuItem1
+            // 
+            toolStripMenuItem1.Name = "toolStripMenuItem1";
+            toolStripMenuItem1.Size = new Size(187, 29);
+            toolStripMenuItem1.Text = "toolStripMenuItem1";
+            // 
+            // MDI
+            // 
+            AutoScaleDimensions = new SizeF(10F, 25F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(1298, 655);
+            Controls.Add(menuStrip1);
+            IsMdiContainer = true;
+            MainMenuStrip = menuStrip1;
+            Margin = new Padding(3, 4, 3, 4);
+            Name = "MDI";
+            Text = "Form2";
+            Load += Form2_Load;
+            menuStrip1.ResumeLayout(false);
+            menuStrip1.PerformLayout();
+            ResumeLayout(false);
+            PerformLayout();
+        }
 
-		}
+        #endregion
 
-		#endregion
-
-		private System.Windows.Forms.MenuStrip menuStrip1;
-		private System.Windows.Forms.ToolStripMenuItem agenciaToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem agenciaFormToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem ciudadToolStripMenuItem;
-	}
+        private MenuStrip menuStrip1;
+        private ToolStripMenuItem agenciaToolStripMenuItem;
+        private ToolStripMenuItem agenciaFormToolStripMenuItem;
+        private ToolStripMenuItem ciudadToolStripMenuItem;
+        private ToolStripMenuItem toolStripMenuItem1;
+    }
 }
