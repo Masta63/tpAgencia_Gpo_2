@@ -47,9 +47,6 @@
             hotelesToolStripMenuItem1 = new ToolStripMenuItem();
             ciudadesToolStripMenuItem1 = new ToolStripMenuItem();
             usuariosToolStripMenuItem = new ToolStripMenuItem();
-            reservasToolStripMenuItem = new ToolStripMenuItem();
-            reservarVueloToolStripMenuItem = new ToolStripMenuItem();
-            reservarHotelToolStripMenuItem = new ToolStripMenuItem();
             cerrarSesionToolStripMenuItem = new ToolStripMenuItem();
             menuStrip1.SuspendLayout();
             SuspendLayout();
@@ -63,7 +60,7 @@
             // menuStrip1
             // 
             menuStrip1.ImageScalingSize = new Size(24, 24);
-            menuStrip1.Items.AddRange(new ToolStripItem[] { altasToolStripMenuItem, opcionesUsuarioComunToolStripMenuItem, aBMToolStripMenuItem, reservasToolStripMenuItem, cerrarSesionToolStripMenuItem });
+            menuStrip1.Items.AddRange(new ToolStripItem[] { altasToolStripMenuItem, opcionesUsuarioComunToolStripMenuItem, aBMToolStripMenuItem, cerrarSesionToolStripMenuItem });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
             menuStrip1.Size = new Size(959, 24);
@@ -82,21 +79,21 @@
             // hotelesToolStripMenuItem
             // 
             hotelesToolStripMenuItem.Name = "hotelesToolStripMenuItem";
-            hotelesToolStripMenuItem.Size = new Size(123, 22);
+            hotelesToolStripMenuItem.Size = new Size(180, 22);
             hotelesToolStripMenuItem.Text = "Hoteles";
             hotelesToolStripMenuItem.Click += hotelesToolStripMenuItem_Click;
             // 
             // personasToolStripMenuItem
             // 
             personasToolStripMenuItem.Name = "personasToolStripMenuItem";
-            personasToolStripMenuItem.Size = new Size(123, 22);
+            personasToolStripMenuItem.Size = new Size(180, 22);
             personasToolStripMenuItem.Text = "Vuelos";
             personasToolStripMenuItem.Click += personasToolStripMenuItem_Click;
             // 
             // ciudadesToolStripMenuItem
             // 
             ciudadesToolStripMenuItem.Name = "ciudadesToolStripMenuItem";
-            ciudadesToolStripMenuItem.Size = new Size(123, 22);
+            ciudadesToolStripMenuItem.Size = new Size(180, 22);
             ciudadesToolStripMenuItem.Text = "Ciudades";
             // 
             // opcionesUsuarioComunToolStripMenuItem
@@ -180,26 +177,6 @@
             usuariosToolStripMenuItem.Text = "Usuarios";
             usuariosToolStripMenuItem.Click += usuariosToolStripMenuItem_Click;
             // 
-            // reservasToolStripMenuItem
-            // 
-            reservasToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { reservarVueloToolStripMenuItem, reservarHotelToolStripMenuItem });
-            reservasToolStripMenuItem.Name = "reservasToolStripMenuItem";
-            reservasToolStripMenuItem.Size = new Size(64, 20);
-            reservasToolStripMenuItem.Text = "Reservas";
-            // 
-            // reservarVueloToolStripMenuItem
-            // 
-            reservarVueloToolStripMenuItem.Name = "reservarVueloToolStripMenuItem";
-            reservarVueloToolStripMenuItem.Size = new Size(180, 22);
-            reservarVueloToolStripMenuItem.Text = "Reservar vuelo";
-            // 
-            // reservarHotelToolStripMenuItem
-            // 
-            reservarHotelToolStripMenuItem.Name = "reservarHotelToolStripMenuItem";
-            reservarHotelToolStripMenuItem.Size = new Size(180, 22);
-            reservarHotelToolStripMenuItem.Text = "Reservar Hotel";
-            reservarHotelToolStripMenuItem.Click += reservarHotelToolStripMenuItem_Click;
-            // 
             // cerrarSesionToolStripMenuItem
             // 
             cerrarSesionToolStripMenuItem.Name = "cerrarSesionToolStripMenuItem";
@@ -243,9 +220,6 @@
         private ToolStripMenuItem hotelesToolStripMenuItem1;
         private ToolStripMenuItem ciudadesToolStripMenuItem1;
         private ToolStripMenuItem usuariosToolStripMenuItem;
-        private ToolStripMenuItem reservasToolStripMenuItem;
-        private ToolStripMenuItem reservarVueloToolStripMenuItem;
-        private ToolStripMenuItem reservarHotelToolStripMenuItem;
         private ToolStripMenuItem cerrarSesionToolStripMenuItem;
     }
 }

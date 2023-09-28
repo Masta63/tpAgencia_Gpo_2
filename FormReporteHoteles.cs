@@ -167,7 +167,7 @@ namespace tpAgencia_Gpo_2
             try
             {
                 string? id = dataGridViewHotel?[0, e.RowIndex]?.Value?.ToString();
-                string? nombre = dataGridViewHotel?[1, e.RowIndex]?.Value?.ToString();
+                string? nombre = dataGridViewHotel?[4, e.RowIndex]?.Value?.ToString();
 
                 labelIdComprar.Text = id;
                 labelNombreHotel.Text = nombre;

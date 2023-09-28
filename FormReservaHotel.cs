@@ -21,7 +21,7 @@ namespace tpAgencia_Gpo_2
         {
             InitializeComponent();
             this.Agencia = agencia;
-            armarComboHoteles();
+            //armarComboHoteles();
             this.Form1 = form1;
 
             if (reservaHotel != null)
