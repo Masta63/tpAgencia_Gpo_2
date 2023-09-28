@@ -133,8 +133,8 @@ namespace tpAgencia_Gpo_2
             Ciudad ciudadHospedaje = agencia.GetCiudades().FirstOrDefault(ciudad => ciudad.nombre == ubicacion);
 
 
-
-            if (ciudadHospedaje == null || string.IsNullOrEmpty(textBoxId.Text) || string.IsNullOrEmpty(textBoxCapacidad.Text) || string.IsNullOrEmpty(textBoxCosto.Text) || string.IsNullOrEmpty(textBoxNombre.Text))
+            //string.IsNullOrEmpty(textBoxId.Text) Eliminar si el proyecto esta co,
+            if (ciudadHospedaje == null || string.IsNullOrEmpty(textBoxCapacidad.Text) || string.IsNullOrEmpty(textBoxCosto.Text) || string.IsNullOrEmpty(textBoxNombre.Text))
 
                 MessageBox.Show("Debe completar todos los campos para poder agregar un nuevo hotel");
 
@@ -152,14 +152,8 @@ namespace tpAgencia_Gpo_2
                     MessageBox.Show("El costo debe tener dos decimales");
                 }
 
-                int id;
-                if (!int.TryParse(textBoxId.Text, out id))
-                {
-                    MessageBox.Show("El id debe ser un entero");
-                }
 
-
-                if (agencia.agregarHotel(id, ciudadHospedaje, capacidad, costo, textBoxNombre.Text))
+                if (agencia.agregarHotel(ciudadHospedaje, capacidad, costo, textBoxNombre.Text))
                     MessageBox.Show("Hotel agregado exitosamente");
                 else
                     MessageBox.Show("Ocurrió un error al querer agregar un Hotel");

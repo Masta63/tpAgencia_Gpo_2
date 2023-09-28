@@ -13,6 +13,7 @@ public class Agencia
     private int cantVuelos;
     private int cantUsuarios = 0;
     private int cantHoteles = 0;
+    private int cantIdHoteles = 0;
 
 
     //metodo constructor
@@ -333,11 +334,12 @@ public class Agencia
 
     //INICIO METODOS DE HOTEL
 
-    public bool agregarHotel(int id, Ciudad ubicacion, int capacidad, double costo, string nombre)
+    public bool agregarHotel(Ciudad ubicacion, int capacidad, double costo, string nombre)
     {
 
-        hoteles.Add(new Hotel(id, ubicacion, capacidad, costo, nombre));
+        hoteles.Add(new Hotel(cantIdHoteles, ubicacion, capacidad, costo, nombre));
         cantHoteles++;
+        cantIdHoteles++;
         return true;
     }
 

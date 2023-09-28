@@ -118,8 +118,11 @@
             // 
             // textBoxId
             // 
+            textBoxId.BackColor = SystemColors.ButtonShadow;
+            textBoxId.Enabled = false;
             textBoxId.Location = new Point(561, 46);
             textBoxId.Name = "textBoxId";
+            textBoxId.ReadOnly = true;
             textBoxId.Size = new Size(179, 23);
             textBoxId.TabIndex = 10;
             textBoxId.TextChanged += textBoxId_TextChanged;
