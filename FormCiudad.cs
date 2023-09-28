@@ -33,18 +33,37 @@ namespace tpAgencia_Gpo_2
 
             try
             {
-                if (Agencia.GetCiudades().OrderByDescending(x => x.id).FirstOrDefault() != null)
+                if (!string.IsNullOrEmpty(txtNombre.Text))
                 {
-                    int id = Agencia.GetCiudades().OrderByDescending(x => x.id).FirstOrDefault().id + 1;
-                    Ciudad oCiudad = new Ciudad(Convert.ToInt32(id), txtNombre.Text);
-                    Agencia.setCiudad(oCiudad);
-                    textCiudadId.Text = Convert.ToString(id);
-                    //Validacion para verificar que se cargo correctamente la ciudad
-                    string mensaje = $"Ciudad: {oCiudad.nombre}\n";
+                    var ciudad = Agencia.GetCiudades().OrderByDescending(x => x.id).FirstOrDefault();
 
-                    MessageBox.Show(mensaje, "Información de Ciudad");
+                    if (ciudad != null)
+                    {
+                        int id = Agencia.GetCiudades().OrderByDescending(x => x.id).FirstOrDefault().id + 1;
+                        Ciudad oCiudad = new Ciudad(Convert.ToInt32(id), txtNombre.Text);
+                        Agencia.setCiudad(oCiudad);
+                        textCiudadId.Text = Convert.ToString(id);
+                        //Validacion para verificar que se cargo correctamente la ciudad
+                        string mensaje = $"Ciudad: {oCiudad.nombre}\n";
+
+                        MessageBox.Show(mensaje, "Información de Ciudad");
+                    }
+                    else
+                    {
+                        int id = 1;
+                        Ciudad oCiudad = new Ciudad(Convert.ToInt32(id), txtNombre.Text);
+                        Agencia.setCiudad(oCiudad);
+                        textCiudadId.Text = Convert.ToString(id);
+                        //Validacion para verificar que se cargo correctamente la ciudad
+                        string mensaje = $"Ciudad: {oCiudad.nombre}\n";
+
+                        MessageBox.Show(mensaje, "Información de Ciudad");
+                    }
                 }
-
+                else
+                {
+                    MessageBox.Show( "Debe ingresar la ciudad");
+                }
             }
             catch (Exception ex)
             {
