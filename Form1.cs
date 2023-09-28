@@ -81,6 +81,7 @@ namespace tpAgencia_Gpo_2
             Agencia.setReservasHotel(reservaHotel);
             Agencia.setReservasHotel(reservaHotel2);
 
+
             List<Usuario> ListHuespedesHilton = new List<Usuario>();
             Usuario usuarioHilton = Agencia.getUsuarios().ToList().Where(x => x.id == 1).FirstOrDefault();
             ListHuespedesHilton.Add(usuarioHilton);

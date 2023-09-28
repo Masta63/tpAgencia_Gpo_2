@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static System.Windows.Forms.DataFormats;
+using static tpAgencia_Gpo_2.FormHotelAbm;
 
 namespace tpAgencia_Gpo_2
 {
@@ -22,6 +23,7 @@ namespace tpAgencia_Gpo_2
         private FormUsuarioSimple usuarioSimple;
         private FormMisVuelos misVuelos;
         private FormReporteHoteles FormReporteHoteles;
+        private FormHotelAbm formHotel;
         private FormReservaHotel FormReservaHotel;
         private FormReporteCiudad FormReporteCiudad;
 
@@ -47,6 +49,10 @@ namespace tpAgencia_Gpo_2
             formCiudad = new FormCiudad(agencia, form1);
             formCiudad.MdiParent = form1;
             formCiudad.TransfEventoFormCiudad += TransfDelegadoFormCiudad;
+
+            formHotel = new FormHotelAbm(agencia, form1);
+            formHotel.MdiParent = form1;
+            formHotel.TransfEventoFormHotel += TransfDelegadoFormHotel;
 
             buscadorVuelos = new BuscadorVuelos(agencia, form1);
             buscadorVuelos.MdiParent = form1;
@@ -140,6 +146,14 @@ namespace tpAgencia_Gpo_2
             formCiudad.Show();
         }
 
+        private void TransfDelegadoFormHotel()
+        {
+            this.MdiParent = Form1;
+            this.Close();
+            formHotel = new FormHotelAbm(Agencia, Form1);
+            formHotel.Show();
+        }
+
         private void TransfDelegadoBuscadorVuelos()
         {
             this.MdiParent = Form1;
@@ -224,6 +238,11 @@ namespace tpAgencia_Gpo_2
         private void reservarHotelToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.TransfDelegadoAltaReservaHotel();
+        }
+
+        private void hotelesToolStripMenuItem1_Click_1(object sender, EventArgs e)
+        {
+            this.TransfDelegadoFormHotel();
         }
 
         private void ciudadesToolStripMenuItem_Click(object sender, EventArgs e)

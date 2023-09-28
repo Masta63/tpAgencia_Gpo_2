@@ -41,7 +41,23 @@ namespace tpAgencia_Gpo_2
             this.nombre = nombre;
         }
 
+        public Hotel(int id, Ciudad ubicacion, int capacidad, double costo, string nombre)
+        {
+            this.id = id;
+            this.ubicacion = ubicacion;
+            this.capacidad = capacidad;
+            this.costo = costo;
+            listHuespedes = new List<Usuario>();
+            listMisReservas = new List<ReservaHotel>();
+            this.nombre = nombre;
+        }
+
 
         //metodos
+        public string[] ToString()
+        {
+            string[] ubicacionArr = ubicacion.ToString();
+            return new string[] { id.ToString(), ubicacionArr[1], capacidad.ToString(), costo.ToString(), nombre.ToString() };
+        }
     }
 }

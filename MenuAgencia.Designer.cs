@@ -79,21 +79,21 @@
             // hotelesToolStripMenuItem
             // 
             hotelesToolStripMenuItem.Name = "hotelesToolStripMenuItem";
-            hotelesToolStripMenuItem.Size = new Size(180, 22);
+            hotelesToolStripMenuItem.Size = new Size(123, 22);
             hotelesToolStripMenuItem.Text = "Hoteles";
             hotelesToolStripMenuItem.Click += hotelesToolStripMenuItem_Click;
             // 
             // personasToolStripMenuItem
             // 
             personasToolStripMenuItem.Name = "personasToolStripMenuItem";
-            personasToolStripMenuItem.Size = new Size(180, 22);
+            personasToolStripMenuItem.Size = new Size(123, 22);
             personasToolStripMenuItem.Text = "Vuelos";
             personasToolStripMenuItem.Click += personasToolStripMenuItem_Click;
             // 
             // ciudadesToolStripMenuItem
             // 
             ciudadesToolStripMenuItem.Name = "ciudadesToolStripMenuItem";
-            ciudadesToolStripMenuItem.Size = new Size(180, 22);
+            ciudadesToolStripMenuItem.Size = new Size(123, 22);
             ciudadesToolStripMenuItem.Text = "Ciudades";
             ciudadesToolStripMenuItem.Click += ciudadesToolStripMenuItem_Click;
             // 
@@ -154,27 +154,28 @@
             // vuelosToolStripMenuItem
             // 
             vuelosToolStripMenuItem.Name = "vuelosToolStripMenuItem";
-            vuelosToolStripMenuItem.Size = new Size(123, 22);
+            vuelosToolStripMenuItem.Size = new Size(180, 22);
             vuelosToolStripMenuItem.Text = "Vuelos";
             vuelosToolStripMenuItem.Click += vuelosToolStripMenuItem_Click;
             // 
             // hotelesToolStripMenuItem1
             // 
             hotelesToolStripMenuItem1.Name = "hotelesToolStripMenuItem1";
-            hotelesToolStripMenuItem1.Size = new Size(123, 22);
+            hotelesToolStripMenuItem1.Size = new Size(180, 22);
             hotelesToolStripMenuItem1.Text = "Hoteles";
+            hotelesToolStripMenuItem1.Click += hotelesToolStripMenuItem1_Click_1;
             // 
             // ciudadesToolStripMenuItem1
             // 
             ciudadesToolStripMenuItem1.Name = "ciudadesToolStripMenuItem1";
-            ciudadesToolStripMenuItem1.Size = new Size(123, 22);
+            ciudadesToolStripMenuItem1.Size = new Size(180, 22);
             ciudadesToolStripMenuItem1.Text = "Ciudades";
             ciudadesToolStripMenuItem1.Click += ciudadesToolStripMenuItem1_Click;
             // 
             // usuariosToolStripMenuItem
             // 
             usuariosToolStripMenuItem.Name = "usuariosToolStripMenuItem";
-            usuariosToolStripMenuItem.Size = new Size(123, 22);
+            usuariosToolStripMenuItem.Size = new Size(180, 22);
             usuariosToolStripMenuItem.Text = "Usuarios";
             usuariosToolStripMenuItem.Click += usuariosToolStripMenuItem_Click;
             // 
