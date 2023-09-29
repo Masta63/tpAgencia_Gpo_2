@@ -17,7 +17,7 @@ public class Agencia
     private int cantUsuarios = 0;
 
 
-    //metodo constructor
+    //metodo constructorr
     public Agencia()
     {
         hoteles = new List<Hotel>();
