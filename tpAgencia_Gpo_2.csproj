@@ -9,6 +9,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Update="FormReservasHoteles.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="FormReservasVuelos.cs">
       <SubType>Form</SubType>
     </Compile>

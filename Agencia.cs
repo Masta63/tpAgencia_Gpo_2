@@ -362,6 +362,24 @@ public class Agencia
         return vuelosReservados;
     }
 
+    //METODO DE RESERVA DE HOTEL
+    public List<Hotel> misReservasHoteles(Usuario usuario)
+    {
+        DateTime fechaActual = DateTime.Now;
+        List<Hotel> hotelesReservados = new List<Hotel>();
+
+        foreach (ReservaHotel reserva in usuario.misReservasHoteles)
+        {
+            if (reserva.fechaHasta.Date >= fechaActual.Date)
+            {
+                hotelesReservados.Add(reserva.miHotel);
+            }
+
+
+        }
+        return hotelesReservados;
+    }
+
     public List<Hotel> getHoteles()
     {
         return hoteles.ToList();

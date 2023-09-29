@@ -124,12 +124,14 @@
             misreservashotelesToolStripMenuItem.Name = "misreservashotelesToolStripMenuItem";
             misreservashotelesToolStripMenuItem.Size = new Size(203, 22);
             misreservashotelesToolStripMenuItem.Text = "Mis reservas hoteles";
+            misreservashotelesToolStripMenuItem.Click += misreservashotelesToolStripMenuItem_Click;
             // 
             // misreservasvuelosToolStripMenuItem
             // 
             misreservasvuelosToolStripMenuItem.Name = "misreservasvuelosToolStripMenuItem";
             misreservasvuelosToolStripMenuItem.Size = new Size(203, 22);
             misreservasvuelosToolStripMenuItem.Text = "Mis reservas vuelos";
+            misreservasvuelosToolStripMenuItem.Click += misreservasvuelosToolStripMenuItem_Click;
             // 
             // misvuelosencualviajeToolStripMenuItem
             // 

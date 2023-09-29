@@ -31,6 +31,7 @@
             label1 = new Label();
             label2 = new Label();
             dataGridView1 = new DataGridView();
+            Volver_desde_usuario = new Button();
             Origen = new DataGridViewTextBoxColumn();
             Destino = new DataGridViewTextBoxColumn();
             Costo = new DataGridViewTextBoxColumn();
@@ -38,7 +39,6 @@
             Aerolinea = new DataGridViewTextBoxColumn();
             Avion = new DataGridViewTextBoxColumn();
             Cantidad = new DataGridViewTextBoxColumn();
-            Volver_desde_usuario = new Button();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
             // 
@@ -46,10 +46,9 @@
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Cascadia Code", 26F, FontStyle.Bold, GraphicsUnit.Point);
-            label1.Location = new Point(346, 19);
-            label1.Margin = new Padding(2, 0, 2, 0);
+            label1.Location = new Point(494, 32);
             label1.Name = "label1";
-            label1.Size = new Size(461, 46);
+            label1.Size = new Size(330, 69);
             label1.TabIndex = 0;
             label1.Text = "Mis reservas de vuelo";
             // 
@@ -57,10 +56,9 @@
             // 
             label2.AutoSize = true;
             label2.Font = new Font("Microsoft Sans Serif", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
-            label2.Location = new Point(51, 84);
-            label2.Margin = new Padding(2, 0, 2, 0);
+            label2.Location = new Point(73, 140);
             label2.Name = "label2";
-            label2.Size = new Size(66, 13);
+            label2.Size = new Size(148, 20);
             label2.TabIndex = 1;
             label2.Text = "Mis reservas";
             // 
@@ -68,13 +66,24 @@
             // 
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridView1.Columns.AddRange(new DataGridViewColumn[] { Origen, Destino, Costo, Fecha, Aerolinea, Avion, Cantidad });
-            dataGridView1.Location = new Point(52, 119);
-            dataGridView1.Margin = new Padding(2, 2, 2, 2);
+            dataGridView1.Location = new Point(75, 199);
             dataGridView1.Name = "dataGridView1";
             dataGridView1.RowHeadersWidth = 62;
             dataGridView1.RowTemplate.Height = 33;
-            dataGridView1.Size = new Size(786, 175);
+            dataGridView1.Size = new Size(1123, 291);
             dataGridView1.TabIndex = 2;
+            // 
+            // Volver_desde_usuario
+            // 
+            Volver_desde_usuario.BackColor = Color.FromArgb(192, 255, 255);
+            Volver_desde_usuario.Location = new Point(75, 537);
+            Volver_desde_usuario.Margin = new Padding(4, 5, 4, 5);
+            Volver_desde_usuario.Name = "Volver_desde_usuario";
+            Volver_desde_usuario.Size = new Size(107, 38);
+            Volver_desde_usuario.TabIndex = 27;
+            Volver_desde_usuario.Text = "Volver";
+            Volver_desde_usuario.UseVisualStyleBackColor = false;
+            Volver_desde_usuario.Click += Volver_desde_usuario_Click;
             // 
             // Origen
             // 
@@ -125,27 +134,15 @@
             Cantidad.Name = "Cantidad";
             Cantidad.Width = 150;
             // 
-            // Volver_desde_usuario
-            // 
-            Volver_desde_usuario.BackColor = Color.FromArgb(192, 255, 255);
-            Volver_desde_usuario.Location = new Point(52, 322);
-            Volver_desde_usuario.Name = "Volver_desde_usuario";
-            Volver_desde_usuario.Size = new Size(75, 23);
-            Volver_desde_usuario.TabIndex = 27;
-            Volver_desde_usuario.Text = "Volver";
-            Volver_desde_usuario.UseVisualStyleBackColor = false;
-            Volver_desde_usuario.Click += Volver_desde_usuario_Click;
-            // 
             // FormReservasVuelos
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1087, 425);
+            ClientSize = new Size(1476, 695);
             Controls.Add(Volver_desde_usuario);
             Controls.Add(dataGridView1);
             Controls.Add(label2);
             Controls.Add(label1);
-            Margin = new Padding(2, 2, 2, 2);
             Name = "FormReservasVuelos";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "FormReservasVuelos";

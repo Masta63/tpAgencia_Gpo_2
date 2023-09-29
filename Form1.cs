@@ -34,10 +34,6 @@ namespace tpAgencia_Gpo_2
             Agencia.agregarVuelo(Agencia.GetCiudades()[2], Agencia.GetCiudades()[0], 2, 200000, new DateTime(2023, 10, 10), "JetSmart", "Airbus300");
             Agencia.agregarVuelo(Agencia.GetCiudades()[0], Agencia.GetCiudades()[1], 2, 200000, new DateTime(2023, 09, 10), "JetSmart", "Airbus300");
 
-            /*
-             * METODO DE RESERVA DE VUELO DE LUCAS
-            Usuario.agregarReservaVuelo((Agencia.GetCiudades()[0], Agencia.GetCiudades()[1], 20, 50000, new DateTime(2023, 10, 30), "AA", "Airbus"),(Agencia.getUsuarioActual));
-            */
 
             cargaDeHotelesConReservaYusuarios();
         }
