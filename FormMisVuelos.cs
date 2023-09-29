@@ -45,7 +45,7 @@ namespace tpAgencia_Gpo_2
                 {
                     Vuelo = group.Key,
                     Cantidad = group.Count(),
-                    MontoTotal = group.Sum(v=>v.costo)
+                    MontoTotal = group.Sum(v => v.costo)
                 });
 
                 foreach (var vuelosAgrupado in vuelosIguales)

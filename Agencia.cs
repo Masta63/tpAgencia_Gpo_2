@@ -283,7 +283,7 @@ public class Agencia
         return vuelos.ToList();
     }
 
-    //Método solo para las pruebas de vuelo, hay que borrarlo y agregar el que pase Nati
+
     public List<Ciudad> GetCiudades()
     {
         return ciudades.ToList();
