@@ -47,38 +47,65 @@ namespace tpAgencia_Gpo_2
 
         private void button_Agregar_Click(object sender, EventArgs e)
         {
+
+
             if (string.IsNullOrEmpty(textBox_nombre.Text) || string.IsNullOrEmpty(textBox_apellido.Text) ||
-                string.IsNullOrEmpty(textBox_dni.Text) || string.IsNullOrEmpty(textBox_email.Text))
+                string.IsNullOrEmpty(textBox_dni.Text) || string.IsNullOrEmpty(textBox_email.Text) && (refAgencia.ExisteUsuarioConDniOMail(textBox_dni.Text, textBox_email.Text)))
+
             {
                 MessageBox.Show("Debe completar todos los campos para agregar un usuario.");
             }
             else
             {
-                if (refAgencia.agregarUsuario(textBox_nombre.Text, textBox_apellido.Text, textBox_dni.Text, textBox_email.Text))
+                if ((refAgencia.ExisteUsuarioConDniOMail(textBox_dni.Text, textBox_email.Text)))
                 {
-                    MessageBox.Show("Agregado con éxito");
+                    MessageBox.Show("ya existe un usuario con el mismo maiol o dni.");
+                    //true
                 }
                 else
                 {
-                    MessageBox.Show("Problemas al agregar");
+                    if (refAgencia.agregarUsuario(textBox_nombre.Text, textBox_apellido.Text, textBox_dni.Text, textBox_email.Text))
+                    {
+                        MessageBox.Show("Agregado con éxito");
+                    }
+                    else
+                    {
+                        MessageBox.Show("Problemas al agregar");
+                    }
                 }
             }
+
         }
 
 
         private void button_Modificar_Click(object sender, EventArgs e)
         {
 
-            if (usuarioSeleccionado != -1 && string.IsNullOrEmpty(textBox_nombre.Text) && string.IsNullOrEmpty(textBox_apellido.Text) &&
-                string.IsNullOrEmpty(textBox_dni.Text) && string.IsNullOrEmpty(textBox_email.Text))
+            //isnullorempty devuelve true si esta vacio
+            if (usuarioSeleccionado != -1)
             {
-                if (refAgencia.modificarUsuario(usuarioSeleccionado, textBox_nombre.Text, textBox_apellido.Text, textBox_dni.Text, textBox_email.Text))
-                    MessageBox.Show("Modificado con éxito");
+                if (!string.IsNullOrEmpty(textBox_nombre.Text) && !string.IsNullOrEmpty(textBox_apellido.Text) &&
+                    !string.IsNullOrEmpty(textBox_dni.Text) && !string.IsNullOrEmpty(textBox_email.Text))
+                {
+                    if (refAgencia.modificarUsuario(usuarioSeleccionado, textBox_nombre.Text, textBox_apellido.Text, textBox_dni.Text, textBox_email.Text))
+                    {
+                        MessageBox.Show("Modificado con éxito");
+                    }
+                    else
+                    {
+                        MessageBox.Show("Problemas al modificar");
+                    }
+                }
                 else
-                    MessageBox.Show("Problemas al modificar");
+                {
+                    MessageBox.Show("no pueden haber datos incompletos");
+                }
+                
             }
             else
+            {
                 MessageBox.Show("Debe seleccionar un usuario y no puede haber datos incompletos");
+            }
         }
 
         private void button_Eliminar_Click(object sender, EventArgs e)
