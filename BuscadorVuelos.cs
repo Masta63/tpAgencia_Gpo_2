@@ -63,8 +63,9 @@ namespace tpAgencia_Gpo_2
 
             Ciudad ciudadOrigen = agencia.GetCiudades().FirstOrDefault(ciudad => ciudad.nombre == cOrigen);
             Ciudad ciudadDestino = agencia.GetCiudades().FirstOrDefault(ciudad => ciudad.nombre == cDestino);
-
-            List<Vuelo> vuelosEncontrados = agencia.buscarVuelos(ciudadOrigen, ciudadDestino, fechaSeleccionada, cantidadPax);
+            if (ciudadOrigen != null && ciudadDestino != null && fechaSeleccionada != null && cantidadPax != null)
+            {
+                List<Vuelo> vuelosEncontrados = agencia.buscarVuelos(ciudadOrigen, ciudadDestino, fechaSeleccionada, cantidadPax);
 
             dataGridView1.Rows.Clear();
 
@@ -91,9 +92,15 @@ namespace tpAgencia_Gpo_2
                 {
                     MessageBox.Show("No hay vuelos disponibles");
                 }
-           
+            }
+            else
+            {
+                MessageBox.Show("Debe completar todos los campos");
+            }
 
-           
+
+
+
         }
 
         private void Volver_desde_usuario_Click(object sender, EventArgs e)

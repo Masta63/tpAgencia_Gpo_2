@@ -90,6 +90,8 @@
             Origen.HeaderText = "Origen";
             Origen.MinimumWidth = 8;
             Origen.Name = "Origen";
+            Origen.ReadOnly = true;
+            Origen.Resizable = DataGridViewTriState.False;
             Origen.Width = 150;
             // 
             // Destino
@@ -97,6 +99,8 @@
             Destino.HeaderText = "Destino";
             Destino.MinimumWidth = 8;
             Destino.Name = "Destino";
+            Destino.ReadOnly = true;
+            Destino.Resizable = DataGridViewTriState.False;
             Destino.Width = 150;
             // 
             // Costo
@@ -104,6 +108,8 @@
             Costo.HeaderText = "Costo";
             Costo.MinimumWidth = 8;
             Costo.Name = "Costo";
+            Costo.ReadOnly = true;
+            Costo.Resizable = DataGridViewTriState.False;
             Costo.Width = 150;
             // 
             // Fecha
@@ -111,6 +117,8 @@
             Fecha.HeaderText = "Fecha";
             Fecha.MinimumWidth = 8;
             Fecha.Name = "Fecha";
+            Fecha.ReadOnly = true;
+            Fecha.Resizable = DataGridViewTriState.False;
             Fecha.Width = 150;
             // 
             // Aerolinea
@@ -118,6 +126,8 @@
             Aerolinea.HeaderText = "Aerolinea";
             Aerolinea.MinimumWidth = 8;
             Aerolinea.Name = "Aerolinea";
+            Aerolinea.ReadOnly = true;
+            Aerolinea.Resizable = DataGridViewTriState.False;
             Aerolinea.Width = 150;
             // 
             // Avion
@@ -125,6 +135,8 @@
             Avion.HeaderText = "Avion";
             Avion.MinimumWidth = 8;
             Avion.Name = "Avion";
+            Avion.ReadOnly = true;
+            Avion.Resizable = DataGridViewTriState.False;
             Avion.Width = 150;
             // 
             // Cantidad
@@ -132,6 +144,8 @@
             Cantidad.HeaderText = "Cantidad";
             Cantidad.MinimumWidth = 8;
             Cantidad.Name = "Cantidad";
+            Cantidad.ReadOnly = true;
+            Cantidad.Resizable = DataGridViewTriState.False;
             Cantidad.Width = 150;
             // 
             // FormMisVuelos
@@ -143,6 +157,7 @@
             Controls.Add(dataGridView1);
             Controls.Add(label2);
             Controls.Add(label1);
+            FormBorderStyle = FormBorderStyle.None;
             Name = "FormMisVuelos";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "FormMisVuelos";

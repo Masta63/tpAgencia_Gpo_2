@@ -102,33 +102,40 @@ namespace tpAgencia_Gpo_2
 
 
             if (ciudadOrigen == null || ciudadDestino == null || string.IsNullOrEmpty(textBox3.Text) || string.IsNullOrEmpty(textBox4.Text) || string.IsNullOrEmpty(dateTimePicker1.Text) || string.IsNullOrEmpty(textBox6.Text) || string.IsNullOrEmpty(textBox7.Text))
-
+            {
                 MessageBox.Show("Debe completar todos los campos para poder agregar un nuevo vuelo");
-
+            }
             else
             {
                 int capacidad;
                 if (!int.TryParse(textBox3.Text, out capacidad))
                 {
                     MessageBox.Show("La capacidad debe ser un número válido");
+                    return;
                 }
 
                 double costo;
                 if (!double.TryParse(textBox4.Text, out costo))
                 {
-                    MessageBox.Show("El costo debe tener dos decimales");
+                    MessageBox.Show("El costo debe ser un número válido");
+                    return;
                 }
 
                 DateTime fecha;
                 if (!DateTime.TryParse(dateTimePicker1.Text, out fecha))
                 {
                     MessageBox.Show("Debe elegir una fecha");
+                    return;
                 }
 
                 if (agencia.agregarVuelo(ciudadOrigen, ciudadDestino, capacidad, costo, fecha, textBox6.Text, textBox7.Text))
+                {
                     MessageBox.Show("Vuelo agregado exitosamente");
+                }
                 else
+                {
                     MessageBox.Show("Ocurrió un error al querer agregar un vuelo");
+                }
             }
         }
 
