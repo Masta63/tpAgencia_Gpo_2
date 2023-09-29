@@ -8,6 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static System.Windows.Forms.DataFormats;
+using static tpAgencia_Gpo_2.FormHotelAbm;
+using static tpAgencia_Gpo_2.FormReservasVuelos;
 
 namespace tpAgencia_Gpo_2
 {
@@ -23,7 +25,11 @@ namespace tpAgencia_Gpo_2
         private FormMisVuelos misVuelos;
         private FormMisHoteles misHoteles;
         private FormReporteHoteles FormReporteHoteles;
+        private FormHotelAbm formHotel;
         private FormReservaHotel FormReservaHotel;
+        private FormReporteCiudad FormReporteCiudad;
+        private FormReservasVuelos reservasVuelos;
+        private FormReservasHoteles reservasHoteles;
 
         public MenuAgencia(Agencia agencia, Form1 form1)
         {
@@ -47,6 +53,10 @@ namespace tpAgencia_Gpo_2
             formCiudad = new FormCiudad(agencia, form1);
             formCiudad.MdiParent = form1;
             formCiudad.TransfEventoFormCiudad += TransfDelegadoFormCiudad;
+
+            formHotel = new FormHotelAbm(agencia, form1);
+            formHotel.MdiParent = form1;
+            formHotel.TransfEventoFormHotel += TransfDelegadoFormHotel;
 
             buscadorVuelos = new BuscadorVuelos(agencia, form1);
             buscadorVuelos.MdiParent = form1;
@@ -73,6 +83,14 @@ namespace tpAgencia_Gpo_2
             FormReservaHotel = new FormReservaHotel(agencia, form1, null, string.Empty);
             FormReporteHoteles.MdiParent = form1;
             FormReservaHotel.transfDelegadoFormAltaReserva += TransfDelegadoAltaReservaHotel;
+
+            FormReporteCiudad = new FormReporteCiudad(agencia, form1);
+            FormReporteCiudad.MdiParent = form1;
+            FormReporteCiudad.TransfEventoFormReporteCiudad += TransfDelegadoReporteCiudad;
+
+            reservasVuelos = new FormReservasVuelos(agencia, form1);
+            reservasVuelos.MdiParent = form1;
+            reservasVuelos.TransfEventoReservasVuelos += TransfDelegadoReservasVuelos;
 
         }
 
@@ -141,6 +159,14 @@ namespace tpAgencia_Gpo_2
             formCiudad.Show();
         }
 
+        private void TransfDelegadoFormHotel()
+        {
+            this.MdiParent = Form1;
+            this.Close();
+            formHotel = new FormHotelAbm(Agencia, Form1);
+            formHotel.Show();
+        }
+
         private void TransfDelegadoBuscadorVuelos()
         {
             this.MdiParent = Form1;
@@ -191,6 +217,28 @@ namespace tpAgencia_Gpo_2
             FormReservaHotel.Show();
         }
 
+        private void TransfDelegadoReporteCiudad()
+        {
+            this.MdiParent = Form1;
+            this.Close();
+            FormReporteCiudad = new  FormReporteCiudad(Agencia, Form1);
+            FormReporteCiudad.Show();
+        }
+        private void TransfDelegadoReservasVuelos()
+        {
+            this.MdiParent = Form1;
+            this.Close();
+            reservasVuelos = new FormReservasVuelos(Agencia, Form1);
+            reservasVuelos.Show();
+        }
+
+        private void TransfDelegadoReservasHoteles()
+        {
+            this.MdiParent = Form1;
+            this.Close();
+            reservasHoteles = new FormReservasHoteles(Agencia, Form1);
+            reservasHoteles.Show();
+        }
 
         private void usuariosToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -228,9 +276,30 @@ namespace tpAgencia_Gpo_2
             this.TransfDelegadoAltaReservaHotel();
         }
 
+
         private void misHotelesquevisiteToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.TransfDelegadoMisHoteles();
+
+        private void hotelesToolStripMenuItem1_Click_1(object sender, EventArgs e)
+        {
+            this.TransfDelegadoFormHotel();
+        }
+
+        private void ciudadesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.TransfDelegadoReporteCiudad();
+        }
+
+        private void misreservasvuelosToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.TransfDelegadoReservasVuelos();
+        }
+
+        private void misreservashotelesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.TransfDelegadoReservasHoteles();
+
         }
     }
 }

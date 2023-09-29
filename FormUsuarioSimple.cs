@@ -45,15 +45,20 @@ namespace tpAgencia_Gpo_2
 
             if (usuarioActual != null)
             {
-                if (refAgencia.agregarCredito(usuarioActual.id, double.Parse(textBox_MiCredito.Text)))
+                if (double.TryParse(textBox_MiCredito.Text, out double nuevoCredito))
                 {
-
-                    MessageBox.Show("Modificado con éxito");
+                    if (refAgencia.agregarCredito(usuarioActual.id, nuevoCredito))
+                    {
+                        MessageBox.Show("Modificado con éxito");
+                    }
+                    else
+                    {
+                        MessageBox.Show("Problemas al modificar");
+                    }
                 }
-
                 else
                 {
-                    MessageBox.Show("Problemas al modificar");//corregir problema de porque entra aca
+                    MessageBox.Show("El valor ingresado en 'Mi Crédito' no es válido.");
                 }
             }
             else
@@ -61,6 +66,7 @@ namespace tpAgencia_Gpo_2
                 MessageBox.Show("Debe seleccionar un usuario");
             }
             actualizarDatos();
+
         }
 
 
@@ -115,20 +121,31 @@ namespace tpAgencia_Gpo_2
 
         private void button_Modificar_Click(object sender, EventArgs e)
         {
+
+            //isnullorempty devuelve true si esta vacio
             if (usuarioActual != null)
             {
-                if (refAgencia.modificarUsuario(usuarioActual.id, textBox_nombre.Text, textBox_apellido.Text, textBox_dni.Text, textBox_email.Text))
+                if (!string.IsNullOrEmpty(textBox_nombre.Text) && !string.IsNullOrEmpty(textBox_apellido.Text) &&
+                    !string.IsNullOrEmpty(textBox_dni.Text) && !string.IsNullOrEmpty(textBox_email.Text))
                 {
-                    MessageBox.Show("Modificado con éxito");
+                    if (refAgencia.modificarUsuario(usuarioActual.id, textBox_nombre.Text, textBox_apellido.Text, textBox_dni.Text, textBox_email.Text))
+                    {
+                        MessageBox.Show("Modificado con éxito");
+                    }
+                    else
+                    {
+                        MessageBox.Show("Problemas al modificar");
+                    }
                 }
                 else
                 {
-                    MessageBox.Show("Problemas al modificar");
+                    MessageBox.Show("no pueden haber datos incompletos");
                 }
+
             }
             else
             {
-                MessageBox.Show("Debe seleccionar un usuario");
+                MessageBox.Show("Debe seleccionar un usuario y no puede haber datos incompletos");
             }
 
             actualizarDatos();

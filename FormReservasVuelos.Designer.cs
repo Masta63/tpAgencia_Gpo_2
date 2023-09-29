@@ -1,6 +1,6 @@
 ﻿namespace tpAgencia_Gpo_2
 {
-    partial class FormMisVuelos
+    partial class FormReservasVuelos
     {
         /// <summary>
         /// Required designer variable.
@@ -50,7 +50,7 @@
             label1.Name = "label1";
             label1.Size = new Size(330, 69);
             label1.TabIndex = 0;
-            label1.Text = "Mis Vuelos";
+            label1.Text = "Mis reservas de vuelo";
             // 
             // label2
             // 
@@ -60,7 +60,7 @@
             label2.Name = "label2";
             label2.Size = new Size(148, 20);
             label2.TabIndex = 1;
-            label2.Text = "Historial de vuelos";
+            label2.Text = "Mis reservas";
             // 
             // dataGridView1
             // 
@@ -90,8 +90,6 @@
             Origen.HeaderText = "Origen";
             Origen.MinimumWidth = 8;
             Origen.Name = "Origen";
-            Origen.ReadOnly = true;
-            Origen.Resizable = DataGridViewTriState.False;
             Origen.Width = 150;
             // 
             // Destino
@@ -99,8 +97,6 @@
             Destino.HeaderText = "Destino";
             Destino.MinimumWidth = 8;
             Destino.Name = "Destino";
-            Destino.ReadOnly = true;
-            Destino.Resizable = DataGridViewTriState.False;
             Destino.Width = 150;
             // 
             // Costo
@@ -108,8 +104,6 @@
             Costo.HeaderText = "Costo";
             Costo.MinimumWidth = 8;
             Costo.Name = "Costo";
-            Costo.ReadOnly = true;
-            Costo.Resizable = DataGridViewTriState.False;
             Costo.Width = 150;
             // 
             // Fecha
@@ -117,8 +111,6 @@
             Fecha.HeaderText = "Fecha";
             Fecha.MinimumWidth = 8;
             Fecha.Name = "Fecha";
-            Fecha.ReadOnly = true;
-            Fecha.Resizable = DataGridViewTriState.False;
             Fecha.Width = 150;
             // 
             // Aerolinea
@@ -126,8 +118,6 @@
             Aerolinea.HeaderText = "Aerolinea";
             Aerolinea.MinimumWidth = 8;
             Aerolinea.Name = "Aerolinea";
-            Aerolinea.ReadOnly = true;
-            Aerolinea.Resizable = DataGridViewTriState.False;
             Aerolinea.Width = 150;
             // 
             // Avion
@@ -135,8 +125,6 @@
             Avion.HeaderText = "Avion";
             Avion.MinimumWidth = 8;
             Avion.Name = "Avion";
-            Avion.ReadOnly = true;
-            Avion.Resizable = DataGridViewTriState.False;
             Avion.Width = 150;
             // 
             // Cantidad
@@ -144,11 +132,9 @@
             Cantidad.HeaderText = "Cantidad";
             Cantidad.MinimumWidth = 8;
             Cantidad.Name = "Cantidad";
-            Cantidad.ReadOnly = true;
-            Cantidad.Resizable = DataGridViewTriState.False;
             Cantidad.Width = 150;
             // 
-            // FormMisVuelos
+            // FormReservasVuelos
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -157,10 +143,9 @@
             Controls.Add(dataGridView1);
             Controls.Add(label2);
             Controls.Add(label1);
-            FormBorderStyle = FormBorderStyle.None;
-            Name = "FormMisVuelos";
+            Name = "FormReservasVuelos";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "FormMisVuelos";
+            Text = "FormReservasVuelos";
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             ResumeLayout(false);
             PerformLayout();

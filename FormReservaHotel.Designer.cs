@@ -72,6 +72,7 @@
             // 
             // textCantPer
             // 
+            textCantPer.Enabled = false;
             textCantPer.Location = new Point(257, 112);
             textCantPer.Name = "textCantPer";
             textCantPer.Size = new Size(100, 23);
@@ -79,6 +80,7 @@
             // 
             // boxHoteles
             // 
+            boxHoteles.Enabled = false;
             boxHoteles.FormattingEnabled = true;
             boxHoteles.Location = new Point(70, 112);
             boxHoteles.Name = "boxHoteles";
@@ -159,6 +161,7 @@
             // 
             // fechaDesde
             // 
+            fechaDesde.Enabled = false;
             fechaDesde.Location = new Point(70, 183);
             fechaDesde.Name = "fechaDesde";
             fechaDesde.Size = new Size(200, 23);
@@ -166,6 +169,7 @@
             // 
             // fechaHasta
             // 
+            fechaHasta.Enabled = false;
             fechaHasta.Location = new Point(340, 183);
             fechaHasta.Name = "fechaHasta";
             fechaHasta.Size = new Size(200, 23);

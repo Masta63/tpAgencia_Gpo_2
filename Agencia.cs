@@ -15,6 +15,8 @@ public class Agencia
     private Usuario? usuarioActual { get; set; }
     private int cantVuelos;
     private int cantUsuarios = 0;
+    private int cantHoteles = 0;
+    private int cantIdHoteles = 0;
 
 
     //metodo constructor
@@ -23,6 +25,7 @@ public class Agencia
         hoteles = new List<Hotel>();
         vuelos = new List<Vuelo>();
         cantVuelos = 0;
+        cantHoteles = 0;
         ciudades = new List<Ciudad>();
         reservasHotel = new List<ReservaHotel>();
         reservasVuelo = new List<ReservaVuelo>();
@@ -211,9 +214,16 @@ public class Agencia
         return false;
 
     }
+    //verificar si ya existe un usuario con ese mail o dni
+    //devuelve true si encuentra
+    public bool ExisteUsuarioConDniOMail(string dni, string mail)
+    {
+        return getListUsuario().Any(u => u.dni == dni || u.mail == mail);
+    }
 
 
     //FIN METODOS USUARIO
+
 
 
 
@@ -273,7 +283,7 @@ public class Agencia
         return vuelos.ToList();
     }
 
-    //Método solo para las pruebas de vuelo, hay que borrarlo y agregar el que pase Nati
+
     public List<Ciudad> GetCiudades()
     {
         return ciudades.ToList();
@@ -341,6 +351,42 @@ public class Agencia
         return vuelosPasados;
     }
 
+    //METODO DE RESERVA DE VUELO DE LUCAS - REVISAR -
+    public List<Vuelo> misReservasVuelos(Usuario usuario)
+    {
+        DateTime fechaActual = DateTime.Now;
+        List<Vuelo> vuelosReservados = new List<Vuelo>();
+
+        foreach (ReservaVuelo reserva in usuario.misReservasVuelo)
+        {
+            if (reserva.miVuelo.fecha > fechaActual)
+            {
+                vuelosReservados.Add(reserva.miVuelo);
+            }
+
+
+        }
+        return vuelosReservados;
+    }
+
+    //METODO DE RESERVA DE HOTEL
+    public List<Hotel> misReservasHoteles(Usuario usuario)
+    {
+        DateTime fechaActual = DateTime.Now;
+        List<Hotel> hotelesReservados = new List<Hotel>();
+
+        foreach (ReservaHotel reserva in usuario.misReservasHoteles)
+        {
+            if (reserva.fechaHasta.Date >= fechaActual.Date)
+            {
+                hotelesReservados.Add(reserva.miHotel);
+            }
+
+
+        }
+        return hotelesReservados;
+    }
+
     public List<Hotel> getHoteles()
     {
         return hoteles.ToList();
@@ -350,6 +396,58 @@ public class Agencia
     {
         hoteles.Add(hotel);
     }
+
+
+    //INICIO METODOS DE HOTEL
+
+    public bool agregarHotel(Ciudad ubicacion, int capacidad, double costo, string nombre)
+    {
+
+        hoteles.Add(new Hotel(cantIdHoteles, ubicacion, capacidad, costo, nombre));
+        cantHoteles++;
+        cantIdHoteles++;
+        return true;
+    }
+
+    public bool modificarHotel(int id, Ciudad ubicacion, int capacidad, double costo, string nombre)
+    {
+        foreach (Hotel hotel in hoteles)
+        {
+            if (hotel.id == id)
+            {
+                hotel.ubicacion = ubicacion;
+                hotel.capacidad = capacidad;
+                hotel.costo = costo;
+                hotel.nombre = nombre;
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public bool eliminarHotel(int id)
+    {
+        foreach (Hotel hotel in hoteles)
+        {
+            if (hotel.id == id)
+
+            {
+                hoteles.Remove(hotel);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public List<Hotel> getHotel()
+    {
+        return hoteles.ToList();
+    }
+
+
+
+    //FIN METODOS DE HOTEL
+
 
     public void setReservasHotel(ReservaHotel reservaHotel)
     {

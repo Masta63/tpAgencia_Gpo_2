@@ -11,25 +11,25 @@ using static tpAgencia_Gpo_2.BuscadorVuelos;
 
 namespace tpAgencia_Gpo_2
 {
-    public partial class FormMisVuelos : Form
+    public partial class FormReservasVuelos : Form
     {
 
         private Agencia agencia;
         private Form1 form1;
         private Usuario usuarioActual;
-        public TransfDelegadoMisVuelos TransfEventoMisVuelos;
-        public FormMisVuelos(Agencia agencia, Form1 form1)
+        public TransfDelegadoReservasVuelos TransfEventoReservasVuelos;
+        public FormReservasVuelos(Agencia agencia, Form1 form1)
         {
             InitializeComponent();
             this.agencia = agencia;
             this.form1 = form1;
             usuarioActual = agencia.getUsuarioActual();
-            this.Load += FormMisVuelos_Load;
+            this.Load += FormReservasVuelos_Load;
         }
 
-        public delegate void TransfDelegadoMisVuelos();
+        public delegate void TransfDelegadoReservasVuelos();
 
-        private void FormMisVuelos_Load(object sender, EventArgs e)
+        private void FormReservasVuelos_Load(object sender, EventArgs e)
         {
             MostrarVuelos();
         }
@@ -39,9 +39,9 @@ namespace tpAgencia_Gpo_2
 
             if (usuarioActual != null)
             {
-                List<Vuelo> vuelosPasados = agencia.misVuelos(usuarioActual);
+                List<Vuelo> vuelosFuturos = agencia.misReservasVuelos(usuarioActual);
 
-                var vuelosIguales = vuelosPasados.GroupBy(v => v.id).Select(group => new
+                var vuelosIguales = vuelosFuturos.GroupBy(v => v.id).Select(group => new
                 {
                     Vuelo = group.Key,
                     Cantidad = group.Count(),
@@ -50,7 +50,7 @@ namespace tpAgencia_Gpo_2
 
                 foreach (var vuelosAgrupado in vuelosIguales)
                 {
-                    Vuelo vuelo = vuelosPasados.FirstOrDefault(v => v.id == vuelosAgrupado.Vuelo);
+                    Vuelo vuelo = vuelosFuturos.FirstOrDefault(v => v.id == vuelosAgrupado.Vuelo);
                     if (vuelo != null)
                     {
 

@@ -7,59 +7,57 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using static tpAgencia_Gpo_2.BuscadorVuelos;
+using static tpAgencia_Gpo_2.FormReservaHotel;
 
 namespace tpAgencia_Gpo_2
 {
-    public partial class FormMisVuelos : Form
+    public partial class FormReservasHoteles : Form
     {
 
         private Agencia agencia;
         private Form1 form1;
         private Usuario usuarioActual;
-        public TransfDelegadoMisVuelos TransfEventoMisVuelos;
-        public FormMisVuelos(Agencia agencia, Form1 form1)
+        public TransfDelegadoReservasHoteles TransfEventoReservasHoteles;
+        public FormReservasHoteles(Agencia agencia, Form1 form1)
         {
             InitializeComponent();
             this.agencia = agencia;
             this.form1 = form1;
             usuarioActual = agencia.getUsuarioActual();
-            this.Load += FormMisVuelos_Load;
+            this.Load += FormReservasHoteles_Load;
         }
 
-        public delegate void TransfDelegadoMisVuelos();
+        public delegate void TransfDelegadoReservasHoteles();
 
-        private void FormMisVuelos_Load(object sender, EventArgs e)
+        private void FormReservasHoteles_Load(object sender, EventArgs e)
         {
-            MostrarVuelos();
+            MostrarHoteles();
         }
-        private void MostrarVuelos()
+        private void MostrarHoteles()
         {
             dataGridView1.Rows.Clear();
 
             if (usuarioActual != null)
             {
-                List<Vuelo> vuelosPasados = agencia.misVuelos(usuarioActual);
+                List<Hotel> hotelesFuturos = agencia.misReservasHoteles(usuarioActual);
 
-                var vuelosIguales = vuelosPasados.GroupBy(v => v.id).Select(group => new
+                var hotelesIguales = hotelesFuturos.GroupBy(v => v.id).Select(group => new
                 {
-                    Vuelo = group.Key,
+                    Hotel = group.Key,
                     Cantidad = group.Count(),
                     MontoTotal = group.Sum(v => v.costo)
                 });
 
-                foreach (var vuelosAgrupado in vuelosIguales)
+                foreach (var hotelesAgrupado in hotelesIguales)
                 {
-                    Vuelo vuelo = vuelosPasados.FirstOrDefault(v => v.id == vuelosAgrupado.Vuelo);
-                    if (vuelo != null)
+                    Hotel hotel = hotelesFuturos.FirstOrDefault(v => v.id == hotelesAgrupado.Hotel);
+                    if (hotel != null)
                     {
 
                         dataGridView1.Rows.Add(
-                            vuelo.origen.nombre,
-                            vuelo.destino.nombre,
-                            vuelosAgrupado.MontoTotal,
-                            vuelo.fecha.ToString("dd/MM/yyyy"),
-                            vuelo.aerolinea, vuelo.avion, vuelosAgrupado.Cantidad);
+                            hotel.ubicacion.nombre,
+                            hotelesAgrupado.MontoTotal,
+                            hotel.nombre, hotel.capacidad, hotelesAgrupado.Cantidad);
                     }
 
                 }

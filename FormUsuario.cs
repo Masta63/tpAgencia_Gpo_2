@@ -47,29 +47,66 @@ namespace tpAgencia_Gpo_2
 
         private void button_Agregar_Click(object sender, EventArgs e)
         {
-            if (textBox_nombre.Text == " " || textBox_apellido.Text == " " || textBox_dni.Text == " " || textBox_email.Text == " " ||
-                textBox_nombre.Text == null || textBox_apellido.Text == null || textBox_dni.Text == null || textBox_email.Text == null
-                )
-                MessageBox.Show("Debe completar los campos para agregar");
+
+            //empty devuelve true si esta vacio
+            if (string.IsNullOrEmpty(textBox_nombre.Text) || string.IsNullOrEmpty(textBox_apellido.Text) ||
+                string.IsNullOrEmpty(textBox_dni.Text) || string.IsNullOrEmpty(textBox_email.Text) && (refAgencia.ExisteUsuarioConDniOMail(textBox_dni.Text, textBox_email.Text)))
+
+            {
+                MessageBox.Show("Debe completar todos los campos para agregar un usuario.");
+            }
             else
-                if (refAgencia.agregarUsuario(textBox_nombre.Text, textBox_apellido.Text, textBox_dni.Text, textBox_email.Text))
-                MessageBox.Show("Agregado con éxito");
-            else
-                MessageBox.Show("Problemas al agregar");
+            {
+                if ((refAgencia.ExisteUsuarioConDniOMail(textBox_dni.Text, textBox_email.Text)))
+                {
+                    MessageBox.Show("ya existe un usuario con el mismo maiol o dni.");
+                    //true
+                }
+                else
+                {
+                    if (textBox_nombre.Text.Length >= 3 && textBox_apellido.Text.Length >= 3 && textBox_dni.Text.Length == 8 && textBox_email.Text.Contains("@"))                       
+                    {
+                        refAgencia.agregarUsuario(textBox_nombre.Text, textBox_apellido.Text, textBox_dni.Text, textBox_email.Text);
+                        MessageBox.Show("Agregado con éxito");
+                    }
+                    else
+                    {
+                        MessageBox.Show("Problemas al agregar");
+                    }
+                }
+            }
+
         }
+
 
         private void button_Modificar_Click(object sender, EventArgs e)
         {
 
+            //isnullorempty devuelve true si esta vacio
             if (usuarioSeleccionado != -1)
             {
-                if (refAgencia.modificarUsuario(usuarioSeleccionado, textBox_nombre.Text, textBox_apellido.Text, textBox_dni.Text, textBox_email.Text))
-                    MessageBox.Show("Modificado con éxito");
+                if (!string.IsNullOrEmpty(textBox_nombre.Text) && !string.IsNullOrEmpty(textBox_apellido.Text) &&
+                    !string.IsNullOrEmpty(textBox_dni.Text) && !string.IsNullOrEmpty(textBox_email.Text))
+                {
+                    if (refAgencia.modificarUsuario(usuarioSeleccionado, textBox_nombre.Text, textBox_apellido.Text, textBox_dni.Text, textBox_email.Text))
+                    {
+                        MessageBox.Show("Modificado con éxito");
+                    }
+                    else
+                    {
+                        MessageBox.Show("Problemas al modificar");
+                    }
+                }
                 else
-                    MessageBox.Show("Problemas al modificar");
+                {
+                    MessageBox.Show("no pueden haber datos incompletos");
+                }
+                
             }
             else
-                MessageBox.Show("Debe seleccionar un usuario");
+            {
+                MessageBox.Show("Debe seleccionar un usuario y no puede haber datos incompletos");
+            }
         }
 
         private void button_Eliminar_Click(object sender, EventArgs e)
@@ -166,30 +203,60 @@ namespace tpAgencia_Gpo_2
         }
 
         private void btn_agregarCredito_Click(object sender, EventArgs e)
-        {
+        {//metodos para agregar credito al usuario verifica que sea un numero
             if (usuarioSeleccionado != -1)
             {
-                if (refAgencia.agregarCredito(usuarioSeleccionado, double.Parse(textBox_credito.Text)))
-                    MessageBox.Show("Modificado con éxito");
+                if (double.TryParse(textBox_credito.Text, out double nuevoCredito))
+                {
+                    if (refAgencia.agregarCredito(usuarioSeleccionado, nuevoCredito))
+                    {
+                        MessageBox.Show("Modificado con éxito");
+                        // Aquí podrías actualizar la vista para reflejar el nuevo crédito.
+                    }
+                    else
+                    {
+                        MessageBox.Show("Problemas al modificar");
+                    }
+                }
                 else
-                    MessageBox.Show("Problemas al modificar");
+                {
+                    MessageBox.Show("El valor ingresado en 'Crédito' no es válido.");
+                }
             }
             else
+            {
                 MessageBox.Show("Debe seleccionar un usuario");
+            }
         }
 
+
         private void btn_modificarCredito_Click_1(object sender, EventArgs e)
-        {
+        {//metodos para modificar credito al usuario verifica que sea un numero
             if (usuarioSeleccionado != -1)
             {
-                if (refAgencia.modificarCredito(usuarioSeleccionado, double.Parse(textBox_credito.Text)))
-                    MessageBox.Show("Modificado con éxito");
+                if (double.TryParse(textBox_credito.Text, out double nuevoCredito))
+                {
+                    if (refAgencia.modificarCredito(usuarioSeleccionado, nuevoCredito))
+                    {
+                        MessageBox.Show("Modificado con éxito");
+                        // Aquí podrías actualizar la vista para reflejar el nuevo crédito.
+                    }
+                    else
+                    {
+                        MessageBox.Show("Problemas al modificar");
+                    }
+                }
                 else
-                    MessageBox.Show("Problemas al modificar");
+                {
+                    MessageBox.Show("El valor ingresado en 'Crédito' no es válido.");
+                }
             }
             else
+            {
                 MessageBox.Show("Debe seleccionar un usuario");
+            }
         }
+
 
         private void btn_buscarUsuario_Click(object sender, EventArgs e)
         {
