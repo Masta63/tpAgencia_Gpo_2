@@ -45,15 +45,20 @@ namespace tpAgencia_Gpo_2
 
             if (usuarioActual != null)
             {
-                if (refAgencia.agregarCredito(usuarioActual.id, double.Parse(textBox_MiCredito.Text)))
+                if (double.TryParse(textBox_MiCredito.Text, out double nuevoCredito))
                 {
-
-                    MessageBox.Show("Modificado con éxito");
+                    if (refAgencia.agregarCredito(usuarioActual.id, nuevoCredito))
+                    {
+                        MessageBox.Show("Modificado con éxito");
+                    }
+                    else
+                    {
+                        MessageBox.Show("Problemas al modificar");
+                    }
                 }
-
                 else
                 {
-                    MessageBox.Show("Problemas al modificar");//corregir problema de porque entra aca
+                    MessageBox.Show("El valor ingresado en 'Mi Crédito' no es válido.");
                 }
             }
             else
@@ -61,6 +66,7 @@ namespace tpAgencia_Gpo_2
                 MessageBox.Show("Debe seleccionar un usuario");
             }
             actualizarDatos();
+
         }
 
 
