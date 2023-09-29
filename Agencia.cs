@@ -359,21 +359,4 @@ public class Agencia
     {
         return reservasHotel.ToList();
     }
-
-    public List<Hotel> misHoteles(Usuario usuario)
-    {
-        DateTime fechaActual = DateTime.Now;
-        List<Hotel> hotelesPasados = new List<Hotel>();
-
-        foreach (ReservaHotel reserva in usuario.misReservasHoteles)
-        {
-            if (reserva.miHotel.fecha < fechaActual)
-            {
-                hotelesPasados.Add(reserva.miHotel);
-            }
-
-
-        }
-        return hotelesPasados;
-    }
 }

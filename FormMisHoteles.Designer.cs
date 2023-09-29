@@ -114,6 +114,7 @@
             Volver_desde_usuario.TabIndex = 28;
             Volver_desde_usuario.Text = "Volver";
             Volver_desde_usuario.UseVisualStyleBackColor = false;
+            Volver_desde_usuario.Click += Volver_desde_usuario_Click;
             // 
             // FormMisHoteles
             // 

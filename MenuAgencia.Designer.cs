@@ -145,6 +145,7 @@
             misHotelesquevisiteToolStripMenuItem.Name = "misHotelesquevisiteToolStripMenuItem";
             misHotelesquevisiteToolStripMenuItem.Size = new Size(203, 22);
             misHotelesquevisiteToolStripMenuItem.Text = "Mis Hoteles(que visite)";
+            misHotelesquevisiteToolStripMenuItem.Click += misHotelesquevisiteToolStripMenuItem_Click;
             // 
             // aBMToolStripMenuItem
             // 
@@ -190,13 +191,13 @@
             // reservarVueloToolStripMenuItem
             // 
             reservarVueloToolStripMenuItem.Name = "reservarVueloToolStripMenuItem";
-            reservarVueloToolStripMenuItem.Size = new Size(180, 22);
+            reservarVueloToolStripMenuItem.Size = new Size(150, 22);
             reservarVueloToolStripMenuItem.Text = "Reservar vuelo";
             // 
             // reservarHotelToolStripMenuItem
             // 
             reservarHotelToolStripMenuItem.Name = "reservarHotelToolStripMenuItem";
-            reservarHotelToolStripMenuItem.Size = new Size(180, 22);
+            reservarHotelToolStripMenuItem.Size = new Size(150, 22);
             reservarHotelToolStripMenuItem.Text = "Reservar Hotel";
             reservarHotelToolStripMenuItem.Click += reservarHotelToolStripMenuItem_Click;
             // 

@@ -17,7 +17,7 @@ namespace tpAgencia_Gpo_2
         private Agencia agencia;
         private Form1 form1;
         private Usuario usuarioActual;
-        public TransfDelegadoMisHoteles TransfEventoMisVuelos;
+        public TransfDelegadoMisHoteles TransfEventoMisHoteles;
         public FormMisHoteles(Agencia agencia, Form1 form1)
         {
             InitializeComponent();
@@ -36,32 +36,28 @@ namespace tpAgencia_Gpo_2
         private void MostrarHoteles()
         {
             dataGridView1.Rows.Clear();
+            DateTime fechaActual = DateTime.Now;
 
             if (usuarioActual != null)
             {
-                List<Hotel> hotelesPasados = agencia.misHoteles(usuarioActual);
 
-                foreach (var hoteles in hotelesPasados)
-                {
-                    Hotel hotel = hotelesPasados.FirstOrDefault(v => v.id == hoteles.Hotel);
-                    if (hotel != null)
-                    {
+                foreach (var item in agencia.getUsuarioActual().misReservasHoteles) {
 
-                        dataGridView1.Rows.Add(
-                            hotel.ubicacion,
-                            hotel.capacidad,
-                            hotel.costo,
-                            hotel.nombre,
-                            hotel.huespedes
-                            );
-                    }
+                    if(item.fechaHasta < fechaActual)
+                    
+                    dataGridView1.Rows.Add(
+                        item.miHotel.nombre,
+                        item.miHotel.ubicacion.nombre,
+                        item.miHotel.capacidad,
+                        item.miHotel.costo,
+                        item.fechaDesde,
+                        item.fechaHasta
+                        );
+
 
                 }
 
-
-
             }
-
         }
 
         private void Volver_desde_usuario_Click(object sender, EventArgs e)
@@ -71,5 +67,6 @@ namespace tpAgencia_Gpo_2
             MenuAgencia.MdiParent = form1;
             MenuAgencia.Show();
         }
+  
     }
 }
