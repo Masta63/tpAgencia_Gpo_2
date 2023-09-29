@@ -214,9 +214,16 @@ public class Agencia
         return false;
 
     }
+    //verificar si ya existe un usuario con ese mail o dni
+    //devuelve true si encuentra
+    public bool ExisteUsuarioConDniOMail(string dni, string mail)
+    {
+        return getListUsuario().Any(u => u.dni == dni || u.mail == mail);
+    }
 
 
     //FIN METODOS USUARIO
+
 
 
 
