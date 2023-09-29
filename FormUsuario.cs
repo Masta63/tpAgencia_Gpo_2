@@ -48,7 +48,7 @@ namespace tpAgencia_Gpo_2
         private void button_Agregar_Click(object sender, EventArgs e)
         {
 
-
+            //empty devuelve true si esta vacio
             if (string.IsNullOrEmpty(textBox_nombre.Text) || string.IsNullOrEmpty(textBox_apellido.Text) ||
                 string.IsNullOrEmpty(textBox_dni.Text) || string.IsNullOrEmpty(textBox_email.Text) && (refAgencia.ExisteUsuarioConDniOMail(textBox_dni.Text, textBox_email.Text)))
 
@@ -64,8 +64,9 @@ namespace tpAgencia_Gpo_2
                 }
                 else
                 {
-                    if (refAgencia.agregarUsuario(textBox_nombre.Text, textBox_apellido.Text, textBox_dni.Text, textBox_email.Text))
+                    if (usuarioSeleccionado != -1  )                       
                     {
+                        refAgencia.agregarUsuario(textBox_nombre.Text, textBox_apellido.Text, textBox_dni.Text, textBox_email.Text);
                         MessageBox.Show("Agregado con éxito");
                     }
                     else
