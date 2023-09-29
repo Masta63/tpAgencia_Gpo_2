@@ -64,7 +64,7 @@ namespace tpAgencia_Gpo_2
                 }
                 else
                 {
-                    if (usuarioSeleccionado != -1  )                       
+                    if (textBox_nombre.Text.Length >= 3 && textBox_apellido.Text.Length >= 3 && textBox_dni.Text.Length == 8 && textBox_email.Text.Contains("@"))                       
                     {
                         refAgencia.agregarUsuario(textBox_nombre.Text, textBox_apellido.Text, textBox_dni.Text, textBox_email.Text);
                         MessageBox.Show("Agregado con éxito");
