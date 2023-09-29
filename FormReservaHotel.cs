@@ -93,14 +93,17 @@ namespace tpAgencia_Gpo_2
                 }
                 if (!estaRango && Convert.ToInt32(textCantPer.Text) <= hotelSeleccionado.capacidad && hotelSeleccionado.costo == Convert.ToDouble(textBoxMonto.Text))
                 {
-                    reservaHotel = new ReservaHotel(hotelSeleccionado, Agencia.getUsuarioActual(), fechaEgreso, fechaIngreso, Convert.ToDouble(textBoxMonto.Text));
+                    int savePersonas = hotelSeleccionado.capacidad;
+                    reservaHotel = new ReservaHotel(hotelSeleccionado, Agencia.getUsuarioActual(),fechaIngreso, fechaEgreso, Convert.ToDouble(textBoxMonto.Text));
                     hotelSeleccionado.capacidad = hotelSeleccionado.capacidad - Convert.ToInt32(textCantPer.Text);
 
                     Usuario usuarioActual = Agencia.getUsuarioActual();
                     usuarioActual.setReservaHotel(reservaHotel);
                     Agencia.setUsuario(usuarioActual);
                     Agencia.setReservasHotel(reservaHotel);
-                    
+                    hotelSeleccionado.capacidad = savePersonas;
+                    Agencia.getUsuarioActual().setReservaHotel(reservaHotel);
+
                 }
 
 
