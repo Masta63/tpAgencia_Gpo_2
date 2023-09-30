@@ -183,9 +183,9 @@
             // 
             buttonComprar.Location = new Point(12, 245);
             buttonComprar.Name = "buttonComprar";
-            buttonComprar.Size = new Size(75, 23);
+            buttonComprar.Size = new Size(119, 23);
             buttonComprar.TabIndex = 12;
-            buttonComprar.Text = "Comprar";
+            buttonComprar.Text = "Ir a Comprar";
             buttonComprar.UseVisualStyleBackColor = true;
             buttonComprar.Click += buttonComprar_Click;
             // 
@@ -213,7 +213,7 @@
             // labelTituloComprar
             // 
             labelTituloComprar.AutoSize = true;
-            labelTituloComprar.Location = new Point(93, 247);
+            labelTituloComprar.Location = new Point(214, 253);
             labelTituloComprar.Name = "labelTituloComprar";
             labelTituloComprar.Size = new Size(125, 15);
             labelTituloComprar.TabIndex = 35;
@@ -222,7 +222,7 @@
             // labelIdComprar
             // 
             labelIdComprar.AutoSize = true;
-            labelIdComprar.Location = new Point(219, 248);
+            labelIdComprar.Location = new Point(340, 254);
             labelIdComprar.Name = "labelIdComprar";
             labelIdComprar.Size = new Size(0, 15);
             labelIdComprar.TabIndex = 36;
@@ -230,7 +230,7 @@
             // labelNombreHotel
             // 
             labelNombreHotel.AutoSize = true;
-            labelNombreHotel.Location = new Point(256, 248);
+            labelNombreHotel.Location = new Point(377, 254);
             labelNombreHotel.Name = "labelNombreHotel";
             labelNombreHotel.Size = new Size(0, 15);
             labelNombreHotel.TabIndex = 37;

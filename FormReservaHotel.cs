@@ -55,7 +55,7 @@ namespace tpAgencia_Gpo_2
                 {
                     MessageBox.Show("Reservado");
                     buttonComprar.Enabled = false;
-                }                                 
+                }
             }
         }
 
@@ -96,15 +96,12 @@ namespace tpAgencia_Gpo_2
                 }
                 if (!estaRango && Convert.ToInt32(textCantPer.Text) <= hotelSeleccionado.capacidad && hotelSeleccionado.costo == Convert.ToDouble(textBoxMonto.Text))
                 {
-                   
-                    reservaHotel = new ReservaHotel(hotelSeleccionado, Agencia.getUsuarioActual(),fechaIngreso, fechaEgreso, Convert.ToDouble(textBoxMonto.Text));
+
+                    reservaHotel = new ReservaHotel(hotelSeleccionado, Agencia.getUsuarioActual(), fechaIngreso, fechaEgreso, Convert.ToDouble(textBoxMonto.Text));
                     hotelSeleccionado.capacidad = hotelSeleccionado.capacidad - Convert.ToInt32(textCantPer.Text);
                     Usuario usuarioActual = Agencia.getUsuarioActual();
                     usuarioActual.setReservaHotel(reservaHotel);
                     Agencia.setUsuario(usuarioActual);
-                    Agencia.setReservasHotel(reservaHotel);
-                    Agencia.getUsuarioActual().setReservaHotel(reservaHotel);
-
                 }
 
 

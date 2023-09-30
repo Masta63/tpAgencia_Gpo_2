@@ -64,9 +64,9 @@
             // 
             buttonComprar.Location = new Point(38, 250);
             buttonComprar.Name = "buttonComprar";
-            buttonComprar.Size = new Size(75, 23);
+            buttonComprar.Size = new Size(121, 23);
             buttonComprar.TabIndex = 47;
-            buttonComprar.Text = "Comprar";
+            buttonComprar.Text = "Confirmar comprar";
             buttonComprar.UseVisualStyleBackColor = true;
             buttonComprar.Click += buttonComprar_Click;
             // 
