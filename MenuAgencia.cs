@@ -280,7 +280,7 @@ namespace tpAgencia_Gpo_2
         private void misHotelesquevisiteToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.TransfDelegadoMisHoteles();
-
+        }
         private void hotelesToolStripMenuItem1_Click_1(object sender, EventArgs e)
         {
             this.TransfDelegadoFormHotel();

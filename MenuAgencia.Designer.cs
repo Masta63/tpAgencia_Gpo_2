@@ -183,7 +183,8 @@
             usuariosToolStripMenuItem.Click += usuariosToolStripMenuItem_Click;
             // 
             // reservasToolStripMenuItem
-            // 
+            //
+            /* revisar este error
             reservasToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { reservarVueloToolStripMenuItem, reservarHotelToolStripMenuItem });
             reservasToolStripMenuItem.Name = "reservasToolStripMenuItem";
             reservasToolStripMenuItem.Size = new Size(64, 20);
@@ -202,7 +203,7 @@
             reservarHotelToolStripMenuItem.Text = "Reservar Hotel";
             reservarHotelToolStripMenuItem.Click += reservarHotelToolStripMenuItem_Click;
             // 
-
+            */
             // cerrarSesionToolStripMenuItem
             // 
             cerrarSesionToolStripMenuItem.Name = "cerrarSesionToolStripMenuItem";
