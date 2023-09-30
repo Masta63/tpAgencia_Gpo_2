@@ -213,9 +213,14 @@ namespace tpAgencia_Gpo_2
 
         private void Volver_desde_usuario_Click(object sender, EventArgs e)
         {
+
+
+            this.Close();
             MenuAgencia MenuAgencia = new MenuAgencia(Agencia, Form1);
             MenuAgencia.MdiParent = Form1;
             MenuAgencia.Show();
+
+
         }
     }
 }
