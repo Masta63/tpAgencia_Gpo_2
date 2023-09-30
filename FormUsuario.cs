@@ -61,7 +61,7 @@ namespace tpAgencia_Gpo_2
             {
                 if ((refAgencia.existeUsuarioConDniOMail(textBox_dni.Text, textBox_email.Text)))
                 {
-                    MessageBox.Show("ya existe un usuario con el mismo maiol o dni.");
+                    MessageBox.Show("ya existe un usuario con el mismo mail o dni.");
                     //true
                 }
                 else
@@ -148,8 +148,8 @@ namespace tpAgencia_Gpo_2
                 textBox_apellido.Text = " ";
                 textBox_email.Text = " ";
                 textBox_dni.Text = " ";
-                textBox_resHotel.Text = " ";
-                textBox_resVuelo.Text = " ";
+                //textBox_resHotel.Text = " ";
+                //textBox_resVuelo.Text = " ";
 
             }
         }
@@ -183,8 +183,8 @@ namespace tpAgencia_Gpo_2
                 textBox_email.Text = email;
                 textBox_dni.Text = dni;
                 textBox_credito.Text = credito;
-                textBox_resHotel.Text = resHotel;
-                textBox_resVuelo.Text = resVuelo;
+                //textBox_resHotel.Text = resHotel;
+                //textBox_resVuelo.Text = resVuelo;
 
 
                 usuarioSeleccionado = int.Parse(id);
