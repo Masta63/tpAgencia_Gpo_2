@@ -113,38 +113,42 @@ namespace tpAgencia_Gpo_2
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            string columnaComprar = "Comprar";
-            if (dataGridView1.Columns[e.ColumnIndex].Name == columnaComprar && e.RowIndex >= 0)
+            if (dataGridView1.Rows[e.RowIndex].Cells["Id"].Value != null)
             {
-                Usuario usuarioActualCompra = agencia.getUsuarioActual();
-                int vueloId = int.Parse(dataGridView1.Rows[e.RowIndex].Cells["Id"].Value.ToString());
 
-                int cantidad = (int)numericUpDownPax.Value;
-
-                if (usuarioActualCompra != null)
+                string columnaComprar = "Comprar";
+                if (dataGridView1.Columns[e.ColumnIndex].Name == columnaComprar && e.RowIndex >= 0)
                 {
-                    bool compraExitosa = agencia.comprarVuelo(vueloId, usuarioActualCompra, cantidad);
+                    Usuario usuarioActualCompra = agencia.getUsuarioActual();
+                    int vueloId = int.Parse(dataGridView1.Rows[e.RowIndex].Cells["Id"].Value.ToString());
 
-                    if (compraExitosa)
+                    int cantidad = (int)numericUpDownPax.Value;
+
+                    if (usuarioActualCompra != null)
                     {
-                        Vuelo vueloSeleccionado = agencia.getVuelos().FirstOrDefault(v=> v.id ==vueloId);
-                      
-                        if(vueloSeleccionado != null)
-                        {
-                            vueloSeleccionado.capacidad -= cantidad;
-                        }
-                        int rowIndex = e.RowIndex;
-                        int asientosDisponibles = vueloSeleccionado.capacidad;
-                        dataGridView1.Rows[rowIndex].Cells["Cantidad"].Value = asientosDisponibles;
-                       
-                        
-                        
-                        MessageBox.Show("Reserva realiza con éxito");
-                    }
-                    
-                }
+                        bool compraExitosa = agencia.comprarVuelo(vueloId, usuarioActualCompra, cantidad);
 
-            }
+                        if (compraExitosa)
+                        {
+                            Vuelo vueloSeleccionado = agencia.getVuelos().FirstOrDefault(v => v.id == vueloId);
+
+                            if (vueloSeleccionado != null)
+                            {
+                                vueloSeleccionado.capacidad -= cantidad;
+                            }
+                            int rowIndex = e.RowIndex;
+                            int asientosDisponibles = vueloSeleccionado.capacidad;
+                            dataGridView1.Rows[rowIndex].Cells["Cantidad"].Value = asientosDisponibles;
+
+
+
+                            MessageBox.Show("Reserva realiza con éxito");
+                        }
+
+                    }
+
+                }
+            }          
         }
     }
 }
