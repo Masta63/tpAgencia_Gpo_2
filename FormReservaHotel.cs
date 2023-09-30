@@ -102,6 +102,7 @@ namespace tpAgencia_Gpo_2
                     reservaHotel = new ReservaHotel(hotelSeleccionado, Agencia.getUsuarioActual(), fechaIngreso, fechaEgreso, Convert.ToDouble(textBoxMonto.Text));
                     hotelSeleccionado.capacidad = hotelSeleccionado.capacidad - Convert.ToInt32(textCantPer.Text);
                     Usuario usuarioActual = Agencia.getUsuarioActual();
+                    usuarioActual.credito = usuarioActual.credito - Convert.ToDouble(textBoxMonto.Text);
                     usuarioActual.setReservaHotel(reservaHotel);
                     Agencia.setUsuario(usuarioActual);
                 }
