@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualBasic.ApplicationServices;
 using System;
+using System.Linq;
 using System.Net;
 using System.Xml.Linq;
 using tpAgencia_Gpo_2;
@@ -403,7 +404,10 @@ public class Agencia
     public bool agregarHotel(Ciudad ubicacion, int capacidad, double costo, string nombre)
     {
 
-        hoteles.Add(new Hotel(cantIdHoteles, ubicacion, capacidad, costo, nombre));
+
+        int cant = hoteles.OrderByDescending(x => x.id).FirstOrDefault().id + 1;
+
+        hoteles.Add(new Hotel(cant, ubicacion, capacidad, costo, nombre));
         cantHoteles++;
         cantIdHoteles++;
         return true;
@@ -453,7 +457,7 @@ public class Agencia
     {
         reservasHotel.Add(reservaHotel);
     }
-    public List<ReservaHotel>  getReservasHotel()
+    public List<ReservaHotel> getReservasHotel()
     {
         return reservasHotel.ToList();
     }
