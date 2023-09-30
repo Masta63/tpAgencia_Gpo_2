@@ -36,27 +36,19 @@
             label_apellido = new Label();
             label_dni = new Label();
             label_email = new Label();
-            label_reserva_hotel = new Label();
-            label_reserva_vuelo = new Label();
+           // label_reserva_hotel = new Label();
+           // label_reserva_vuelo = new Label();
             textBox_id = new TextBox();
             textBox_nombre = new TextBox();
             textBox_apellido = new TextBox();
             textBox_dni = new TextBox();
             textBox_email = new TextBox();
-            textBox_resHotel = new TextBox();
-            textBox_resVuelo = new TextBox();
+           // textBox_resHotel = new TextBox();
+           // textBox_resVuelo = new TextBox();
             button_Agregar = new Button();
             button_Modificar = new Button();
             button_Eliminar = new Button();
             dataGridView_usuarios = new DataGridView();
-            id = new DataGridViewTextBoxColumn();
-            nombre = new DataGridViewTextBoxColumn();
-            apellido = new DataGridViewTextBoxColumn();
-            dni = new DataGridViewTextBoxColumn();
-            credito = new DataGridViewTextBoxColumn();
-            email = new DataGridViewTextBoxColumn();
-            resHotel = new DataGridViewTextBoxColumn();
-            resVuelo = new DataGridViewTextBoxColumn();
             bienvenida = new Label();
             Bienvenida_usuario = new Label();
             btn_modificarCredito = new Button();
@@ -65,6 +57,14 @@
             btn_agregarCredito = new Button();
             label_Credito = new Label();
             textBox_credito = new TextBox();
+            id = new DataGridViewTextBoxColumn();
+            nombre = new DataGridViewTextBoxColumn();
+            apellido = new DataGridViewTextBoxColumn();
+            dni = new DataGridViewTextBoxColumn();
+            credito = new DataGridViewTextBoxColumn();
+            email = new DataGridViewTextBoxColumn();
+            resHotel = new DataGridViewTextBoxColumn();
+            resVuelo = new DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)dataGridView_usuarios).BeginInit();
             SuspendLayout();
             // 
@@ -259,57 +259,6 @@
             dataGridView_usuarios.CellContentClick += dataGridView_usuarios_CellContentClick;
             dataGridView_usuarios.CellDoubleClick += dataGridView_usuarios_CellContentClick;
             // 
-            // id
-            // 
-            id.HeaderText = "ID de usuario";
-            id.Name = "id";
-            id.ReadOnly = true;
-            id.Width = 110;
-            // 
-            // nombre
-            // 
-            nombre.HeaderText = "Nombre";
-            nombre.Name = "nombre";
-            nombre.ReadOnly = true;
-            // 
-            // apellido
-            // 
-            apellido.HeaderText = "Apellido";
-            apellido.Name = "apellido";
-            apellido.ReadOnly = true;
-            // 
-            // dni
-            // 
-            dni.HeaderText = "Dni";
-            dni.Name = "dni";
-            dni.ReadOnly = true;
-            // 
-            // credito
-            // 
-            credito.HeaderText = "Credito";
-            credito.Name = "credito";
-            credito.ReadOnly = true;
-            // 
-            // email
-            // 
-            email.HeaderText = "Email";
-            email.Name = "email";
-            email.ReadOnly = true;
-            // 
-            // resHotel
-            // 
-            resHotel.HeaderText = "Reserva de Hotel";
-            resHotel.Name = "resHotel";
-            resHotel.ReadOnly = true;
-            resHotel.Width = 120;
-            // 
-            // resVuelo
-            // 
-            resVuelo.HeaderText = "Reserva de Vuelo";
-            resVuelo.Name = "resVuelo";
-            resVuelo.ReadOnly = true;
-            resVuelo.Width = 120;
-            // 
             // bienvenida
             // 
             bienvenida.AutoSize = true;
@@ -386,6 +335,59 @@
             textBox_credito.Size = new Size(114, 23);
             textBox_credito.TabIndex = 37;
             // 
+            // id
+            // 
+            id.HeaderText = "ID de usuario";
+            id.Name = "id";
+            id.ReadOnly = true;
+            id.Width = 110;
+            // 
+            // nombre
+            // 
+            nombre.HeaderText = "Nombre";
+            nombre.Name = "nombre";
+            nombre.ReadOnly = true;
+            // 
+            // apellido
+            // 
+            apellido.HeaderText = "Apellido";
+            apellido.Name = "apellido";
+            apellido.ReadOnly = true;
+            // 
+            // dni
+            // 
+            dni.HeaderText = "Dni";
+            dni.Name = "dni";
+            dni.ReadOnly = true;
+            // 
+            // credito
+            // 
+            credito.HeaderText = "Credito";
+            credito.Name = "credito";
+            credito.ReadOnly = true;
+            // 
+            // email
+            // 
+            email.HeaderText = "Email";
+            email.Name = "email";
+            email.ReadOnly = true;
+            // 
+            // resHotel
+            // 
+            resHotel.HeaderText = "Reserva de Hotel";
+            resHotel.Name = "resHotel";
+            resHotel.ReadOnly = true;
+            resHotel.Visible = false;
+            resHotel.Width = 120;
+            // 
+            // resVuelo
+            // 
+            resVuelo.HeaderText = "Reserva de Vuelo";
+            resVuelo.Name = "resVuelo";
+            resVuelo.ReadOnly = true;
+            resVuelo.Visible = false;
+            resVuelo.Width = 120;
+            // 
             // FormUsuario
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -458,6 +460,11 @@
         private TextBox textBox_resHotel;
         private DataGridView dataGridView2;
         private Label bienvenida;
+        private Button btn_modificarCredito;
+        private Button btn_buscarUsuario;
+        private Button btn_agregarCredito;
+        private Label label_Credito;
+        private TextBox textBox_credito;
         private DataGridViewTextBoxColumn id;
         private DataGridViewTextBoxColumn nombre;
         private DataGridViewTextBoxColumn apellido;
@@ -466,10 +473,5 @@
         private DataGridViewTextBoxColumn email;
         private DataGridViewTextBoxColumn resHotel;
         private DataGridViewTextBoxColumn resVuelo;
-        private Button btn_modificarCredito;
-        private Button btn_buscarUsuario;
-        private Button btn_agregarCredito;
-        private Label label_Credito;
-        private TextBox textBox_credito;
     }
 }
