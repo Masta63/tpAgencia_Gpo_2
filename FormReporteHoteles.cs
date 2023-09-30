@@ -24,6 +24,7 @@ namespace tpAgencia_Gpo_2
         {
             InitializeComponent();
             this.WindowState = FormWindowState.Maximized;
+            this.MdiParent = form1;
             this.Agencia = agencia;
             armarComboCiudades();
             this.Form1 = form1;
@@ -197,13 +198,20 @@ namespace tpAgencia_Gpo_2
 
         private void buttonComprar_Click(object sender, EventArgs e)
         {
+            double monto = Agencia.getUsuarioActual().credito;
+            
+            if(monto < Convert.ToDouble(TextMonto.Text))
+            {
+                MessageBox.Show("No tiene suficiente credito");
+            }
+
             if (string.IsNullOrEmpty(labelIdComprar.Text))
                 MessageBox.Show("Debe seleccionar una reserva para comprar");
 
             if (string.IsNullOrEmpty(TextMonto.Text))
                 MessageBox.Show("Debe seleccionar una monto para comprar");
 
-            if (!string.IsNullOrEmpty(labelIdComprar.Text) && !string.IsNullOrEmpty(TextMonto.Text))
+            if (!string.IsNullOrEmpty(labelIdComprar.Text) && !string.IsNullOrEmpty(TextMonto.Text) && monto >= Convert.ToDouble(TextMonto.Text))
             {
                 Hotel? hotelSeleccionado = Agencia.getHoteles().Where(x => x.id == Convert.ToInt32(labelIdComprar.Text)).FirstOrDefault();
                 ReservaHotel reservaHotel = new ReservaHotel(hotelSeleccionado, Agencia.getUsuarioActual(), fechaDesde.Value, fechaHasta.Value, Convert.ToInt32(TextMonto.Text));

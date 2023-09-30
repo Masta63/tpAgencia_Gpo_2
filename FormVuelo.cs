@@ -22,6 +22,7 @@ namespace tpAgencia_Gpo_2
         {
             InitializeComponent();
             this.WindowState = FormWindowState.Maximized;
+            this.MdiParent = form1;
             this.agencia = agencia;
             List<Ciudad> ciudades = agencia.GetCiudades();
             this.Form1 = form1;

@@ -23,6 +23,8 @@ namespace tpAgencia_Gpo_2
         {
             InitializeComponent();
             this.WindowState = FormWindowState.Maximized;
+            this.form1 = form1;
+            this.MdiParent = form1;
             this.Agencia = agencia;
             this.form1 = form1;
             MostrarDGV();

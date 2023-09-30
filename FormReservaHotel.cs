@@ -21,8 +21,10 @@ namespace tpAgencia_Gpo_2
         {
             InitializeComponent();
             this.Agencia = agencia;
+            this.WindowState = FormWindowState.Maximized;
             //armarComboHoteles();
             this.Form1 = form1;
+            this.MdiParent = form1;
 
             if (reservaHotel != null)
             {

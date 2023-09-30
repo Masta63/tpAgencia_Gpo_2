@@ -35,15 +35,6 @@ public class Agencia
 
     //INICIO METODOS DE USUARIO
 
-    public void registrarUsuario(int id, string name, string apellido, string dni, string mail, string password, bool esAdmin)
-    {
-        Usuario usuario = new Usuario(id, name, apellido, dni, mail, password, esAdmin);
-        listUsuarios.Add(usuario);
-    }
-    public List<Usuario> Usuarios
-    {
-        get => listUsuarios.ToList();
-    }
 
     public void setUsuario(Usuario usuario)
     {
@@ -60,13 +51,6 @@ public class Agencia
         return this.usuarioActual;
     }
 
-    public bool setUsuarioActual(Usuario usuarioActual)
-    {
-        //cree este metodo solo para hacer pruebas en mi vista de usuario
-        this.usuarioActual = usuarioActual;
-        return true;
-    }
-
     public List<Usuario> getListUsuario()
     {
         return listUsuarios;
@@ -77,12 +61,12 @@ public class Agencia
         usuarioActual = null;
     }
 
-    public string iniciarSesion(List<Usuario> usuariosSeleccionados, string InputMail, string Inputpass, bool checkAdmin)
+    public string iniciarSesion(List<Usuario> usuariosSeleccionados, string inputMail, string inputpass, bool checkAdmin)
     {
         string codigoReturn = string.Empty;
         foreach (Usuario user in usuariosSeleccionados)
         {
-            if (user.mail.Equals(InputMail) && user.password == Inputpass)
+            if (user.mail.Equals(inputMail) && user.password == inputpass)
             {
                 codigoReturn = "OK";
                 user.esAdmin = checkAdmin;
@@ -111,13 +95,6 @@ public class Agencia
         return listUsuarios.ToList();
     }
 
-    public bool agregarUsuarioobjet(Usuario usuario)
-    {
-        Usuario obj = new Usuario(cantUsuarios, usuario.name, usuario.apellido, usuario.dni, usuario.mail);
-        cantUsuarios++;
-        listUsuarios.Add(obj);
-        return true;
-    }
     public bool agregarUsuario(string name, string apellido, string dni, string mail)
     {
         Usuario usuario = new Usuario(cantUsuarios, name, apellido, dni, mail);
@@ -217,7 +194,7 @@ public class Agencia
     }
     //verificar si ya existe un usuario con ese mail o dni
     //devuelve true si encuentra
-    public bool ExisteUsuarioConDniOMail(string dni, string mail)
+    public bool existeUsuarioConDniOMail(string dni, string mail)
     {
         return getListUsuario().Any(u => u.dni == dni || u.mail == mail);
     }
@@ -232,12 +209,7 @@ public class Agencia
     // INICIO METODOS DE VUELO
 
     //ver lo que explicó el profesor
-    public void cargarCredito(int idUsuario, double importe)
-    {
 
-        this.usuarioActual.credito += importe;
-
-    }
     public bool agregarVuelo(Ciudad origen, Ciudad destino, int capacidad, double costo, DateTime fecha, string aerolinea, string avion)
     {
 

@@ -20,6 +20,8 @@ namespace tpAgencia_Gpo_2
         public FormReporteCiudad(Agencia agencia, Form1 form1)
         {
             InitializeComponent();
+            this.WindowState = FormWindowState.Maximized;
+            this.MdiParent = form1;
             this.oAgencia = agencia;
             this.Form1 = form1;
         }

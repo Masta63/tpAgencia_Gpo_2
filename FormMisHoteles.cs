@@ -21,6 +21,8 @@ namespace tpAgencia_Gpo_2
         public FormMisHoteles(Agencia agencia, Form1 form1)
         {
             InitializeComponent();
+            this.WindowState = FormWindowState.Maximized;
+            this.MdiParent = form1;
             this.agencia = agencia;
             this.form1 = form1;
             usuarioActual = agencia.getUsuarioActual();

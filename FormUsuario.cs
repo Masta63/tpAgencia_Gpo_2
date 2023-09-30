@@ -23,6 +23,8 @@ namespace tpAgencia_Gpo_2
             InitializeComponent();
             this.WindowState = FormWindowState.Maximized;
             this.refAgencia = agencia;
+            this.form1 = form1;
+            this.MdiParent = form1;
 
             //usuario = new Usuario("juan", "garcia", "22333444", "juan@mail.com");
             //agencia.agregarUsuarioobjet(usuario);
@@ -50,14 +52,14 @@ namespace tpAgencia_Gpo_2
 
             //empty devuelve true si esta vacio
             if (string.IsNullOrEmpty(textBox_nombre.Text) || string.IsNullOrEmpty(textBox_apellido.Text) ||
-                string.IsNullOrEmpty(textBox_dni.Text) || string.IsNullOrEmpty(textBox_email.Text) && (refAgencia.ExisteUsuarioConDniOMail(textBox_dni.Text, textBox_email.Text)))
+                string.IsNullOrEmpty(textBox_dni.Text) || string.IsNullOrEmpty(textBox_email.Text) && (refAgencia.existeUsuarioConDniOMail(textBox_dni.Text, textBox_email.Text)))
 
             {
                 MessageBox.Show("Debe completar todos los campos para agregar un usuario.");
             }
             else
             {
-                if ((refAgencia.ExisteUsuarioConDniOMail(textBox_dni.Text, textBox_email.Text)))
+                if ((refAgencia.existeUsuarioConDniOMail(textBox_dni.Text, textBox_email.Text)))
                 {
                     MessageBox.Show("ya existe un usuario con el mismo maiol o dni.");
                     //true

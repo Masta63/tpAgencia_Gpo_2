@@ -23,6 +23,8 @@ namespace tpAgencia_Gpo_2
         public FormHotelAbm(Agencia agencia, Form1 form1)
         {
             InitializeComponent();
+            this.WindowState = FormWindowState.Maximized;
+            this.MdiParent = form1;
             this.agencia = agencia;
             this.Form1 = form1;
             List<Ciudad> ciudades = agencia.GetCiudades();
