@@ -147,21 +147,21 @@
             // 
             // label_reserva_hotel
             // 
-            label_reserva_hotel.AutoSize = true;
-            label_reserva_hotel.Location = new Point(949, 267);
-            label_reserva_hotel.Name = "label_reserva_hotel";
-            label_reserva_hotel.Size = new Size(79, 15);
-            label_reserva_hotel.TabIndex = 17;
-            label_reserva_hotel.Text = "Reserva Hotel";
-            // 
-            // label_reserva_vuelo
-            // 
-            label_reserva_vuelo.AutoSize = true;
-            label_reserva_vuelo.Location = new Point(948, 308);
-            label_reserva_vuelo.Name = "label_reserva_vuelo";
-            label_reserva_vuelo.Size = new Size(80, 15);
-            label_reserva_vuelo.TabIndex = 18;
-            label_reserva_vuelo.Text = "Reserva Vuelo";
+            //label_reserva_hotel.AutoSize = true;
+            //label_reserva_hotel.Location = new Point(949, 267);
+            //label_reserva_hotel.Name = "label_reserva_hotel";
+            //label_reserva_hotel.Size = new Size(79, 15);
+            //label_reserva_hotel.TabIndex = 17;
+            //label_reserva_hotel.Text = "Reserva Hotel";
+            //// 
+            //// label_reserva_vuelo
+            //// 
+            //label_reserva_vuelo.AutoSize = true;
+            //label_reserva_vuelo.Location = new Point(948, 308);
+            //label_reserva_vuelo.Name = "label_reserva_vuelo";
+            //label_reserva_vuelo.Size = new Size(80, 15);
+            //label_reserva_vuelo.TabIndex = 18;
+            //label_reserva_vuelo.Text = "Reserva Vuelo";
             // 
             // textBox_id
             // 
@@ -202,17 +202,17 @@
             // 
             // textBox_resHotel
             // 
-            textBox_resHotel.Location = new Point(1044, 259);
-            textBox_resHotel.Name = "textBox_resHotel";
-            textBox_resHotel.Size = new Size(269, 23);
-            textBox_resHotel.TabIndex = 31;
+            //textBox_resHotel.Location = new Point(1044, 259);
+            //textBox_resHotel.Name = "textBox_resHotel";
+            //textBox_resHotel.Size = new Size(269, 23);
+            //textBox_resHotel.TabIndex = 31;
             // 
             // textBox_resVuelo
             // 
-            textBox_resVuelo.Location = new Point(1044, 300);
-            textBox_resVuelo.Name = "textBox_resVuelo";
-            textBox_resVuelo.Size = new Size(269, 23);
-            textBox_resVuelo.TabIndex = 27;
+            //textBox_resVuelo.Location = new Point(1044, 300);
+            //textBox_resVuelo.Name = "textBox_resVuelo";
+            //textBox_resVuelo.Size = new Size(269, 23);
+            //textBox_resVuelo.TabIndex = 27;
             // 
             // button_Agregar
             // 
