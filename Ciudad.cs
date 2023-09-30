@@ -1,4 +1,6 @@
-﻿namespace tpAgencia_Gpo_2
+﻿using System;
+
+namespace tpAgencia_Gpo_2
 {
     public class Ciudad
     {
@@ -20,15 +22,29 @@
         //Constructores
         public Ciudad(int id, string nombre)
         {
-            id = id++;
+            this.id = id;
             this.nombre = nombre;
             listHoteles = new List<Hotel>();
             listVuelos = new List<Vuelo>();
         }
 
+<<<<<<< HEAD
 
     }
 
 
         //metodos
+=======
+        //metodos
+        public string[] ToString()
+        {
+            return new string[] { id.ToString(), nombre.ToString() };
+        }
+
+    }
+
+   
+
+    
+>>>>>>> master
 }

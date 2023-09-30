@@ -30,6 +30,17 @@ namespace tpAgencia_Gpo_2
 
 
         //metodos constructores
+        public Hotel(int id, Ciudad ubicacion, int capacidad, double costo, string nombre, List<Usuario> listHuespedes, List<ReservaHotel> listMisReservas)
+        {
+            this.id = id;
+            this.ubicacion = ubicacion;
+            this.capacidad = capacidad;
+            this.costo = costo;
+            this.listHuespedes = listHuespedes;
+            this.listMisReservas = listMisReservas;
+            this.nombre = nombre;
+        }
+
         public Hotel(int id, Ciudad ubicacion, int capacidad, double costo, string nombre)
         {
             this.id = id;
@@ -43,5 +54,10 @@ namespace tpAgencia_Gpo_2
 
 
         //metodos
+        public string[] ToString()
+        {
+            string[] ubicacionArr = ubicacion.ToString();
+            return new string[] { id.ToString(), ubicacionArr[1], capacidad.ToString(), costo.ToString(), nombre.ToString() };
+        }
     }
 }
