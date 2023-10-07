@@ -45,43 +45,32 @@ namespace tpAgencia_Gpo_2
         {
             string cont = textContrasenia.Text;
             string mail = textMail.Text;
-            if (cont != null && mail != "" && cont != null && mail != "")
-            {
-                var usuariosSeleccionados = agencia.getListUsuario().Where(x => x.mail == mail).ToList();
-                validacionEstadoUsuario(usuariosSeleccionados, mail, cont);
-            }
-            else
-                MessageBox.Show("Debe ingresar un usuario y contraseña!");
-        }
+            string resp = agencia.login(textContrasenia.Text, textMail.Text, true);
 
+            switch (resp)
+            {
+                case "OK":
+                    this.TransfEventoLogin();
+                    break;
+                case "BLOQUEADO":
+                    MessageBox.Show("Error, usuario bloqueado");
+                    textContrasenia.Enabled = false;
+                    textMail.Enabled = false;
+                    Aceptar.Enabled = false;
+                    break;
+                case "MAILERROR":
+                    MessageBox.Show("Error, usuario o contraseña incorrectos");
+                    break;
+                case "INGRESARDATOS":
+                    MessageBox.Show("Debe ingresar un usuario y contraseña!");
+                    break;
+                case "FALTAUSUARIO":
+                    MessageBox.Show("No existe el usuario");
+                    break;
+                default:
+                    break;
+            }
 
-        private void validacionEstadoUsuario(List<Usuario> usuariosSeleccionados, string mailInput, string Inputpass)
-        {
-            if (usuariosSeleccionados.Count == 0)
-            {
-                MessageBox.Show("Error, debe ingresar un usuario existente");
-            }
-            else
-            {
-                string respLogin = agencia.iniciarSesion(usuariosSeleccionados, mailInput, Inputpass, checkBoxEsAdmin.Checked);
-                switch (respLogin)
-                {
-                    case "OK":
-                        this.TransfEventoLogin();
-                        break;
-                    case "BLOQUEADO":
-                        MessageBox.Show("Error, usuario bloqueado");
-                        textContrasenia.Enabled = false;
-                        textMail.Enabled = false;
-                        Aceptar.Enabled = false;
-                        break;
-                    case "MAILERROR":
-                        MessageBox.Show("Error, usuario o contraseña incorrectos");
-                        break;
-                    default:
-                        break;
-                }
-            }
         }
 
     }

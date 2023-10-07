@@ -36,6 +36,30 @@ public class Agencia
     //INICIO METODOS DE USUARIO
 
 
+
+
+
+    public string login(string? _contraseña, string? _mail, bool check)
+    {
+        if (_contraseña != null && _mail != "" && _contraseña != null && _mail != "")
+        {
+            Usuario? usuarioSeleccionados = this.getListUsuario().Where(x => x?.mail == _mail).FirstOrDefault();
+            return validacionEstadoUsuario(usuarioSeleccionados, _mail, _contraseña, check);
+        }
+        else
+        {
+            return "INGRESARDATOS";
+        }
+    }
+
+
+
+    private string validacionEstadoUsuario(Usuario? usuarioSeleccionados, string mailInput, string Inputpass, bool Checked)
+    {
+        return this.iniciarSesion(usuarioSeleccionados, mailInput, Inputpass, Checked);
+    }
+
+
     public void setUsuario(Usuario usuario)
     {
         listUsuarios.Add(usuario);
@@ -61,31 +85,34 @@ public class Agencia
         usuarioActual = null;
     }
 
-    public string iniciarSesion(List<Usuario> usuariosSeleccionados, string inputMail, string inputpass, bool checkAdmin)
+    public string iniciarSesion(Usuario? usuarioSeleccionados, string inputMail, string inputpass, bool checkAdmin)
     {
-        string codigoReturn = string.Empty;
-        foreach (Usuario user in usuariosSeleccionados)
+        string codigoReturn;
+        if (usuarioSeleccionados == null)
         {
-            if (user.mail.Equals(inputMail) && user.password == inputpass)
+
+            codigoReturn = "FALTAUSUARIO";
+        }
+        else if (usuarioSeleccionados.mail.Equals(inputMail) && usuarioSeleccionados.password == inputpass)
+        {
+            codigoReturn = "OK";
+            usuarioSeleccionados.esAdmin = checkAdmin;
+            this.usuarioActual = usuarioSeleccionados;
+        }
+        else
+        {
+            usuarioSeleccionados.intentosFallidos++;
+            if (usuarioSeleccionados.intentosFallidos == 3)
             {
-                codigoReturn = "OK";
-                user.esAdmin = checkAdmin;
-                this.usuarioActual = user;
+                usuarioSeleccionados.bloqueado = true;
+                codigoReturn = "BLOQUEADO";
             }
             else
             {
-                user.intentosFallidos++;
-                if (user.intentosFallidos == 3)
-                {
-                    user.bloqueado = true;
-                    codigoReturn = "BLOQUEADO";
-                }
-                else
-                {
-                    codigoReturn = "MAILERROR";
-                }
+                codigoReturn = "MAILERROR";
             }
         }
+
         return codigoReturn;
     }
 
