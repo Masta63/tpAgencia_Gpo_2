@@ -13,7 +13,7 @@ using static tpAgencia_Gpo_2.FormReservasVuelos;
 
 namespace tpAgencia_Gpo_2
 {
-    public partial class MenuAgencia : Form
+    public partial class MenuAgenciaAdm : Form
     {
         private Agencia Agencia;
         private FormUsuario FormUsuario;
@@ -31,12 +31,32 @@ namespace tpAgencia_Gpo_2
         private FormReservasVuelos reservasVuelos;
         private FormReservasHoteles reservasHoteles;
 
-        public MenuAgencia(Agencia agencia, Form1 form1)
+        public MenuAgenciaAdm(Agencia agencia, Form1 form1)
         {
             InitializeComponent();
             this.WindowState = FormWindowState.Maximized;
             this.Agencia = agencia;
             this.Form1 = form1;
+
+
+            validacionPermisos();
+
+
+            FormUsuario = new FormUsuario(Agencia, form1);
+            FormUsuario.MdiParent = form1;
+            FormUsuario.TransfEventoFormUsuario += TransfDelegadoFormUsuario;
+
+            FormVuelo = new FormVuelo(agencia, form1);
+            FormVuelo.MdiParent = form1;
+            FormVuelo.TransfEventoFormVuelo += TransfDelegadoFormVuelo;
+
+            formCiudad = new FormCiudad(agencia, form1);
+            formCiudad.MdiParent = form1;
+            formCiudad.TransfEventoFormCiudad += TransfDelegadoFormCiudad;
+
+            formHotel = new FormHotelAbm(agencia, form1);
+            formHotel.MdiParent = form1;
+            formHotel.TransfEventoFormHotel += TransfDelegadoFormHotel;
 
             buscadorVuelos = new BuscadorVuelos(agencia, form1);
             buscadorVuelos.MdiParent = form1;
@@ -74,6 +94,16 @@ namespace tpAgencia_Gpo_2
 
         }
 
+        private void validacionPermisos()
+        {
+            Usuario? ua = Agencia.getUsuarioActual();
+            if (ua != null && !ua.esAdmin)
+            {
+                aBMToolStripMenuItem.Enabled = false;
+            }
+        }
+
+
         private void altasToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
@@ -104,6 +134,37 @@ namespace tpAgencia_Gpo_2
             Agencia.cerrarSesion();
             this.Close();
             Form1.Close();
+        }
+        private void TransfDelegadoFormUsuario()
+        {
+            this.MdiParent = Form1;
+            this.Close();
+            FormUsuario = new FormUsuario(Agencia, Form1);
+            FormUsuario.Show();
+        }
+
+        private void TransfDelegadoFormVuelo()
+        {
+            this.MdiParent = Form1;
+            this.Close();
+            FormVuelo = new FormVuelo(Agencia, Form1);
+            FormVuelo.Show();
+        }
+
+        private void TransfDelegadoFormCiudad()
+        {
+            this.MdiParent = Form1;
+            this.Close();
+            formCiudad = new FormCiudad(Agencia, Form1);
+            formCiudad.Show();
+        }
+
+        private void TransfDelegadoFormHotel()
+        {
+            this.MdiParent = Form1;
+            this.Close();
+            formHotel = new FormHotelAbm(Agencia, Form1);
+            formHotel.Show();
         }
 
         private void TransfDelegadoBuscadorVuelos()
@@ -160,7 +221,7 @@ namespace tpAgencia_Gpo_2
         {
             this.MdiParent = Form1;
             this.Close();
-            FormReporteCiudad = new FormReporteCiudad(Agencia, Form1);
+            FormReporteCiudad = new  FormReporteCiudad(Agencia, Form1);
             FormReporteCiudad.Show();
         }
         private void TransfDelegadoReservasVuelos()
@@ -178,6 +239,22 @@ namespace tpAgencia_Gpo_2
             reservasHoteles = new FormReservasHoteles(Agencia, Form1);
             reservasHoteles.Show();
         }
+
+        private void usuariosToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.TransfDelegadoFormUsuario();
+        }
+
+        private void vuelosToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.TransfDelegadoFormVuelo();
+        }
+
+        private void ciudadesToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            this.TransfDelegadoFormCiudad();
+        }
+
 
         private void cargarCreditoToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -204,6 +281,10 @@ namespace tpAgencia_Gpo_2
         {
             this.TransfDelegadoMisHoteles();
         }
+        private void hotelesToolStripMenuItem1_Click_1(object sender, EventArgs e)
+        {
+            this.TransfDelegadoFormHotel();
+        }
 
         private void ciudadesToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -218,11 +299,6 @@ namespace tpAgencia_Gpo_2
         private void misreservashotelesToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.TransfDelegadoReservasHoteles();
-
-        }
-
-        private void aBMToolStripMenuItem_Click(object sender, EventArgs e)
-        {
 
         }
     }

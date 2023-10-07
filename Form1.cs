@@ -8,6 +8,7 @@ namespace tpAgencia_Gpo_2
         private Agencia Agencia;
         private Login Login;
         private MenuAgencia MenuAgencia;
+        private MenuAgenciaAdm MenuAgenciaAdm;
         private FormUsuarioSimple usuarioSimple;
 
         public Form1()
@@ -90,9 +91,19 @@ namespace tpAgencia_Gpo_2
         {
             MessageBox.Show("Log correcto, Usuario: " + Agencia.nombreLogueado(), "Inicio de Sesión", MessageBoxButtons.OK, MessageBoxIcon.Information);
             Login.Close();
-            MenuAgencia = new MenuAgencia(Agencia, this);
-            MenuAgencia.MdiParent = this;
-            MenuAgencia.Show();
+
+            if (Agencia.getUsuarioActual().esAdmin)
+            {
+                MenuAgenciaAdm = new MenuAgenciaAdm(Agencia, this);
+                MenuAgenciaAdm.MdiParent = this;
+                MenuAgenciaAdm.Show();
+            }
+            else
+            {
+                MenuAgencia = new MenuAgencia(Agencia, this);
+                MenuAgencia.MdiParent = this;
+                MenuAgencia.Show();
+            }
         }
 
 
