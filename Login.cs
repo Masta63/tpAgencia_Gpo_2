@@ -45,7 +45,7 @@ namespace tpAgencia_Gpo_2
         {
             string cont = textContrasenia.Text;
             string mail = textMail.Text;
-            string resp = agencia.login(textContrasenia.Text, textMail.Text, true);
+            string resp = agencia.login(textContrasenia.Text, textMail.Text);
 
             switch (resp)
             {

@@ -39,12 +39,12 @@ public class Agencia
 
 
 
-    public string login(string? _contraseña, string? _mail, bool check)
+    public string login(string? _contraseña, string? _mail)
     {
         if (_contraseña != null && _mail != "" && _contraseña != null && _mail != "")
         {
             Usuario? usuarioSeleccionados = this.getListUsuario().Where(x => x?.mail == _mail).FirstOrDefault();
-            return validacionEstadoUsuario(usuarioSeleccionados, _mail, _contraseña, check);
+            return validacionEstadoUsuario(usuarioSeleccionados, _mail, _contraseña);
         }
         else
         {
@@ -54,9 +54,9 @@ public class Agencia
 
 
 
-    private string validacionEstadoUsuario(Usuario? usuarioSeleccionados, string mailInput, string Inputpass, bool Checked)
+    private string validacionEstadoUsuario(Usuario? usuarioSeleccionados, string mailInput, string Inputpass)
     {
-        return this.iniciarSesion(usuarioSeleccionados, mailInput, Inputpass, Checked);
+        return this.iniciarSesion(usuarioSeleccionados, mailInput, Inputpass);
     }
 
 
@@ -85,7 +85,7 @@ public class Agencia
         usuarioActual = null;
     }
 
-    public string iniciarSesion(Usuario? usuarioSeleccionados, string inputMail, string inputpass, bool checkAdmin)
+    public string iniciarSesion(Usuario? usuarioSeleccionados, string inputMail, string inputpass)
     {
         string codigoReturn;
         if (usuarioSeleccionados == null)
@@ -96,7 +96,6 @@ public class Agencia
         else if (usuarioSeleccionados.mail.Equals(inputMail) && usuarioSeleccionados.password == inputpass)
         {
             codigoReturn = "OK";
-            usuarioSeleccionados.esAdmin = checkAdmin;
             this.usuarioActual = usuarioSeleccionados;
         }
         else
