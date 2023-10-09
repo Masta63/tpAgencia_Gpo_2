@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Xml.Linq;
 using tpAgencia_Gpo_2;
+using static System.Net.Mime.MediaTypeNames;
 
 public class Agencia
 {
@@ -391,6 +392,12 @@ public class Agencia
         return hoteles.ToList();
     }
 
+    public Hotel? getHotelesByHotel(string boxHoteles)
+    {
+        return getHoteles()?.FirstOrDefault(x => x.nombre == boxHoteles);
+    }
+
+
     public void setHotel(Hotel hotel)
     {
         hoteles.Add(hotel);
@@ -458,5 +465,83 @@ public class Agencia
     public List<ReservaHotel> getReservasHotel()
     {
         return reservasHotel.ToList();
+    }
+
+
+    public bool estaRangoParaLaReserva(Hotel hotelSeleccionado, DateTime fechaIngreso, DateTime fechaEgreso)
+    {
+        bool estaRango = false;
+        foreach (var itemReserva in hotelSeleccionado.misReservas)
+        {
+            estaRango = this.verificacionRango(itemReserva, hotelSeleccionado, fechaIngreso, fechaEgreso);
+        }
+        return estaRango;
+    }
+
+    public List<Hotel> TraerDisponibilidadHotel(string ciudadSeleccionada, DateTime fechaIngreso, DateTime fechaEgreso, string textCantPer)
+    {
+        bool estaRango = false;
+        int cantPer = 0;
+
+        List<Hotel> hotelesDisponibles = new List<Hotel>();
+
+        foreach (var itemHotel in this.getHoteles())
+        {
+            if (itemHotel.ubicacion.nombre == ciudadSeleccionada)
+            {
+                foreach (var itemReserva in itemHotel.misReservas)
+                {
+                    estaRango = this.verificacionRango(itemReserva, itemHotel, fechaIngreso, fechaEgreso);
+                    cantPer++;
+                }
+                if (!estaRango && Convert.ToInt32(textCantPer) <= itemHotel.capacidad)
+                    hotelesDisponibles.Add(itemHotel);
+            }
+        }
+
+        return hotelesDisponibles;
+    }
+
+    private bool verificacionRango(ReservaHotel itemReserva, Hotel itemHotel, DateTime fechaIngreso, DateTime fechaEgreso)
+    {
+        bool estaRango = false;
+
+        if (itemReserva.miHotel.id == itemHotel.id)
+        {
+            if (itemReserva.fechaDesde < fechaIngreso && itemReserva.fechaHasta > fechaIngreso)
+            {
+                estaRango = true;
+
+            }
+
+            if (itemReserva.fechaDesde < fechaEgreso && itemReserva.fechaHasta > fechaEgreso)
+            {
+                estaRango = true;
+            }
+        }
+        else
+        {
+            estaRango = false;
+        }
+        return estaRango;
+    }
+
+
+    public ReservaHotel? GenerarReserva(Hotel hotelSeleccionado, DateTime fechaIngreso, DateTime fechaEgreso, string textBoxMonto, string textCantPer, bool estaRango)
+    {
+        if (!estaRango && Convert.ToInt32(textCantPer) <= hotelSeleccionado.capacidad && hotelSeleccionado.costo == Convert.ToDouble(textBoxMonto))
+        {
+            ReservaHotel reservaHotel = new ReservaHotel(hotelSeleccionado, this.getUsuarioActual(), fechaIngreso, fechaEgreso, Convert.ToDouble(textBoxMonto));
+            hotelSeleccionado.capacidad = hotelSeleccionado.capacidad - Convert.ToInt32(textCantPer);
+            Usuario usuarioActual = this.getUsuarioActual();
+            usuarioActual.credito = usuarioActual.credito - Convert.ToDouble(textBoxMonto);
+            usuarioActual.setReservaHotel(reservaHotel);
+            this.setUsuario(usuarioActual);
+            return reservaHotel;
+        }
+        else
+        {
+            return null;
+        }
     }
 }

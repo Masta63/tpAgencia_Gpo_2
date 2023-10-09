@@ -112,43 +112,7 @@ namespace tpAgencia_Gpo_2
             string ciudadSeleccionada = boxCiudades.SelectedItem.ToString();
             DateTime fechaIngreso = fechaDesde.Value;
             DateTime fechaEgreso = fechaHasta.Value;
-
-            //int userVal = int.Parse(textCantPer.Text);
-            bool estaRango = false;
-            int cantPer = 0;
-
-            List<Hotel> hotelesDisponibles = new List<Hotel>();
-
-            foreach (var itemHotel in Agencia.getHoteles())
-            {
-                if (itemHotel.ubicacion.nombre == ciudadSeleccionada)
-                {
-                    foreach (var itemReserva in itemHotel.misReservas)
-                    {
-                        if (itemReserva.miHotel.id == itemHotel.id)
-                        {
-                            if (itemReserva.fechaDesde < fechaIngreso && itemReserva.fechaHasta > fechaIngreso)
-                            {
-                                estaRango = true;
-
-                            }
-
-                            if (itemReserva.fechaDesde < fechaEgreso && itemReserva.fechaHasta > fechaEgreso)
-                            {
-                                estaRango = true;
-                            }
-                        }
-                        else
-                        {
-                            estaRango = false;
-                        }
-                        cantPer++;
-                    }
-                    if (!estaRango && Convert.ToInt32(textCantPer.Text) <= itemHotel.capacidad)
-                        hotelesDisponibles.Add(itemHotel);
-                }
-            }
-
+            List<Hotel> hotelesDisponibles = Agencia.TraerDisponibilidadHotel(ciudadSeleccionada, fechaIngreso, fechaEgreso, textCantPer.Text);
             bool disponibilidad = false;
             dataGridViewHotel.Rows.Clear();
             if (hotelesDisponibles.Count > 0)

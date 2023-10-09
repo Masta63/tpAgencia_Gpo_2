@@ -38,14 +38,6 @@ namespace tpAgencia_Gpo_2
 
         }
 
-        private void armarComboHoteles()
-        {
-            foreach (var itemHoteles in Agencia.getHoteles())
-            {
-                boxHoteles.Items.Add(itemHoteles.nombre);
-            }
-        }
-
 
         public delegate void TransfDelegadoFormAltaReserva();
         private void buttonComprar_Click(object sender, EventArgs e)
@@ -67,49 +59,12 @@ namespace tpAgencia_Gpo_2
             DateTime fechaIngreso = fechaDesde.Value;
             DateTime fechaEgreso = fechaHasta.Value;
             bool disponibilidad = false;
-            bool estaRango = false;
-            int cantPer = 0;
-
-            Hotel? hotelSeleccionado = Agencia.getHoteles().Where(x => x.nombre == boxHoteles.Text).FirstOrDefault();
-
+            Hotel? hotelSeleccionado = Agencia.getHotelesByHotel(boxHoteles.Text);
             if (validaciones(hotelSeleccionado))
             {
-                ReservaHotel? reservaHotel = null;
-                foreach (var itemReserva in hotelSeleccionado.misReservas)
-                {
-                    if (itemReserva.miHotel.id == hotelSeleccionado.id)
-                    {
-                        if (itemReserva.fechaDesde < fechaIngreso && itemReserva.fechaHasta > fechaIngreso)
-                        {
-                            estaRango = true;
-
-                        }
-
-                        if (itemReserva.fechaDesde < fechaEgreso && itemReserva.fechaHasta > fechaEgreso)
-                        {
-                            estaRango = true;
-                        }
-                    }
-                    else
-                    {
-                        estaRango = false;
-                    }
-                    cantPer++;
-                }
-                if (!estaRango && Convert.ToInt32(textCantPer.Text) <= hotelSeleccionado.capacidad && hotelSeleccionado.costo == Convert.ToDouble(textBoxMonto.Text))
-                {
-
-                    reservaHotel = new ReservaHotel(hotelSeleccionado, Agencia.getUsuarioActual(), fechaIngreso, fechaEgreso, Convert.ToDouble(textBoxMonto.Text));
-                    hotelSeleccionado.capacidad = hotelSeleccionado.capacidad - Convert.ToInt32(textCantPer.Text);
-                    Usuario usuarioActual = Agencia.getUsuarioActual();
-                    usuarioActual.credito = usuarioActual.credito - Convert.ToDouble(textBoxMonto.Text);
-                    usuarioActual.setReservaHotel(reservaHotel);
-                    Agencia.setUsuario(usuarioActual);
-                }
-
-
+                bool estaRango = Agencia.estaRangoParaLaReserva(hotelSeleccionado, fechaIngreso, fechaEgreso);
                 dataGridViewHotel.Rows.Clear();
-                if (reservaHotel != null)
+                if (Agencia.GenerarReserva(hotelSeleccionado, fechaIngreso, fechaIngreso, textBoxMonto.Text, textCantPer.Text, estaRango) != null)
                 {
                     dataGridViewHotel.Rows.Add(new string[] { hotelSeleccionado.nombre, textBoxMonto.Text, Convert.ToString(hotelSeleccionado.capacidad), fechaIngreso.ToLongTimeString(), fechaEgreso.ToLongTimeString() });
                     disponibilidad = true;
