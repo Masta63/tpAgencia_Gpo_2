@@ -22,7 +22,6 @@ namespace tpAgencia_Gpo_2
             InitializeComponent();
             this.Agencia = agencia;
             this.WindowState = FormWindowState.Maximized;
-            //armarComboHoteles();
             this.Form1 = form1;
             this.MdiParent = form1;
 
@@ -62,9 +61,8 @@ namespace tpAgencia_Gpo_2
             Hotel? hotelSeleccionado = Agencia.getHotelesByHotel(boxHoteles.Text);
             if (validaciones(hotelSeleccionado))
             {
-                bool estaRango = Agencia.estaRangoParaLaReserva(hotelSeleccionado, fechaIngreso, fechaEgreso);
                 dataGridViewHotel.Rows.Clear();
-                if (Agencia.GenerarReserva(hotelSeleccionado, fechaIngreso, fechaIngreso, textBoxMonto.Text, textCantPer.Text, estaRango) != null)
+                if (Agencia.GenerarReserva(hotelSeleccionado, fechaIngreso, fechaIngreso, textBoxMonto.Text, textCantPer.Text) != null)
                 {
                     dataGridViewHotel.Rows.Add(new string[] { hotelSeleccionado.nombre, textBoxMonto.Text, Convert.ToString(hotelSeleccionado.capacidad), fechaIngreso.ToLongTimeString(), fechaEgreso.ToLongTimeString() });
                     disponibilidad = true;
