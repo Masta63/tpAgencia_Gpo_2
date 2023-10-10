@@ -4,7 +4,7 @@ using System.Net.Mail;
 
 namespace tpAgencia_Gpo_2
 {
-    public class Usuario 
+    public class Usuario
     {
         private List<ReservaHotel> listMisReservasHoteles;
         private List<ReservaVuelo> listMisReservasVuelo;
@@ -31,6 +31,10 @@ namespace tpAgencia_Gpo_2
         public double credito { get; set; }
         public bool esAdmin { get; set; }
 
+
+        //GETTER Y SETTER DE PRUEBA PARA BASE DE DATOS
+        public int esAdmincito { get; set; }
+
         public List<Hotel> hotelesVisitados
         {
             get => listHotelesVisitados.ToList();
@@ -42,9 +46,9 @@ namespace tpAgencia_Gpo_2
         }
 
         //constructor para formUsuario
-        public Usuario( string name, string apellido, string dni, string mail)
+        public Usuario(string name, string apellido, string dni, string mail)
         {
-            
+
             this.name = name;
             this.apellido = apellido;
             this.dni = dni;
@@ -57,7 +61,7 @@ namespace tpAgencia_Gpo_2
             listVuelosTomados = new List<Vuelo>();
         }
         //constructor para formUsuario
-        public Usuario(int id,string name, string apellido, string dni, string mail)
+        public Usuario(int id, string name, string apellido, string dni, string mail)
         {
             this.id = id;
             this.name = name;
@@ -85,6 +89,25 @@ namespace tpAgencia_Gpo_2
             listHotelesVisitados = new List<Hotel>();
             listVuelosTomados = new List<Vuelo>();
         }
+
+
+        //CONSTRUCTOR DE PRUEBA PARA BASE DE DATOS//
+        public Usuario(int id, string name, string apellido, string dni, string mail, string password, int esAdmincito)
+        {
+            this.id = id;
+            this.name = name;
+            this.apellido = apellido;
+            this.dni = dni;
+            this.esAdmincito = esAdmincito;
+            this.password = password;
+            this.mail = mail;
+            listMisReservasHoteles = new List<ReservaHotel>();
+            listMisReservasVuelo = new List<ReservaVuelo>();
+            listHotelesVisitados = new List<Hotel>();
+            listVuelosTomados = new List<Vuelo>();
+        }
+
+
 
 
         //metodos

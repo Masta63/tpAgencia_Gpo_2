@@ -18,6 +18,7 @@ public class Agencia
     private int cantUsuarios = 0;
     private int cantHoteles = 0;
     private int cantIdHoteles = 0;
+    private DAL DB;
 
 
     //metodo constructor
@@ -31,6 +32,13 @@ public class Agencia
         reservasHotel = new List<ReservaHotel>();
         reservasVuelo = new List<ReservaVuelo>();
         listUsuarios = new List<Usuario>();
+        DB = new DAL();
+        inicializarAtributos();
+    }
+
+    private void inicializarAtributos()
+    {
+        listUsuarios = DB.inicializarUsuarios();
     }
 
     //INICIO METODOS DE USUARIO
@@ -365,6 +373,9 @@ public class Agencia
         return hoteles.ToList();
     }
 
+
+    // NO VA //
+
     public void setHotel(Hotel hotel)
     {
         hoteles.Add(hotel);
@@ -434,3 +445,4 @@ public class Agencia
         return reservasHotel.ToList();
     }
 }
+
