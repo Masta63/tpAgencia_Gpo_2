@@ -130,6 +130,15 @@ public class Agencia
         listUsuarios.Add(usuario);
         return true;
     }
+    //metodo del formRegistro de Usuario
+    public bool agregarUsuario(string name, string apellido, string dni, string mail, string pass)
+    {
+        Usuario usuario = new Usuario(cantUsuarios, name, apellido, dni, mail);
+        cantUsuarios++;
+        usuario.id = listUsuarios != null ? listUsuarios.OrderByDescending(x => x.id).FirstOrDefault().id + 1 : 1;
+        listUsuarios.Add(usuario);
+        return true;
+    }
 
     public bool modificarUsuario(int id, string name, string apellido, string dni, string mail)
     {

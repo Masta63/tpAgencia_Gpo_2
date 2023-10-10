@@ -71,13 +71,13 @@ namespace tpAgencia_Gpo_2
             listHotelesVisitados = new List<Hotel>();
             listVuelosTomados = new List<Vuelo>();
         }
-        public Usuario(int id, string name, string apellido, string dni, string mail, string password, bool esAdmin)
+        public Usuario(int id, string name, string apellido, string dni, string mail, string password)
         {
             this.id = id;
             this.name = name;
             this.apellido = apellido;
             this.dni = dni;
-            this.esAdmin = esAdmin;
+            this.esAdmin = false;
             this.password = password;
             this.mail = mail;
             listMisReservasHoteles = new List<ReservaHotel>();
