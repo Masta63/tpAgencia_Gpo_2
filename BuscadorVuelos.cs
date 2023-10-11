@@ -126,10 +126,11 @@ namespace tpAgencia_Gpo_2
 
                     if (usuarioActualCompra != null)
                     {
-                        bool compraExitosa = agencia.comprarVuelo(vueloId, usuarioActualCompra, cantidad);
+                        string resultado = agencia.comprarVuelo(vueloId, usuarioActualCompra, cantidad);
 
-                        if (compraExitosa)
+                        switch (resultado)
                         {
+                            case "exito":
                             Vuelo vueloSeleccionado = agencia.getVuelos().FirstOrDefault(v => v.id == vueloId);
 
                             if (vueloSeleccionado != null)
@@ -139,14 +140,17 @@ namespace tpAgencia_Gpo_2
                             int rowIndex = e.RowIndex;
                             int asientosDisponibles = vueloSeleccionado.capacidad;
                             dataGridView1.Rows[rowIndex].Cells["Cantidad"].Value = asientosDisponibles;
-
-
-
                             MessageBox.Show("Reserva realiza con éxito");
+                            break;
+
+                            case "sinSaldo":
+                                MessageBox.Show("No tienes suficiente crédito para realizar la compra");
+                                break;
+                            case "error":
+                                MessageBox.Show("Hubo un error inesperado, volvé a intentarlo");
+                                break;
                         }
-
                     }
-
                 }
             }          
         }

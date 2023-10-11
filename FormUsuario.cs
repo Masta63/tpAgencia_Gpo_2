@@ -139,7 +139,7 @@ namespace tpAgencia_Gpo_2
             foreach (Usuario us in refAgencia.getUsuarios())//para cada usuario en el clon de listado de usuarios de mi referencia de agencia
             {
 
-                dataGridView_usuarios.Rows.Add(new string[] { us.id.ToString(), us.name, us.apellido, us.dni.ToString(), us.credito.ToString(), us.mail, us.misReservasHoteles.ToString(), us.misReservasVuelo.ToString() });
+                dataGridView_usuarios.Rows.Add(new string[] { us.id.ToString(), us.name, us.apellido, us.dni.ToString(), us.credito.ToString(), us.mail, us.misReservasHoteles.ToString(), us.listMisReservasVuelo.ToString() });
 
 
                 textBox_id.Text = " ";
@@ -278,7 +278,7 @@ namespace tpAgencia_Gpo_2
                 if (us.dni == dni)
                 {
                     dataGridView_usuarios.Rows.Clear();
-                    dataGridView_usuarios.Rows.Add(new string[] { us.id.ToString(), us.name, us.apellido, us.dni.ToString(), us.credito.ToString(), us.mail, us.misReservasHoteles.ToString(), us.misReservasVuelo.ToString() });
+                    dataGridView_usuarios.Rows.Add(new string[] { us.id.ToString(), us.name, us.apellido, us.dni.ToString(), us.credito.ToString(), us.mail, us.misReservasHoteles.ToString(), us.listMisReservasVuelo.ToString() });
 
                     usuarioEncontrado = true;
                     break; // Como se encontró el usuario, podemos salir del bucle.

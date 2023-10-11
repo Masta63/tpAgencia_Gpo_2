@@ -28,23 +28,18 @@ namespace tpAgencia_Gpo_2
             listVuelos = new List<Vuelo>();
         }
 
-<<<<<<< HEAD
 
-    }
-
-
-        //metodos
-=======
         //metodos
         public string[] ToString()
         {
+            
             return new string[] { id.ToString(), nombre.ToString() };
         }
 
+
     }
+
+}
 
    
 
-    
->>>>>>> master
-}

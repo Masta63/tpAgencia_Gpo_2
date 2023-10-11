@@ -48,7 +48,11 @@ namespace tpAgencia_Gpo_2
 
             foreach (Vuelo vue in agencia.getVuelos())
             {
-                dataGridView1.Rows.Add(vue.ToString());
+               
+                string idCOrigen = agencia.obtenerCiudadPorId(vue.origen.id);
+                string idCDestino = agencia.obtenerCiudadPorId(vue.destino.id);
+               
+                dataGridView1.Rows.Add(vue.id, idCOrigen, idCDestino, vue.capacidad, vue.costo, vue.fecha, vue.aerolinea, vue.avion);
 
                 textBox8.Text = "";
                 comboBox1.Text = "";
@@ -67,14 +71,14 @@ namespace tpAgencia_Gpo_2
         {
             try
             {
-                string? id = dataGridView1[0, e.RowIndex]?.Value?.ToString();
-                string? Origen = dataGridView1[1, e.RowIndex]?.Value?.ToString();
-                string? Destino = dataGridView1[2, e.RowIndex]?.Value?.ToString();
-                string? Capacidad = dataGridView1[3, e.RowIndex]?.Value?.ToString();
-                string? Costo = dataGridView1[4, e.RowIndex]?.Value?.ToString();
-                string? Fecha = dataGridView1[5, e.RowIndex]?.Value?.ToString();
-                string? Aerolinea = dataGridView1[6, e.RowIndex]?.Value?.ToString();
-                string? Avion = dataGridView1[7, e.RowIndex]?.Value?.ToString();
+                string id = dataGridView1[0, e.RowIndex].Value.ToString();
+                string Origen = dataGridView1[1, e.RowIndex].Value.ToString();
+                string Destino = dataGridView1[2, e.RowIndex].Value.ToString();
+                string Capacidad = dataGridView1[3, e.RowIndex].Value.ToString();
+                string Costo = dataGridView1[4, e.RowIndex].Value.ToString();
+                string Fecha = dataGridView1[5, e.RowIndex].Value.ToString();
+                string Aerolinea = dataGridView1[6, e.RowIndex].Value.ToString();
+                string Avion = dataGridView1[7, e.RowIndex].Value.ToString();
                 textBox8.Text = id;
                 comboBox1.Text = Origen;
                 comboBox2.Text = Destino;
@@ -85,6 +89,7 @@ namespace tpAgencia_Gpo_2
                 textBox7.Text = Avion;
 
                 vueloSeleccionado = int.Parse(id);
+                
             }
             catch(Exception)
             {
@@ -94,20 +99,24 @@ namespace tpAgencia_Gpo_2
 
         private void button1_Click(object sender, EventArgs e)
         {
-            string cOrigen = comboBox1.Text;
-            string cDestino = comboBox2.Text;
-
-            Ciudad ciudadOrigen = agencia.GetCiudades().FirstOrDefault(ciudad => ciudad.nombre == cOrigen);
-            Ciudad ciudadDestino = agencia.GetCiudades().FirstOrDefault(ciudad => ciudad.nombre == cDestino);
-
+            string origen = comboBox1.Text;
+            string destino = comboBox2.Text;
+            int idCOrigen = agencia.obtenerNombreCiudad(origen);
+            int idCDestino = agencia.obtenerNombreCiudad(destino);
 
 
-            if (ciudadOrigen == null || ciudadDestino == null || string.IsNullOrEmpty(textBox3.Text) || string.IsNullOrEmpty(textBox4.Text) || string.IsNullOrEmpty(dateTimePicker1.Text) || string.IsNullOrEmpty(textBox6.Text) || string.IsNullOrEmpty(textBox7.Text))
+            if (string.IsNullOrEmpty(comboBox1.Text) || string.IsNullOrEmpty(comboBox2.Text) || string.IsNullOrEmpty(textBox3.Text) || string.IsNullOrEmpty(textBox4.Text) || string.IsNullOrEmpty(dateTimePicker1.Text) || string.IsNullOrEmpty(textBox6.Text) || string.IsNullOrEmpty(textBox7.Text))
             {
                 MessageBox.Show("Debe completar todos los campos para poder agregar un nuevo vuelo");
             }
             else
-            {
+            {   
+                if(idCOrigen == -1 || idCDestino==-1) 
+                {
+                    MessageBox.Show("Debe seleccionar una ciudad");
+                    return;
+                }
+
                 int capacidad;
                 if (!int.TryParse(textBox3.Text, out capacidad))
                 {
@@ -129,7 +138,7 @@ namespace tpAgencia_Gpo_2
                     return;
                 }
 
-                if (agencia.agregarVuelo(ciudadOrigen, ciudadDestino, capacidad, costo, fecha, textBox6.Text, textBox7.Text))
+                if (agencia.agregarVuelo(idCOrigen, idCDestino, capacidad, costo, fecha, textBox6.Text, textBox7.Text))
                 {
                     MessageBox.Show("Vuelo agregado exitosamente");
                 }
@@ -156,14 +165,19 @@ namespace tpAgencia_Gpo_2
                     double costo = double.Parse(textBox4.Text);
                     DateTime fecha = DateTime.Parse(dateTimePicker1.Text);
 
-                    if (agencia.modificarVuelo(vueloSeleccionado, ciudadOrigen, ciudadDestino, capacidad, costo, fecha, textBox6.Text, textBox7.Text))
+                    string resultado = (agencia.modificarVuelo(vueloSeleccionado, ciudadOrigen, ciudadDestino, capacidad, costo, fecha, textBox6.Text, textBox7.Text));
+                    switch (resultado)
                     {
-                        MessageBox.Show("Vuelo modificado exitosamente");
-                    }
-                    else
-                    {
-                        MessageBox.Show("Ocurrió un problema al querer modificar el vuelo");
-                    }
+                        case "exito":
+                            MessageBox.Show("Vuelo modificado exitosamente");
+                            break;
+                        case "capacidad":
+                            MessageBox.Show("La capacidad es menor a la cantidad de personas que reservaron el vuelo");
+                            break;
+                        case "error":
+                            MessageBox.Show("Ocurrió un problema al querer modificar el vuelo");
+                            break;
+                    } 
                 }
                 catch (FormatException)
                 {

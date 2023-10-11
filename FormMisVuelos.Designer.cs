@@ -38,7 +38,6 @@
             Fecha = new DataGridViewTextBoxColumn();
             Aerolinea = new DataGridViewTextBoxColumn();
             Avion = new DataGridViewTextBoxColumn();
-            Cantidad = new DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
             // 
@@ -65,7 +64,7 @@
             // dataGridView1
             // 
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { Origen, Destino, Costo, Fecha, Aerolinea, Avion, Cantidad });
+            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { Origen, Destino, Costo, Fecha, Aerolinea, Avion});
             dataGridView1.Location = new Point(75, 199);
             dataGridView1.Name = "dataGridView1";
             dataGridView1.RowHeadersWidth = 62;
@@ -139,15 +138,7 @@
             Avion.Resizable = DataGridViewTriState.False;
             Avion.Width = 150;
             // 
-            // Cantidad
-            // 
-            Cantidad.HeaderText = "Cantidad";
-            Cantidad.MinimumWidth = 8;
-            Cantidad.Name = "Cantidad";
-            Cantidad.ReadOnly = true;
-            Cantidad.Resizable = DataGridViewTriState.False;
-            Cantidad.Width = 150;
-            // 
+           
             // FormMisVuelos
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
@@ -178,6 +169,6 @@
         private DataGridViewTextBoxColumn Fecha;
         private DataGridViewTextBoxColumn Aerolinea;
         private DataGridViewTextBoxColumn Avion;
-        private DataGridViewTextBoxColumn Cantidad;
+        
     }
 }

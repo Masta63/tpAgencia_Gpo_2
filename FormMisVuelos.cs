@@ -61,7 +61,7 @@ namespace tpAgencia_Gpo_2
                             vuelo.destino.nombre,
                             vuelosAgrupado.MontoTotal,
                             vuelo.fecha.ToString("dd/MM/yyyy"),
-                            vuelo.aerolinea, vuelo.avion, vuelosAgrupado.Cantidad);
+                            vuelo.aerolinea, vuelo.avion);
                     }
 
                 }
