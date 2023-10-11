@@ -480,7 +480,7 @@ public class Agencia
     public bool estaRangoParaLaReserva(Hotel hotelSeleccionado, DateTime fechaIngreso, DateTime fechaEgreso)
     {
         bool estaRango = false;
-        foreach (var itemReserva in hotelSeleccionado.misReservas)
+        foreach (var itemReserva in hotelSeleccionado.listMisReservas)
         {
             estaRango = this.verificacionRango(itemReserva, hotelSeleccionado, fechaIngreso, fechaEgreso);
         }
@@ -498,7 +498,7 @@ public class Agencia
         {
             if (itemHotel.ubicacion.nombre == ciudadSeleccionada)
             {
-                foreach (var itemReserva in itemHotel.misReservas)
+                foreach (var itemReserva in itemHotel.listMisReservas)
                 {
                     estaRango = this.verificacionRango(itemReserva, itemHotel, fechaIngreso, fechaEgreso);
                     cantPer++;

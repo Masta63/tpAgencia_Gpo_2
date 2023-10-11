@@ -9,24 +9,18 @@ namespace tpAgencia_Gpo_2
     public class Hotel
     {
 
-        private List<Usuario> listHuespedes;
-        private List<ReservaHotel> listMisReservas;
 
         //declaracion de variables publicac on properties
         public int id { get; set; }
         public Ciudad ubicacion { get; set; }
         public int capacidad { get; set; }
         public double costo { get; set; }
-        public List<Usuario> huespedes 
-        {
-            get => listHuespedes.ToList();           
-        }
+        public List<Usuario> listHuespedes { get; set; }
+
         public string nombre { get; set; }
 
-        public List<ReservaHotel> misReservas
-        {
-            get => listMisReservas.ToList();
-        }
+        public List<ReservaHotel> listMisReservas { get; set; }
+
 
 
         //metodos constructores
