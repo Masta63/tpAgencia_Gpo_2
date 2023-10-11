@@ -6,8 +6,7 @@ namespace tpAgencia_Gpo_2
 {
     public class Usuario 
     {
-        private List<ReservaHotel> listMisReservasHoteles;
-        private List<ReservaVuelo> listMisReservasVuelo;
+
         private List<Hotel> listHotelesVisitados;
         private List<Vuelo> listVuelosTomados;
 
@@ -19,27 +18,19 @@ namespace tpAgencia_Gpo_2
         public string password { get; set; }
         public int intentosFallidos { get; set; }
         public bool bloqueado { get; set; }
-        public List<ReservaHotel> misReservasHoteles
-        {
-            get => listMisReservasHoteles.ToList();
-        }
-        public List<ReservaVuelo> misReservasVuelo
-        {
-            get => listMisReservasVuelo.ToList();
-        }
+        public List<ReservaHotel> listMisReservasHoteles { get; set; }
+
+        public List<ReservaVuelo> listMisReservasVuelo { get; set; }
+
 
         public double credito { get; set; }
         public bool esAdmin { get; set; }
 
-        public List<Hotel> hotelesVisitados
-        {
-            get => listHotelesVisitados.ToList();
-        }
+        public List<Hotel> hotelesVisitados { get; set; }
 
-        public List<Vuelo> vuelosTomados
-        {
-            get => listVuelosTomados.ToList();
-        }
+
+        public List<Vuelo> vuelosTomados { get; set; }
+
 
         //constructor para formUsuario
         public Usuario( string name, string apellido, string dni, string mail)

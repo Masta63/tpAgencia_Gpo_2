@@ -348,7 +348,7 @@ public class Agencia
         DateTime fechaActual = DateTime.Now;
         List<Vuelo> vuelosPasados = new List<Vuelo>();
 
-        foreach (ReservaVuelo reserva in usuario.misReservasVuelo)
+        foreach (ReservaVuelo reserva in usuario.listMisReservasVuelo)
         {
             if (reserva.miVuelo.fecha < fechaActual)
             {
@@ -366,7 +366,7 @@ public class Agencia
         DateTime fechaActual = DateTime.Now;
         List<Vuelo> vuelosReservados = new List<Vuelo>();
 
-        foreach (ReservaVuelo reserva in usuario.misReservasVuelo)
+        foreach (ReservaVuelo reserva in usuario.listMisReservasVuelo)
         {
             if (reserva.miVuelo.fecha > fechaActual)
             {
@@ -384,7 +384,7 @@ public class Agencia
         DateTime fechaActual = DateTime.Now;
         List<Hotel> hotelesReservados = new List<Hotel>();
 
-        foreach (ReservaHotel reserva in usuario.misReservasHoteles)
+        foreach (ReservaHotel reserva in usuario.listMisReservasHoteles)
         {
             if (reserva.fechaHasta.Date >= fechaActual.Date)
             {
