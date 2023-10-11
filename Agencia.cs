@@ -328,7 +328,7 @@ public class Agencia
                 for (int i = 0; i < cantidad; i++)
                 {
                     ReservaVuelo reserva = new ReservaVuelo(vuelo, usuarioActual);
-                    vuelo.misReservas.Add(reserva);
+                    vuelo.listMisReservas.Add(reserva);
                     usuarioActual.agregarReservaVuelo(reserva);
                 }
 
