@@ -43,7 +43,7 @@ namespace tpAgencia_Gpo_2
             if (usuarioActual != null)
             {
 
-                foreach (var item in agencia.getUsuarioActual().misReservasHoteles) {
+                foreach (var item in agencia.getUsuarioActual().listMisReservasHoteles) {
 
                     if(item.fechaHasta < fechaActual)
                     

@@ -130,6 +130,15 @@ public class Agencia
         listUsuarios.Add(usuario);
         return true;
     }
+    //metodo del formRegistro de Usuario
+    public bool agregarUsuario(string name, string apellido, string dni, string mail, string pass)
+    {
+        Usuario usuario = new Usuario(cantUsuarios, name, apellido, dni, mail);
+        cantUsuarios++;
+        usuario.id = listUsuarios != null ? listUsuarios.OrderByDescending(x => x.id).FirstOrDefault().id + 1 : 1;
+        listUsuarios.Add(usuario);
+        return true;
+    }
 
     public bool modificarUsuario(int id, string name, string apellido, string dni, string mail)
     {
@@ -319,7 +328,7 @@ public class Agencia
                 for (int i = 0; i < cantidad; i++)
                 {
                     ReservaVuelo reserva = new ReservaVuelo(vuelo, usuarioActual);
-                    vuelo.misReservas.Add(reserva);
+                    vuelo.listMisReservas.Add(reserva);
                     usuarioActual.agregarReservaVuelo(reserva);
                 }
 
@@ -339,7 +348,7 @@ public class Agencia
         DateTime fechaActual = DateTime.Now;
         List<Vuelo> vuelosPasados = new List<Vuelo>();
 
-        foreach (ReservaVuelo reserva in usuario.misReservasVuelo)
+        foreach (ReservaVuelo reserva in usuario.listMisReservasVuelo)
         {
             if (reserva.miVuelo.fecha < fechaActual)
             {
@@ -357,7 +366,7 @@ public class Agencia
         DateTime fechaActual = DateTime.Now;
         List<Vuelo> vuelosReservados = new List<Vuelo>();
 
-        foreach (ReservaVuelo reserva in usuario.misReservasVuelo)
+        foreach (ReservaVuelo reserva in usuario.listMisReservasVuelo)
         {
             if (reserva.miVuelo.fecha > fechaActual)
             {
@@ -375,7 +384,7 @@ public class Agencia
         DateTime fechaActual = DateTime.Now;
         List<Hotel> hotelesReservados = new List<Hotel>();
 
-        foreach (ReservaHotel reserva in usuario.misReservasHoteles)
+        foreach (ReservaHotel reserva in usuario.listMisReservasHoteles)
         {
             if (reserva.fechaHasta.Date >= fechaActual.Date)
             {
@@ -471,7 +480,7 @@ public class Agencia
     public bool estaRangoParaLaReserva(Hotel hotelSeleccionado, DateTime fechaIngreso, DateTime fechaEgreso)
     {
         bool estaRango = false;
-        foreach (var itemReserva in hotelSeleccionado.misReservas)
+        foreach (var itemReserva in hotelSeleccionado.listMisReservas)
         {
             estaRango = this.verificacionRango(itemReserva, hotelSeleccionado, fechaIngreso, fechaEgreso);
         }
@@ -489,7 +498,7 @@ public class Agencia
         {
             if (itemHotel.ubicacion.nombre == ciudadSeleccionada)
             {
-                foreach (var itemReserva in itemHotel.misReservas)
+                foreach (var itemReserva in itemHotel.listMisReservas)
                 {
                     estaRango = this.verificacionRango(itemReserva, itemHotel, fechaIngreso, fechaEgreso);
                     cantPer++;
