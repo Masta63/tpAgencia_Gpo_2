@@ -146,6 +146,7 @@
             Cantidad.Name = "Cantidad";
             Cantidad.ReadOnly = true;
             Cantidad.Resizable = DataGridViewTriState.False;
+            Cantidad.Visible = false;
             Cantidad.Width = 150;
             // 
             // FormMisVuelos

@@ -8,7 +8,6 @@ namespace tpAgencia_Gpo_2
     {
 
         private List<Hotel> listHotelesVisitados;
-        private List<Vuelo> listVuelosTomados;
 
         public int id { get; set; }
         public string name { get; set; }
@@ -21,7 +20,7 @@ namespace tpAgencia_Gpo_2
         public List<ReservaHotel> listMisReservasHoteles { get; set; }
 
         public List<ReservaVuelo> listMisReservasVuelo { get; set; }
-
+        public List<Vuelo> listVuelosTomados { get; set; }
 
         public double credito { get; set; }
         public bool esAdmin { get; set; }
@@ -99,7 +98,10 @@ namespace tpAgencia_Gpo_2
             listMisReservasVuelo.Add(reserva);
         }
 
-      
+        public void agregarVueloTomado(Vuelo vuelo)
+        {
+            listVuelosTomados.Add(vuelo);
+        }
 
     }
 }

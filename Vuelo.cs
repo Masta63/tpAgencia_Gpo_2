@@ -4,7 +4,7 @@
 
     public class Vuelo
     {
-        
+
         public int id { get; set; }
         public Ciudad origen { get; set; }
         public Ciudad destino { get; set; }
@@ -16,9 +16,8 @@
         public string aerolinea { get; set; }
         public string avion { get; set; }
         public List<ReservaVuelo> listMisReservas { get; set; }
-        
 
-        public Vuelo(int id, Ciudad origen, Ciudad destino, int capacidad,double costo, DateTime fecha, string aerolinea, string avion)
+        public Vuelo(int id, Ciudad origen, Ciudad destino, int capacidad, double costo, DateTime fecha, string aerolinea, string avion)
         {
             this.id = id;
             this.origen = origen;
@@ -46,12 +45,23 @@
         }
 
         //metodos
+
+        public void agregarListaPasajeros(List<Usuario> usuarios)
+        {
+            listPasajeros.AddRange(usuarios);
+        }
+
+        public void agregarReservaAlVuelo(ReservaVuelo reserva)
+        {
+            listMisReservas.Add(reserva);
+        }
         public string[] ToString()
         {
-            string[] origenArr = origen.ToString();
-            string[] destinoArr = destino.ToString();
-            return new string[] {id.ToString(), origenArr[1], destinoArr[1], capacidad.ToString(), costo.ToString(), fecha.ToString(), aerolinea, avion };
+            string[] ciudadOrigen = origen.ToString();
+            string[] ciudadDestino = origen.ToString();
+            return new string[] { id.ToString(), ciudadOrigen[1], ciudadDestino[1], capacidad.ToString(), costo.ToString(), fecha.ToString(), aerolinea, avion };
         }
+
 
     }
 }
