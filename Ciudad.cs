@@ -4,20 +4,15 @@ namespace tpAgencia_Gpo_2
 {
     public class Ciudad
     {
-        private List<Hotel> listHoteles;
-        private List<Vuelo> listVuelos;
+
 
         //declaracion de variables con properties
         public int id { get; set; }
         public string nombre {  get; set; }
-        public List<Hotel> hoteles 
-        {
-            get => listHoteles.ToList();
-        }
-        public List<Vuelo> vuelos 
-        { 
-            get => listVuelos.ToList();        
-        }
+        public List<Hotel> listHoteles { get; set; }
+
+        public List<Vuelo> listVuelos { get; set; }
+
 
         //Constructores
         public Ciudad(int id, string nombre)
