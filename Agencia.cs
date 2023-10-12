@@ -244,43 +244,72 @@ public class Agencia
 
     // INICIO METODOS DE VUELO
 
-    //ver lo que explicó el profesor
-
-    public bool agregarVuelo(Ciudad origen, Ciudad destino, int capacidad, double costo, DateTime fecha, string aerolinea, string avion)
+    public int obtenerNombreCiudad(string nombre)
     {
-
-        vuelos.Add(new Vuelo(cantVuelos, origen, destino, capacidad, costo, fecha, aerolinea, avion));
+        Ciudad ciudad = ciudades.FirstOrDefault(ciudad => ciudad.nombre == nombre);
+        return ciudad != null ? ciudad.id : -1;
+    }
+    public string obtenerCiudadPorId(int id)
+    {
+        Ciudad ciudad = ciudades.FirstOrDefault(ciudad => ciudad.id == id);
+        return ciudad != null ? ciudad.nombre : string.Empty;
+    }
+    public bool agregarVuelo(int idOrigen, int idDestino, int capacidad, double costo, DateTime fecha, string aerolinea, string avion)
+    {
+        Ciudad cOrigen = ciudades.FirstOrDefault(ciudad => ciudad.id == idOrigen);
+        Ciudad cDestino = ciudades.FirstOrDefault(ciudad => ciudad.id == idDestino);
+        vuelos.Add(new Vuelo(cantVuelos, cOrigen, cDestino, capacidad, costo, fecha, aerolinea, avion));
         cantVuelos++;
         return true;
     }
 
-    public bool modificarVuelo(int id, Ciudad origen, Ciudad destino, int capacidad, double costo, DateTime fecha, string aerolinea, string avion)
+    public string modificarVuelo(int id, Ciudad origen, Ciudad destino, int capacidad, double costo, DateTime fecha, string aerolinea, string avion)
     {
         foreach (Vuelo vuelo in vuelos)
         {
             if (vuelo.id == id)
             {
-                vuelo.origen = origen;
-                vuelo.destino = destino;
-                vuelo.capacidad = capacidad;
-                vuelo.costo = costo;
-                vuelo.fecha = fecha;
-                vuelo.aerolinea = aerolinea;
-                vuelo.avion = avion;
-                return true;
+                int cantReservas = vuelo.listPasajeros.Count;
+                if (capacidad >= cantReservas)
+                {
+                    vuelo.origen = origen;
+                    vuelo.destino = destino;
+                    vuelo.costo = costo;
+                    vuelo.fecha = fecha;
+                    vuelo.aerolinea = aerolinea;
+                    vuelo.avion = avion;
+                    vuelo.capacidad = capacidad;
+
+                    return "exito";
+                }
+                else
+                {
+                    return "capacidad";
+                }
+
             }
         }
-        return false;
+        return "error";
     }
 
     public bool eliminarVuelo(int id)
     {
+        DateTime fechaActual = DateTime.Now;
         foreach (Vuelo vuelo in vuelos)
         {
             if (vuelo.id == id)
 
             {
+                if (vuelo.fecha > fechaActual)
+                {
+
+                    foreach (ReservaVuelo reservas in vuelo.listMisReservas)
+                    {
+                        reservas.miUsuario.credito += reservas.pagado;
+                    }
+                }
                 vuelos.Remove(vuelo);
+
                 return true;
             }
         }
@@ -304,17 +333,17 @@ public class Agencia
         foreach (Vuelo vuelo in vuelos)
         {
 
-            if (vuelo.origen.nombre == origen.nombre && vuelo.destino.nombre == destino.nombre && vuelo.fecha.Date == fecha.Date && vuelo.capacidad >= cantidadPax)
+            if (vuelo.origen.nombre == origen.nombre && vuelo.destino.nombre == destino.nombre && vuelo.fecha.Date == fecha.Date && vuelo.capacidad >= cantidadPax + vuelo.vendido)
             {
                 vuelosDisponibles.Add(vuelo);
             }
 
         }
-        return vuelosDisponibles.ToList();
+        return vuelosDisponibles;
 
     }
 
-    public bool comprarVuelo(int vueloId, Usuario usuarioActual, int cantidad)
+    public string comprarVuelo(int vueloId, Usuario usuarioActual, int cantidad)
     {
         Vuelo vuelo = vuelos.FirstOrDefault(v => v.id == vueloId);
         if (vuelo != null && cantidad > 0 && cantidad <= vuelo.capacidad - vuelo.vendido)
@@ -325,39 +354,31 @@ public class Agencia
                 usuarioActual.credito -= costoTotal;
                 vuelo.vendido += cantidad;
 
+                //List<Usuario> pax = new List<Usuario>();
                 for (int i = 0; i < cantidad; i++)
                 {
-                    ReservaVuelo reserva = new ReservaVuelo(vuelo, usuarioActual);
-                    vuelo.listMisReservas.Add(reserva);
-                    usuarioActual.agregarReservaVuelo(reserva);
+                    vuelo.listPasajeros.Add(usuarioActual);
                 }
+                ReservaVuelo reserva = new ReservaVuelo(vuelo, usuarioActual, costoTotal);
+                usuarioActual.agregarReservaVuelo(reserva);
+                usuarioActual.agregarVueloTomado(vuelo);
+                vuelo.agregarReservaAlVuelo(reserva);
 
-                return true;
+
+
+                return "exito";
             }
-            MessageBox.Show("No tienes suficiente crédito para realizar la compra");
+            return "sinSaldo";
+
         }
-
-
-        return false;
+        return "error";
 
     }
 
     //FIN METODOS DE VUELO
-    public List<Vuelo> misVuelos(Usuario usuario)
+    public List<Vuelo> misVuelos(Usuario usuarioActual)
     {
-        DateTime fechaActual = DateTime.Now;
-        List<Vuelo> vuelosPasados = new List<Vuelo>();
-
-        foreach (ReservaVuelo reserva in usuario.listMisReservasVuelo)
-        {
-            if (reserva.miVuelo.fecha < fechaActual)
-            {
-                vuelosPasados.Add(reserva.miVuelo);
-            }
-
-
-        }
-        return vuelosPasados;
+        return usuarioActual.listVuelosTomados.ToList();
     }
 
     //METODO DE RESERVA DE VUELO DE LUCAS - REVISAR -
