@@ -129,14 +129,13 @@ namespace tpAgencia_Gpo_2
 
         private void buttonAgregar_Click(object sender, EventArgs e)
         {
-            string ubicacion = comboBoxHospedaje.Text;
+           // string ubicacion = comboBoxHospedaje.Text;
 
 
-            Ciudad ciudadHospedaje = agencia.GetCiudades().FirstOrDefault(ciudad => ciudad.nombre == ubicacion);
+          //  Ciudad ciudadHospedaje = agencia.GetCiudades().FirstOrDefault(ciudad => ciudad.nombre == ubicacion);
 
 
-            //string.IsNullOrEmpty(textBoxId.Text) Eliminar si el proyecto esta co,
-            if (ciudadHospedaje == null || string.IsNullOrEmpty(textBoxCapacidad.Text) || string.IsNullOrEmpty(textBoxCosto.Text) || string.IsNullOrEmpty(textBoxNombre.Text))
+            if (string.IsNullOrEmpty(comboBoxHospedaje.Text) || string.IsNullOrEmpty(textBoxCapacidad.Text) || string.IsNullOrEmpty(textBoxCosto.Text) || string.IsNullOrEmpty(textBoxNombre.Text))
 
                 MessageBox.Show("Debe completar todos los campos para poder agregar un nuevo hotel");
 
@@ -155,7 +154,7 @@ namespace tpAgencia_Gpo_2
                 }
 
 
-                if (agencia.agregarHotel(ciudadHospedaje, capacidad, costo, textBoxNombre.Text))
+                if (agencia.agregarHotel(comboBoxHospedaje.Text, capacidad, costo, textBoxNombre.Text))
                     MessageBox.Show("Hotel agregado exitosamente");
                 else
                     MessageBox.Show("Ocurrió un error al querer agregar un Hotel");
@@ -174,16 +173,24 @@ namespace tpAgencia_Gpo_2
                     int capacidad = int.Parse(textBoxCapacidad.Text);
                     double costo = double.Parse(textBoxCosto.Text);
                     int id = int.Parse(textBoxId.Text);
+                    string agenciaModificarHotel = (agencia.modificarHotel(hotelSeleccionado, ciudadHospedaje1, capacidad, costo, textBoxNombre.Text));
+
+                    switch (agenciaModificarHotel)
+                    { 
+
+                    case "exito":
+                        MessageBox.Show("Hotel modificado exitosamente");
+                        break;
+                    case "capacidad":
+                        MessageBox.Show("La capacidad es menor a la cantidad de personas que reservaron el hotel");
+                        break;
+                    case "error":
+                        MessageBox.Show("Ocurrió un problema al querer modificar el hotel");
+                        break;
+                    }
 
 
-                    if (agencia.modificarHotel(hotelSeleccionado, ciudadHospedaje1, capacidad, costo, textBoxNombre.Text))
-                    {
-                        MessageBox.Show("Datos del hotel modificado exitosamente");
-                    }
-                    else
-                    {
-                        MessageBox.Show("Ocurrió un problema al querer modificar los datos del hotel");
-                    }
+
                 }
                 catch (FormatException)
                 {

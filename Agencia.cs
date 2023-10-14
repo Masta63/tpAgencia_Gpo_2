@@ -384,49 +384,58 @@ public class Agencia
 
     //INICIO METODOS DE HOTEL
 
-    public bool agregarHotel(Ciudad ubicacion, int capacidad, double costo, string nombre)
+
+
+    public bool agregarHotel(string ubicacion, int capacidad, double costo, string nombre)
     {
-
-
+        Ciudad ubicacion1 = ciudades.FirstOrDefault(ciudad => ciudad.nombre == ubicacion );
         int cant = hoteles.OrderByDescending(x => x.id).FirstOrDefault().id + 1;
 
-        hoteles.Add(new Hotel(cant, ubicacion, capacidad, costo, nombre));
+        hoteles.Add(new Hotel(cant, ubicacion1, capacidad, costo, nombre));
         cantHoteles++;
         cantIdHoteles++;
         return true;
     }
 
-    public bool modificarHotel(int id, Ciudad ubicacion, int capacidad, double costo, string nombre)
+    public string modificarHotel(int id, Ciudad ubicacion, int capacidad, double costo, string nombre)
     {
         foreach (Hotel hotel in hoteles)
         {
             if (hotel.id == id)
             {
-                hotel.ubicacion = ubicacion;
-                hotel.capacidad = capacidad;
-                hotel.costo = costo;
-                hotel.nombre = nombre;
-                return true;
+                int cantReservas = hotel.capacidad;
+                if (capacidad >= cantReservas)
+                {
+                    hotel.ubicacion = ubicacion;
+                    hotel.capacidad = capacidad;
+                    hotel.costo = costo;
+                    hotel.nombre = nombre;
+
+                    return "exito";
+                }
+                else {
+                    return "capacidad";
+                     };
             }
         }
-        return false;
+        return "error";
     }
 
-    public bool eliminarHotel(int id)
-    {
-        foreach (Hotel hotel in hoteles)
-        {
-            if (hotel.id == id)
 
+          public bool eliminarHotel(int id)
+          {
+            foreach (Hotel hotel in hoteles)
             {
-                hoteles.Remove(hotel);
-                return true;
+            if (hotel.id == id) 
+                 { 
+                     hoteles.Remove(hotel);
+                     return true;
+                 }
             }
-        }
-        return false;
-    }
+               return false;
+            }
 
-    public List<Hotel> getHotel()
+        public List<Hotel> getHotel()
     {
         return hoteles.ToList();
     }
