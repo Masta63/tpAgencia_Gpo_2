@@ -568,6 +568,7 @@ public class Agencia
             Usuario usuarioActual = this.getUsuarioActual();
             usuarioActual.credito = usuarioActual.credito - Convert.ToDouble(textBoxMonto);
             usuarioActual.setReservaHotel(reservaHotel);
+            usuarioActual.agregarHotelVisitado(reservaHotel.miHotel);
             this.setUsuario(usuarioActual);
             return reservaHotel;
         }
