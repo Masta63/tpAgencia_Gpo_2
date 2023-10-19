@@ -19,7 +19,7 @@ public class Agencia
     private int cantUsuarios = 0;
     private int cantHoteles = 0;
     private int cantIdHoteles = 0;
-
+    private DAL DB;
 
     //metodo constructor
     public Agencia()
@@ -32,12 +32,17 @@ public class Agencia
         reservasHotel = new List<ReservaHotel>();
         reservasVuelo = new List<ReservaVuelo>();
         listUsuarios = new List<Usuario>();
+        DB = new DAL();
+        inicializarAtributos();
     }
 
+    private void inicializarAtributos()
+    {
+        listUsuarios = DB.inicializarUsuarios();
+    }
+
+
     //INICIO METODOS DE USUARIO
-
-
-
 
 
     public string login(string? _contraseña, string? _mail)
