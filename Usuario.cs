@@ -61,6 +61,23 @@ namespace tpAgencia_Gpo_2
             listHotelesVisitados = new List<Hotel>();
             listVuelosTomados = new List<Vuelo>();
         }
+        public Usuario(int id, Int32 dni, string name, string apellido, string mail, string password, Int32 intentosFallidos, bool bloqueado, double credito, bool esAdmin)
+        {
+            this.id = id;
+            this.name = name;
+            this.apellido = apellido;
+            this.dni = Convert.ToString(dni);
+            this.mail = mail;
+            this.password = password;
+            this.intentosFallidos = intentosFallidos;
+            this.bloqueado = bloqueado;
+            this.credito = credito;
+            this.esAdmin = esAdmin;
+            listMisReservasHoteles = new List<ReservaHotel>();
+            listMisReservasVuelo = new List<ReservaVuelo>();
+            listHotelesVisitados = new List<Hotel>();
+            listVuelosTomados = new List<Vuelo>();
+        }
         public Usuario(int id, string name, string apellido, string dni, string mail, string password)
         {
             this.id = id;

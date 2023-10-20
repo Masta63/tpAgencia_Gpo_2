@@ -16,8 +16,7 @@ namespace tpAgencia_Gpo_2
             InitializeComponent();
             this.WindowState = FormWindowState.Maximized;
             Agencia = new Agencia();
-
-            cargaUsuarios();
+         
             cargaCiudades();
 
 
@@ -40,14 +39,7 @@ namespace tpAgencia_Gpo_2
 
 
 
-        private  void cargaUsuarios()
-        {
-            Agencia.setUsuario(new Usuario(1, "pepe", "popo", "29111222", "Juan@pepe.com", "1234"));
-            Agencia.setUsuario(new Usuario(2, "juana", "lola", "33333333", "Juana@lola.com", "1234" ));
-            Agencia.setUsuario(new Usuario(3, "pablo", "lopez", "22222222", "Pablo@lopez.com", "1234" ));
-            Agencia.setUsuario(new Usuario(4, "pablo", "lopez", "22222222", "admin@admin.com", "1234" ));
 
-        }
 
         private void cargaCiudades()
         {
