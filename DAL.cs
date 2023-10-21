@@ -43,8 +43,9 @@ namespace tpAgencia_Gpo_2
                     SqlDataReader reader = command.ExecuteReader();// creo el objeto para leer la base de datos y ejecutar el comando
                     Usuario aux;
 
-                    while (reader.Read())
+                    while (reader.Read())//metodo devuelve true mientras siga leyendo una fila sigue el bucle
                     {
+                        //leo la fila, la carga en la variable aux y la agrega a mis usuarios para trabajar en tiempo de ejecucion 
                         aux = new Usuario(reader.GetInt32(0), reader.GetInt32(1), reader.GetString(2), reader.GetString(3), reader.GetString(4), reader.GetString(5), reader.GetInt32(6), reader.GetBoolean(7),reader.GetDouble(8),reader.GetBoolean(9));
                         misUsuarios.Add(aux);
 

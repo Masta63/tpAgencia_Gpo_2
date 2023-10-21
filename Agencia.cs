@@ -41,6 +41,7 @@ public class Agencia
         //aca deberiamos agregar los metodos para inicializar vuelos hoteles paises etc
 
         listUsuarios = DB.inicializarUsuarios();//metodo para inicializar usuarios
+        //le asigno todo lo del metodo a la sita de la clase logica que trabaja en tiempo de ejecucion
     }
 
 
