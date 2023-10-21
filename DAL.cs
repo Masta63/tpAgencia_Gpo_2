@@ -37,10 +37,10 @@ namespace tpAgencia_Gpo_2
                 try
                 {
                     
-                    conex.Open();
+                    conex.Open();//metodo que ejecuta la conexion con la base de datos
 
                     
-                    SqlDataReader reader = command.ExecuteReader();
+                    SqlDataReader reader = command.ExecuteReader();// creo el objeto para leer la base de datos y ejecutar el comando
                     Usuario aux;
 
                     while (reader.Read())
