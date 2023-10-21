@@ -630,6 +630,9 @@ public class Agencia
             //agregar la nueva reserva en memoria
             usuarioActual.listMisReservasHoteles.Add(reservaHotel);
 
+            //agregar hotel visitado
+            usuarioActual.agregarHotelVisitado(reservaHotel.miHotel);
+
             //setea el usuario actual
             this.setUsuario(usuarioActual);
             return reservaHotel;

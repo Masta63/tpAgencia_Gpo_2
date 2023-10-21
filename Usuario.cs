@@ -7,7 +7,7 @@ namespace tpAgencia_Gpo_2
     public class Usuario 
     {
 
-        private List<Hotel> listHotelesVisitados;
+        public List<Hotel> listHotelesVisitados;
 
         public int id { get; set; }
         public string name { get; set; }
@@ -118,6 +118,11 @@ namespace tpAgencia_Gpo_2
         public void agregarVueloTomado(Vuelo vuelo)
         {
             listVuelosTomados.Add(vuelo);
+        }
+
+        public void agregarHotelVisitado(Hotel hotel)
+        {
+            listHotelesVisitados.Add(hotel);
         }
 
     }
