@@ -449,5 +449,117 @@ namespace tpAgencia_Gpo_2
 
         #endregion
 
+        #region AbmHoteles
+
+
+        public int agregarHotel(int idHotel, Ciudad ubicacion, int capacidad, float costo, string nombre, int idMisReservas)
+        {
+            int resultadoQuery;
+            int idNuevoHotel = -1;
+            string queryString = "INSERT INTO [dbo].[Hotel]([idHotel], [ubicacion], [capacidad], [costo], [nombre], [idMisReservas]) VALUES (@idHotel, @ubicacion, @capacidad ,@costo, @nombre, @idMisReservas);";
+
+            using (SqlConnection conex = new SqlConnection(connectionStr))
+            {
+                SqlCommand cmd = new SqlCommand(queryString, conex);
+                cmd.Parameters.Add(new SqlParameter("@idHotel", SqlDbType.Int));
+                cmd.Parameters.Add(new SqlParameter("@ubicacion", SqlDbType.NVarChar));
+                cmd.Parameters.Add(new SqlParameter("@capacidad", SqlDbType.Int));
+                cmd.Parameters.Add(new SqlParameter("@costo", SqlDbType.Float));
+                cmd.Parameters.Add(new SqlParameter("@nombre", SqlDbType.NVarChar));
+                cmd.Parameters.Add(new SqlParameter("@idMisReservas", SqlDbType.Int));
+                cmd.Parameters["@idHotel"].Value = idHotel;
+                cmd.Parameters["@ubicacion"].Value = ubicacion;
+                cmd.Parameters["@capacidad"].Value = capacidad;
+                cmd.Parameters["@costo"].Value = costo;
+                cmd.Parameters["@nombre"].Value = nombre;
+                cmd.Parameters["@idMisReservas"].Value = idMisReservas;
+
+
+                try
+                {
+                    conex.Open();
+                    resultadoQuery = cmd.ExecuteNonQuery();
+
+                    string ConsultaId = "SELECT MAX([idHotel]) FROM [dbo].[Hotel]";
+                    cmd = new SqlCommand(ConsultaId, conex);
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    reader.Read();
+                   idNuevoHotel = reader.GetInt32(0);
+                    reader.Close();
+
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    return -1;
+                }
+                return idNuevoHotel;
+            }
+
+
+        }
+
+        public int eliminarHotel(int id)
+        {
+            string connectionString = Properties.Resources.ConnectionStr;
+            string queryString = "DELETE FROM [dbo].[Hotel] WHERE idHotel=@id";
+            using (SqlConnection conex = new SqlConnection(connectionString))
+            {
+                SqlCommand cmd = new SqlCommand(queryString, conex);
+                cmd.Parameters.Add(new SqlParameter("@id", SqlDbType.Int));
+                cmd.Parameters["@id"].Value = id;
+
+                try
+                {
+                    conex.Open();
+                    return cmd.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    return 0;
+
+                }
+            }
+        }
+
+
+        public int modificarHotel(int idHotel, Ciudad ubicacion, int capacidad, float costo, string nombre, int idMisReservas)
+        {
+            string connectionString = Properties.Resources.ConnectionStr;
+            string queryString = "UPDATE [dbo].[Hotel] SET idHotel=@idHotel, ubicacion = @ubicacion, capacidad=@capacidad, costo=@costo, nombre=@nombre, idMisReservas=@idMisReservas WHERE idHotel=@id;";
+            using (SqlConnection conex = new SqlConnection(connectionString))
+            {
+                SqlCommand cmd = new SqlCommand(queryString, conex);
+                cmd.Parameters.Add(new SqlParameter("@idHotel", SqlDbType.Int));
+                cmd.Parameters.Add(new SqlParameter("@ubicacion", SqlDbType.NVarChar));
+                cmd.Parameters.Add(new SqlParameter("@capacidad", SqlDbType.Int));
+                cmd.Parameters.Add(new SqlParameter("@costo", SqlDbType.Float));
+                cmd.Parameters.Add(new SqlParameter("@nombre", SqlDbType.NVarChar));
+                cmd.Parameters.Add(new SqlParameter("@idMisReservas", SqlDbType.Int));
+                cmd.Parameters["@idHotel"].Value = idHotel;
+                cmd.Parameters["@ubicacion"].Value = ubicacion;
+                cmd.Parameters["@capacidad"].Value = capacidad;
+                cmd.Parameters["@costo"].Value = costo;
+                cmd.Parameters["@nombre"].Value = nombre;
+                cmd.Parameters["@idMisReservas"].Value = idMisReservas;
+                try
+                {
+                    conex.Open();
+                    return cmd.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    return 0;
+                }
+            }
+        }
+
+        #endregion
+
+
+
+
     }
 }

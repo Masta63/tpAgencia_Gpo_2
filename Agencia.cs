@@ -478,46 +478,89 @@ public class Agencia
 
     //INICIO METODOS DE HOTEL
 
-    public bool agregarHotel(Ciudad ubicacion, int capacidad, double costo, string nombre)
+    public bool agregarHotel(int idHotel, Ciudad ubicacion, int capacidad, float costo, string nombre, int idMisReservas)
     {
 
 
         int cant = hoteles.OrderByDescending(x => x.id).FirstOrDefault().id + 1;
-
-        hoteles.Add(new Hotel(cant, ubicacion, capacidad, costo, nombre));
-        cantHoteles++;
-        cantIdHoteles++;
-        return true;
+        int idNuevoHotel;
+        idNuevoHotel = DB.agregarHotel(idHotel, ubicacion, capacidad, costo, nombre, idMisReservas);
+        if (idNuevoHotel != -1)
+        {
+            Hotel nuevo = new Hotel(idHotel, ubicacion,  capacidad,  costo,  nombre);
+            hoteles.Add(nuevo);
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
-    public bool modificarHotel(int id, Ciudad ubicacion, int capacidad, double costo, string nombre)
+
+
+    public string modificarHotel(int idHotel, Ciudad ubicacion, int capacidad, float costo, string nombre, int idMisReservas)
     {
-        foreach (Hotel hotel in hoteles)
+        if (DB.modificarHotel(idHotel,ubicacion, capacidad, costo, nombre, idMisReservas ) == 1)
         {
-            if (hotel.id == id)
+            try
             {
-                hotel.ubicacion = ubicacion;
-                hotel.capacidad = capacidad;
-                hotel.costo = costo;
-                hotel.nombre = nombre;
-                return true;
+                foreach (Hotel hotel in hoteles)
+                {
+                    if (hotel.id == idHotel)
+                    {
+                        int cantReservas = hotel.listMisReservas.Count;
+                        if (capacidad >= cantReservas)
+                        {
+                            hotel.ubicacion = ubicacion;
+                            hotel.capacidad = capacidad;
+                            hotel.costo = costo;
+                            hotel.nombre = nombre;
+
+                            return "exito";
+                        }
+                        else
+                        {
+                            return "capacidad";
+                        }
+                    }
+
+                }
+            }
+            catch (Exception e)
+            {
+                return "error";
             }
         }
-        return false;
+        return "error";
+
+
     }
 
-    public bool eliminarHotel(int id)
+    public bool eliminarHotel(int idHotel)
     {
-        foreach (Hotel hotel in hoteles)
+     
+        if (DB.eliminarHotel(idHotel) == 1)
         {
-            if (hotel.id == id)
-
+            try
             {
-                hoteles.Remove(hotel);
-                return true;
+                foreach (Hotel h in hoteles)
+                    if (h.id == idHotel)
+                    {
+                        hoteles.Remove(h);
+                        return true;
+                    }
+                return false;
+            }
+            catch (Exception)
+            {
+                return false;
             }
         }
-        return false;
+        else
+        {
+            return false;
+        }
     }
 
     public List<Hotel> getHotel()
