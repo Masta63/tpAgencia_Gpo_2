@@ -99,6 +99,7 @@ namespace tpAgencia_Gpo_2
 
         //}
 
+        #region reservaHotel
         public List<ReservaHotel> traerReservasPorHotel(Hotel hotel)
         {
             List<ReservaHotel> reservasPorHotel = new List<ReservaHotel>();
@@ -139,7 +140,6 @@ namespace tpAgencia_Gpo_2
                 {
                     conex.Open();
                     SqlDataReader reader = command.ExecuteReader();
-                    Hotel_Usuario aux;
                     while (reader.Read())
                     {
                         Usuario misHuespedes = new Usuario(reader.GetInt32(1), reader.GetInt32(4), reader.GetString(5), reader.GetString(6), reader.GetString(7), reader.GetString(8), reader.GetInt32(9), reader.GetBoolean(10), reader.GetDouble(11), reader.GetBoolean(12));
@@ -189,6 +189,8 @@ namespace tpAgencia_Gpo_2
             }
             return Hoteles;
         }
+
+        #endregion
 
     }
 }
