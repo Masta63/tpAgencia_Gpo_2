@@ -125,6 +125,42 @@ public class Agencia
         return listUsuarios.ToList();
     }
 
+    public bool agregarUsuarioDal(string Dni, string Nombre, string apellido, string Mail,string Password,bool EsADM, bool Bloqueado)
+    {
+        //comprobación para que no me agreguen usuarios con DNI duplicado
+        bool esValido = true;
+        foreach (Usuario u in listUsuarios)
+        {
+            if (u.dni == Dni)
+            {
+                esValido = false;
+            }
+        }
+        if (esValido)
+        {
+            int idNuevoUsuario;
+            idNuevoUsuario = DB.agregarUsuario(Dni, Nombre, apellido, Mail,Password, EsADM, Bloqueado);
+            //compruebo que se pudo agregar a la base y se le asignó un ID
+            if (idNuevoUsuario != -1)
+            {
+                //Ahora sí lo agrego en la lista
+                Usuario nuevo = new Usuario(idNuevoUsuario, Dni, Nombre,apellido, Mail, Password, EsADM,Bloqueado);
+                listUsuarios.Add(nuevo);
+                return true;
+            }
+            else
+            {
+                //algo salió mal con la query porque no generó un id válido
+                return false;
+            }
+        }
+        else
+            return false;
+    }
+
+
+
+    
     public bool agregarUsuario(string name, string apellido, string dni, string mail)
     {
         Usuario usuario = new Usuario(cantUsuarios, name, apellido, dni, mail);
@@ -133,7 +169,9 @@ public class Agencia
         listUsuarios.Add(usuario);
         return true;
     }
+    
     //metodo del formRegistro de Usuario
+    /*
     public bool agregarUsuario(string name, string apellido, string dni, string mail, string pass)
     {
         Usuario usuario = new Usuario(cantUsuarios, name, apellido, dni, mail);
@@ -142,7 +180,7 @@ public class Agencia
         listUsuarios.Add(usuario);
         return true;
     }
-
+    */
     public bool modificarUsuario(int id, string name, string apellido, string dni, string mail)
     {
         foreach (Usuario user in listUsuarios)

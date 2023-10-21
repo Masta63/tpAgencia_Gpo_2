@@ -68,7 +68,9 @@ namespace tpAgencia_Gpo_2
                 {
                     if (textBox_nombre.Text.Length >= 3 && textBox_apellido.Text.Length >= 3 && textBox_dni.Text.Length == 8 && textBox_email.Text.Contains("@"))
                     {
-                        refAgencia.agregarUsuario(textBox_nombre.Text, textBox_apellido.Text, textBox_dni.Text, textBox_email.Text);
+                        //Dni, Nombre, apellido, Mail, EsADM, Bloqueado);
+                        refAgencia.agregarUsuarioDal(textBox_dni.Text, textBox_nombre.Text, textBox_apellido.Text, textBox_email.Text, textBox_pass.Text, checkBox_admin.Checked, checkBox_bloqueado.Checked);
+
                         MessageBox.Show("Agregado con éxito");
                     }
                     else
@@ -139,7 +141,7 @@ namespace tpAgencia_Gpo_2
             foreach (Usuario us in refAgencia.getUsuarios())//para cada usuario en el clon de listado de usuarios de mi referencia de agencia
             {
 
-                dataGridView_usuarios.Rows.Add(new string[] { us.id.ToString(), us.name, us.apellido, us.dni.ToString(), us.credito.ToString(), us.mail, us.listMisReservasHoteles.ToString(), us.listMisReservasVuelo.ToString() });
+                dataGridView_usuarios.Rows.Add(new string[] { us.id.ToString(), us.name, us.apellido, us.dni.ToString(), us.credito.ToString(), us.mail, us.esAdmin.ToString(), us.bloqueado.ToString(), us.listMisReservasHoteles.ToString(), us.listMisReservasVuelo.ToString() });
 
 
                 textBox_id.Text = " ";
@@ -175,14 +177,18 @@ namespace tpAgencia_Gpo_2
                 string? dni = dataGridView_usuarios[3, e.RowIndex]?.Value?.ToString();
                 string? credito = dataGridView_usuarios[4, e.RowIndex]?.Value?.ToString();
                 string? email = dataGridView_usuarios[5, e.RowIndex]?.Value?.ToString();
-                string? resHotel = dataGridView_usuarios[6, e.RowIndex]?.Value?.ToString();
-                string? resVuelo = dataGridView_usuarios[7, e.RowIndex]?.Value?.ToString();
+                string? admin = dataGridView_usuarios[6, e.RowIndex]?.Value?.ToString();
+                string? bloqueado = dataGridView_usuarios[7, e.RowIndex]?.Value?.ToString();
+
                 textBox_id.Text = id;
                 textBox_nombre.Text = nombre;
                 textBox_apellido.Text = apellido;
                 textBox_email.Text = email;
                 textBox_dni.Text = dni;
                 textBox_credito.Text = credito;
+                checkBox_admin.Checked = bool.Parse(admin);
+                checkBox_bloqueado.Checked = bool.Parse(bloqueado);
+
                 //textBox_resHotel.Text = resHotel;
                 //textBox_resVuelo.Text = resVuelo;
 
@@ -290,5 +296,7 @@ namespace tpAgencia_Gpo_2
                 MessageBox.Show("Debe introducir un DNI de usuario válido");
             }
         }
+
+
     }
 }

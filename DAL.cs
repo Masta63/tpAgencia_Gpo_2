@@ -65,24 +65,26 @@ namespace tpAgencia_Gpo_2
         }
 
         //devuelve el ID del usuario agregado a la base, si algo falla devuelve -1
-        public int agregarUsuario(int Dni, string Nombre, string Mail, string Password, bool EsADM, bool Bloqueado)
+        public int agregarUsuario(string Dni, string Nombre, string Apellido, string Mail, string Password, bool EsADM, bool Bloqueado)
         {
             //primero me aseguro que lo pueda agregar a la base
             int resultadoQuery;
             int idNuevoUsuario = -1;
-            string queryString = "INSERT INTO [dbo].[Usuarios] ([DNI],[Nombre],[Mail],[Password],[EsADM],[Bloqueado]) VALUES (@dni,@nombre,@mail,@password,@esadm,@bloqueado);";
+            string queryString = "INSERT INTO [dbo].[Usuarios] ([DNI],[Nombre],[apellido],[Mail],[Password],[EsADM],[Bloqueado]) VALUES (@dni,@nombre,@mail,@password,@esadm,@bloqueado);";
             using (SqlConnection connection =
                 new SqlConnection(connectionStr))
             {
                 SqlCommand command = new SqlCommand(queryString, connection);
                 command.Parameters.Add(new SqlParameter("@dni", SqlDbType.Int));//definimos los parametros las condiciones que queremos que respete
                 command.Parameters.Add(new SqlParameter("@nombre", SqlDbType.NVarChar));
+                command.Parameters.Add(new SqlParameter("@apellido", SqlDbType.NVarChar));
                 command.Parameters.Add(new SqlParameter("@mail", SqlDbType.NVarChar));
                 command.Parameters.Add(new SqlParameter("@password", SqlDbType.NVarChar));
                 command.Parameters.Add(new SqlParameter("@esadm", SqlDbType.Bit));
                 command.Parameters.Add(new SqlParameter("@bloqueado", SqlDbType.Bit));
                 command.Parameters["@dni"].Value = Dni;//estos valores hace referencia a los parametros que definimos arriba 
                 command.Parameters["@nombre"].Value = Nombre;
+                command.Parameters["@apellido"].Value = Apellido;
                 command.Parameters["@mail"].Value = Mail;
                 command.Parameters["@password"].Value = Password;
                 command.Parameters["@esadm"].Value = EsADM;
