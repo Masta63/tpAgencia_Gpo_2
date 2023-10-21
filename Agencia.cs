@@ -520,11 +520,15 @@ public class Agencia
 
         foreach (var itemHotel in this.getHoteles())
         {
-            if (itemHotel.ubicacion.nombre == ciudadSeleccionada)
+            if (itemHotel.ubicacion.nombre.Trim().ToUpper() == ciudadSeleccionada.Trim().ToUpper())
             {
                 foreach (var itemReserva in itemHotel.listMisReservas)
                 {
                     estaRango = this.verificacionRango(itemReserva, itemHotel, fechaIngreso, fechaEgreso);
+
+                    if (estaRango)
+                        break;
+
                     cantPer++;
                 }
                 if (!estaRango && Convert.ToInt32(textCantPer) <= itemHotel.capacidad)

@@ -44,8 +44,9 @@ namespace tpAgencia_Gpo_2
         private void cargaCiudades()
         {
             Agencia.setCiudad(new Ciudad(1, "Bariloche"));
-            Agencia.setCiudad(new Ciudad(2, "Mendoza"));
-            Agencia.setCiudad(new Ciudad(3, "Buenos Aires"));
+            Agencia.setCiudad(new Ciudad(2, "buenos aires"));
+            Agencia.setCiudad(new Ciudad(3, "san juan"));
+            Agencia.setCiudad(new Ciudad(4, "calamuchita"));
         }
 
         private void cargaDeHotelesConReservaYusuarios()

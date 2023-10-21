@@ -32,7 +32,7 @@ namespace tpAgencia_Gpo_2
                 fechaHasta.Value = reservaHotel.fechaHasta;
                 textBoxMonto.Text = Convert.ToString(reservaHotel.pagado);
                 textCantPer.Text = cantHuesp;
-                dataGridViewHotel.Rows.Add(new string[] { reservaHotel.miHotel.nombre, Convert.ToString(reservaHotel.pagado), Convert.ToString(reservaHotel.miHotel.capacidad), reservaHotel.fechaDesde.ToLongTimeString(), reservaHotel.fechaHasta.ToLongTimeString() });
+                dataGridViewHotel.Rows.Add(new string[] { reservaHotel.miHotel.nombre, Convert.ToString(reservaHotel.pagado), Convert.ToString(reservaHotel.miHotel.capacidad), reservaHotel.fechaDesde.ToLongDateString(), reservaHotel.fechaHasta.ToLongDateString() });
             }
 
         }
