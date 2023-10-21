@@ -16,8 +16,8 @@ namespace tpAgencia_Gpo_2
         public DAL()
         {
             //cargar la cadena de conexion desde el archivo properties
-             //proyecto-> propiedades->recursos-> crear o abrir
-             //en el valor va el conection string que tenemos de la base de datos
+            //proyecto-> propiedades->recursos-> crear o abrir
+            //en el valor va el conection string que tenemos de la base de datos
             connectionStr = Properties.Resources.ConnectionStr; //debemos cargar cada uno en nuestra resoursces el string para urilizarlo
         }
 
@@ -45,7 +45,7 @@ namespace tpAgencia_Gpo_2
 
                     while (reader.Read())
                     {
-                        aux = new Usuario(reader.GetInt32(0), reader.GetInt32(1), reader.GetString(2), reader.GetString(3), reader.GetString(4), reader.GetString(5), reader.GetInt32(6), reader.GetBoolean(7),reader.GetDouble(8),reader.GetBoolean(9));
+                        aux = new Usuario(reader.GetInt32(0), reader.GetInt32(1), reader.GetString(2), reader.GetString(3), reader.GetString(4), reader.GetString(5), reader.GetInt32(6), reader.GetBoolean(7), reader.GetDouble(8), reader.GetBoolean(9));
                         misUsuarios.Add(aux);
 
                     }
@@ -85,7 +85,7 @@ namespace tpAgencia_Gpo_2
 
                     while (reader.Read())
                     {
-                        aux = new Ciudad(reader.GetInt32(0),  reader.GetString(1));
+                        aux = new Ciudad(reader.GetInt32(0), reader.GetString(1));
                         ciudades.Add(aux);
 
                     }
@@ -101,7 +101,7 @@ namespace tpAgencia_Gpo_2
 
         }
 
-       public List<Vuelo> inicializarVuelos()
+        public List<Vuelo> inicializarVuelos()
         {
             List<Vuelo> vuelos = new List<Vuelo>();
 
@@ -121,20 +121,20 @@ namespace tpAgencia_Gpo_2
 
                     while (reader.Read())
                     {
-                      
+
                         Ciudad origen = new Ciudad(reader.GetInt32(1), reader.GetString(9));
                         Ciudad destino = new Ciudad(reader.GetInt32(2), reader.GetString(10));
 
                         int? vendido = null;
-                        if(!reader.IsDBNull(4)) 
+                        if (!reader.IsDBNull(4))
                         {
-                        vendido = reader.GetInt32(4);
+                            vendido = reader.GetInt32(4);
                         }
-                        
-                        
-                        
-                        aux = new Vuelo(reader.GetInt32(0), origen, destino, reader.GetInt32(3),  reader.GetDouble(5), reader.GetDateTime(6), reader.GetString(7), reader.GetString(8));
-                       vuelos.Add(aux);
+
+
+
+                        aux = new Vuelo(reader.GetInt32(0), origen, destino, reader.GetInt32(3), reader.GetDouble(5), reader.GetDateTime(6), reader.GetString(7), reader.GetString(8));
+                        vuelos.Add(aux);
                     }
 
                     reader.Close();
@@ -168,7 +168,7 @@ namespace tpAgencia_Gpo_2
                 cmd.Parameters["@idOrigen"].Value = idOrigen;
                 cmd.Parameters["@idDestino"].Value = idDestino;
                 cmd.Parameters["@capacidad"].Value = capacidad;
-               
+
                 cmd.Parameters["@costo"].Value = costo;
                 cmd.Parameters["@fecha"].Value = fecha;
                 cmd.Parameters["@aerolinea"].Value = aerolinea;
@@ -213,7 +213,7 @@ namespace tpAgencia_Gpo_2
                     conex.Open();
                     return cmd.ExecuteNonQuery();
                 }
-                catch (Exception ex) 
+                catch (Exception ex)
                 {
                     Console.WriteLine(ex.Message);
                     return 0;
@@ -257,175 +257,7 @@ namespace tpAgencia_Gpo_2
                     return 0;
                 }
             }
-            }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        }
 
 
         #region reservaHotel
