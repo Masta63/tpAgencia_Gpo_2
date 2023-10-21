@@ -33,7 +33,7 @@ public class Agencia
         reservasVuelo = new List<ReservaVuelo>();
         listUsuarios = new List<Usuario>();
         DB = new DAL();//inicializar constructor
-        inicializarAtributos();
+        inicializarAtributos();//inicializo los metodos de la clase DB
     }
 
     private void inicializarAtributos()

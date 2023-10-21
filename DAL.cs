@@ -21,6 +21,8 @@ namespace tpAgencia_Gpo_2
             connectionStr = Properties.Resources.ConnectionStr; //debemos cargar cada uno en nuestra resoursces el string para urilizarlo
         }
 
+
+        // -- METODOS DE USUARIO --
         public List<Usuario> inicializarUsuarios()
         {
             List<Usuario> misUsuarios = new List<Usuario>();
@@ -30,16 +32,16 @@ namespace tpAgencia_Gpo_2
 
           
             //creo conexion con la base de datos el using al finalizar el metodo utiliza el dispose y cierra la conexion para ahorrar recursos
-            using (SqlConnection conex = new SqlConnection(connectionStr))
+            using (SqlConnection conex = new SqlConnection(connectionStr))//OBJETO<--1
             {
                 
-                SqlCommand command = new SqlCommand(queryString, conex);
+                SqlCommand command = new SqlCommand(queryString, conex);//OBJETO<--2
                 try
                 {
                     
                     conex.Open();//metodo que ejecuta la conexion con la base de datos
 
-                    
+                    //OBJETO<--3
                     SqlDataReader reader = command.ExecuteReader();// creo el objeto para leer la base de datos y ejecutar el comando
                     Usuario aux;
 
@@ -61,6 +63,58 @@ namespace tpAgencia_Gpo_2
             return misUsuarios;
 
         }
+
+        //devuelve el ID del usuario agregado a la base, si algo falla devuelve -1
+        public int agregarUsuario(int Dni, string Nombre, string Mail, string Password, bool EsADM, bool Bloqueado)
+        {
+            //primero me aseguro que lo pueda agregar a la base
+            int resultadoQuery;
+            int idNuevoUsuario = -1;
+            string queryString = "INSERT INTO [dbo].[Usuarios] ([DNI],[Nombre],[Mail],[Password],[EsADM],[Bloqueado]) VALUES (@dni,@nombre,@mail,@password,@esadm,@bloqueado);";
+            using (SqlConnection connection =
+                new SqlConnection(connectionStr))
+            {
+                SqlCommand command = new SqlCommand(queryString, connection);
+                command.Parameters.Add(new SqlParameter("@dni", SqlDbType.Int));//definimos los parametros las condiciones que queremos que respete
+                command.Parameters.Add(new SqlParameter("@nombre", SqlDbType.NVarChar));
+                command.Parameters.Add(new SqlParameter("@mail", SqlDbType.NVarChar));
+                command.Parameters.Add(new SqlParameter("@password", SqlDbType.NVarChar));
+                command.Parameters.Add(new SqlParameter("@esadm", SqlDbType.Bit));
+                command.Parameters.Add(new SqlParameter("@bloqueado", SqlDbType.Bit));
+                command.Parameters["@dni"].Value = Dni;//estos valores hace referencia a los parametros que definimos arriba 
+                command.Parameters["@nombre"].Value = Nombre;
+                command.Parameters["@mail"].Value = Mail;
+                command.Parameters["@password"].Value = Password;
+                command.Parameters["@esadm"].Value = EsADM;
+                command.Parameters["@bloqueado"].Value = Bloqueado;
+                try
+                {
+                    connection.Open();
+                    //esta consulta NO espera un resultado para leer, es del tipo NON Query
+                    //no abrimos un datareader, con este metodo capturamos la cantidad de filas afectadas
+                    //si creamos un datareader esta mal xk no necesita ser leida una tabla
+                    resultadoQuery = command.ExecuteNonQuery();
+
+                    //*******************************************
+                    //Ahora hago esta query para obtener el ID
+                    string ConsultaID = "SELECT MAX([ID]) FROM [dbo].[Usuarios]";// con esta consulta capturamos el ultimo agregado, no es lo optimo sino que tenga un where para filtrar por dni
+                    command = new SqlCommand(ConsultaID, connection);
+                    SqlDataReader reader = command.ExecuteReader();
+                    reader.Read();
+                    idNuevoUsuario = reader.GetInt32(0);//guardamos el id del nuevo usuario en una variable
+                    reader.Close();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    return -1;
+                }
+                return idNuevoUsuario;
+            }
+        }
+
+        // -- FIN METODOS DE USUARIO
+
 
         //public List<Vuelo> inicializarVuelos()
         //{
