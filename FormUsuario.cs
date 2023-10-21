@@ -25,6 +25,7 @@ namespace tpAgencia_Gpo_2
             this.refAgencia = agencia;
             this.form1 = form1;
             this.MdiParent = form1;
+            
 
             //usuario = new Usuario("juan", "garcia", "22333444", "juan@mail.com");
             //agencia.agregarUsuarioobjet(usuario);
@@ -68,7 +69,7 @@ namespace tpAgencia_Gpo_2
                 {
                     if (textBox_nombre.Text.Length >= 3 && textBox_apellido.Text.Length >= 3 && textBox_dni.Text.Length == 8 && textBox_email.Text.Contains("@"))
                     {
-                        //Dni, Nombre, apellido, Mail, EsADM, Bloqueado);
+                        //Dni, Nombre, apellido, Mail,pass, EsADM, Bloqueado);
                         refAgencia.agregarUsuarioDal(textBox_dni.Text, textBox_nombre.Text, textBox_apellido.Text, textBox_email.Text, textBox_pass.Text, checkBox_admin.Checked, checkBox_bloqueado.Checked);
 
                         MessageBox.Show("Agregado con éxito");
@@ -92,7 +93,8 @@ namespace tpAgencia_Gpo_2
                 if (!string.IsNullOrEmpty(textBox_nombre.Text) && !string.IsNullOrEmpty(textBox_apellido.Text) &&
                     !string.IsNullOrEmpty(textBox_dni.Text) && !string.IsNullOrEmpty(textBox_email.Text))
                 {
-                    if (refAgencia.modificarUsuario(usuarioSeleccionado, textBox_nombre.Text, textBox_apellido.Text, textBox_dni.Text, textBox_email.Text))
+                    //Dni, Nombre, apellido, Mail,pass, EsADM, Bloqueado);
+                    if (refAgencia.modificarUsuarioDal(usuarioSeleccionado, int.Parse(textBox_dni.Text), textBox_nombre.Text, textBox_apellido.Text, textBox_email.Text,checkBox_admin.Checked,checkBox_bloqueado.Checked))
                     {
                         MessageBox.Show("Modificado con éxito");
                     }
@@ -117,7 +119,7 @@ namespace tpAgencia_Gpo_2
         {
             if (usuarioSeleccionado != -1)
             {
-                if (refAgencia.eliminarUsuario(usuarioSeleccionado))
+                if (refAgencia.eliminarUsuarioDal(usuarioSeleccionado))
                     MessageBox.Show("Eliminado con éxito");
                 else
                     MessageBox.Show("Problemas al eliminar");
@@ -166,7 +168,6 @@ namespace tpAgencia_Gpo_2
 
         private void dataGridView_usuarios_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-
 
 
             try
