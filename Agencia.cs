@@ -41,6 +41,9 @@ public class Agencia
         //aca deberiamos agregar los metodos para inicializar vuelos hoteles paises etc
 
         listUsuarios = DB.inicializarUsuarios();//metodo para inicializar usuarios
+        hoteles = DB.inicializarHoteles();
+        ciudades = DB.inicializarCiudades();
+        vuelos = DB.inicializarVuelos();
         //le asigno todo lo del metodo a la sita de la clase logica que trabaja en tiempo de ejecucion
     }
 
@@ -355,37 +358,60 @@ public class Agencia
     }
     public bool agregarVuelo(int idOrigen, int idDestino, int capacidad, double costo, DateTime fecha, string aerolinea, string avion)
     {
+
         Ciudad cOrigen = ciudades.FirstOrDefault(ciudad => ciudad.id == idOrigen);
         Ciudad cDestino = ciudades.FirstOrDefault(ciudad => ciudad.id == idDestino);
-        vuelos.Add(new Vuelo(cantVuelos, cOrigen, cDestino, capacidad, costo, fecha, aerolinea, avion));
-        cantVuelos++;
-        return true;
+        int idNuevoVuelo;
+        idNuevoVuelo = DB.agregarVuelo(idOrigen, idDestino, capacidad, costo, fecha, aerolinea, avion);
+        if (idNuevoVuelo != -1)
+        {
+            Vuelo nuevo = new Vuelo(idNuevoVuelo, cOrigen, cDestino, capacidad, costo, fecha, aerolinea, avion);
+            vuelos.Add(nuevo);
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+
     }
 
-    public string modificarVuelo(int id, Ciudad origen, Ciudad destino, int capacidad, double costo, DateTime fecha, string aerolinea, string avion)
+    public string modificarVuelo(int id, int origen, int destino, int capacidad, double costo, DateTime fecha, string aerolinea, string avion)
     {
-        foreach (Vuelo vuelo in vuelos)
+        Ciudad cOrigen = ciudades.FirstOrDefault(ciudad => ciudad.id == origen);
+        Ciudad cDestino = ciudades.FirstOrDefault(ciudad => ciudad.id == destino);
+        if (DB.modificarVuelo(id, origen, destino, capacidad, costo, fecha, aerolinea, avion) == 1)
         {
-            if (vuelo.id == id)
+            try
             {
-                int cantReservas = vuelo.listPasajeros.Count;
-                if (capacidad >= cantReservas)
+                foreach (Vuelo vuelo in vuelos)
                 {
-                    vuelo.origen = origen;
-                    vuelo.destino = destino;
-                    vuelo.costo = costo;
-                    vuelo.fecha = fecha;
-                    vuelo.aerolinea = aerolinea;
-                    vuelo.avion = avion;
-                    vuelo.capacidad = capacidad;
+                    if (vuelo.id == id)
+                    {
+                        int cantReservas = vuelo.listPasajeros.Count;
+                        if (capacidad >= cantReservas)
+                        {
+                            vuelo.origen = cOrigen;
+                            vuelo.destino = cDestino;
+                            vuelo.costo = costo;
+                            vuelo.fecha = fecha;
+                            vuelo.aerolinea = aerolinea;
+                            vuelo.avion = avion;
+                            vuelo.capacidad = capacidad;
 
-                    return "exito";
-                }
-                else
-                {
-                    return "capacidad";
-                }
+                            return "exito";
+                        }
+                        else
+                        {
+                            return "capacidad";
+                        }
+                    }
 
+                }
+            }
+            catch (Exception e)
+            {
+                return "error";
             }
         }
         return "error";
@@ -394,23 +420,37 @@ public class Agencia
     public bool eliminarVuelo(int id)
     {
         DateTime fechaActual = DateTime.Now;
-        foreach (Vuelo vuelo in vuelos)
+        if (DB.eliminarVuelo(id) == 1)
         {
-            if (vuelo.id == id)
 
+            try
             {
-                if (vuelo.fecha > fechaActual)
-                {
 
-                    foreach (ReservaVuelo reservas in vuelo.listMisReservas)
+
+                foreach (Vuelo vuelo in vuelos)
+                {
+                    if (vuelo.id == id)
+
                     {
-                        reservas.miUsuario.credito += reservas.pagado;
+                        if (vuelo.fecha > fechaActual)
+                        {
+
+                            foreach (ReservaVuelo reservas in vuelo.listMisReservas)
+                            {
+                                reservas.miUsuario.credito += reservas.pagado;
+                            }
+                        }
+                        vuelos.Remove(vuelo);
+
+                        return true;
                     }
                 }
-                vuelos.Remove(vuelo);
-
-                return true;
             }
+            catch (Exception e)
+            {
+                return false;
+            }
+
         }
         return false;
     }
@@ -616,11 +656,15 @@ public class Agencia
 
         foreach (var itemHotel in this.getHoteles())
         {
-            if (itemHotel.ubicacion.nombre == ciudadSeleccionada)
+            if (itemHotel.ubicacion.nombre.Trim().ToUpper() == ciudadSeleccionada.Trim().ToUpper())
             {
                 foreach (var itemReserva in itemHotel.listMisReservas)
                 {
                     estaRango = this.verificacionRango(itemReserva, itemHotel, fechaIngreso, fechaEgreso);
+
+                    if (estaRango)
+                        break;
+
                     cantPer++;
                 }
                 if (!estaRango && Convert.ToInt32(textCantPer) <= itemHotel.capacidad)
@@ -660,13 +704,30 @@ public class Agencia
     {
         bool estaRango = this.estaRangoParaLaReserva(hotelSeleccionado, fechaIngreso, fechaEgreso);
 
-        if (!estaRango && Convert.ToInt32(textCantPer) <= hotelSeleccionado.capacidad && hotelSeleccionado.costo == Convert.ToDouble(textBoxMonto))
+        TimeSpan ts = fechaEgreso.Date.Subtract(fechaIngreso.Date);
+        double costo = ((ts.Days + 1) * hotelSeleccionado.costo);
+
+        if (!estaRango && Convert.ToInt32(textCantPer) <= hotelSeleccionado.capacidad && costo == Convert.ToDouble(textBoxMonto))
         {
+            //genera objeto reserva en memoria
             ReservaHotel reservaHotel = new ReservaHotel(hotelSeleccionado, this.getUsuarioActual(), fechaIngreso, fechaEgreso, Convert.ToDouble(textBoxMonto));
+            DB.agregarReserva(reservaHotel.miUsuario.id, reservaHotel.fechaDesde.Date, reservaHotel.fechaHasta.Date, reservaHotel.pagado, reservaHotel.miHotel.id);
+
+
+            //Recalcula la capacidad del hotel
             hotelSeleccionado.capacidad = hotelSeleccionado.capacidad - Convert.ToInt32(textCantPer);
+            DB.modificarCapacidadHotel(reservaHotel.miHotel.id, hotelSeleccionado.capacidad);
+
             Usuario usuarioActual = this.getUsuarioActual();
+
+            //le resta el credito al usuario
             usuarioActual.credito = usuarioActual.credito - Convert.ToDouble(textBoxMonto);
-            usuarioActual.setReservaHotel(reservaHotel);
+            DB.modificarCreditoUsuario(reservaHotel.miUsuario.id, usuarioActual.credito);
+
+            //agregar la nueva reserva en memoria
+            usuarioActual.listMisReservasHoteles.Add(reservaHotel);
+
+            //setea el usuario actual
             this.setUsuario(usuarioActual);
             return reservaHotel;
         }
