@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data;
-using System.Data.SqlClient;
+using System.Data.SqlClient;//debemos agregar para poder usar los metodos de conexion dy reader
 
 namespace tpAgencia_Gpo_2
 {
@@ -25,11 +25,11 @@ namespace tpAgencia_Gpo_2
         {
             List<Usuario> misUsuarios = new List<Usuario>();
 
-           
+           //string con la consulta que quiero realizar
             string queryString = "SELECT * from Usuario";
 
           
-
+            //creo conexion con la base de datos el using al finalizar el metodo utiliza el dispose y cierra la conexion para ahorrar recursos
             using (SqlConnection conex = new SqlConnection(connectionStr))
             {
                 
