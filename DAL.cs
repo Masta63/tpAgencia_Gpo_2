@@ -70,7 +70,7 @@ namespace tpAgencia_Gpo_2
             //primero me aseguro que lo pueda agregar a la base
             int resultadoQuery;
             int idNuevoUsuario = -1;
-            string queryString = "INSERT INTO [dbo].[Usuarios] ([DNI],[Nombre],[apellido],[Mail],[Password],[EsADM],[Bloqueado]) VALUES (@dni,@nombre,@mail,@password,@esadm,@bloqueado);";
+            string queryString = "INSERT INTO [dbo].[Usuario] ([dni],[nombre],[apellido],[mail],[password],[esAdmin],[bloqueado]) VALUES (@dni,@nombre,@mail,@password,@esadm,@bloqueado);";
             using (SqlConnection connection =
                 new SqlConnection(connectionStr))
             {
@@ -99,7 +99,7 @@ namespace tpAgencia_Gpo_2
 
                     //*******************************************
                     //Ahora hago esta query para obtener el ID
-                    string ConsultaID = "SELECT MAX([ID]) FROM [dbo].[Usuarios]";// con esta consulta capturamos el ultimo agregado, no es lo optimo sino que tenga un where para filtrar por dni
+                    string ConsultaID = "SELECT MAX([ID]) FROM [dbo].[Usuario]";// con esta consulta capturamos el ultimo agregado, no es lo optimo sino que tenga un where para filtrar por dni
                     command = new SqlCommand(ConsultaID, connection);
                     SqlDataReader reader = command.ExecuteReader();
                     reader.Read();
@@ -119,7 +119,7 @@ namespace tpAgencia_Gpo_2
         public int eliminarUsuario(int Id)
         {
             string connectionString = Properties.Resources.ConnectionStr;
-            string queryString = "DELETE FROM [dbo].[Usuarios] WHERE ID=@id";
+            string queryString = "DELETE FROM [dbo].[Usuario] WHERE ID=@id";
             using (SqlConnection connection =
                 new SqlConnection(connectionString))
             {
