@@ -19,7 +19,7 @@ public class Agencia
     private int cantUsuarios = 0;
     private int cantHoteles = 0;
     private int cantIdHoteles = 0;
-    private DAL DB;
+    private DAL DB; //clase adicional para intercambio con base de datos
 
     //metodo constructor
     public Agencia()
@@ -32,13 +32,15 @@ public class Agencia
         reservasHotel = new List<ReservaHotel>();
         reservasVuelo = new List<ReservaVuelo>();
         listUsuarios = new List<Usuario>();
-        DB = new DAL();
+        DB = new DAL();//inicializar constructor
         inicializarAtributos();
     }
 
     private void inicializarAtributos()
     {
-        listUsuarios = DB.inicializarUsuarios();
+        //aca deberiamos agregar los metodos para inicializar vuelos hoteles paises etc
+
+        listUsuarios = DB.inicializarUsuarios();//metodo para inicializar usuarios
     }
 
 
