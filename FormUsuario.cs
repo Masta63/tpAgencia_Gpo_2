@@ -298,6 +298,12 @@ namespace tpAgencia_Gpo_2
             }
         }
 
-
+        private void button1_Click(object sender, EventArgs e)
+        {
+            this.Close();
+            MenuAgencia MenuAgencia = new MenuAgencia(refAgencia, form1);
+            MenuAgencia.MdiParent = form1;
+            MenuAgencia.Show();
+        }
     }
 }

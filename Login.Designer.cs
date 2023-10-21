@@ -33,6 +33,7 @@
             textMail = new TextBox();
             textContrasenia = new TextBox();
             Aceptar = new Button();
+            btn_registrarse = new Button();
             SuspendLayout();
             // 
             // label1
@@ -72,7 +73,7 @@
             // 
             // Aceptar
             // 
-            Aceptar.Location = new Point(200, 143);
+            Aceptar.Location = new Point(43, 129);
             Aceptar.Name = "Aceptar";
             Aceptar.Size = new Size(75, 23);
             Aceptar.TabIndex = 4;
@@ -80,11 +81,21 @@
             Aceptar.UseVisualStyleBackColor = true;
             Aceptar.Click += Aceptar_Click;
             // 
+            // btn_registrarse
+            // 
+            btn_registrarse.Location = new Point(199, 129);
+            btn_registrarse.Name = "btn_registrarse";
+            btn_registrarse.Size = new Size(75, 23);
+            btn_registrarse.TabIndex = 5;
+            btn_registrarse.Text = "Registrarse";
+            btn_registrarse.UseVisualStyleBackColor = true;
+            // 
             // Login
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(286, 178);
+            Controls.Add(btn_registrarse);
             Controls.Add(Aceptar);
             Controls.Add(textContrasenia);
             Controls.Add(textMail);
@@ -105,5 +116,6 @@
         private TextBox textMail;
         private TextBox textContrasenia;
         private Button Aceptar;
+        private Button btn_registrarse;
     }
 }
