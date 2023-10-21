@@ -34,7 +34,7 @@ namespace tpAgencia_Gpo_2
             Agencia.agregarVuelo(Agencia.obtenerNombreCiudad("Bariloche"), Agencia.obtenerNombreCiudad("Buenos Aires"), 2, 200000, new DateTime(2023, 10, 10), "JetSmart", "Airbus300");
             Agencia.agregarVuelo(Agencia.obtenerNombreCiudad("Buenos Aires"), Agencia.obtenerNombreCiudad("Mendoza"), 2, 200000, new DateTime(2023, 09, 10), "JetSmart", "Airbus300");
 
-            cargaDeHotelesConReservaYusuarios();
+            //cargaDeHotelesConReservaYusuarios();
         }
 
 

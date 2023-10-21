@@ -39,6 +39,7 @@ public class Agencia
     private void inicializarAtributos()
     {
         listUsuarios = DB.inicializarUsuarios();
+        hoteles = DB.inicializarHoteles();
     }
 
 
