@@ -70,7 +70,7 @@ namespace tpAgencia_Gpo_2
             //primero me aseguro que lo pueda agregar a la base
             int resultadoQuery;
             int idNuevoUsuario = -1;
-            string queryString = "INSERT INTO [dbo].[Usuario] ([dni],[nombre],[apellido],[mail],[password],[esAdmin],[bloqueado]) VALUES (@dni,@nombre,@mail,@password,@esadm,@bloqueado);";
+            string queryString = "INSERT INTO [dbo].[Usuario] ([dni],[nombre],[apellido],[mail],[password],[intentosFallidos],[bloqueado],[credito],[esAdmin]) VALUES (@dni,@nombre,@apellido,@mail,@password,@intentosFallidos,@bloqueado,@credito,@esadm);";
             using (SqlConnection connection =
                 new SqlConnection(connectionStr))
             {
@@ -82,6 +82,8 @@ namespace tpAgencia_Gpo_2
                 command.Parameters.Add(new SqlParameter("@password", SqlDbType.NVarChar));
                 command.Parameters.Add(new SqlParameter("@esadm", SqlDbType.Bit));
                 command.Parameters.Add(new SqlParameter("@bloqueado", SqlDbType.Bit));
+                command.Parameters.Add(new SqlParameter("@intentosFallidos", SqlDbType.Int));
+                command.Parameters.Add(new SqlParameter("@credito", SqlDbType.Int));
                 command.Parameters["@dni"].Value = Dni;//estos valores hace referencia a los parametros que definimos arriba 
                 command.Parameters["@nombre"].Value = Nombre;
                 command.Parameters["@apellido"].Value = Apellido;
@@ -89,6 +91,10 @@ namespace tpAgencia_Gpo_2
                 command.Parameters["@password"].Value = Password;
                 command.Parameters["@esadm"].Value = EsADM;
                 command.Parameters["@bloqueado"].Value = Bloqueado;
+                command.Parameters["@credito"].Value = 0;
+                command.Parameters["@intentosFallidos"].Value = 0;
+
+
                 try
                 {
                     connection.Open();
@@ -99,7 +105,7 @@ namespace tpAgencia_Gpo_2
 
                     //*******************************************
                     //Ahora hago esta query para obtener el ID
-                    string ConsultaID = "SELECT MAX([ID]) FROM [dbo].[Usuario]";// con esta consulta capturamos el ultimo agregado, no es lo optimo sino que tenga un where para filtrar por dni
+                    string ConsultaID = "SELECT MAX([idUsuario]) FROM [dbo].[Usuario]";// con esta consulta capturamos el ultimo agregado, no es lo optimo sino que tenga un where para filtrar por dni
                     command = new SqlCommand(ConsultaID, connection);
                     SqlDataReader reader = command.ExecuteReader();
                     reader.Read();
@@ -119,7 +125,7 @@ namespace tpAgencia_Gpo_2
         public int eliminarUsuario(int Id)
         {
             string connectionString = Properties.Resources.ConnectionStr;
-            string queryString = "DELETE FROM [dbo].[Usuario] WHERE ID=@id";
+            string queryString = "DELETE FROM [dbo].[Usuario] WHERE [idUsuario]=@id";
             using (SqlConnection connection =
                 new SqlConnection(connectionString))
             {
@@ -144,7 +150,7 @@ namespace tpAgencia_Gpo_2
         public int modificarUsuario(int Id, int Dni, string Nombre, string Mail, string Password, bool EsADM, bool Bloqueado)
         {
             string connectionString = Properties.Resources.ConnectionStr;
-            string queryString = "UPDATE [dbo].[Usuarios] SET Nombre=@nombre, Mail=@mail,Password=@password, EsADM=@esadm, Bloqueado=@bloqueado WHERE ID=@id;";
+            string queryString = "UPDATE [dbo].[Usuario] SET nombre=@nombre, mail=@mail,password=@password, bloqueado=@bloqueado, esAdmin=@esadm WHERE [idUsuario]=@id;";
             using (SqlConnection connection =
                 new SqlConnection(connectionString))
             {

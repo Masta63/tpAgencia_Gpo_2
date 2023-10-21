@@ -187,7 +187,7 @@
             // button_Agregar
             // 
             button_Agregar.BackColor = Color.LightGreen;
-            button_Agregar.Location = new Point(1003, 348);
+            button_Agregar.Location = new Point(992, 364);
             button_Agregar.Name = "button_Agregar";
             button_Agregar.Size = new Size(75, 23);
             button_Agregar.TabIndex = 28;
@@ -198,7 +198,7 @@
             // button_Modificar
             // 
             button_Modificar.BackColor = Color.FromArgb(255, 255, 192);
-            button_Modificar.Location = new Point(1130, 348);
+            button_Modificar.Location = new Point(1119, 364);
             button_Modificar.Name = "button_Modificar";
             button_Modificar.Size = new Size(75, 23);
             button_Modificar.TabIndex = 29;
@@ -209,7 +209,7 @@
             // button_Eliminar
             // 
             button_Eliminar.BackColor = Color.LightCoral;
-            button_Eliminar.Location = new Point(1249, 348);
+            button_Eliminar.Location = new Point(1238, 364);
             button_Eliminar.Name = "button_Eliminar";
             button_Eliminar.Size = new Size(75, 23);
             button_Eliminar.TabIndex = 30;

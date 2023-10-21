@@ -25,7 +25,7 @@ namespace tpAgencia_Gpo_2
             this.refAgencia = agencia;
             this.form1 = form1;
             this.MdiParent = form1;
-            
+
 
             //usuario = new Usuario("juan", "garcia", "22333444", "juan@mail.com");
             //agencia.agregarUsuarioobjet(usuario);
@@ -94,7 +94,7 @@ namespace tpAgencia_Gpo_2
                     !string.IsNullOrEmpty(textBox_dni.Text) && !string.IsNullOrEmpty(textBox_email.Text))
                 {
                     //Dni, Nombre, apellido, Mail,pass, EsADM, Bloqueado);
-                    if (refAgencia.modificarUsuarioDal(usuarioSeleccionado, int.Parse(textBox_dni.Text), textBox_nombre.Text, textBox_apellido.Text, textBox_email.Text,checkBox_admin.Checked,checkBox_bloqueado.Checked))
+                    if (refAgencia.modificarUsuarioDal(usuarioSeleccionado, int.Parse(textBox_dni.Text), textBox_nombre.Text, textBox_apellido.Text, textBox_email.Text, checkBox_admin.Checked, checkBox_bloqueado.Checked))
                     {
                         MessageBox.Show("Modificado con éxito");
                     }
