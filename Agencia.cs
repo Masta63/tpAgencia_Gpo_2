@@ -19,7 +19,7 @@ public class Agencia
     private int cantUsuarios = 0;
     private int cantHoteles = 0;
     private int cantIdHoteles = 0;
-
+    private DAL DB; //clase adicional para intercambio con base de datos
 
     //metodo constructor
     public Agencia()
@@ -32,19 +32,26 @@ public class Agencia
         reservasHotel = new List<ReservaHotel>();
         reservasVuelo = new List<ReservaVuelo>();
         listUsuarios = new List<Usuario>();
+        DB = new DAL();//inicializar constructor
+        inicializarAtributos();
     }
 
+    private void inicializarAtributos()
+    {
+        //aca deberiamos agregar los metodos para inicializar vuelos hoteles paises etc
+
+        listUsuarios = DB.inicializarUsuarios();//metodo para inicializar usuarios
+    }
+
+
     //INICIO METODOS DE USUARIO
-
-
-
 
 
     public string login(string? _contraseña, string? _mail)
     {
         if (_contraseña != null && _mail != "" && _contraseña != null && _mail != "")
         {
-            Usuario? usuarioSeleccionados = this.getListUsuario().Where(x => x?.mail == _mail).FirstOrDefault();
+            Usuario? usuarioSeleccionados = this.getUsuarios().Where(x => x?.mail.Trim() == _mail).FirstOrDefault();
             return validacionEstadoUsuario(usuarioSeleccionados, _mail, _contraseña);
         }
         else
@@ -76,11 +83,6 @@ public class Agencia
         return this.usuarioActual;
     }
 
-    public List<Usuario> getListUsuario()
-    {
-        return listUsuarios;
-    }
-
     public void cerrarSesion()
     {
         usuarioActual = null;
@@ -94,7 +96,7 @@ public class Agencia
 
             codigoReturn = "FALTAUSUARIO";
         }
-        else if (usuarioSeleccionados.mail.Equals(inputMail) && usuarioSeleccionados.password == inputpass)
+        else if (usuarioSeleccionados.mail.Trim().Equals(inputMail) && usuarioSeleccionados.password.Trim() == inputpass)
         {
             codigoReturn = "OK";
             this.usuarioActual = usuarioSeleccionados;
@@ -232,7 +234,7 @@ public class Agencia
     //devuelve true si encuentra
     public bool existeUsuarioConDniOMail(string dni, string mail)
     {
-        return getListUsuario().Any(u => u.dni == dni || u.mail == mail);
+        return getUsuarios().Any(u => u.dni == dni || u.mail == mail);
     }
 
 
