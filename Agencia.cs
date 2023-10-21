@@ -159,8 +159,66 @@ public class Agencia
     }
 
 
+    public bool eliminarUsuarioDal(int Id)
+    {
+        //primero me aseguro que lo pueda eliminar en la base
+        if (DB.eliminarUsuario(Id) == 1)
+        {
+            try
+            {
+                //Ahora sí lo elimino en la lista
+                foreach (Usuario u in listUsuarios)
+                    if (u.id == Id)
+                    {
+                        listUsuarios.Remove(u);
+                        return true;
+                    }
+                return false;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+        else
+        {
+            //algo salió mal con la query porque no generó 1 registro
+            return false;
+        }
+    }
 
-    
+    public bool modificarUsuarioDal(int Id, int Dni, string Nombre, string Mail, string Password, bool EsADM, bool Bloqueado)
+    {
+        //primero me aseguro que lo pueda agregar a la base
+        if (DB.modificarUsuario(Id, Dni, Nombre, Mail, Password, EsADM, Bloqueado) == 1)
+        {
+            try
+            {
+                //Ahora sí lo MODIFICO en la lista
+                for (int i = 0; i < listUsuarios.Count; i++)
+                    if (listUsuarios[i].id == Id)
+                    {
+                        listUsuarios[i].name = Nombre;
+                        listUsuarios[i].mail = Mail;
+                        listUsuarios[i].password = Password;
+                        listUsuarios[i].esAdmin = EsADM;
+                        listUsuarios[i].bloqueado = Bloqueado;
+                    }
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+        else
+        {
+            //algo salió mal con la query porque no generó 1 registro
+            return false;
+        }
+    }
+
+
     public bool agregarUsuario(string name, string apellido, string dni, string mail)
     {
         Usuario usuario = new Usuario(cantUsuarios, name, apellido, dni, mail);

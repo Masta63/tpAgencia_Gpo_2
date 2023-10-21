@@ -115,52 +115,114 @@ namespace tpAgencia_Gpo_2
             }
         }
 
-        // -- FIN METODOS DE USUARIO
+        //devuelve la cantidad de elementos modificados en la base (debería ser 1 si anduvo bien)
+        public int eliminarUsuario(int Id)
+        {
+            string connectionString = Properties.Resources.ConnectionStr;
+            string queryString = "DELETE FROM [dbo].[Usuarios] WHERE ID=@id";
+            using (SqlConnection connection =
+                new SqlConnection(connectionString))
+            {
+                SqlCommand command = new SqlCommand(queryString, connection);
+                command.Parameters.Add(new SqlParameter("@id", SqlDbType.Int));
+                command.Parameters["@id"].Value = Id;
+                try
+                {
+                    connection.Open();
+                    //esta consulta NO espera un resultado para leer, es del tipo NON Query
+                    return command.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    return 0;
+                }
+            }
+        }
+
+        //devuelve la cantidad de elementos modificados en la base (debería ser 1 si anduvo bien)
+        public int modificarUsuario(int Id, int Dni, string Nombre, string Mail, string Password, bool EsADM, bool Bloqueado)
+        {
+            string connectionString = Properties.Resources.ConnectionStr;
+            string queryString = "UPDATE [dbo].[Usuarios] SET Nombre=@nombre, Mail=@mail,Password=@password, EsADM=@esadm, Bloqueado=@bloqueado WHERE ID=@id;";
+            using (SqlConnection connection =
+                new SqlConnection(connectionString))
+            {
+                SqlCommand command = new SqlCommand(queryString, connection);
+                command.Parameters.Add(new SqlParameter("@id", SqlDbType.Int));
+                command.Parameters.Add(new SqlParameter("@dni", SqlDbType.Int));
+                command.Parameters.Add(new SqlParameter("@nombre", SqlDbType.NVarChar));
+                command.Parameters.Add(new SqlParameter("@mail", SqlDbType.NVarChar));
+                command.Parameters.Add(new SqlParameter("@password", SqlDbType.NVarChar));
+                command.Parameters.Add(new SqlParameter("@esadm", SqlDbType.Bit));
+                command.Parameters.Add(new SqlParameter("@bloqueado", SqlDbType.Bit));
+                command.Parameters["@id"].Value = Id;
+                command.Parameters["@dni"].Value = Dni;
+                command.Parameters["@nombre"].Value = Nombre;
+                command.Parameters["@mail"].Value = Mail;
+                command.Parameters["@password"].Value = Password;
+                command.Parameters["@esadm"].Value = EsADM;
+                command.Parameters["@bloqueado"].Value = Bloqueado;
+                try
+                {
+                    connection.Open();
+                    //esta consulta NO espera un resultado para leer, es del tipo NON Query
+                    return command.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    return 0;
+                }
+            }
+        }
+
+            // -- FIN METODOS DE USUARIO
 
 
-        //public List<Vuelo> inicializarVuelos()
-        //{
-        //    List<Vuelo> misUsuarios = new List<Vuelo>();
+            //public List<Vuelo> inicializarVuelos()
+            //{
+            //    List<Vuelo> misUsuarios = new List<Vuelo>();
 
 
-        //    string queryString = "SELECT * from Vuelo";
-
-
-
-        //    using (SqlConnection conex = new SqlConnection(connectionStr))
-        //    {
-
-        //        SqlCommand command = new SqlCommand(queryString, conex);
-        //        try
-        //        {
-
-        //            conex.Open();
-
-
-        //            SqlDataReader reader = command.ExecuteReader();
-        //            Vuelo aux;
-
-        //            while (reader.Read())
-        //            {
-        //                aux = new Vuelo(reader.GetInt32(0), reader.GetInt32(1), reader.GetInt32(2), reader.GetInt32(3), reader.GetFloat(4), reader.GetDateTime(5), reader.GetString(6), reader.GetString(7));
-        //                misUsuarios.Add(aux);
-
-        //            }
-        //            reader.Close();
-
-        //        }
-        //        catch (Exception ex)
-        //        {
-        //            Console.WriteLine(ex.Message);
-        //        }
-        //    }
-        //    return misUsuarios;
-
-        //}
+            //    string queryString = "SELECT * from Vuelo";
 
 
 
+            //    using (SqlConnection conex = new SqlConnection(connectionStr))
+            //    {
+
+            //        SqlCommand command = new SqlCommand(queryString, conex);
+            //        try
+            //        {
+
+            //            conex.Open();
 
 
-    }
+            //            SqlDataReader reader = command.ExecuteReader();
+            //            Vuelo aux;
+
+            //            while (reader.Read())
+            //            {
+            //                aux = new Vuelo(reader.GetInt32(0), reader.GetInt32(1), reader.GetInt32(2), reader.GetInt32(3), reader.GetFloat(4), reader.GetDateTime(5), reader.GetString(6), reader.GetString(7));
+            //                misUsuarios.Add(aux);
+
+            //            }
+            //            reader.Close();
+
+            //        }
+            //        catch (Exception ex)
+            //        {
+            //            Console.WriteLine(ex.Message);
+            //        }
+            //    }
+            //    return misUsuarios;
+
+            //}
+
+
+
+
+
+        }
 }
