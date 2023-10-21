@@ -17,7 +17,7 @@ namespace tpAgencia_Gpo_2
             this.WindowState = FormWindowState.Maximized;
             Agencia = new Agencia();
          
-            cargaCiudades();
+            //cargaCiudades();
 
 
             Login = new Login(Agencia);
@@ -29,10 +29,10 @@ namespace tpAgencia_Gpo_2
 
             //Vuelos hardcodeados
 
-            Agencia.agregarVuelo(Agencia.obtenerNombreCiudad("Bariloche"), Agencia.obtenerNombreCiudad("Mendoza"), 20, 50000, new DateTime(2023, 10, 30), "AA", "Airbus");
-            Agencia.agregarVuelo(Agencia.obtenerNombreCiudad("Mendoza"), Agencia.obtenerNombreCiudad("Buenos Aires"), 50, 100000, new DateTime(2023, 10, 20), "AA", "Airbus320");
-            Agencia.agregarVuelo(Agencia.obtenerNombreCiudad("Bariloche"), Agencia.obtenerNombreCiudad("Buenos Aires"), 2, 200000, new DateTime(2023, 10, 10), "JetSmart", "Airbus300");
-            Agencia.agregarVuelo(Agencia.obtenerNombreCiudad("Buenos Aires"), Agencia.obtenerNombreCiudad("Mendoza"), 2, 200000, new DateTime(2023, 09, 10), "JetSmart", "Airbus300");
+            //Agencia.agregarVuelo(Agencia.obtenerNombreCiudad("Bariloche"), Agencia.obtenerNombreCiudad("Mendoza"), 20, 50000, new DateTime(2023, 10, 30), "AA", "Airbus");
+            //Agencia.agregarVuelo(Agencia.obtenerNombreCiudad("Mendoza"), Agencia.obtenerNombreCiudad("Buenos Aires"), 50, 100000, new DateTime(2023, 10, 20), "AA", "Airbus320");
+            //Agencia.agregarVuelo(Agencia.obtenerNombreCiudad("Bariloche"), Agencia.obtenerNombreCiudad("Buenos Aires"), 2, 200000, new DateTime(2023, 10, 10), "JetSmart", "Airbus300");
+            //Agencia.agregarVuelo(Agencia.obtenerNombreCiudad("Buenos Aires"), Agencia.obtenerNombreCiudad("Mendoza"), 2, 200000, new DateTime(2023, 09, 10), "JetSmart", "Airbus300");
 
             //cargaDeHotelesConReservaYusuarios();
         }
@@ -41,12 +41,12 @@ namespace tpAgencia_Gpo_2
 
 
 
-        private void cargaCiudades()
-        {
-            Agencia.setCiudad(new Ciudad(1, "Bariloche"));
-            Agencia.setCiudad(new Ciudad(2, "Mendoza"));
-            Agencia.setCiudad(new Ciudad(3, "Buenos Aires"));
-        }
+        //private void cargaCiudades()
+        //{
+        //    Agencia.setCiudad(new Ciudad(1, "Bariloche"));
+        //    Agencia.setCiudad(new Ciudad(2, "Mendoza"));
+        //    Agencia.setCiudad(new Ciudad(3, "Buenos Aires"));
+        //}
 
         private void cargaDeHotelesConReservaYusuarios()
         {

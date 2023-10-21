@@ -61,45 +61,206 @@ namespace tpAgencia_Gpo_2
 
         }
 
-        //public List<Vuelo> inicializarVuelos()
-        //{
-        //    List<Vuelo> misUsuarios = new List<Vuelo>();
+        public List<Ciudad> inicializarCiudades()
+        {
+            List<Ciudad> ciudades = new List<Ciudad>();
 
 
-        //    string queryString = "SELECT * from Vuelo";
+            string queryString = "SELECT * from Ciudad";
 
 
 
-        //    using (SqlConnection conex = new SqlConnection(connectionStr))
-        //    {
+            using (SqlConnection conex = new SqlConnection(connectionStr))
+            {
 
-        //        SqlCommand command = new SqlCommand(queryString, conex);
-        //        try
-        //        {
+                SqlCommand command = new SqlCommand(queryString, conex);
+                try
+                {
 
-        //            conex.Open();
+                    conex.Open();
 
 
-        //            SqlDataReader reader = command.ExecuteReader();
-        //            Vuelo aux;
+                    SqlDataReader reader = command.ExecuteReader();
+                    Ciudad aux;
 
-        //            while (reader.Read())
-        //            {
-        //                aux = new Vuelo(reader.GetInt32(0), reader.GetInt32(1), reader.GetInt32(2), reader.GetInt32(3), reader.GetFloat(4), reader.GetDateTime(5), reader.GetString(6), reader.GetString(7));
-        //                misUsuarios.Add(aux);
+                    while (reader.Read())
+                    {
+                        aux = new Ciudad(reader.GetInt32(0),  reader.GetString(1));
+                        ciudades.Add(aux);
 
-        //            }
-        //            reader.Close();
+                    }
+                    reader.Close();
 
-        //        }
-        //        catch (Exception ex)
-        //        {
-        //            Console.WriteLine(ex.Message);
-        //        }
-        //    }
-        //    return misUsuarios;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+            }
+            return ciudades;
 
-        //}
+        }
+
+       public List<Vuelo> inicializarVuelos()
+        {
+            List<Vuelo> vuelos = new List<Vuelo>();
+
+            string queryString = "SELECT V.*, C1.nombre AS OrigenNombre, C2.nombre AS DestinoNombre FROM Vuelo AS V " +
+                                "INNER JOIN Ciudad AS C1 ON V.IdOrigen = C1.IdCiudad " +
+                                "INNER JOIN Ciudad AS C2 ON V.IdDestino = C2.IdCiudad";
+
+            using (SqlConnection conex = new SqlConnection(connectionStr))
+            {
+                SqlCommand command = new SqlCommand(queryString, conex);
+
+                try
+                {
+                    conex.Open();
+                    SqlDataReader reader = command.ExecuteReader();
+                    Vuelo aux;
+
+                    while (reader.Read())
+                    {
+                      
+                        Ciudad origen = new Ciudad(reader.GetInt32(1), reader.GetString(9));
+                        Ciudad destino = new Ciudad(reader.GetInt32(2), reader.GetString(10));
+
+                        int? vendido = null;
+                        if(!reader.IsDBNull(4)) 
+                        {
+                        vendido = reader.GetInt32(4);
+                        }
+                        
+                        
+                        
+                        aux = new Vuelo(reader.GetInt32(0), origen, destino, reader.GetInt32(3),  reader.GetDouble(5), reader.GetDateTime(6), reader.GetString(7), reader.GetString(8));
+                       vuelos.Add(aux);
+                    }
+
+                    reader.Close();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+            }
+
+            return vuelos;
+        }
+
+
+        public int agregarVuelo(int idOrigen, int idDestino, int capacidad, double costo, DateTime fecha, string aerolinea, string avion)
+        {
+            int resultadoQuery;
+            int idNuevoVuelo = -1;
+            string queryString = "INSERT INTO [dbo].[Vuelo]([idOrigen], [idDestino], [capacidad], [costo],[fecha], [aerolinea], [avion]) VALUES (@idOrigen, @idDestino, @capacidad,@costo, @fecha, @aerolinea,@avion);";
+
+            using (SqlConnection conex = new SqlConnection(connectionStr))
+            {
+                SqlCommand cmd = new SqlCommand(queryString, conex);
+                cmd.Parameters.Add(new SqlParameter("@idOrigen", SqlDbType.Int));
+                cmd.Parameters.Add(new SqlParameter("@idDestino", SqlDbType.Int));
+                cmd.Parameters.Add(new SqlParameter("@capacidad", SqlDbType.Int));
+                cmd.Parameters.Add(new SqlParameter("@costo", SqlDbType.Float));
+                cmd.Parameters.Add(new SqlParameter("@fecha", SqlDbType.DateTime));
+                cmd.Parameters.Add(new SqlParameter("@aerolinea", SqlDbType.NVarChar));
+                cmd.Parameters.Add(new SqlParameter("@avion", SqlDbType.NVarChar));
+                cmd.Parameters["@idOrigen"].Value = idOrigen;
+                cmd.Parameters["@idDestino"].Value = idDestino;
+                cmd.Parameters["@capacidad"].Value = capacidad;
+               
+                cmd.Parameters["@costo"].Value = costo;
+                cmd.Parameters["@fecha"].Value = fecha;
+                cmd.Parameters["@aerolinea"].Value = aerolinea;
+                cmd.Parameters["@avion"].Value = avion;
+
+                try
+                {
+                    conex.Open();
+                    resultadoQuery = cmd.ExecuteNonQuery();
+
+                    string ConsultaId = "SELECT MAX([idVuelo]) FROM [dbo].[Vuelo]";
+                    cmd = new SqlCommand(ConsultaId, conex);
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    reader.Read();
+                    idNuevoVuelo = reader.GetInt32(0);
+                    reader.Close();
+
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    return -1;
+                }
+                return idNuevoVuelo;
+            }
+
+
+        }
+
+        public int eliminarVuelo(int id)
+        {
+            string connectionString = Properties.Resources.ConnectionStr;
+            string queryString = "DELETE FROM [dbo].[Vuelo] WHERE idVuelo=@id";
+            using (SqlConnection conex = new SqlConnection(connectionString))
+            {
+                SqlCommand cmd = new SqlCommand(queryString, conex);
+                cmd.Parameters.Add(new SqlParameter("@id", SqlDbType.Int));
+                cmd.Parameters["@id"].Value = id;
+
+                try
+                {
+                    conex.Open();
+                    return cmd.ExecuteNonQuery();
+                }
+                catch (Exception ex) 
+                {
+                    Console.WriteLine(ex.Message);
+                    return 0;
+
+                }
+            }
+        }
+
+
+        public int modificarVuelo(int id, int idOrigen, int idDestino, int capacidad, double costo, DateTime fecha, string aerolinea, string avion)
+        {
+            string connectionString = Properties.Resources.ConnectionStr;
+            string queryString = "UPDATE [dbo].[Vuelo] SET idOrigen=@idOrigen, idDestino=@idDestino, capacidad=@capacidad, costo=@costo, fecha=@fecha, aerolinea=@aerolinea, avion=@avion WHERE idVuelo=@id;";
+            using (SqlConnection conex = new SqlConnection(connectionString))
+            {
+                SqlCommand cmd = new SqlCommand(queryString, conex);
+                cmd.Parameters.Add(new SqlParameter("@id", SqlDbType.Int));
+                cmd.Parameters.Add(new SqlParameter("@idOrigen", SqlDbType.Int));
+                cmd.Parameters.Add(new SqlParameter("@idDestino", SqlDbType.Int));
+                cmd.Parameters.Add(new SqlParameter("@capacidad", SqlDbType.Int));
+                cmd.Parameters.Add(new SqlParameter("@costo", SqlDbType.Float));
+                cmd.Parameters.Add(new SqlParameter("@fecha", SqlDbType.DateTime));
+                cmd.Parameters.Add(new SqlParameter("@aerolinea", SqlDbType.NVarChar));
+                cmd.Parameters.Add(new SqlParameter("@avion", SqlDbType.NVarChar));
+                cmd.Parameters["@id"].Value = id;
+                cmd.Parameters["@idOrigen"].Value = idOrigen;
+                cmd.Parameters["@idDestino"].Value = idDestino;
+                cmd.Parameters["@capacidad"].Value = capacidad;
+                cmd.Parameters["@costo"].Value = costo;
+                cmd.Parameters["@fecha"].Value = fecha;
+                cmd.Parameters["@aerolinea"].Value = aerolinea;
+                cmd.Parameters["@avion"].Value = avion;
+                try
+                {
+                    conex.Open();
+                    return cmd.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    return 0;
+                }
+            }
+            }
+
+
+
 
         #region reservaHotel
         public List<ReservaHotel> traerReservasPorHotel(Hotel hotel)
