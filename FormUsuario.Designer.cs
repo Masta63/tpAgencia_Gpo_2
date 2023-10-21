@@ -67,6 +67,7 @@
             checkBox_bloqueado = new CheckBox();
             textBox_pass = new TextBox();
             label_pass = new Label();
+            button1 = new Button();
             ((System.ComponentModel.ISupportInitialize)dataGridView_usuarios).BeginInit();
             SuspendLayout();
             // 
@@ -407,12 +408,24 @@
             label_pass.TabIndex = 45;
             label_pass.Text = "Password";
             // 
+            // button1
+            // 
+            button1.BackColor = Color.FromArgb(192, 255, 255);
+            button1.Location = new Point(35, 476);
+            button1.Name = "button1";
+            button1.Size = new Size(75, 23);
+            button1.TabIndex = 56;
+            button1.Text = "Volver";
+            button1.UseVisualStyleBackColor = false;
+            button1.Click += button1_Click;
+            // 
             // FormUsuario
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1385, 511);
             ControlBox = false;
+            Controls.Add(button1);
             Controls.Add(label_pass);
             Controls.Add(textBox_pass);
             Controls.Add(checkBox_bloqueado);
@@ -498,5 +511,6 @@
         private DataGridViewTextBoxColumn resVuelo;
         private TextBox textBox_pass;
         private Label label_pass;
+        private Button button1;
     }
 }
