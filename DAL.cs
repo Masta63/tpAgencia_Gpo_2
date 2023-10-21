@@ -113,7 +113,6 @@ namespace tpAgencia_Gpo_2
                 {
                     conex.Open();
                     SqlDataReader reader = command.ExecuteReader();
-                    Hotel aux;
                     while (reader.Read())
                     {
                         Usuario miUsuario = new Usuario(reader.GetInt32(6), reader.GetInt32(7), reader.GetString(8), reader.GetString(9), reader.GetString(10), reader.GetString(11), reader.GetInt32(12), reader.GetBoolean(13), reader.GetDouble(14), reader.GetBoolean(15));
