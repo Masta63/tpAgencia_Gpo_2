@@ -11,12 +11,14 @@ namespace tpAgencia_Gpo_2
 {
     class DAL
     {
-        private String connectionStr;
+        private String connectionStr; //atributo que vamos a usar frecuentemente
 
         public DAL()
         {
-
-            connectionStr = Properties.Resources.ConnectionStr;
+            //cargar la cadena de conexion desde el archivo properties
+             //proyecto-> propiedades->recursos-> crear o abrir
+             //en el valor va el conection string que tenemos de la base de datos
+            connectionStr = Properties.Resources.ConnectionStr; //debemos cargar cada uno en nuestra resoursces el string para urilizarlo
         }
 
         public List<Usuario> inicializarUsuarios()
