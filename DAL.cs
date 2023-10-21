@@ -350,6 +350,103 @@ namespace tpAgencia_Gpo_2
             return Hoteles;
         }
 
+
+        public int agregarReserva(Int32 idUsuario, DateTime fechaDesde, DateTime fechaHasta, double pagado, Int32 idHotel)
+        {
+            int resultadoQuery;
+            int idNuevaReservaHotel = -1;
+            string queryString = "INSERT INTO [dbo].[ReservaHotel]([idUsuario],[fechaDesde],[fechaHasta],[pagado],[idHotel]) VALUES (@idUsuario, @fechaDesde, @fechaHasta,@pagado, @idHotel);";
+
+            using (SqlConnection conex = new SqlConnection(connectionStr))
+            {
+                SqlCommand cmd = new SqlCommand(queryString, conex);
+                cmd.Parameters.Add(new SqlParameter("@idUsuario", SqlDbType.Int));
+                cmd.Parameters.Add(new SqlParameter("@fechaDesde", SqlDbType.DateTime));
+                cmd.Parameters.Add(new SqlParameter("@fechaHasta", SqlDbType.DateTime));
+                cmd.Parameters.Add(new SqlParameter("@pagado", SqlDbType.Float));
+                cmd.Parameters.Add(new SqlParameter("@idHotel", SqlDbType.Int));
+                cmd.Parameters["@idUsuario"].Value = idUsuario;
+                cmd.Parameters["@fechaDesde"].Value = fechaDesde;
+                cmd.Parameters["@fechaHasta"].Value = fechaHasta;
+                cmd.Parameters["@pagado"].Value = pagado;
+                cmd.Parameters["@idHotel"].Value = idHotel;
+
+                try
+                {
+                    conex.Open();
+                    resultadoQuery = cmd.ExecuteNonQuery();
+
+                    string ConsultaId = "SELECT MAX([idReservaHotel]) FROM [dbo].[ReservaHotel]";
+                    cmd = new SqlCommand(ConsultaId, conex);
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    reader.Read();
+                    idNuevaReservaHotel = reader.GetInt32(0);
+                    reader.Close();
+
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    return -1;
+                }
+                return idNuevaReservaHotel;
+            }
+
+        }
+
+        public int modificarCapacidadHotel(Int32 idHotel, int capacidad)
+        {
+            string connectionString = Properties.Resources.ConnectionStr;
+            string queryString = "UPDATE [dbo].[Hotel] SET capacidad=@capacidad WHERE idHotel=@idHotel;";
+            using (SqlConnection conex = new SqlConnection(connectionString))
+            {
+                SqlCommand cmd = new SqlCommand(queryString, conex);
+                cmd.Parameters.Add(new SqlParameter("@idHotel", SqlDbType.Int));
+                cmd.Parameters.Add(new SqlParameter("@capacidad", SqlDbType.Int));
+
+                cmd.Parameters["@idHotel"].Value = idHotel;
+                cmd.Parameters["@capacidad"].Value = capacidad;
+
+                try
+                {
+                    conex.Open();
+                    return cmd.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    return 0;
+                }
+            }
+        }
+
+        public int modificarCreditoUsuario(Int32 idUsuario, double nuevoCredito)
+        {
+            string connectionString = Properties.Resources.ConnectionStr;
+            string queryString = "UPDATE [dbo].[Usuario] SET credito=@credito WHERE idUsuario=@idUsuario;";
+            using (SqlConnection conex = new SqlConnection(connectionString))
+            {
+                SqlCommand cmd = new SqlCommand(queryString, conex);
+                cmd.Parameters.Add(new SqlParameter("@idUsuario", SqlDbType.Int));
+                cmd.Parameters.Add(new SqlParameter("@credito", SqlDbType.Float));
+
+                cmd.Parameters["@idUsuario"].Value = idUsuario;
+                cmd.Parameters["@credito"].Value = nuevoCredito;
+
+                try
+                {
+                    conex.Open();
+                    return cmd.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    return 0;
+                }
+            }
+        }
+
+
         #endregion
 
     }

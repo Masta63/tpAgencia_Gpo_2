@@ -259,24 +259,24 @@ public class Agencia
         Ciudad ciudad = ciudades.FirstOrDefault(ciudad => ciudad.id == id);
         return ciudad != null ? ciudad.nombre : string.Empty;
     }
-    public bool agregarVuelo(int idOrigen, int idDestino, int capacidad,double costo, DateTime fecha, string aerolinea, string avion)
+    public bool agregarVuelo(int idOrigen, int idDestino, int capacidad, double costo, DateTime fecha, string aerolinea, string avion)
     {
-        
+
         Ciudad cOrigen = ciudades.FirstOrDefault(ciudad => ciudad.id == idOrigen);
         Ciudad cDestino = ciudades.FirstOrDefault(ciudad => ciudad.id == idDestino);
         int idNuevoVuelo;
         idNuevoVuelo = DB.agregarVuelo(idOrigen, idDestino, capacidad, costo, fecha, aerolinea, avion);
-        if(idNuevoVuelo != -1)
+        if (idNuevoVuelo != -1)
         {
-            Vuelo nuevo = new Vuelo(idNuevoVuelo, cOrigen, cDestino, capacidad, costo, fecha,aerolinea,avion);
+            Vuelo nuevo = new Vuelo(idNuevoVuelo, cOrigen, cDestino, capacidad, costo, fecha, aerolinea, avion);
             vuelos.Add(nuevo);
             return true;
         }
         else
         {
-                return false;
+            return false;
         }
-      
+
     }
 
     public string modificarVuelo(int id, int origen, int destino, int capacidad, double costo, DateTime fecha, string aerolinea, string avion)
@@ -348,12 +348,14 @@ public class Agencia
                         return true;
                     }
                 }
-            } catch (Exception e)
+            }
+            catch (Exception e)
             {
                 return false;
             }
-           
-        }return false;
+
+        }
+        return false;
     }
 
     public List<Vuelo> getVuelos()
@@ -607,11 +609,25 @@ public class Agencia
 
         if (!estaRango && Convert.ToInt32(textCantPer) <= hotelSeleccionado.capacidad && hotelSeleccionado.costo == Convert.ToDouble(textBoxMonto))
         {
+            //genera objeto reserva en memoria
             ReservaHotel reservaHotel = new ReservaHotel(hotelSeleccionado, this.getUsuarioActual(), fechaIngreso, fechaEgreso, Convert.ToDouble(textBoxMonto));
+            DB.agregarReserva(reservaHotel.miUsuario.id, reservaHotel.fechaDesde.Date, reservaHotel.fechaHasta.Date, reservaHotel.pagado, reservaHotel.miHotel.id);
+
+
+            //Recalcula la capacidad del hotel
             hotelSeleccionado.capacidad = hotelSeleccionado.capacidad - Convert.ToInt32(textCantPer);
+            DB.modificarCapacidadHotel(reservaHotel.miHotel.id, hotelSeleccionado.capacidad);
+
             Usuario usuarioActual = this.getUsuarioActual();
+
+            //le resta el credito al usuario
             usuarioActual.credito = usuarioActual.credito - Convert.ToDouble(textBoxMonto);
-            usuarioActual.setReservaHotel(reservaHotel);
+            DB.modificarCreditoUsuario(reservaHotel.miUsuario.id, usuarioActual.credito);
+
+            //agregar la nueva reserva en memoria
+            usuarioActual.listMisReservasHoteles.Add(reservaHotel);
+
+            //setea el usuario actual
             this.setUsuario(usuarioActual);
             return reservaHotel;
         }
