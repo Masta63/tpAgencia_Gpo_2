@@ -32,7 +32,9 @@ namespace tpAgencia_Gpo_2
                 fechaHasta.Value = reservaHotel.fechaHasta;
                 textBoxMonto.Text = Convert.ToString(reservaHotel.pagado);
                 textCantPer.Text = cantHuesp;
-                dataGridViewHotel.Rows.Add(new string[] { reservaHotel.miHotel.nombre, Convert.ToString(reservaHotel.pagado), Convert.ToString(reservaHotel.miHotel.capacidad), reservaHotel.fechaDesde.ToLongDateString(), reservaHotel.fechaHasta.ToLongDateString() });
+                TimeSpan ts = fechaHasta.Value.Date.Subtract(fechaDesde.Value.Date);
+                double costo = ((ts.Days + 1) * reservaHotel.miHotel.costo);
+                dataGridViewHotel.Rows.Add(new string[] { reservaHotel.miHotel.nombre, Convert.ToString(costo), Convert.ToString(reservaHotel.miHotel.capacidad), reservaHotel.fechaDesde.ToLongDateString(), reservaHotel.fechaHasta.ToLongDateString() });
             }
 
         }
@@ -62,9 +64,9 @@ namespace tpAgencia_Gpo_2
             if (validaciones(hotelSeleccionado))
             {
                 dataGridViewHotel.Rows.Clear();
-                if (Agencia.GenerarReserva(hotelSeleccionado, fechaIngreso, fechaIngreso, textBoxMonto.Text, textCantPer.Text) != null)
+                if (Agencia.GenerarReserva(hotelSeleccionado, fechaIngreso, fechaEgreso, textBoxMonto.Text, textCantPer.Text) != null)
                 {
-                    dataGridViewHotel.Rows.Add(new string[] { hotelSeleccionado.nombre, textBoxMonto.Text, Convert.ToString(hotelSeleccionado.capacidad), fechaIngreso.ToLongTimeString(), fechaEgreso.ToLongTimeString() });
+                    dataGridViewHotel.Rows.Add(new string[] { hotelSeleccionado.nombre, textBoxMonto.Text, Convert.ToString(hotelSeleccionado.capacidad), fechaIngreso.ToShortDateString(), fechaEgreso.ToShortDateString() });
                     disponibilidad = true;
                 }
             }
@@ -103,7 +105,9 @@ namespace tpAgencia_Gpo_2
                 MessageBox.Show("No cubre el costo");
                 return false;
             }
-            if (hotelSeleccionado.costo < Convert.ToDouble(textBoxMonto.Text))
+            TimeSpan ts = fechaHasta.Value.Date.Subtract(fechaDesde.Value.Date);
+            double costo = ((ts.Days + 1) * hotelSeleccionado.costo);
+            if (costo < Convert.ToDouble(textBoxMonto.Text))
             {
                 MessageBox.Show("El costo es mayor");
                 return false;

@@ -607,7 +607,10 @@ public class Agencia
     {
         bool estaRango = this.estaRangoParaLaReserva(hotelSeleccionado, fechaIngreso, fechaEgreso);
 
-        if (!estaRango && Convert.ToInt32(textCantPer) <= hotelSeleccionado.capacidad && hotelSeleccionado.costo == Convert.ToDouble(textBoxMonto))
+        TimeSpan ts = fechaEgreso.Date.Subtract(fechaIngreso.Date);
+        double costo = ((ts.Days + 1) * hotelSeleccionado.costo);
+
+        if (!estaRango && Convert.ToInt32(textCantPer) <= hotelSeleccionado.capacidad && costo == Convert.ToDouble(textBoxMonto))
         {
             //genera objeto reserva en memoria
             ReservaHotel reservaHotel = new ReservaHotel(hotelSeleccionado, this.getUsuarioActual(), fechaIngreso, fechaEgreso, Convert.ToDouble(textBoxMonto));
