@@ -6,6 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data;
 using System.Data.SqlClient;//debemos agregar para poder usar los metodos de conexion dy reader
+using System.Transactions;
+using System.Data.Common;
 
 namespace tpAgencia_Gpo_2
 {
@@ -409,7 +411,122 @@ namespace tpAgencia_Gpo_2
             }
         }
 
+        //CONTROLAR LA CONEXIÓN CON LA BASE CUANDO FUNCIONE AGREGAR USUARIO
+        public int modificarReservaVuelo(int id, int cantidad, double costo)
+        {
+            string connectionString = Properties.Resources.ConnectionStr;
+            string queryString = "UPDATE [dbo].[ReservaVuelo] SET pagado=@costo,  WHERE idReservaVuelo=@id;";
+            using (SqlConnection conex = new SqlConnection(connectionString))
+            {
+                SqlCommand cmd = new SqlCommand(queryString, conex);
+                cmd.Parameters.Add(new SqlParameter("@id", SqlDbType.Int));
+                cmd.Parameters.Add(new SqlParameter("@costo", SqlDbType.Float));
+               
+                cmd.Parameters["@id"].Value = id;
+                cmd.Parameters["@costo"].Value = costo;
 
+                string getVueloIdQuery = "SELECT idVuelo FROM [dbo].[ReservaVuelo] WHERE idReservaVuelo = @id;";
+                int vueloId = -1;
+                try
+                {
+                    conex.Open();
+                
+                using (SqlCommand getVueloIdCmd = new SqlCommand(getVueloIdQuery, conex))
+                {
+                    getVueloIdCmd.Parameters.Add(new SqlParameter("@id", SqlDbType.Int));
+                    getVueloIdCmd.Parameters["@id"].Value = id;
+
+                    using (SqlDataReader reader = getVueloIdCmd.ExecuteReader())
+                    {
+                            reader.Read();
+                       
+                            vueloId = reader.GetInt32(0);
+                       
+                    }
+                }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    return 0;
+                }
+                string updateCapacidadQuery = "UPDATE [dbo].[Vuelo] SET capacidad = capacidad + @cantidad WHERE idVuelo = @idVuelo;";
+                try
+                {
+                    using (SqlCommand updateCapacidadCmd = new SqlCommand(updateCapacidadQuery, conex))
+                    {
+                        updateCapacidadCmd.Parameters.Add(new SqlParameter("@idVuelo", SqlDbType.Int));
+                        updateCapacidadCmd.Parameters.Add(new SqlParameter("@cantidad", SqlDbType.Int));
+                        updateCapacidadCmd.Parameters["@idVuelo"].Value = vueloId;
+                        updateCapacidadCmd.Parameters["@cantidad"].Value = cantidad;
+
+                        updateCapacidadCmd.ExecuteNonQuery();
+                    }
+                    return cmd.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    return 0;
+                }
+
+
+
+            //    try
+            //    {
+            //        conex.Open();
+            //        return cmd.ExecuteNonQuery();
+            //    }
+            //    catch (Exception ex)
+            //    {
+            //        Console.WriteLine(ex.Message);
+            //        return 0;
+            //    }
+            }
+        }
+
+        //CONTROLAR LA CONEXIÓN CON LA BASE CUANDO FUNCIONE AGREGAR USUARIO
+        public int agregarReservaVuelo(int idReservaVuelo, int idVuelo, double costo, int idUsuario)
+        {
+            int resultadoQuery;
+            int idNuevoVuelo = -1;
+            string queryString = "INSERT INTO [dbo].[ReservaVuelo]([idVuelo], [idUsuario], [pagado]) VALUES (@idVuelo, @costo, @idUsuario);";
+
+            using (SqlConnection conex = new SqlConnection(connectionStr))
+            {
+                SqlCommand cmd = new SqlCommand(queryString, conex);
+                cmd.Parameters.Add(new SqlParameter("@idVuelo", SqlDbType.Int));
+                cmd.Parameters.Add(new SqlParameter("@idUsuario", SqlDbType.Int));
+                cmd.Parameters.Add(new SqlParameter("@costo", SqlDbType.Float));
+               
+                cmd.Parameters["@idVuelo"].Value = idVuelo;
+                cmd.Parameters["@idUsuario"].Value = idUsuario;
+               cmd.Parameters["@costo"].Value = costo;
+               
+
+                try
+                {
+                    conex.Open();
+                    resultadoQuery = cmd.ExecuteNonQuery();
+
+                    string ConsultaId = "SELECT MAX([idVuelo]) FROM [dbo].[Vuelo]";
+                    cmd = new SqlCommand(ConsultaId, conex);
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    reader.Read();
+                    idNuevoVuelo = reader.GetInt32(0);
+                    reader.Close();
+
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    return -1;
+                }
+                return idNuevoVuelo;
+            }
+
+
+        }
         #region reservaHotel
         public List<ReservaHotel> traerReservasPorHotel(Hotel hotel)
         {

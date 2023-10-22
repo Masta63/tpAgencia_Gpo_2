@@ -34,7 +34,21 @@ namespace tpAgencia_Gpo_2
         private void FormMisVuelos_Load(object sender, EventArgs e)
         {
             MostrarVuelos();
+            AddButtonColumn();
+
         }
+        private void AddButtonColumn()
+        {
+           
+            DataGridViewButtonColumn buttonColumn = new DataGridViewButtonColumn();
+            buttonColumn.HeaderText = "Modificar/Cancelar";
+            buttonColumn.Text = "Modificar/Cancelar";
+            buttonColumn.UseColumnTextForButtonValue = true;
+
+            
+            dataGridView1.Columns.Add(buttonColumn);
+        }
+
         private void MostrarVuelos()
         {
             dataGridView1.Rows.Clear();
@@ -70,6 +84,13 @@ namespace tpAgencia_Gpo_2
 
             }
 
+        }
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.ColumnIndex == dataGridView1.Columns["Modificar/Cancelar"].Index)
+            {
+                
+            }
         }
 
         private void Volver_desde_usuario_Click(object sender, EventArgs e)
