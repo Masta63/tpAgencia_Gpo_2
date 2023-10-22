@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualBasic.ApplicationServices;
 using System;
+using System.CodeDom;
 using System.Linq;
 using System.Net;
 using System.Xml.Linq;
@@ -220,6 +221,59 @@ public class Agencia
             return false;
         }
     }
+    //modifico el creidto del usuario en ABM
+    public bool modificarCreditoDal(int id, double monto)
+    {
+        if (DB.modificarCreditoUsuario( id, monto)==1)
+        {
+            return modificarCredito(id, monto);//reutilizo metodo anterior
+        }
+        else
+        {
+            return false;
+        }
+    }
+    //agrego credito en el ABM
+    public bool AgregarCreditoDal(int id, double monto)
+    {
+        if (DB.agregoCreditoUsuario(id, monto) == 1)
+        {
+            return agregarCredito(id, monto);//reutilizo metodo anterior
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+
+    //metodo anterior
+    public bool modificarCredito(int id, double monto)
+    {
+        foreach (Usuario user in listUsuarios)
+        {
+            if (user.id == id)
+            {
+                user.credito = monto;
+                return true;
+            }
+        }
+        return false;
+    }
+
+    //metodo anterior
+    public bool agregarCredito(int id, double monto)
+    {
+        foreach (Usuario user in listUsuarios)
+        {
+            if (user.id == id)
+            {
+                user.credito += monto;
+                return true;
+            }
+        }
+        return false;
+    }
 
 
     public bool agregarUsuario(string name, string apellido, string dni, string mail)
@@ -271,31 +325,7 @@ public class Agencia
         return false;
     }
 
-    public bool modificarCredito(int id, double monto)
-    {
-        foreach (Usuario user in listUsuarios)
-        {
-            if (user.id == id)
-            {
-                user.credito = monto;
-                return true;
-            }
-        }
-        return false;
-    }
 
-    public bool agregarCredito(int id, double monto)
-    {
-        foreach (Usuario user in listUsuarios)
-        {
-            if (user.id == id)
-            {
-                user.credito += monto;
-                return true;
-            }
-        }
-        return false;
-    }
 
     public bool eliminarCiudad(int id)
     {

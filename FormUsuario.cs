@@ -217,10 +217,10 @@ namespace tpAgencia_Gpo_2
             {
                 if (double.TryParse(textBox_credito.Text, out double nuevoCredito))
                 {
-                    if (refAgencia.agregarCredito(usuarioSeleccionado, nuevoCredito))
+                    if (refAgencia.AgregarCreditoDal(usuarioSeleccionado, nuevoCredito))
                     {
                         MessageBox.Show("Modificado con éxito");
-                        // Aquí podrías actualizar la vista para reflejar el nuevo crédito.
+                        actualizarDatos();
                     }
                     else
                     {
@@ -245,10 +245,10 @@ namespace tpAgencia_Gpo_2
             {
                 if (double.TryParse(textBox_credito.Text, out double nuevoCredito))
                 {
-                    if (refAgencia.modificarCredito(usuarioSeleccionado, nuevoCredito))
+                    if (refAgencia.modificarCreditoDal(usuarioSeleccionado, nuevoCredito))
                     {
                         MessageBox.Show("Modificado con éxito");
-                        // Aquí podrías actualizar la vista para reflejar el nuevo crédito.
+                        actualizarDatos();
                     }
                     else
                     {

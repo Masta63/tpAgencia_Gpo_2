@@ -16,8 +16,8 @@ namespace tpAgencia_Gpo_2
         public DAL()
         {
             //cargar la cadena de conexion desde el archivo properties
-             //proyecto-> propiedades->recursos-> crear o abrir
-             //en el valor va el conection string que tenemos de la base de datos
+            //proyecto-> propiedades->recursos-> crear o abrir
+            //en el valor va el conection string que tenemos de la base de datos
             connectionStr = Properties.Resources.ConnectionStr; //debemos cargar cada uno en nuestra resoursces el string para urilizarlo
         }
 
@@ -27,18 +27,18 @@ namespace tpAgencia_Gpo_2
         {
             List<Usuario> misUsuarios = new List<Usuario>();
 
-           //string con la consulta que quiero realizar
+            //string con la consulta que quiero realizar
             string queryString = "SELECT * from Usuario";
 
-          
+
             //creo conexion con la base de datos el using al finalizar el metodo utiliza el dispose y cierra la conexion para ahorrar recursos
             using (SqlConnection conex = new SqlConnection(connectionStr))//OBJETO<--1
             {
-                
+
                 SqlCommand command = new SqlCommand(queryString, conex);//OBJETO<--2
                 try
                 {
-                    
+
                     conex.Open();//metodo que ejecuta la conexion con la base de datos
 
                     //OBJETO<--3
@@ -48,7 +48,7 @@ namespace tpAgencia_Gpo_2
                     while (reader.Read())//metodo devuelve true mientras siga leyendo una fila sigue el bucle
                     {
                         //leo la fila, la carga en la variable aux y la agrega a mis usuarios para trabajar en tiempo de ejecucion 
-                        aux = new Usuario(reader.GetInt32(0), reader.GetInt32(1), reader.GetString(2), reader.GetString(3), reader.GetString(4), reader.GetString(5), reader.GetInt32(6), reader.GetBoolean(7),reader.GetDouble(8),reader.GetBoolean(9));
+                        aux = new Usuario(reader.GetInt32(0), reader.GetInt32(1), reader.GetString(2), reader.GetString(3), reader.GetString(4), reader.GetString(5), reader.GetInt32(6), reader.GetBoolean(7), reader.GetDouble(8), reader.GetBoolean(9));
                         misUsuarios.Add(aux);
 
                     }
@@ -63,7 +63,7 @@ namespace tpAgencia_Gpo_2
             return misUsuarios;
 
         }
-        
+
         //devuelve el ID del usuario agregado a la base, si algo falla devuelve -1
         public int agregarUsuario(string Dni, string Nombre, string Apellido, string Mail, string Password, bool EsADM, bool Bloqueado)
         {
@@ -83,7 +83,7 @@ namespace tpAgencia_Gpo_2
                 command.Parameters.Add(new SqlParameter("@esadm", SqlDbType.Bit));
                 command.Parameters.Add(new SqlParameter("@bloqueado", SqlDbType.Bit));
                 command.Parameters.Add(new SqlParameter("@intentosFallidos", SqlDbType.Int));
-                command.Parameters.Add(new SqlParameter("@credito", SqlDbType.Int));
+                command.Parameters.Add(new SqlParameter("@credito", SqlDbType.Float));
                 command.Parameters["@dni"].Value = Dni;//estos valores hace referencia a los parametros que definimos arriba 
                 command.Parameters["@nombre"].Value = Nombre;
                 command.Parameters["@apellido"].Value = Apellido;
@@ -174,6 +174,32 @@ namespace tpAgencia_Gpo_2
                     connection.Open();
                     //esta consulta NO espera un resultado para leer, es del tipo NON Query
                     return command.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    return 0;
+                }
+            }
+        }
+
+        public int agregoCreditoUsuario(int idUsuario, double nuevoCredito)
+        {
+            string connectionString = Properties.Resources.ConnectionStr;
+            string queryString = "UPDATE [tp_agencia].[dbo].[Usuario] SET [credito] = [credito] + @credito  WHERE [idUsuario] = @idUsuario;";
+            using (SqlConnection conex = new SqlConnection(connectionString))
+            {
+                SqlCommand cmd = new SqlCommand(queryString, conex);
+                cmd.Parameters.Add(new SqlParameter("@idUsuario", SqlDbType.Int));
+                cmd.Parameters.Add(new SqlParameter("@credito", SqlDbType.Float));
+
+                cmd.Parameters["@idUsuario"].Value = idUsuario;
+                cmd.Parameters["@credito"].Value = nuevoCredito;
+
+                try
+                {
+                    conex.Open();
+                    return cmd.ExecuteNonQuery();
                 }
                 catch (Exception ex)
                 {
@@ -544,6 +570,7 @@ namespace tpAgencia_Gpo_2
             }
         }
 
+        //reutilice este metodo para usuario y para vuelo
         public int modificarCreditoUsuario(Int32 idUsuario, double nuevoCredito)
         {
             string connectionString = Properties.Resources.ConnectionStr;
@@ -569,6 +596,8 @@ namespace tpAgencia_Gpo_2
                 }
             }
         }
+
+
 
 
         #endregion
