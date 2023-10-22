@@ -15,14 +15,28 @@ namespace tpAgencia_Gpo_2
     {
 
         private Agencia agencia;
-
+        private FormRegistroUsuario FormRegistroUsuario;
         public TransfDelegadoLogin TransfEventoLogin;
-
-        public Login(Agencia agencia)
+        private Form1 form1;
+        public Login(Agencia agencia, Form1 form1)
         {
             this.agencia = agencia;
             InitializeComponent();
+
+            this.FormRegistroUsuario = new FormRegistroUsuario(agencia, form1);
+            FormRegistroUsuario.MdiParent = form1;
+            FormRegistroUsuario.TransfEventoRegistro += TransfDelegadoRegistro;
+            this.form1 = form1;
         }
+
+        private void TransfDelegadoRegistro()
+        {
+            this.MdiParent = form1;
+            this.Close();
+            FormRegistroUsuario = new FormRegistroUsuario(agencia, form1);
+            FormRegistroUsuario.Show();
+        }
+
 
         private void Login_Load(object sender, EventArgs e)
         {
@@ -73,6 +87,10 @@ namespace tpAgencia_Gpo_2
 
         }
 
+        private void btn_registrarse_Click(object sender, EventArgs e)
+        {
+            this.TransfDelegadoRegistro();
+        }
     }
 
 }

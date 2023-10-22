@@ -7,18 +7,26 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static tpAgencia_Gpo_2.Login;
 
 namespace tpAgencia_Gpo_2
 {
     public partial class FormRegistroUsuario : Form
     {
         private Agencia refAgencia;
-
-        public FormRegistroUsuario(Agencia agencia)
+        public TransfDelegadoRegistro TransfEventoRegistro;
+        private Login Login;
+        private MenuAgencia MenuAgencia;
+        private MenuAgenciaAdm MenuAgenciaAdm;
+        private Form1 form1;
+        public FormRegistroUsuario(Agencia agencia, Form1 form1)
         {
             InitializeComponent();
             refAgencia = agencia;
+            this.MdiParent = form1;
+            this.form1 = form1;
         }
+
 
         private void btn_Registrar_Click(object sender, EventArgs e)
         {
@@ -43,12 +51,48 @@ namespace tpAgencia_Gpo_2
                     {
                         //   refAgencia.agregarUsuario(textBox_nombre.Text, textBox_apellido.Text, textBox_dni.Text, textBox_email.Text,textBox_pass.Text);
                         MessageBox.Show("Agregado con éxito");
+                        this.volver();
                     }
                     else
                     {
                         MessageBox.Show("Problemas al agregar");
                     }
                 }
+            }
+            
+        }
+        public delegate void TransfDelegadoRegistro();
+        private void buttonRegistro_volver_Click(object sender, EventArgs e)
+        {
+            this.volver();
+        }
+
+        private void volver()
+        {
+            this.Close();
+            Login = new Login(refAgencia, form1);
+            Login.MdiParent = form1;
+            Login.TransfEventoLogin += TransfDelegadoLogin;
+            Login.Show();
+        }
+
+
+        private void TransfDelegadoLogin()
+        {
+            MessageBox.Show("Log correcto, Usuario: " + refAgencia.nombreLogueado(), "Inicio de Sesión", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            Login.Close();
+
+            if (refAgencia.getUsuarioActual().esAdmin)
+            {
+                MenuAgenciaAdm = new MenuAgenciaAdm(refAgencia, form1);
+                MenuAgenciaAdm.MdiParent = form1;
+                MenuAgenciaAdm.Show();
+            }
+            else
+            {
+                MenuAgencia = new MenuAgencia(refAgencia, form1);
+                MenuAgencia.MdiParent = form1;
+                MenuAgencia.Show();
             }
         }
     }

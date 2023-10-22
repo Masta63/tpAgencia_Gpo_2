@@ -89,6 +89,7 @@
             btn_registrarse.TabIndex = 5;
             btn_registrarse.Text = "Registrarse";
             btn_registrarse.UseVisualStyleBackColor = true;
+            btn_registrarse.Click += btn_registrarse_Click;
             // 
             // Login
             // 
