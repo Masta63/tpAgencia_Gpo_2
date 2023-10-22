@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.SqlServer.Server;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -209,9 +210,18 @@ namespace tpAgencia_Gpo_2
         private void Volver_desde_usuario_Click(object sender, EventArgs e)
         {
             this.Close();
-            MenuAgencia MenuAgencia = new MenuAgencia(agencia, Form1);
-            MenuAgencia.MdiParent = Form1;
-            MenuAgencia.Show();
+            if (agencia.getUsuarioActual().esAdmin)
+            {
+                MenuAgenciaAdm menuAgenciaAdm = new MenuAgenciaAdm(agencia, Form1);
+                menuAgenciaAdm.MdiParent = Form1;
+                menuAgenciaAdm.Show();
+            }
+            else
+            {
+                MenuAgencia MenuAgencia = new MenuAgencia(agencia, Form1);
+                MenuAgencia.MdiParent = Form1;
+                MenuAgencia.Show();
+            }
         }
     }
 }
