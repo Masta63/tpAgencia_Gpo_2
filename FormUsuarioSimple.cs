@@ -47,7 +47,7 @@ namespace tpAgencia_Gpo_2
             {
                 if (double.TryParse(textBox_MiCredito.Text, out double nuevoCredito))
                 {
-                    if (refAgencia.agregarCredito(usuarioActual.id, nuevoCredito))
+                    if (refAgencia.AgregarCreditoDal(usuarioActual.id, nuevoCredito))
                     {
                         MessageBox.Show("Modificado con éxito");
                     }
