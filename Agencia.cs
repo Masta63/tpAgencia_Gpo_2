@@ -446,7 +446,62 @@ public class Agencia
         }
         return "error";
     }
+    public string modificarReservaVuelo(int id, int cantidad, double costo)
+    {
+        if (DB.modificarReservaVuelo(id, cantidad, costo ) == 1)
+        {
+            try
+            {
+                foreach (Vuelo vuelo in vuelos)
+                {
+                    if (vuelo.id == id)
+                    {
+                        int cantReservas = vuelo.listPasajeros.Count;
+                        if (vuelo.capacidad >= cantReservas)
+                        {
+                           
+                            vuelo.costo = costo;
+                           
 
+                            return "exito";
+                        }
+                        else
+                        {
+                            return "capacidad";
+                        }
+                    }
+
+                }
+            }
+            catch (Exception e)
+            {
+                return "error";
+            }
+        }
+        return "error";
+    }
+
+    public double CalcularNuevoCosto(int vueloId, int nuevaCantidad)
+    {
+        
+        double costoBase = ObtenerCostoBase(vueloId);
+        double nuevoCosto = costoBase * nuevaCantidad; 
+        return nuevoCosto;
+    }
+    public double ObtenerCostoBase(int vueloId)
+    {
+        Vuelo vuelo = vuelos.FirstOrDefault(v => v.id == vueloId);
+
+        if (vuelo != null)
+        {
+            return vuelo.costo; 
+        }
+        else
+        {
+            
+            return 0; 
+        }
+    }
     public bool eliminarVuelo(int id)
     {
         DateTime fechaActual = DateTime.Now;
@@ -512,9 +567,12 @@ public class Agencia
 
     }
 
+
+    //CONTROLAR LA CONEXIÓN CON LA BASE CUANDO FUNCIONE AGREGAR USUARIO
     public string comprarVuelo(int vueloId, Usuario usuarioActual, int cantidad)
     {
         Vuelo vuelo = vuelos.FirstOrDefault(v => v.id == vueloId);
+       
         if (vuelo != null && cantidad > 0 && cantidad <= vuelo.capacidad - vuelo.vendido)
         {
             double costoTotal = vuelo.costo * cantidad;
@@ -528,6 +586,10 @@ public class Agencia
                 {
                     vuelo.listPasajeros.Add(usuarioActual);
                 }
+
+                int reservaId = DB.agregarReservaVuelo(0, vueloId, costoTotal, usuarioActual.id);
+
+                if(reservaId != -1) { 
                 ReservaVuelo reserva = new ReservaVuelo(vuelo, usuarioActual, costoTotal);
                 usuarioActual.agregarReservaVuelo(reserva);
                 usuarioActual.agregarVueloTomado(vuelo);
@@ -536,6 +598,12 @@ public class Agencia
 
 
                 return "exito";
+                }
+                else
+                {
+                    // Maneja el caso en que la inserción en la base de datos falle.
+                    return "error";
+                }
             }
             return "sinSaldo";
 
@@ -558,10 +626,9 @@ public class Agencia
 
         foreach (ReservaVuelo reserva in usuario.listMisReservasVuelo)
         {
-            if (reserva.miVuelo.fecha > fechaActual)
-            {
+            
                 vuelosReservados.Add(reserva.miVuelo);
-            }
+          
 
 
         }
