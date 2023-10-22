@@ -147,28 +147,45 @@ namespace tpAgencia_Gpo_2
             }
         }
 
-        //devuelve la cantidad de elementos modificados en la base (debería ser 1 si anduvo bien)
-        public int modificarUsuario(int Id, string Nombre, string Apellido, int Dni, string Mail)
+        public int modificarUsuarioConContraseña(int Id, string Nombre, string Apellido, int Dni, string Mail, string nuevaContraseña)
         {
             string connectionString = Properties.Resources.ConnectionStr;
-            string queryString = "UPDATE [dbo].[Usuario] SET nombre = @nombre, apellido = @apellido, dni = @dni, mail = @mail WHERE [idUsuario] = @id;";
+            string queryString;
+
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                SqlCommand command = new SqlCommand(queryString, connection);
+                SqlCommand command = new SqlCommand();
                 command.Parameters.Add(new SqlParameter("@id", SqlDbType.Int));
                 command.Parameters.Add(new SqlParameter("@nombre", SqlDbType.NVarChar));
                 command.Parameters.Add(new SqlParameter("@apellido", SqlDbType.NVarChar));
                 command.Parameters.Add(new SqlParameter("@dni", SqlDbType.NVarChar));
                 command.Parameters.Add(new SqlParameter("@mail", SqlDbType.NVarChar));
+
                 command.Parameters["@id"].Value = Id;
                 command.Parameters["@nombre"].Value = Nombre;
                 command.Parameters["@apellido"].Value = Apellido;
                 command.Parameters["@dni"].Value = Dni;
                 command.Parameters["@mail"].Value = Mail;
+
+                if (!string.IsNullOrEmpty(nuevaContraseña))
+                {
+                    // Si se proporciona una nueva contraseña, se incluye en la actualización
+                    queryString = "UPDATE [dbo].[Usuario] SET nombre = @nombre, apellido = @apellido, dni = @dni, mail = @mail, password = @nuevaContraseña WHERE [idUsuario] = @id;";
+                    command.Parameters.Add(new SqlParameter("@nuevaContraseña", SqlDbType.NVarChar));
+                    command.Parameters["@nuevaContraseña"].Value = nuevaContraseña;
+                }
+                else
+                {
+                    // Si no se proporciona una nueva contraseña, se excluye de la actualización
+                    queryString = "UPDATE [dbo].[Usuario] SET nombre = @nombre, apellido = @apellido, dni = @dni, mail = @mail WHERE [idUsuario] = @id;";
+                }
+
+                command.CommandText = queryString;
+                command.Connection = connection;
+
                 try
                 {
                     connection.Open();
-                    // Esta consulta NO espera un resultado para leer, es del tipo NON Query
                     return command.ExecuteNonQuery();
                 }
                 catch (Exception ex)
@@ -178,6 +195,7 @@ namespace tpAgencia_Gpo_2
                 }
             }
         }
+
 
 
         public int agregoCreditoUsuario(int idUsuario, double nuevoCredito)

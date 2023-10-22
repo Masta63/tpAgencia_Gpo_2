@@ -192,11 +192,11 @@ public class Agencia
     }
 
     
-    public bool modificarUsuarioDal(int Id, string Nombre, string Apellido, int Dni, string Mail)
+    public bool modificarUsuarioDal(int Id, string Nombre, string Apellido, int Dni, string Mail,string pass)
     {
         //primero me aseguro que lo pueda agregar a la base
         //int Id, string Nombre, string Apellido, string Dni, string Mail
-        if (DB.modificarUsuario( Id,  Nombre,  Apellido,  Dni,  Mail) == 1)
+        if (DB.modificarUsuarioConContraseña( Id,  Nombre,  Apellido,  Dni,  Mail, pass) == 1)
         {
             try
             {

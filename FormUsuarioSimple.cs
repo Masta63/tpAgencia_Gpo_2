@@ -79,7 +79,7 @@ namespace tpAgencia_Gpo_2
                 if (refAgencia.getUsuarioActual().password == textBox_pass_viejo.Text)
                 {
 
-                    if (refAgencia.modificarPassword(usuarioActual.id, textBox_pass_nuevo.Text))
+                    if (refAgencia.modificarUsuarioDal(usuarioActual.id,usuarioActual.name,usuarioActual.apellido,int.Parse(usuarioActual.dni),usuarioActual.mail, textBox_pass_nuevo.Text))
                     {
 
                         MessageBox.Show("Modificado con éxito");
@@ -105,15 +105,15 @@ namespace tpAgencia_Gpo_2
 
             if (usuarioActual != null)
             {
-                label_ver_saldo_credito.Text = refAgencia.getUsuarioActual().credito.ToString();
+                label_ver_saldo_credito.Text = refAgencia.getUsuarioActual().credito.ToString().Trim();
                 usuarioActual = refAgencia.getUsuarioActual();
-                label_set_usuario_actual.Text = refAgencia.getUsuarioActual().name;
-                label_ver_saldo_credito.Text = (refAgencia.getUsuarioActual()?.credito ?? 0) == 0 ? "No posee saldo actual" : refAgencia.getUsuarioActual().credito.ToString();
-                textBox_id.Text = refAgencia.getUsuarioActual().id.ToString();
-                textBox_nombre.Text = refAgencia.getUsuarioActual().name; ;
-                textBox_apellido.Text = refAgencia.getUsuarioActual().apellido; ;
-                textBox_email.Text = refAgencia.getUsuarioActual().mail;
-                textBox_dni.Text = refAgencia.getUsuarioActual().dni;
+                label_set_usuario_actual.Text = refAgencia.getUsuarioActual().name.Trim();
+                label_ver_saldo_credito.Text = (refAgencia.getUsuarioActual()?.credito ?? 0) == 0 ? "No posee saldo actual" : refAgencia.getUsuarioActual().credito.ToString().Trim();
+                textBox_id.Text = refAgencia.getUsuarioActual().id.ToString().Trim();
+                textBox_nombre.Text = refAgencia.getUsuarioActual().name.Trim(); ;
+                textBox_apellido.Text = refAgencia.getUsuarioActual().apellido.Trim(); ;
+                textBox_email.Text = refAgencia.getUsuarioActual().mail.Trim();
+                textBox_dni.Text = refAgencia.getUsuarioActual().dni.Trim();
             }
 
 
@@ -129,7 +129,7 @@ namespace tpAgencia_Gpo_2
                     !string.IsNullOrEmpty(textBox_dni.Text) && !string.IsNullOrEmpty(textBox_email.Text))
                 {
                     //id    nombre  apellido    dni     email
-                    if (refAgencia.modificarUsuarioDal(usuarioActual.id, textBox_nombre.Text, textBox_apellido.Text, int.Parse(textBox_dni.Text), textBox_email.Text))
+                    if (refAgencia.modificarUsuarioDal(usuarioActual.id, textBox_nombre.Text, textBox_apellido.Text, int.Parse(textBox_dni.Text), textBox_email.Text,textBox_pass_nuevo.Text))
                     {
                         MessageBox.Show("Modificado con éxito");
                     }
