@@ -17,7 +17,7 @@ namespace tpAgencia_Gpo_2
             this.WindowState = FormWindowState.Maximized;
             Agencia = new Agencia();
          
-            Login = new Login(Agencia);
+            Login = new Login(Agencia, this);
             Login.MdiParent = this;
             Login.TransfEventoLogin += TransfDelegadoLogin;
             Login.Show();

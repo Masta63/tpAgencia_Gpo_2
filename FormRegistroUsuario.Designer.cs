@@ -140,6 +140,7 @@
             buttonRegistro_volver.TabIndex = 11;
             buttonRegistro_volver.Text = "Volver";
             buttonRegistro_volver.UseVisualStyleBackColor = true;
+            buttonRegistro_volver.Click += buttonRegistro_volver_Click;
             // 
             // FormRegistroUsuario
             // 
