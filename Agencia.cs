@@ -682,4 +682,14 @@ public class Agencia
             return null;
         }
     }
+
+    internal bool modificarHotel(int hotelSeleccionado, Ciudad? ciudadHospedaje1, int capacidad, double costo, string text)
+    {
+        throw new NotImplementedException();
+    }
+
+    internal bool agregarHotel(Ciudad ciudadHospedaje, int capacidad, double costo, string text)
+    {
+        throw new NotImplementedException();
+    }
 }

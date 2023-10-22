@@ -155,8 +155,9 @@ namespace tpAgencia_Gpo_2
                 }
 
 
-                if (agencia.agregarHotel(ciudadHospedaje, capacidad, costo, textBoxNombre.Text))
+                if (agencia.agregarHotel(ciudadHospedaje, capacidad, costo, textBoxNombre.Text)) { 
                     MessageBox.Show("Hotel agregado exitosamente");
+                }
                 else
                     MessageBox.Show("Ocurrió un error al querer agregar un Hotel");
             }
