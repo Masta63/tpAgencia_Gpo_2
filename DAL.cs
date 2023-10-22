@@ -421,7 +421,7 @@ namespace tpAgencia_Gpo_2
                 SqlCommand cmd = new SqlCommand(queryString, conex);
                 cmd.Parameters.Add(new SqlParameter("@id", SqlDbType.Int));
                 cmd.Parameters.Add(new SqlParameter("@costo", SqlDbType.Float));
-               
+
                 cmd.Parameters["@id"].Value = id;
                 cmd.Parameters["@costo"].Value = costo;
 
@@ -430,20 +430,20 @@ namespace tpAgencia_Gpo_2
                 try
                 {
                     conex.Open();
-                
-                using (SqlCommand getVueloIdCmd = new SqlCommand(getVueloIdQuery, conex))
-                {
-                    getVueloIdCmd.Parameters.Add(new SqlParameter("@id", SqlDbType.Int));
-                    getVueloIdCmd.Parameters["@id"].Value = id;
 
-                    using (SqlDataReader reader = getVueloIdCmd.ExecuteReader())
+                    using (SqlCommand getVueloIdCmd = new SqlCommand(getVueloIdQuery, conex))
                     {
+                        getVueloIdCmd.Parameters.Add(new SqlParameter("@id", SqlDbType.Int));
+                        getVueloIdCmd.Parameters["@id"].Value = id;
+
+                        using (SqlDataReader reader = getVueloIdCmd.ExecuteReader())
+                        {
                             reader.Read();
-                       
+
                             vueloId = reader.GetInt32(0);
-                       
+
+                        }
                     }
-                }
                 }
                 catch (Exception ex)
                 {
@@ -472,16 +472,16 @@ namespace tpAgencia_Gpo_2
 
 
 
-            //    try
-            //    {
-            //        conex.Open();
-            //        return cmd.ExecuteNonQuery();
-            //    }
-            //    catch (Exception ex)
-            //    {
-            //        Console.WriteLine(ex.Message);
-            //        return 0;
-            //    }
+                //    try
+                //    {
+                //        conex.Open();
+                //        return cmd.ExecuteNonQuery();
+                //    }
+                //    catch (Exception ex)
+                //    {
+                //        Console.WriteLine(ex.Message);
+                //        return 0;
+                //    }
             }
         }
 
@@ -498,11 +498,11 @@ namespace tpAgencia_Gpo_2
                 cmd.Parameters.Add(new SqlParameter("@idVuelo", SqlDbType.Int));
                 cmd.Parameters.Add(new SqlParameter("@idUsuario", SqlDbType.Int));
                 cmd.Parameters.Add(new SqlParameter("@costo", SqlDbType.Float));
-               
+
                 cmd.Parameters["@idVuelo"].Value = idVuelo;
                 cmd.Parameters["@idUsuario"].Value = idUsuario;
-               cmd.Parameters["@costo"].Value = costo;
-               
+                cmd.Parameters["@costo"].Value = costo;
+
 
                 try
                 {
@@ -661,6 +661,45 @@ namespace tpAgencia_Gpo_2
 
         }
 
+        public int agregarRelacionUsuarioHotel(Int32 idUsuario, Int32 idHotel)
+        {
+            int resultadoQuery;
+            int idNuevaReservaHotel = -1;
+            string queryString = "INSERT INTO [dbo].[Hotel_Usuario]([idUsuario],[idHotel]) VALUES (@idUsuario, @idHotel);";
+
+            using (SqlConnection conex = new SqlConnection(connectionStr))
+            {
+                SqlCommand cmd = new SqlCommand(queryString, conex);
+                cmd.Parameters.Add(new SqlParameter("@idUsuario", SqlDbType.Int));
+                cmd.Parameters.Add(new SqlParameter("@idHotel", SqlDbType.Int));
+                cmd.Parameters["@idUsuario"].Value = idUsuario;
+                cmd.Parameters["@idHotel"].Value = idHotel;
+
+                try
+                {
+                    conex.Open();
+                    resultadoQuery = cmd.ExecuteNonQuery();
+
+                    string ConsultaId = "SELECT MAX([idUsuario]), MAX([idHotel]) FROM [dbo].[Hotel_Usuario]";
+                    cmd = new SqlCommand(ConsultaId, conex);
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    reader.Read();
+                    idNuevaReservaHotel = reader.GetInt32(0);
+                    reader.Close();
+
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    return -1;
+                }
+                return idNuevaReservaHotel;
+            }
+
+        }
+
+
+
         public int modificarCapacidadHotel(Int32 idHotel, int capacidad)
         {
             string connectionString = Properties.Resources.ConnectionStr;
@@ -714,7 +753,38 @@ namespace tpAgencia_Gpo_2
             }
         }
 
+        public bool traerHotel_Usuario(Int32 idHotel, Int32 idUsuario)
+        {
+            bool existe = false;
+            string queryString = "SELECT * FROM [sistema].[dbo].[Hotel_Usuario]  where idHotel=" + idHotel + "and idUsuario=" + idUsuario;
 
+            using (SqlConnection conex = new SqlConnection(connectionStr))
+            {
+                SqlCommand command = new SqlCommand(queryString, conex);
+                try
+                {
+                    conex.Open();
+                    SqlDataReader reader = command.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        if (reader.GetInt32(0) != null && reader.GetInt32(1) != null)
+                        {
+                            existe = true;
+                        }
+                        else
+                        {
+                            existe = false;
+                        }
+                    }
+                    reader.Close();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+            }
+            return existe;
+        }
 
 
         #endregion

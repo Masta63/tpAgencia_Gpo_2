@@ -129,7 +129,7 @@ public class Agencia
         return listUsuarios.ToList();
     }
 
-    public bool agregarUsuarioDal(string Dni, string Nombre, string apellido, string Mail,string Password,bool EsADM, bool Bloqueado)
+    public bool agregarUsuarioDal(string Dni, string Nombre, string apellido, string Mail, string Password, bool EsADM, bool Bloqueado)
     {
         //comprobación para que no me agreguen usuarios con DNI duplicado
         bool esValido = true;
@@ -143,12 +143,12 @@ public class Agencia
         if (esValido)
         {
             int idNuevoUsuario;
-            idNuevoUsuario = DB.agregarUsuario(Dni, Nombre, apellido, Mail,Password, EsADM, Bloqueado);
+            idNuevoUsuario = DB.agregarUsuario(Dni, Nombre, apellido, Mail, Password, EsADM, Bloqueado);
             //compruebo que se pudo agregar a la base y se le asignó un ID
             if (idNuevoUsuario != -1)
             {
                 //Ahora sí lo agrego en la lista
-                Usuario nuevo = new Usuario(idNuevoUsuario, Dni, Nombre,apellido, Mail, Password, EsADM,Bloqueado);
+                Usuario nuevo = new Usuario(idNuevoUsuario, Dni, Nombre, apellido, Mail, Password, EsADM, Bloqueado);
                 listUsuarios.Add(nuevo);
                 return true;
             }
@@ -224,7 +224,7 @@ public class Agencia
     //modifico el creidto del usuario en ABM
     public bool modificarCreditoDal(int id, double monto)
     {
-        if (DB.modificarCreditoUsuario( id, monto)==1)
+        if (DB.modificarCreditoUsuario(id, monto) == 1)
         {
             return modificarCredito(id, monto);//reutilizo metodo anterior
         }
@@ -284,7 +284,7 @@ public class Agencia
         listUsuarios.Add(usuario);
         return true;
     }
-    
+
     //metodo del formRegistro de Usuario
     /*
     public bool agregarUsuario(string name, string apellido, string dni, string mail, string pass)
@@ -448,7 +448,7 @@ public class Agencia
     }
     public string modificarReservaVuelo(int id, int cantidad, double costo)
     {
-        if (DB.modificarReservaVuelo(id, cantidad, costo ) == 1)
+        if (DB.modificarReservaVuelo(id, cantidad, costo) == 1)
         {
             try
             {
@@ -459,9 +459,9 @@ public class Agencia
                         int cantReservas = vuelo.listPasajeros.Count;
                         if (vuelo.capacidad >= cantReservas)
                         {
-                           
+
                             vuelo.costo = costo;
-                           
+
 
                             return "exito";
                         }
@@ -483,9 +483,9 @@ public class Agencia
 
     public double CalcularNuevoCosto(int vueloId, int nuevaCantidad)
     {
-        
+
         double costoBase = ObtenerCostoBase(vueloId);
-        double nuevoCosto = costoBase * nuevaCantidad; 
+        double nuevoCosto = costoBase * nuevaCantidad;
         return nuevoCosto;
     }
     public double ObtenerCostoBase(int vueloId)
@@ -494,12 +494,12 @@ public class Agencia
 
         if (vuelo != null)
         {
-            return vuelo.costo; 
+            return vuelo.costo;
         }
         else
         {
-            
-            return 0; 
+
+            return 0;
         }
     }
     public bool eliminarVuelo(int id)
@@ -572,7 +572,7 @@ public class Agencia
     public string comprarVuelo(int vueloId, Usuario usuarioActual, int cantidad)
     {
         Vuelo vuelo = vuelos.FirstOrDefault(v => v.id == vueloId);
-       
+
         if (vuelo != null && cantidad > 0 && cantidad <= vuelo.capacidad - vuelo.vendido)
         {
             double costoTotal = vuelo.costo * cantidad;
@@ -589,15 +589,16 @@ public class Agencia
 
                 int reservaId = DB.agregarReservaVuelo(0, vueloId, costoTotal, usuarioActual.id);
 
-                if(reservaId != -1) { 
-                ReservaVuelo reserva = new ReservaVuelo(vuelo, usuarioActual, costoTotal);
-                usuarioActual.agregarReservaVuelo(reserva);
-                usuarioActual.agregarVueloTomado(vuelo);
-                vuelo.agregarReservaAlVuelo(reserva);
+                if (reservaId != -1)
+                {
+                    ReservaVuelo reserva = new ReservaVuelo(vuelo, usuarioActual, costoTotal);
+                    usuarioActual.agregarReservaVuelo(reserva);
+                    usuarioActual.agregarVueloTomado(vuelo);
+                    vuelo.agregarReservaAlVuelo(reserva);
 
 
 
-                return "exito";
+                    return "exito";
                 }
                 else
                 {
@@ -626,9 +627,9 @@ public class Agencia
 
         foreach (ReservaVuelo reserva in usuario.listMisReservasVuelo)
         {
-            
-                vuelosReservados.Add(reserva.miVuelo);
-          
+
+            vuelosReservados.Add(reserva.miVuelo);
+
 
 
         }
@@ -810,6 +811,10 @@ public class Agencia
             ReservaHotel reservaHotel = new ReservaHotel(hotelSeleccionado, this.getUsuarioActual(), fechaIngreso, fechaEgreso, Convert.ToDouble(textBoxMonto));
             DB.agregarReserva(reservaHotel.miUsuario.id, reservaHotel.fechaDesde.Date, reservaHotel.fechaHasta.Date, reservaHotel.pagado, reservaHotel.miHotel.id);
 
+            if (!DB.traerHotel_Usuario(reservaHotel.miHotel.id, reservaHotel.miUsuario.id))
+            {
+                DB.agregarRelacionUsuarioHotel(reservaHotel.miUsuario.id, reservaHotel.miHotel.id);
+            }
 
             //Recalcula la capacidad del hotel
             hotelSeleccionado.capacidad = hotelSeleccionado.capacidad - Convert.ToInt32(textCantPer);
