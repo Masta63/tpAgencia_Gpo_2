@@ -128,7 +128,8 @@ namespace tpAgencia_Gpo_2
                 if (!string.IsNullOrEmpty(textBox_nombre.Text) && !string.IsNullOrEmpty(textBox_apellido.Text) &&
                     !string.IsNullOrEmpty(textBox_dni.Text) && !string.IsNullOrEmpty(textBox_email.Text))
                 {
-                    if (refAgencia.modificarUsuario(usuarioActual.id, textBox_nombre.Text, textBox_apellido.Text, textBox_dni.Text, textBox_email.Text))
+                    //id    nombre  apellido    dni     email
+                    if (refAgencia.modificarUsuarioDal(usuarioActual.id, textBox_nombre.Text, textBox_apellido.Text, int.Parse(textBox_dni.Text), textBox_email.Text))
                     {
                         MessageBox.Show("Modificado con éxito");
                     }

@@ -191,10 +191,12 @@ public class Agencia
         }
     }
 
-    public bool modificarUsuarioDal(int Id, int Dni, string Nombre, string Mail, string Password, bool EsADM, bool Bloqueado)
+    
+    public bool modificarUsuarioDal(int Id, string Nombre, string Apellido, int Dni, string Mail)
     {
         //primero me aseguro que lo pueda agregar a la base
-        if (DB.modificarUsuario(Id, Dni, Nombre, Mail, Password, EsADM, Bloqueado) == 1)
+        //int Id, string Nombre, string Apellido, string Dni, string Mail
+        if (DB.modificarUsuario( Id,  Nombre,  Apellido,  Dni,  Mail) == 1)
         {
             try
             {
@@ -203,10 +205,9 @@ public class Agencia
                     if (listUsuarios[i].id == Id)
                     {
                         listUsuarios[i].name = Nombre;
+                        listUsuarios[i].apellido = Apellido;
                         listUsuarios[i].mail = Mail;
-                        listUsuarios[i].password = Password;
-                        listUsuarios[i].esAdmin = EsADM;
-                        listUsuarios[i].bloqueado = Bloqueado;
+                        listUsuarios[i].dni = Dni.ToString();
                     }
                 return true;
             }
@@ -236,13 +237,41 @@ public class Agencia
     //agrego credito en el ABM
     public bool AgregarCreditoDal(int id, double monto)
     {
-        if (DB.agregoCreditoUsuario(id, monto) == 1)
+        try
         {
-            return agregarCredito(id, monto);//reutilizo metodo anterior
+            if (DB.agregoCreditoUsuario(id, monto) == 1)
+            {
+                return agregarCredito(id, monto);//reutilizo metodo anterior
+            }
+            else
+            {
+                return false;
+            }
         }
-        else
+        catch (Exception)
         {
-            return false;
+
+            throw;
+        }
+    }
+
+    public bool modificarPasswordDal(int id, string text)
+    {
+        try
+        {
+            if (DB.modificarPassword(id, text) == 1)
+            {
+                return modificarPassword(id, text);
+            }
+            else
+            {
+                return false;
+            }
+        }
+        catch (Exception)
+        {
+
+            throw;
         }
     }
 
@@ -264,15 +293,23 @@ public class Agencia
     //metodo anterior
     public bool agregarCredito(int id, double monto)
     {
-        foreach (Usuario user in listUsuarios)
+        try
         {
-            if (user.id == id)
+            foreach (Usuario user in listUsuarios)
             {
-                user.credito += monto;
-                return true;
+                if (user.id == id)
+                {
+                    user.credito += monto;
+                    return true;
+                }
             }
+            return false;
         }
-        return false;
+        catch (Exception)
+        {
+
+            throw;
+        }
     }
 
 
@@ -766,4 +803,6 @@ public class Agencia
             return null;
         }
     }
+
+
 }

@@ -93,8 +93,10 @@ namespace tpAgencia_Gpo_2
                 if (!string.IsNullOrEmpty(textBox_nombre.Text) && !string.IsNullOrEmpty(textBox_apellido.Text) &&
                     !string.IsNullOrEmpty(textBox_dni.Text) && !string.IsNullOrEmpty(textBox_email.Text))
                 {
+
                     //Dni, Nombre, apellido, Mail,pass, EsADM, Bloqueado);
-                    if (refAgencia.modificarUsuarioDal(usuarioSeleccionado, int.Parse(textBox_dni.Text), textBox_nombre.Text, textBox_apellido.Text, textBox_email.Text, checkBox_admin.Checked, checkBox_bloqueado.Checked))
+                   // int Id, string Nombre, string Apellido, string Dni, string Mail
+                    if (refAgencia.modificarUsuarioDal(usuarioSeleccionado, textBox_nombre.Text,textBox_apellido.Text, int.Parse(textBox_dni.Text),textBox_email.Text))
                     {
                         MessageBox.Show("Modificado con éxito");
                     }

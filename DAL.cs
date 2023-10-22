@@ -65,6 +65,7 @@ namespace tpAgencia_Gpo_2
         }
 
         //devuelve el ID del usuario agregado a la base, si algo falla devuelve -1
+        //[idUsuario],[dni],[nombre],[apellido],[mail],[password],[intentosFallidos],[bloqueado],[credito],[esAdmin]
         public int agregarUsuario(string Dni, string Nombre, string Apellido, string Mail, string Password, bool EsADM, bool Bloqueado)
         {
             //primero me aseguro que lo pueda agregar a la base
@@ -147,32 +148,27 @@ namespace tpAgencia_Gpo_2
         }
 
         //devuelve la cantidad de elementos modificados en la base (debería ser 1 si anduvo bien)
-        public int modificarUsuario(int Id, int Dni, string Nombre, string Mail, string Password, bool EsADM, bool Bloqueado)
+        public int modificarUsuario(int Id, string Nombre, string Apellido, int Dni, string Mail)
         {
             string connectionString = Properties.Resources.ConnectionStr;
-            string queryString = "UPDATE [dbo].[Usuario] SET nombre=@nombre, mail=@mail,password=@password, bloqueado=@bloqueado, esAdmin=@esadm WHERE [idUsuario]=@id;";
-            using (SqlConnection connection =
-                new SqlConnection(connectionString))
+            string queryString = "UPDATE [dbo].[Usuario] SET nombre = @nombre, apellido = @apellido, dni = @dni, mail = @mail WHERE [idUsuario] = @id;";
+            using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 SqlCommand command = new SqlCommand(queryString, connection);
                 command.Parameters.Add(new SqlParameter("@id", SqlDbType.Int));
-                command.Parameters.Add(new SqlParameter("@dni", SqlDbType.Int));
                 command.Parameters.Add(new SqlParameter("@nombre", SqlDbType.NVarChar));
+                command.Parameters.Add(new SqlParameter("@apellido", SqlDbType.NVarChar));
+                command.Parameters.Add(new SqlParameter("@dni", SqlDbType.NVarChar));
                 command.Parameters.Add(new SqlParameter("@mail", SqlDbType.NVarChar));
-                command.Parameters.Add(new SqlParameter("@password", SqlDbType.NVarChar));
-                command.Parameters.Add(new SqlParameter("@esadm", SqlDbType.Bit));
-                command.Parameters.Add(new SqlParameter("@bloqueado", SqlDbType.Bit));
                 command.Parameters["@id"].Value = Id;
-                command.Parameters["@dni"].Value = Dni;
                 command.Parameters["@nombre"].Value = Nombre;
+                command.Parameters["@apellido"].Value = Apellido;
+                command.Parameters["@dni"].Value = Dni;
                 command.Parameters["@mail"].Value = Mail;
-                command.Parameters["@password"].Value = Password;
-                command.Parameters["@esadm"].Value = EsADM;
-                command.Parameters["@bloqueado"].Value = Bloqueado;
                 try
                 {
                     connection.Open();
-                    //esta consulta NO espera un resultado para leer, es del tipo NON Query
+                    // Esta consulta NO espera un resultado para leer, es del tipo NON Query
                     return command.ExecuteNonQuery();
                 }
                 catch (Exception ex)
@@ -182,6 +178,7 @@ namespace tpAgencia_Gpo_2
                 }
             }
         }
+
 
         public int agregoCreditoUsuario(int idUsuario, double nuevoCredito)
         {
@@ -195,6 +192,34 @@ namespace tpAgencia_Gpo_2
 
                 cmd.Parameters["@idUsuario"].Value = idUsuario;
                 cmd.Parameters["@credito"].Value = nuevoCredito;
+
+                try
+                {
+                    conex.Open();
+                    return cmd.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    return 0;
+                }
+            }
+        }
+
+        //modificar el password
+
+        public int modificarPassword(int idUsuario, string nuevaPassword)
+        {
+            string connectionString = Properties.Resources.ConnectionStr;
+            string queryString = "UPDATE [tp_agencia].[dbo].[Usuario] SET [password] = @nuevaPassword WHERE [idUsuario] = @idUsuario;";
+            using (SqlConnection conex = new SqlConnection(connectionString))
+            {
+                SqlCommand cmd = new SqlCommand(queryString, conex);
+                cmd.Parameters.Add(new SqlParameter("@idUsuario", SqlDbType.Int));
+                cmd.Parameters.Add(new SqlParameter("@nuevaPassword", SqlDbType.NVarChar));
+
+                cmd.Parameters["@idUsuario"].Value = idUsuario;
+                cmd.Parameters["@nuevaPassword"].Value = nuevaPassword;
 
                 try
                 {
@@ -298,7 +323,7 @@ namespace tpAgencia_Gpo_2
             return vuelos;
         }
 
-
+        
         public int agregarVuelo(int idOrigen, int idDestino, int capacidad, double costo, DateTime fecha, string aerolinea, string avion)
         {
             int resultadoQuery;
