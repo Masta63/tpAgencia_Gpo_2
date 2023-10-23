@@ -837,6 +837,13 @@ public class Agencia
     }
 
 
+    public void eliminarRerservaHotel(int idReservaHotel)
+    {
+        DB.eliminarMiReserva(idReservaHotel);
+        ReservaHotel reservaHotel = this.usuarioActual.listMisReservasHoteles.FirstOrDefault(x => x.idReservaHotel == idReservaHotel);
+        this.usuarioActual.listMisReservasHoteles.Remove(reservaHotel);
+    }
+
     public ReservaHotel? GenerarReserva(Hotel hotelSeleccionado, DateTime fechaIngreso, DateTime fechaEgreso, string textBoxMonto, string textCantPer)
     {
         bool estaRango = this.estaRangoParaLaReserva(hotelSeleccionado, fechaIngreso, fechaEgreso);

@@ -35,7 +35,8 @@ namespace tpAgencia_Gpo_2
         {
             MostrarHoteles();
         }
-        private void MostrarHoteles()
+
+        private void refrescar()
         {
             dataGridView1.Rows.Clear();
 
@@ -53,6 +54,11 @@ namespace tpAgencia_Gpo_2
                        reservas.miHotel.nombre, reservas.miHotel.capacidad, reservas.fechaDesde, reservas.fechaHasta);
                 }
             }
+        }
+
+        private void MostrarHoteles()
+        {
+            refrescar();
         }
 
         private void Volver_desde_usuario_Click(object sender, EventArgs e)
@@ -74,7 +80,45 @@ namespace tpAgencia_Gpo_2
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
+            try
+            {
+                string? id = dataGridView1[0, e.RowIndex]?.Value?.ToString().Trim();
+                string? ubicacion = dataGridView1[1, e.RowIndex]?.Value?.ToString().Trim();
+                string? costo = dataGridView1[2, e.RowIndex]?.Value?.ToString().Trim();
+                string? nombre = dataGridView1[3, e.RowIndex]?.Value?.ToString().Trim();
+                string? capacidad = dataGridView1[4, e.RowIndex]?.Value?.ToString().Trim();
+                string? fechaDesde = dataGridView1[5, e.RowIndex]?.Value?.ToString().Trim();
+                string? fechaHasta = dataGridView1[6, e.RowIndex]?.Value?.ToString().Trim();
 
+
+                textBox_id.Text = id;
+                textUbicacion.Text = ubicacion;
+                textCosto.Text = costo;
+                textBoxName.Text = nombre;
+                textBoxCapacidad.Text = capacidad;
+                dateTimePickerFechaDesde.Value = Convert.ToDateTime(fechaDesde);
+                dateTimePickerFechaHasta.Value = Convert.ToDateTime(fechaHasta);
+                button1.Enabled = true;
+
+                //(usuarioSeleccionado = int.Parse(id);
+            }
+            catch (Exception)
+            {
+            }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            agencia.eliminarRerservaHotel(Convert.ToInt32(textBox_id.Text));
+            refrescar();
+            textBox_id.Text = "";
+            textUbicacion.Text = "";
+            textCosto.Text = "";
+            textBoxName.Text = "";
+            textBoxCapacidad.Text = "";
+            dateTimePickerFechaDesde.Value = Convert.ToDateTime(DateTime.Now);
+            dateTimePickerFechaHasta.Value = Convert.ToDateTime(DateTime.Now);
+            button1.Enabled = false;
         }
     }
 }

@@ -760,6 +760,33 @@ namespace tpAgencia_Gpo_2
         }
         #region reservaHotel
 
+
+        public int eliminarMiReserva(int Id)
+        {
+            string connectionString = Properties.Resources.ConnectionStr;
+            string queryString = "DELETE FROM [dbo].[ReservaHotel] WHERE [idReservaHotel]=@idReservaHotel";
+            using (SqlConnection connection =
+                new SqlConnection(connectionString))
+            {
+                SqlCommand command = new SqlCommand(queryString, connection);
+                command.Parameters.Add(new SqlParameter("@idReservaHotel", SqlDbType.Int));
+                command.Parameters["@idReservaHotel"].Value = Id;
+                try
+                {
+                    connection.Open();
+                    //esta consulta NO espera un resultado para leer, es del tipo NON Query
+                    return command.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    return 0;
+                }
+            }
+        }
+
+
+
         public Usuario? traerUsuarioPorId(Int32 idUsuario)
         {
             Usuario? aux = null;
