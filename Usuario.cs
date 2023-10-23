@@ -31,15 +31,16 @@ namespace tpAgencia_Gpo_2
         public List<Vuelo> vuelosTomados { get; set; }
 
 
-        //constructor para formUsuario
-        public Usuario( string name, string apellido, string dni, string mail)
+        //constructor para formUsuarioRegistro
+        //nombre, apellido, dni, mail, password
+        public Usuario( string name, string apellido, string dni, string mail,string password)
         {
             
             this.name = name;
             this.apellido = apellido;
             this.dni = dni;
             this.mail = mail;
-            password = "password";
+            this.password = password;
             esAdmin = false;
             listMisReservasHoteles = new List<ReservaHotel>();
             listMisReservasVuelo = new List<ReservaVuelo>();
@@ -47,6 +48,7 @@ namespace tpAgencia_Gpo_2
             listVuelosTomados = new List<Vuelo>();
         }
         //constructor para formUsuario
+        
         public Usuario(int id,string name, string apellido, string dni, string mail)
         {
             this.id = id;
@@ -61,7 +63,26 @@ namespace tpAgencia_Gpo_2
             listHotelesVisitados = new List<Hotel>();
             listVuelosTomados = new List<Vuelo>();
         }
-        public Usuario(int id, string name, string apellido, string dni, string mail, string password)
+        
+        public Usuario(int id, Int32 dni, string name, string apellido, string mail, string password, Int32 intentosFallidos, bool bloqueado, double credito, bool esAdmin)
+        {
+            this.id = id;
+            this.name = name;
+            this.apellido = apellido;
+            this.dni = Convert.ToString(dni);
+            this.mail = mail;
+            this.password = password;
+            this.intentosFallidos = intentosFallidos;
+            this.bloqueado = bloqueado;
+            this.credito = credito;
+            this.esAdmin = esAdmin;
+            listMisReservasHoteles = new List<ReservaHotel>();
+            listMisReservasVuelo = new List<ReservaVuelo>();
+            listHotelesVisitados = new List<Hotel>();
+            listVuelosTomados = new List<Vuelo>();
+        }
+        /*
+        public Usuario(int id, string name, string apellido, string dni, string mail, bool esADM, string password)
         {
             this.id = id;
             this.name = name;
@@ -70,6 +91,23 @@ namespace tpAgencia_Gpo_2
             this.esAdmin = false;
             this.password = password;
             this.mail = mail;
+            listMisReservasHoteles = new List<ReservaHotel>();
+            listMisReservasVuelo = new List<ReservaVuelo>();
+            listHotelesVisitados = new List<Hotel>();
+            listVuelosTomados = new List<Vuelo>();
+        }
+        */
+        
+        public Usuario(int id, string dni, string name, string apellido,string mail,string password, bool EsADM, bool Bloqueado)
+        {
+            this.id = id;
+            this.dni = dni;
+            this.name = name;
+            this.apellido = apellido;
+            this.mail = mail;
+            this.password = password;
+            this.esAdmin = EsADM;
+            this.bloqueado = Bloqueado;
             listMisReservasHoteles = new List<ReservaHotel>();
             listMisReservasVuelo = new List<ReservaVuelo>();
             listHotelesVisitados = new List<Hotel>();

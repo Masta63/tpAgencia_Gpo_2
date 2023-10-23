@@ -26,6 +26,7 @@ namespace tpAgencia_Gpo_2
             this.form1 = form1;
             this.MdiParent = form1;
 
+
             //usuario = new Usuario("juan", "garcia", "22333444", "juan@mail.com");
             //agencia.agregarUsuarioobjet(usuario);
             //usuario = new Usuario("pedro", "pascal", "33444555", "pedro@mail.com");
@@ -68,7 +69,9 @@ namespace tpAgencia_Gpo_2
                 {
                     if (textBox_nombre.Text.Length >= 3 && textBox_apellido.Text.Length >= 3 && textBox_dni.Text.Length == 8 && textBox_email.Text.Contains("@"))
                     {
-                        refAgencia.agregarUsuario(textBox_nombre.Text, textBox_apellido.Text, textBox_dni.Text, textBox_email.Text);
+                        //Dni, Nombre, apellido, Mail,pass, EsADM, Bloqueado);
+                        refAgencia.agregarUsuarioDal(textBox_dni.Text, textBox_nombre.Text, textBox_apellido.Text, textBox_email.Text, textBox_pass.Text, checkBox_admin.Checked, checkBox_bloqueado.Checked);
+
                         MessageBox.Show("Agregado con éxito");
                     }
                     else
@@ -90,7 +93,8 @@ namespace tpAgencia_Gpo_2
                 if (!string.IsNullOrEmpty(textBox_nombre.Text) && !string.IsNullOrEmpty(textBox_apellido.Text) &&
                     !string.IsNullOrEmpty(textBox_dni.Text) && !string.IsNullOrEmpty(textBox_email.Text))
                 {
-                    if (refAgencia.modificarUsuario(usuarioSeleccionado, textBox_nombre.Text, textBox_apellido.Text, textBox_dni.Text, textBox_email.Text))
+                    //Dni, Nombre, apellido, Mail,pass, EsADM, Bloqueado);
+                    if (refAgencia.modificarUsuarioDal(usuarioSeleccionado, int.Parse(textBox_dni.Text), textBox_nombre.Text, textBox_apellido.Text, textBox_email.Text, checkBox_admin.Checked, checkBox_bloqueado.Checked))
                     {
                         MessageBox.Show("Modificado con éxito");
                     }
@@ -115,7 +119,7 @@ namespace tpAgencia_Gpo_2
         {
             if (usuarioSeleccionado != -1)
             {
-                if (refAgencia.eliminarUsuario(usuarioSeleccionado))
+                if (refAgencia.eliminarUsuarioDal(usuarioSeleccionado))
                     MessageBox.Show("Eliminado con éxito");
                 else
                     MessageBox.Show("Problemas al eliminar");
@@ -139,7 +143,7 @@ namespace tpAgencia_Gpo_2
             foreach (Usuario us in refAgencia.getUsuarios())//para cada usuario en el clon de listado de usuarios de mi referencia de agencia
             {
 
-                dataGridView_usuarios.Rows.Add(new string[] { us.id.ToString(), us.name, us.apellido, us.dni.ToString(), us.credito.ToString(), us.mail, us.listMisReservasHoteles.ToString(), us.listMisReservasVuelo.ToString() });
+                dataGridView_usuarios.Rows.Add(new string[] { us.id.ToString(), us.name, us.apellido, us.dni.ToString(), us.credito.ToString(), us.mail, us.esAdmin.ToString(), us.bloqueado.ToString(), us.listMisReservasHoteles.ToString(), us.listMisReservasVuelo.ToString() });
 
 
                 textBox_id.Text = " ";
@@ -166,7 +170,6 @@ namespace tpAgencia_Gpo_2
         {
 
 
-
             try
             {
                 string? id = dataGridView_usuarios[0, e.RowIndex]?.Value?.ToString();
@@ -175,14 +178,18 @@ namespace tpAgencia_Gpo_2
                 string? dni = dataGridView_usuarios[3, e.RowIndex]?.Value?.ToString();
                 string? credito = dataGridView_usuarios[4, e.RowIndex]?.Value?.ToString();
                 string? email = dataGridView_usuarios[5, e.RowIndex]?.Value?.ToString();
-                string? resHotel = dataGridView_usuarios[6, e.RowIndex]?.Value?.ToString();
-                string? resVuelo = dataGridView_usuarios[7, e.RowIndex]?.Value?.ToString();
+                string? admin = dataGridView_usuarios[6, e.RowIndex]?.Value?.ToString();
+                string? bloqueado = dataGridView_usuarios[7, e.RowIndex]?.Value?.ToString();
+
                 textBox_id.Text = id;
                 textBox_nombre.Text = nombre;
                 textBox_apellido.Text = apellido;
                 textBox_email.Text = email;
                 textBox_dni.Text = dni;
                 textBox_credito.Text = credito;
+                checkBox_admin.Checked = bool.Parse(admin);
+                checkBox_bloqueado.Checked = bool.Parse(bloqueado);
+
                 //textBox_resHotel.Text = resHotel;
                 //textBox_resVuelo.Text = resVuelo;
 
@@ -210,10 +217,10 @@ namespace tpAgencia_Gpo_2
             {
                 if (double.TryParse(textBox_credito.Text, out double nuevoCredito))
                 {
-                    if (refAgencia.agregarCredito(usuarioSeleccionado, nuevoCredito))
+                    if (refAgencia.AgregarCreditoDal(usuarioSeleccionado, nuevoCredito))
                     {
                         MessageBox.Show("Modificado con éxito");
-                        // Aquí podrías actualizar la vista para reflejar el nuevo crédito.
+                        actualizarDatos();
                     }
                     else
                     {
@@ -238,10 +245,10 @@ namespace tpAgencia_Gpo_2
             {
                 if (double.TryParse(textBox_credito.Text, out double nuevoCredito))
                 {
-                    if (refAgencia.modificarCredito(usuarioSeleccionado, nuevoCredito))
+                    if (refAgencia.modificarCreditoDal(usuarioSeleccionado, nuevoCredito))
                     {
                         MessageBox.Show("Modificado con éxito");
-                        // Aquí podrías actualizar la vista para reflejar el nuevo crédito.
+                        actualizarDatos();
                     }
                     else
                     {
@@ -288,6 +295,23 @@ namespace tpAgencia_Gpo_2
             if (!usuarioEncontrado)
             {
                 MessageBox.Show("Debe introducir un DNI de usuario válido");
+            }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            this.Close();
+            if (refAgencia.getUsuarioActual().esAdmin)
+            {
+                MenuAgenciaAdm menuAgenciaAdm = new MenuAgenciaAdm(refAgencia, form1);
+                menuAgenciaAdm.MdiParent = form1;
+                menuAgenciaAdm.Show();
+            }
+            else
+            {
+                MenuAgencia MenuAgencia = new MenuAgencia(refAgencia, form1);
+                MenuAgencia.MdiParent = form1;
+                MenuAgencia.Show();
             }
         }
     }

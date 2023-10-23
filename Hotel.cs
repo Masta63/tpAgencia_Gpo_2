@@ -42,7 +42,7 @@ namespace tpAgencia_Gpo_2
             this.capacidad = capacidad;
             this.costo = costo;
             listHuespedes = new List<Usuario>();
-            listMisReservas = new List<ReservaHotel>();
+            this.listMisReservas = new List<ReservaHotel>();
             this.nombre = nombre;
         }
 

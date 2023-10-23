@@ -61,7 +61,7 @@ namespace tpAgencia_Gpo_2.Properties {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Data Source=AKASHA\SQLEXPRESS;Initial Catalog=Sistema_Viajes;Integrated Security=True.
+        ///   Looks up a localized string similar to Data Source=AKASHA\SQLEXPRESS;Initial Catalog=Sistema_Viajes;Integrated Security=True.
         /// </summary>
         internal static string ConnectionStr {
             get {

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.SqlServer.Server;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -156,14 +157,17 @@ namespace tpAgencia_Gpo_2
                     string origen = comboBox1.Text;
                     string destino = comboBox2.Text;
 
-                    Ciudad ciudadOrigen = agencia.GetCiudades().FirstOrDefault(ciudad => ciudad.nombre == origen);
-                    Ciudad ciudadDestino = agencia.GetCiudades().FirstOrDefault(ciudad => ciudad.nombre == destino);
+                    //Ciudad ciudadOrigen = agencia.GetCiudades().FirstOrDefault(ciudad => ciudad.nombre == origen);
+                    //Ciudad ciudadDestino = agencia.GetCiudades().FirstOrDefault(ciudad => ciudad.nombre == destino);
+
+                    int idOrigen = agencia.obtenerNombreCiudad(origen);
+                    int idDestino = agencia.obtenerNombreCiudad(destino);
 
                     int capacidad = int.Parse(textBox3.Text);
                     double costo = double.Parse(textBox4.Text);
                     DateTime fecha = DateTime.Parse(dateTimePicker1.Text);
 
-                    string resultado = (agencia.modificarVuelo(vueloSeleccionado, ciudadOrigen, ciudadDestino, capacidad, costo, fecha, textBox6.Text, textBox7.Text));
+                    string resultado = (agencia.modificarVuelo(vueloSeleccionado, idOrigen, idDestino, capacidad, costo, fecha, textBox6.Text, textBox7.Text));
                     switch (resultado)
                     {
                         case "exito":
@@ -206,9 +210,18 @@ namespace tpAgencia_Gpo_2
         private void Volver_desde_usuario_Click(object sender, EventArgs e)
         {
             this.Close();
-            MenuAgencia MenuAgencia = new MenuAgencia(agencia, Form1);
-            MenuAgencia.MdiParent = Form1;
-            MenuAgencia.Show();
+            if (agencia.getUsuarioActual().esAdmin)
+            {
+                MenuAgenciaAdm menuAgenciaAdm = new MenuAgenciaAdm(agencia, Form1);
+                menuAgenciaAdm.MdiParent = Form1;
+                menuAgenciaAdm.Show();
+            }
+            else
+            {
+                MenuAgencia MenuAgencia = new MenuAgencia(agencia, Form1);
+                MenuAgencia.MdiParent = Form1;
+                MenuAgencia.Show();
+            }
         }
     }
 }

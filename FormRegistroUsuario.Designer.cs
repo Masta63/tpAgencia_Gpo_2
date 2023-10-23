@@ -39,6 +39,7 @@
             lbl_email = new Label();
             lbl_pass = new Label();
             btn_Registrar = new Button();
+            buttonRegistro_volver = new Button();
             SuspendLayout();
             // 
             // textBox_nombre
@@ -123,7 +124,7 @@
             // 
             // btn_Registrar
             // 
-            btn_Registrar.Location = new Point(249, 271);
+            btn_Registrar.Location = new Point(411, 270);
             btn_Registrar.Name = "btn_Registrar";
             btn_Registrar.Size = new Size(125, 66);
             btn_Registrar.TabIndex = 10;
@@ -131,11 +132,22 @@
             btn_Registrar.UseVisualStyleBackColor = true;
             btn_Registrar.Click += btn_Registrar_Click;
             // 
+            // buttonRegistro_volver
+            // 
+            buttonRegistro_volver.Location = new Point(144, 270);
+            buttonRegistro_volver.Name = "buttonRegistro_volver";
+            buttonRegistro_volver.Size = new Size(125, 66);
+            buttonRegistro_volver.TabIndex = 11;
+            buttonRegistro_volver.Text = "Volver";
+            buttonRegistro_volver.UseVisualStyleBackColor = true;
+            buttonRegistro_volver.Click += buttonRegistro_volver_Click;
+            // 
             // FormRegistroUsuario
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(706, 450);
+            Controls.Add(buttonRegistro_volver);
             Controls.Add(btn_Registrar);
             Controls.Add(lbl_pass);
             Controls.Add(lbl_email);
@@ -166,5 +178,6 @@
         private Label lbl_email;
         private Label lbl_pass;
         private Button btn_Registrar;
+        private Button buttonRegistro_volver;
     }
 }

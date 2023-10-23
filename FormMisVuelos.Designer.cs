@@ -180,5 +180,6 @@
         private DataGridViewTextBoxColumn Aerolinea;
         private DataGridViewTextBoxColumn Avion;
         private DataGridViewTextBoxColumn Cantidad;
+        
     }
 }

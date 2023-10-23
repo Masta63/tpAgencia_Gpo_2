@@ -119,7 +119,9 @@ namespace tpAgencia_Gpo_2
             {
                 foreach (var itemHotel in hotelesDisponibles)
                 {
-                    dataGridViewHotel.Rows.Add(new string[] { Convert.ToString(itemHotel.id), itemHotel.ubicacion.nombre, Convert.ToString(itemHotel.capacidad), Convert.ToString(itemHotel.costo), itemHotel.nombre, fechaIngreso.ToShortDateString(), fechaEgreso.ToShortDateString() });
+                    TimeSpan ts = fechaEgreso.Date.Subtract(fechaIngreso.Date);
+                    double costo = ((ts.Days + 1) * itemHotel.costo);
+                    dataGridViewHotel.Rows.Add(new string[] { Convert.ToString(itemHotel.id), itemHotel.ubicacion.nombre, Convert.ToString(itemHotel.capacidad), Convert.ToString(costo), itemHotel.nombre, fechaIngreso.ToShortDateString(), fechaEgreso.ToShortDateString() });
                     disponibilidad = true;
                 }
             }
@@ -191,9 +193,18 @@ namespace tpAgencia_Gpo_2
 
 
             this.Close();
-            MenuAgencia MenuAgencia = new MenuAgencia(Agencia, Form1);
-            MenuAgencia.MdiParent = Form1;
-            MenuAgencia.Show();
+            if (Agencia.getUsuarioActual().esAdmin)
+            {
+                MenuAgenciaAdm menuAgenciaAdm = new MenuAgenciaAdm(Agencia, Form1);
+                menuAgenciaAdm.MdiParent = Form1;
+                menuAgenciaAdm.Show();
+            }
+            else
+            {
+                MenuAgencia MenuAgencia = new MenuAgencia(Agencia, Form1);
+                MenuAgencia.MdiParent = Form1;
+                MenuAgencia.Show();
+            }
 
 
         }
