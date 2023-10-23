@@ -133,6 +133,7 @@ namespace tpAgencia_Gpo_2
         {
             try
             {
+                string idReserva = dataGridView1.Rows[e.RowIndex].Cells["idReserva"].Value.ToString();
                 string id = dataGridView1.Rows[e.RowIndex].Cells["id"].Value.ToString();
                 string Origen = dataGridView1.Rows[e.RowIndex].Cells["Origen"].Value.ToString();
                 string Destino = dataGridView1.Rows[e.RowIndex].Cells["Destino"].Value.ToString();
@@ -141,6 +142,7 @@ namespace tpAgencia_Gpo_2
                 string Aerolinea = dataGridView1.Rows[e.RowIndex].Cells["Aerolinea"].Value.ToString();
                 string Cantidad = dataGridView1.Rows[e.RowIndex].Cells["Cantidad"].Value.ToString();
 
+                textBoxIdReserva.Text = idReserva;
                 textBoxId.Text = id;
                 textBoxOrigen.Text = Origen;
                 textBoxDestino.Text = Destino;
@@ -167,19 +169,19 @@ namespace tpAgencia_Gpo_2
                 {
                     int nuevaCantidad = int.Parse(textBoxCantidad.Text);
                     double nuevoCosto = agencia.CalcularNuevoCosto(vueloSeleccionado, nuevaCantidad);
-                    string resultado = (agencia.modificarReservaVuelo(vueloSeleccionado, nuevaCantidad, nuevoCosto));
-                    switch (resultado)
-                    {
-                        case "exito":
-                            MessageBox.Show("Vuelo modificado exitosamente");
-                            break;
-                        case "capacidad":
-                            MessageBox.Show("La capacidad es menor a la cantidad de personas que reservaron el vuelo");
-                            break;
-                        case "error":
-                            MessageBox.Show("Ocurrió un problema al querer modificar el vuelo");
-                            break;
-                    }
+                    //string resultado = (agencia.modificarReservaVuelo(vueloSeleccionado, nuevaCantidad, nuevoCosto));
+                    //switch (resultado)
+                    //{
+                    //    case "exito":
+                    //        MessageBox.Show("Vuelo modificado exitosamente");
+                    //        break;
+                    //    case "capacidad":
+                    //        MessageBox.Show("La capacidad es menor a la cantidad de personas que reservaron el vuelo");
+                    //        break;
+                    //    case "error":
+                    //        MessageBox.Show("Ocurrió un problema al querer modificar el vuelo");
+                    //        break;
+                    //}
                 }
                 catch (FormatException)
                 {

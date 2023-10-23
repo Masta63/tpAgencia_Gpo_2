@@ -446,15 +446,15 @@ public class Agencia
         }
         return "error";
     }
-    public string modificarReservaVuelo(int id, int cantidad, double costo)
+    public string modificarReservaVuelo(int idVuelo, int idReserva, int cantidad, double costo)
     {
-        if (DB.modificarReservaVuelo(id, cantidad, costo) == 1)
+        if (DB.modificarReservaVuelo(idVuelo, idReserva, cantidad, costo) == 1)
         {
             try
             {
                 foreach (Vuelo vuelo in vuelos)
                 {
-                    if (vuelo.id == id)
+                    if (vuelo.id == idVuelo)
                     {
                         int cantReservas = vuelo.listPasajeros.Count;
                         if (vuelo.capacidad >= cantReservas)
@@ -568,7 +568,6 @@ public class Agencia
     }
 
 
-    //CONTROLAR LA CONEXIÓN CON LA BASE CUANDO FUNCIONE AGREGAR USUARIO
     public string comprarVuelo(int vueloId, Usuario usuarioActual, int cantidad)
     {
         Vuelo vuelo = vuelos.FirstOrDefault(v => v.id == vueloId);
@@ -586,12 +585,12 @@ public class Agencia
                 {
                     vuelo.listPasajeros.Add(usuarioActual);
                 }
-
-                int reservaId = DB.agregarReservaVuelo(0, vueloId, costoTotal, usuarioActual.id);
+                ReservaVuelo reserva = new ReservaVuelo(vuelo, usuarioActual, costoTotal);
+                int reservaId = DB.agregarReservaVuelo(vueloId, costoTotal, usuarioActual.id);
 
                 if (reservaId != -1)
                 {
-                    ReservaVuelo reserva = new ReservaVuelo(vuelo, usuarioActual, costoTotal);
+
                     usuarioActual.agregarReservaVuelo(reserva);
                     usuarioActual.agregarVueloTomado(vuelo);
                     vuelo.agregarReservaAlVuelo(reserva);
