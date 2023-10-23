@@ -93,8 +93,10 @@ namespace tpAgencia_Gpo_2
                 if (!string.IsNullOrEmpty(textBox_nombre.Text) && !string.IsNullOrEmpty(textBox_apellido.Text) &&
                     !string.IsNullOrEmpty(textBox_dni.Text) && !string.IsNullOrEmpty(textBox_email.Text))
                 {
+
                     //Dni, Nombre, apellido, Mail,pass, EsADM, Bloqueado);
-                    if (refAgencia.modificarUsuarioDal(usuarioSeleccionado, int.Parse(textBox_dni.Text), textBox_nombre.Text, textBox_apellido.Text, textBox_email.Text, checkBox_admin.Checked, checkBox_bloqueado.Checked))
+                    // int Id, string Nombre, string Apellido, string Dni, string Mail
+                    if (refAgencia.modificarUsuarioDal(usuarioSeleccionado, textBox_nombre.Text, textBox_apellido.Text, int.Parse(textBox_dni.Text), textBox_email.Text, textBox_pass.Text))
                     {
                         MessageBox.Show("Modificado con éxito");
                     }
@@ -172,14 +174,14 @@ namespace tpAgencia_Gpo_2
 
             try
             {
-                string? id = dataGridView_usuarios[0, e.RowIndex]?.Value?.ToString();
-                string? nombre = dataGridView_usuarios[1, e.RowIndex]?.Value?.ToString();
-                string? apellido = dataGridView_usuarios[2, e.RowIndex]?.Value?.ToString();
-                string? dni = dataGridView_usuarios[3, e.RowIndex]?.Value?.ToString();
-                string? credito = dataGridView_usuarios[4, e.RowIndex]?.Value?.ToString();
-                string? email = dataGridView_usuarios[5, e.RowIndex]?.Value?.ToString();
-                string? admin = dataGridView_usuarios[6, e.RowIndex]?.Value?.ToString();
-                string? bloqueado = dataGridView_usuarios[7, e.RowIndex]?.Value?.ToString();
+                string? id = dataGridView_usuarios[0, e.RowIndex]?.Value?.ToString().Trim();
+                string? nombre = dataGridView_usuarios[1, e.RowIndex]?.Value?.ToString().Trim();
+                string? apellido = dataGridView_usuarios[2, e.RowIndex]?.Value?.ToString().Trim();
+                string? dni = dataGridView_usuarios[3, e.RowIndex]?.Value?.ToString().Trim();
+                string? credito = dataGridView_usuarios[4, e.RowIndex]?.Value?.ToString().Trim();
+                string? email = dataGridView_usuarios[5, e.RowIndex]?.Value?.ToString().Trim();
+                string? admin = dataGridView_usuarios[6, e.RowIndex]?.Value?.ToString().Trim();
+                string? bloqueado = dataGridView_usuarios[7, e.RowIndex]?.Value?.ToString().Trim();
 
                 textBox_id.Text = id;
                 textBox_nombre.Text = nombre;
