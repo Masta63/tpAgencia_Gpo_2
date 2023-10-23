@@ -412,17 +412,17 @@ namespace tpAgencia_Gpo_2
         }
 
         //CONTROLAR LA CONEXIÓN CON LA BASE CUANDO FUNCIONE AGREGAR USUARIO
-        public int modificarReservaVuelo(int id, int cantidad, double costo)
+        public int modificarReservaVuelo(int idVuelo, int idReserva, int cantidad, double costo)
         {
             string connectionString = Properties.Resources.ConnectionStr;
-            string queryString = "UPDATE [dbo].[ReservaVuelo] SET pagado=@costo,  WHERE idReservaVuelo=@id;";
+            string queryString = "UPDATE [dbo].[ReservaVuelo] SET pagado=@costo  WHERE idReservaVuelo=@idReserva;";
             using (SqlConnection conex = new SqlConnection(connectionString))
             {
                 SqlCommand cmd = new SqlCommand(queryString, conex);
                 cmd.Parameters.Add(new SqlParameter("@id", SqlDbType.Int));
                 cmd.Parameters.Add(new SqlParameter("@costo", SqlDbType.Float));
 
-                cmd.Parameters["@id"].Value = id;
+                cmd.Parameters["@id"].Value = idVuelo;
                 cmd.Parameters["@costo"].Value = costo;
 
                 string getVueloIdQuery = "SELECT idVuelo FROM [dbo].[ReservaVuelo] WHERE idReservaVuelo = @id;";
@@ -434,7 +434,7 @@ namespace tpAgencia_Gpo_2
                     using (SqlCommand getVueloIdCmd = new SqlCommand(getVueloIdQuery, conex))
                     {
                         getVueloIdCmd.Parameters.Add(new SqlParameter("@id", SqlDbType.Int));
-                        getVueloIdCmd.Parameters["@id"].Value = id;
+                        getVueloIdCmd.Parameters["@id"].Value = idVuelo;
 
                         using (SqlDataReader reader = getVueloIdCmd.ExecuteReader())
                         {
@@ -486,11 +486,11 @@ namespace tpAgencia_Gpo_2
         }
 
         //CONTROLAR LA CONEXIÓN CON LA BASE CUANDO FUNCIONE AGREGAR USUARIO
-        public int agregarReservaVuelo(int idReservaVuelo, int idVuelo, double costo, int idUsuario)
+        public int agregarReservaVuelo(int idVuelo, double costo, int idUsuario)
         {
             int resultadoQuery;
             int idNuevoVuelo = -1;
-            string queryString = "INSERT INTO [dbo].[ReservaVuelo]([idVuelo], [idUsuario], [pagado]) VALUES (@idVuelo, @costo, @idUsuario);";
+            string queryString = "INSERT INTO [dbo].[ReservaVuelo]([idVuelo], [idUsuario], [pagado]) VALUES (@idVuelo, @idUsuario, @costo);";
 
             using (SqlConnection conex = new SqlConnection(connectionStr))
             {

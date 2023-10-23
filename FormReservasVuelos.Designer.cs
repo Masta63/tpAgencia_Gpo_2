@@ -31,6 +31,7 @@
             label1 = new Label();
             label2 = new Label();
             dataGridView1 = new DataGridView();
+            idReserva = new DataGridViewTextBoxColumn();
             id = new DataGridViewTextBoxColumn();
             Origen = new DataGridViewTextBoxColumn();
             Destino = new DataGridViewTextBoxColumn();
@@ -56,6 +57,8 @@
             textBox1 = new TextBox();
             label8 = new Label();
             label9 = new Label();
+            textBoxIdReserva = new TextBox();
+            label10 = new Label();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
             // 
@@ -82,7 +85,7 @@
             // dataGridView1
             // 
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { id, Origen, Destino, Costo, Fecha, Aerolinea, Avion, Cantidad });
+            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { idReserva, id, Origen, Destino, Costo, Fecha, Aerolinea, Avion, Cantidad });
             dataGridView1.Location = new Point(75, 199);
             dataGridView1.Name = "dataGridView1";
             dataGridView1.RowHeadersWidth = 62;
@@ -91,6 +94,14 @@
             dataGridView1.TabIndex = 2;
             dataGridView1.CellContentClick += dataGridView1_CellContentClick;
             dataGridView1.CellDoubleClick += dataGridView1_CellDoubleClick;
+            // 
+            // idReserva
+            // 
+            idReserva.HeaderText = "idReserva";
+            idReserva.MinimumWidth = 8;
+            idReserva.Name = "idReserva";
+            idReserva.Visible = false;
+            idReserva.Width = 150;
             // 
             // id
             // 
@@ -171,7 +182,7 @@
             // 
             // Modificar
             // 
-            Modificar.Location = new Point(1217, 580);
+            Modificar.Location = new Point(1217, 620);
             Modificar.Name = "Modificar";
             Modificar.Size = new Size(116, 46);
             Modificar.TabIndex = 28;
@@ -181,7 +192,7 @@
             // 
             // Eliminar
             // 
-            Eliminar.Location = new Point(1339, 580);
+            Eliminar.Location = new Point(1339, 620);
             Eliminar.Name = "Eliminar";
             Eliminar.Size = new Size(111, 46);
             Eliminar.TabIndex = 29;
@@ -190,7 +201,7 @@
             // 
             // textBoxId
             // 
-            textBoxId.Location = new Point(1309, 160);
+            textBoxId.Location = new Point(1309, 205);
             textBoxId.Name = "textBoxId";
             textBoxId.ReadOnly = true;
             textBoxId.Size = new Size(106, 31);
@@ -198,7 +209,7 @@
             // 
             // textBoxOrigen
             // 
-            textBoxOrigen.Location = new Point(1309, 218);
+            textBoxOrigen.Location = new Point(1309, 263);
             textBoxOrigen.Name = "textBoxOrigen";
             textBoxOrigen.ReadOnly = true;
             textBoxOrigen.Size = new Size(155, 31);
@@ -206,7 +217,7 @@
             // 
             // textBoxDestino
             // 
-            textBoxDestino.Location = new Point(1309, 274);
+            textBoxDestino.Location = new Point(1309, 319);
             textBoxDestino.Name = "textBoxDestino";
             textBoxDestino.ReadOnly = true;
             textBoxDestino.Size = new Size(155, 31);
@@ -214,7 +225,7 @@
             // 
             // textBoxFecha
             // 
-            textBoxFecha.Location = new Point(1309, 336);
+            textBoxFecha.Location = new Point(1309, 381);
             textBoxFecha.Name = "textBoxFecha";
             textBoxFecha.ReadOnly = true;
             textBoxFecha.Size = new Size(141, 31);
@@ -222,7 +233,7 @@
             // 
             // textBoxAerolinea
             // 
-            textBoxAerolinea.Location = new Point(1309, 395);
+            textBoxAerolinea.Location = new Point(1309, 440);
             textBoxAerolinea.Name = "textBoxAerolinea";
             textBoxAerolinea.ReadOnly = true;
             textBoxAerolinea.Size = new Size(141, 31);
@@ -230,7 +241,7 @@
             // 
             // textBoxCantidad
             // 
-            textBoxCantidad.Location = new Point(1309, 519);
+            textBoxCantidad.Location = new Point(1309, 564);
             textBoxCantidad.Name = "textBoxCantidad";
             textBoxCantidad.Size = new Size(106, 31);
             textBoxCantidad.TabIndex = 35;
@@ -238,7 +249,7 @@
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(1221, 221);
+            label3.Location = new Point(1221, 266);
             label3.Name = "label3";
             label3.Size = new Size(66, 25);
             label3.TabIndex = 37;
@@ -247,7 +258,7 @@
             // label4
             // 
             label4.AutoSize = true;
-            label4.Location = new Point(1221, 280);
+            label4.Location = new Point(1221, 325);
             label4.Name = "label4";
             label4.Size = new Size(73, 25);
             label4.TabIndex = 38;
@@ -256,7 +267,7 @@
             // label5
             // 
             label5.AutoSize = true;
-            label5.Location = new Point(1221, 342);
+            label5.Location = new Point(1221, 387);
             label5.Name = "label5";
             label5.Size = new Size(57, 25);
             label5.TabIndex = 39;
@@ -265,7 +276,7 @@
             // label6
             // 
             label6.AutoSize = true;
-            label6.Location = new Point(1221, 398);
+            label6.Location = new Point(1221, 443);
             label6.Name = "label6";
             label6.Size = new Size(86, 25);
             label6.TabIndex = 40;
@@ -274,7 +285,7 @@
             // label7
             // 
             label7.AutoSize = true;
-            label7.Location = new Point(1224, 519);
+            label7.Location = new Point(1224, 564);
             label7.Name = "label7";
             label7.Size = new Size(83, 25);
             label7.TabIndex = 41;
@@ -282,7 +293,7 @@
             // 
             // textBox1
             // 
-            textBox1.Location = new Point(1309, 459);
+            textBox1.Location = new Point(1309, 504);
             textBox1.Name = "textBox1";
             textBox1.ReadOnly = true;
             textBox1.Size = new Size(141, 31);
@@ -291,7 +302,7 @@
             // label8
             // 
             label8.AutoSize = true;
-            label8.Location = new Point(1224, 465);
+            label8.Location = new Point(1224, 510);
             label8.Name = "label8";
             label8.Size = new Size(59, 25);
             label8.TabIndex = 43;
@@ -300,17 +311,36 @@
             // label9
             // 
             label9.AutoSize = true;
-            label9.Location = new Point(1221, 166);
+            label9.Location = new Point(1221, 211);
             label9.Name = "label9";
             label9.Size = new Size(28, 25);
             label9.TabIndex = 44;
             label9.Text = "Id";
+            // 
+            // textBoxIdReserva
+            // 
+            textBoxIdReserva.Location = new Point(1309, 152);
+            textBoxIdReserva.Name = "textBoxIdReserva";
+            textBoxIdReserva.ReadOnly = true;
+            textBoxIdReserva.Size = new Size(106, 31);
+            textBoxIdReserva.TabIndex = 45;
+            // 
+            // label10
+            // 
+            label10.AutoSize = true;
+            label10.Location = new Point(1217, 158);
+            label10.Name = "label10";
+            label10.Size = new Size(93, 25);
+            label10.TabIndex = 46;
+            label10.Text = "Id Reserva";
             // 
             // FormReservasVuelos
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1476, 695);
+            Controls.Add(label10);
+            Controls.Add(textBoxIdReserva);
             Controls.Add(label9);
             Controls.Add(label8);
             Controls.Add(textBox1);
@@ -362,6 +392,8 @@
         private Label label7;
         private TextBox textBox1;
         private Label label8;
+        private Label label9;
+        private DataGridViewTextBoxColumn idReserva;
         private DataGridViewTextBoxColumn id;
         private DataGridViewTextBoxColumn Origen;
         private DataGridViewTextBoxColumn Destino;
@@ -370,6 +402,7 @@
         private DataGridViewTextBoxColumn Aerolinea;
         private DataGridViewTextBoxColumn Avion;
         private DataGridViewTextBoxColumn Cantidad;
-        private Label label9;
+        private TextBox textBoxIdReserva;
+        private Label label10;
     }
 }
