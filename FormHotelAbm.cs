@@ -130,9 +130,11 @@ namespace tpAgencia_Gpo_2
         private void buttonAgregar_Click(object sender, EventArgs e)
         {
             string ubicacion = comboBoxHospedaje.Text;
-
-
+            string nombre = textBoxNombre.Text;
             Ciudad ciudadHospedaje = agencia.GetCiudades().FirstOrDefault(ciudad => ciudad.nombre == ubicacion);
+            Hotel idHotel = agencia.getHoteles().FirstOrDefault(id => id == id);
+            ReservaHotel idMisReservas = agencia.getReservasHotel().FirstOrDefault(id => id == idMisReservas);
+            
 
 
             //string.IsNullOrEmpty(textBoxId.Text) Eliminar si el proyecto esta co,
@@ -148,14 +150,15 @@ namespace tpAgencia_Gpo_2
                     MessageBox.Show("La capacidad debe ser un número válido");
                 }
 
-                double costo;
-                if (!double.TryParse(textBoxCosto.Text, out costo))
+                float costo;
+                if (!float.TryParse(textBoxCosto.Text, out costo))
                 {
                     MessageBox.Show("El costo debe tener dos decimales");
                 }
+               
 
 
-                if (agencia.agregarHotel(ciudadHospedaje, capacidad, costo, textBoxNombre.Text))
+                if (agencia.agregarHotel(idHotel, ciudadHospedaje, capacidad, costo, idMisReservas))
                     MessageBox.Show("Hotel agregado exitosamente");
                 else
                     MessageBox.Show("Ocurrió un error al querer agregar un Hotel");

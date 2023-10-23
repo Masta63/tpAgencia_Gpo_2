@@ -35,7 +35,7 @@ namespace tpAgencia_Gpo_2
             this.nombre = nombre;
         }
 
-        public Hotel(int id, Ciudad ubicacion, int capacidad, double costo, string nombre)
+        public Hotel(int id,Ciudad ubicacion, int capacidad, double costo, string nombre)
         {
             this.id = id;
             this.ubicacion = ubicacion;

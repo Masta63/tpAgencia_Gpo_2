@@ -604,7 +604,7 @@ namespace tpAgencia_Gpo_2
 
         #region ABM Hotel
 
-        public int agregarHotel(int idHotel, Ciudad ubicacion, int capacidad, float costo, string nombre, int idMisReservas)
+        public int agregarHotel(int idHotel, Ciudad ubicacion, int capacidad, float costo, string nombre, ReservaHotel idMisReservas)
         {
             int resultadoQuery;
             int idNuevoHotel = -1;

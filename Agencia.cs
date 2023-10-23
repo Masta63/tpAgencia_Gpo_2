@@ -129,7 +129,7 @@ public class Agencia
         return listUsuarios.ToList();
     }
 
-    public bool agregarUsuarioDal(string Dni, string Nombre, string apellido, string Mail,string Password,bool EsADM, bool Bloqueado)
+    public bool agregarUsuarioDal(string Dni, string Nombre, string apellido, string Mail, string Password, bool EsADM, bool Bloqueado)
     {
         //comprobación para que no me agreguen usuarios con DNI duplicado
         bool esValido = true;
@@ -143,12 +143,12 @@ public class Agencia
         if (esValido)
         {
             int idNuevoUsuario;
-            idNuevoUsuario = DB.agregarUsuario(Dni, Nombre, apellido, Mail,Password, EsADM, Bloqueado);
+            idNuevoUsuario = DB.agregarUsuario(Dni, Nombre, apellido, Mail, Password, EsADM, Bloqueado);
             //compruebo que se pudo agregar a la base y se le asignó un ID
             if (idNuevoUsuario != -1)
             {
                 //Ahora sí lo agrego en la lista
-                Usuario nuevo = new Usuario(idNuevoUsuario, Dni, Nombre,apellido, Mail, Password, EsADM,Bloqueado);
+                Usuario nuevo = new Usuario(idNuevoUsuario, Dni, Nombre, apellido, Mail, Password, EsADM, Bloqueado);
                 listUsuarios.Add(nuevo);
                 return true;
             }
@@ -224,7 +224,7 @@ public class Agencia
     //modifico el creidto del usuario en ABM
     public bool modificarCreditoDal(int id, double monto)
     {
-        if (DB.modificarCreditoUsuario( id, monto)==1)
+        if (DB.modificarCreditoUsuario(id, monto) == 1)
         {
             return modificarCredito(id, monto);//reutilizo metodo anterior
         }
@@ -284,7 +284,7 @@ public class Agencia
         listUsuarios.Add(usuario);
         return true;
     }
-    
+
     //metodo del formRegistro de Usuario
     /*
     public bool agregarUsuario(string name, string apellido, string dni, string mail, string pass)
@@ -605,7 +605,7 @@ public class Agencia
 
     //INICIO METODOS DE HOTEL
 
-    public bool agregarHotel(int idHotel, Ciudad ubicacion, int capacidad, float costo, string nombre, int idMisReservas)
+    public bool agregarHotel(int idHotel, Ciudad ubicacion, int capacidad, float costo, string nombre, ReservaHotel idMisReservas)
     {
 
 
@@ -614,7 +614,7 @@ public class Agencia
         idNuevoHotel = DB.agregarHotel(idHotel, ubicacion, capacidad, costo, nombre, idMisReservas);
         if (idNuevoHotel != -1)
         {
-            Hotel nuevo = new Hotel(idHotel, ubicacion, capacidad, costo, nombre);
+            Hotel nuevo = new Hotel(idHotel,ubicacion, capacidad, costo, nombre);
             hoteles.Add(nuevo);
             return true;
         }
@@ -808,15 +808,5 @@ public class Agencia
         {
             return null;
         }
-    }
-
-    internal bool agregarHotel(Ciudad ciudadHospedaje, int capacidad, double costo, string text)
-    {
-        throw new NotImplementedException();
-    }
-
-    internal bool modificarHotel(int hotelSeleccionado, Ciudad? ciudadHospedaje1, int capacidad, double costo, string text)
-    {
-        throw new NotImplementedException();
     }
 }
