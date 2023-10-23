@@ -139,6 +139,9 @@ namespace tpAgencia_Gpo_2
 
                         switch (resultado)
                         {
+                            case "yaCompro":
+                                MessageBox.Show("Ya compraste este vuelo");
+                                break;
                             case "exito":
                                 Vuelo vueloSeleccionado = agencia.getVuelos().FirstOrDefault(v => v.id == vueloId);
 
