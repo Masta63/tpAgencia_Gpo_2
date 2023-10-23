@@ -105,6 +105,7 @@ public class Agencia
         {
             codigoReturn = "OK";
             this.usuarioActual = usuarioSeleccionados;
+            this.usuarioActual.listMisReservasHoteles = DB.traerMisReservasHotel(usuarioSeleccionados.id);
         }
         else
         {

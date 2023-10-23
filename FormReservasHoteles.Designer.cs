@@ -31,11 +31,14 @@
             label1 = new Label();
             label2 = new Label();
             dataGridView1 = new DataGridView();
+            Volver_desde_usuario = new Button();
+            idReservaHotel = new DataGridViewTextBoxColumn();
             Ubicacion = new DataGridViewTextBoxColumn();
             Costo = new DataGridViewTextBoxColumn();
             Nombre = new DataGridViewTextBoxColumn();
             Capacidad = new DataGridViewTextBoxColumn();
-            Volver_desde_usuario = new Button();
+            fechaDesde = new DataGridViewTextBoxColumn();
+            fechaHasta = new DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
             // 
@@ -64,14 +67,30 @@
             // dataGridView1
             // 
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { Ubicacion, Costo, Nombre, Capacidad });
+            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { idReservaHotel, Ubicacion, Costo, Nombre, Capacidad, fechaDesde, fechaHasta });
             dataGridView1.Location = new Point(52, 119);
-            dataGridView1.Margin = new Padding(2, 2, 2, 2);
+            dataGridView1.Margin = new Padding(2);
             dataGridView1.Name = "dataGridView1";
             dataGridView1.RowHeadersWidth = 62;
             dataGridView1.RowTemplate.Height = 33;
             dataGridView1.Size = new Size(786, 175);
             dataGridView1.TabIndex = 2;
+            // 
+            // Volver_desde_usuario
+            // 
+            Volver_desde_usuario.BackColor = Color.FromArgb(192, 255, 255);
+            Volver_desde_usuario.Location = new Point(52, 322);
+            Volver_desde_usuario.Name = "Volver_desde_usuario";
+            Volver_desde_usuario.Size = new Size(75, 23);
+            Volver_desde_usuario.TabIndex = 27;
+            Volver_desde_usuario.Text = "Volver";
+            Volver_desde_usuario.UseVisualStyleBackColor = false;
+            Volver_desde_usuario.Click += Volver_desde_usuario_Click;
+            // 
+            // idReservaHotel
+            // 
+            idReservaHotel.HeaderText = "id";
+            idReservaHotel.Name = "idReservaHotel";
             // 
             // Ubicacion
             // 
@@ -101,16 +120,15 @@
             Capacidad.Name = "Capacidad";
             Capacidad.Width = 150;
             // 
-            // Volver_desde_usuario
+            // fechaDesde
             // 
-            Volver_desde_usuario.BackColor = Color.FromArgb(192, 255, 255);
-            Volver_desde_usuario.Location = new Point(52, 322);
-            Volver_desde_usuario.Name = "Volver_desde_usuario";
-            Volver_desde_usuario.Size = new Size(75, 23);
-            Volver_desde_usuario.TabIndex = 27;
-            Volver_desde_usuario.Text = "Volver";
-            Volver_desde_usuario.UseVisualStyleBackColor = false;
-            Volver_desde_usuario.Click += Volver_desde_usuario_Click;
+            fechaDesde.HeaderText = "fechaDesde";
+            fechaDesde.Name = "fechaDesde";
+            // 
+            // fechaHasta
+            // 
+            fechaHasta.HeaderText = "fechaHasta";
+            fechaHasta.Name = "fechaHasta";
             // 
             // FormReservasHoteles
             // 
@@ -121,7 +139,7 @@
             Controls.Add(dataGridView1);
             Controls.Add(label2);
             Controls.Add(label1);
-            Margin = new Padding(2, 2, 2, 2);
+            Margin = new Padding(2);
             Name = "FormReservasHoteles";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "FormReservasHoteles";
@@ -136,9 +154,12 @@
         private Label label2;
         private DataGridView dataGridView1;
         private Button Volver_desde_usuario;
+        private DataGridViewTextBoxColumn idReservaHotel;
         private DataGridViewTextBoxColumn Ubicacion;
         private DataGridViewTextBoxColumn Costo;
         private DataGridViewTextBoxColumn Nombre;
         private DataGridViewTextBoxColumn Capacidad;
+        private DataGridViewTextBoxColumn fechaDesde;
+        private DataGridViewTextBoxColumn fechaHasta;
     }
 }
