@@ -41,33 +41,18 @@ namespace tpAgencia_Gpo_2
 
             if (usuarioActual != null)
             {
-                List<Hotel> hotelesFuturos = agencia.misReservasHoteles(usuarioActual);
-
-                var hotelesIguales = hotelesFuturos.GroupBy(v => v.id).Select(group => new
+                foreach (var reservas in agencia.getUsuarioActual().listMisReservasHoteles)
                 {
-                    Hotel = group.Key,
-                    Cantidad = group.Count(),
-                    MontoTotal = group.Sum(v => v.costo)
-                });
+                    TimeSpan ts = reservas.fechaHasta.Date.Subtract(reservas.fechaDesde.Date);
+                    double costo = ((ts.Days + 1) * reservas.miHotel.costo);
 
-                foreach (var hotelesAgrupado in hotelesIguales)
-                {
-                    Hotel hotel = hotelesFuturos.FirstOrDefault(v => v.id == hotelesAgrupado.Hotel);
-                    if (hotel != null)
-                    {
-
-                        dataGridView1.Rows.Add(
-                            hotel.ubicacion.nombre,
-                            hotelesAgrupado.MontoTotal,
-                            hotel.nombre, hotel.capacidad, hotelesAgrupado.Cantidad);
-                    }
-
+                    dataGridView1.Rows.Add(
+                        reservas.idReservaHotel,
+                        reservas.miHotel.ubicacion.nombre,
+                        costo,
+                       reservas.miHotel.nombre, reservas.miHotel.capacidad, reservas.fechaDesde, reservas.fechaHasta);
                 }
-
-
-
             }
-
         }
 
         private void Volver_desde_usuario_Click(object sender, EventArgs e)
@@ -85,6 +70,11 @@ namespace tpAgencia_Gpo_2
                 MenuAgencia.MdiParent = form1;
                 MenuAgencia.Show();
             }
+        }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
         }
     }
 }

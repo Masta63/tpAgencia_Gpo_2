@@ -759,6 +759,113 @@ namespace tpAgencia_Gpo_2
             return cantidadComprada;
         }
         #region reservaHotel
+
+        public Usuario? traerUsuarioPorId(Int32 idUsuario)
+        {
+            Usuario? aux = null;
+            //string con la consulta que quiero realizar
+            string queryString = "SELECT * from Usuario where idUsuario =" + idUsuario;
+            //creo conexion con la base de datos el using al finalizar el metodo utiliza el dispose y cierra la conexion para ahorrar recursos
+            using (SqlConnection conex = new SqlConnection(connectionStr))//OBJETO<--1
+            {
+                SqlCommand command = new SqlCommand(queryString, conex);//OBJETO<--2
+                try
+                {
+
+                    conex.Open();//metodo que ejecuta la conexion con la base de datos
+                    //OBJETO<--3
+                    SqlDataReader reader = command.ExecuteReader();// creo el objeto para leer la base de datos y ejecutar el comando
+                    while (reader.Read())//metodo devuelve true mientras siga leyendo una fila sigue el bucle
+                    {
+                        //leo la fila, la carga en la variable aux y la agrega a mis usuarios para trabajar en tiempo de ejecucion 
+                        aux = new Usuario(reader.GetInt32(0), reader.GetInt32(1), reader.GetString(2), reader.GetString(3), reader.GetString(4), reader.GetString(5), reader.GetInt32(6), reader.GetBoolean(7), reader.GetDouble(8), reader.GetBoolean(9));
+
+                    }
+                    reader.Close();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+            }
+            return aux;
+        }
+
+        public Ciudad? traerCiudadPorId(Int32 idCiudad)
+        {
+            Ciudad? aux = null;
+            //string con la consulta que quiero realizar
+            string queryString = "SELECT * FROM [sistema].[dbo].[Ciudad] where idCiudad =" + idCiudad;
+            //creo conexion con la base de datos el using al finalizar el metodo utiliza el dispose y cierra la conexion para ahorrar recursos
+            using (SqlConnection conex = new SqlConnection(connectionStr))//OBJETO<--1
+            {
+                SqlCommand command = new SqlCommand(queryString, conex);//OBJETO<--2
+                try
+                {
+
+                    conex.Open();//metodo que ejecuta la conexion con la base de datos
+                    //OBJETO<--3
+                    SqlDataReader reader = command.ExecuteReader();// creo el objeto para leer la base de datos y ejecutar el comando
+                    while (reader.Read())//metodo devuelve true mientras siga leyendo una fila sigue el bucle
+                    {
+                        //leo la fila, la carga en la variable aux y la agrega a mis usuarios para trabajar en tiempo de ejecucion 
+                        aux = new Ciudad(reader.GetInt32(0), reader.GetString(1));
+
+                    }
+                    reader.Close();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+            }
+            return aux;
+        }
+
+        public List<ReservaHotel> traerMisReservasHotel(Int32 idUsuario)
+        {
+            List<ReservaHotel> reservaHotels = new List<ReservaHotel>();
+
+            //string con la consulta que quiero realizar
+            string queryString = "SELECT *  FROM [sistema].[dbo].[ReservaHotel] as re inner join [sistema].[dbo].[Usuario]  as s on re.idUsuario = s.idUsuario inner join [sistema].[dbo].[Hotel] as h on re.idHotel = h.idHotel  where s.idUsuario =" + idUsuario;
+
+
+            //creo conexion con la base de datos el using al finalizar el metodo utiliza el dispose y cierra la conexion para ahorrar recursos
+            using (SqlConnection conex = new SqlConnection(connectionStr))//OBJETO<--1
+            {
+
+                SqlCommand command = new SqlCommand(queryString, conex);//OBJETO<--2
+                try
+                {
+
+                    conex.Open();//metodo que ejecuta la conexion con la base de datos
+
+                    //OBJETO<--3
+                    SqlDataReader reader = command.ExecuteReader();// creo el objeto para leer la base de datos y ejecutar el comando
+                    ReservaHotel aux;
+
+                    while (reader.Read())//metodo devuelve true mientras siga leyendo una fila sigue el bucle
+                    {
+                        Ciudad ciudad = traerCiudadPorId(reader.GetInt32(17));
+                        Hotel hotel = new Hotel(reader.GetInt32(5), ciudad, reader.GetInt32(18), reader.GetDouble(19), reader.GetString(20));
+                        Usuario usuario = this.traerUsuarioPorId(reader.GetInt32(1));
+                        //leo la fila, la carga en la variable aux y la agrega a mis usuarios para trabajar en tiempo de ejecucion 
+                        aux = new ReservaHotel(hotel,usuario,reader.GetDateTime(2), reader.GetDateTime(3), reader.GetDouble(4));
+                        aux.idReservaHotel = reader.GetInt32(0);
+                        reservaHotels.Add(aux);
+                    }
+                    reader.Close();
+
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+            }
+            return reservaHotels;
+
+        }
+
         public List<ReservaHotel> traerReservasPorHotel(Hotel hotel)
         {
             List<ReservaHotel> reservasPorHotel = new List<ReservaHotel>();
