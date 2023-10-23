@@ -8,6 +8,9 @@ using System.Data;
 using System.Data.SqlClient;//debemos agregar para poder usar los metodos de conexion dy reader
 using System.Transactions;
 using System.Data.Common;
+using static System.ComponentModel.Design.ObjectSelectorEditor;
+using System.Reflection;
+using System.Runtime.Intrinsics.X86;
 
 namespace tpAgencia_Gpo_2
 {
@@ -489,7 +492,7 @@ namespace tpAgencia_Gpo_2
         public int agregarReservaVuelo(int idVuelo, double costo, int idUsuario)
         {
             int resultadoQuery;
-            int idNuevoVuelo = -1;
+            int idNuevaReservaVuelo = -1;
             string queryString = "INSERT INTO [dbo].[ReservaVuelo]([idVuelo], [idUsuario], [pagado]) VALUES (@idVuelo, @idUsuario, @costo);";
 
             using (SqlConnection conex = new SqlConnection(connectionStr))
@@ -509,11 +512,11 @@ namespace tpAgencia_Gpo_2
                     conex.Open();
                     resultadoQuery = cmd.ExecuteNonQuery();
 
-                    string ConsultaId = "SELECT MAX([idVuelo]) FROM [dbo].[Vuelo]";
+                    string ConsultaId = "SELECT MAX([idReservaVuelo]) FROM [dbo].[ReservaVuelo]";
                     cmd = new SqlCommand(ConsultaId, conex);
                     SqlDataReader reader = cmd.ExecuteReader();
                     reader.Read();
-                    idNuevoVuelo = reader.GetInt32(0);
+                    idNuevaReservaVuelo = reader.GetInt32(0);
                     reader.Close();
 
                 }
@@ -522,10 +525,195 @@ namespace tpAgencia_Gpo_2
                     Console.WriteLine(ex.Message);
                     return -1;
                 }
-                return idNuevoVuelo;
+                return idNuevaReservaVuelo;
             }
 
 
+        }
+        public bool usuarioHaCompradoVuelo(int idUsuario, int idVuelo)
+        {
+            using (SqlConnection conex = new SqlConnection(connectionStr))
+            {
+                string queryString = "SELECT COUNT(*) FROM [dbo].[Vuelo_Usuario] WHERE [idUsuario] = @idUsuario AND [idVuelo] = @idVuelo;";
+                SqlCommand cmd = new SqlCommand(queryString, conex);
+                cmd.Parameters.Add(new SqlParameter("@idUsuario", SqlDbType.Int)).Value = idUsuario;
+                cmd.Parameters.Add(new SqlParameter("@idVuelo", SqlDbType.Int)).Value = idVuelo;
+
+                conex.Open();
+                int count = (int)cmd.ExecuteScalar();
+
+                // Si count es mayor que 0, significa que el usuario ya compró el vuelo
+                return count > 0;
+            }
+        }
+        public int agregarVueloAUsuario(int idVuelo, int idUsuario, int cantidad)
+        {
+            int resultadoQuery;
+            int idNuevaReservaVuelo = -1;
+            string queryString = "INSERT INTO [dbo].[Vuelo_Usuario]([idVuelo],[idUsuario],[cantidad]) VALUES (@idVuelo, @idUsuario, @cantidad);";
+
+            using (SqlConnection conex = new SqlConnection(connectionStr))
+            {
+                SqlCommand cmd = new SqlCommand(queryString, conex);
+                cmd.Parameters.Add(new SqlParameter("@idVuelo", SqlDbType.Int));
+                cmd.Parameters.Add(new SqlParameter("@idUsuario", SqlDbType.Int));
+                cmd.Parameters.Add(new SqlParameter("@cantidad", SqlDbType.Int));
+                cmd.Parameters["@idVuelo"].Value = idVuelo;
+                cmd.Parameters["@idUsuario"].Value = idUsuario;
+                cmd.Parameters["@cantidad"].Value = cantidad;
+               
+                try
+                {
+                    conex.Open();
+                    resultadoQuery = cmd.ExecuteNonQuery();
+
+                    string ConsultaId = "SELECT MAX([idUsuario]), MAX([idVuelo]) FROM [dbo].[Vuelo_Usuario]";
+                    cmd = new SqlCommand(ConsultaId, conex);
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    reader.Read();
+                    idNuevaReservaVuelo = reader.GetInt32(0);
+                    reader.Close();
+
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    return -1;
+                }
+                return idNuevaReservaVuelo;
+            }
+
+        }
+
+        public int modificarCapacidadVuelo(int idVuelo, int capacidad)
+        {
+            string connectionString = Properties.Resources.ConnectionStr;
+            string queryString = "UPDATE [dbo].[Vuelo] SET capacidad=@capacidad WHERE idVuelo=@idVuelo;";
+            using (SqlConnection conex = new SqlConnection(connectionString))
+            {
+                SqlCommand cmd = new SqlCommand(queryString, conex);
+                cmd.Parameters.Add(new SqlParameter("@idVuelo", SqlDbType.Int));
+                cmd.Parameters.Add(new SqlParameter("@capacidad", SqlDbType.Int));
+
+                cmd.Parameters["@idVuelo"].Value = idVuelo;
+                cmd.Parameters["@capacidad"].Value = capacidad;
+
+                try
+                {
+                    conex.Open();
+                    return cmd.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    return 0;
+                }
+            }
+        }
+        public Vuelo ObtenerVueloPorID(int vueloID)
+        {
+            Vuelo vuelo = null;
+            string queryString = "SELECT * FROM [sistema].[dbo].[Vuelo] WHERE id = " + vueloID;
+
+            using (SqlConnection conex = new SqlConnection(connectionStr))
+            {
+                SqlCommand command = new SqlCommand(queryString, conex);
+                try
+                {
+                    conex.Open();
+                    SqlDataReader reader = command.ExecuteReader();
+
+                    if (reader.Read())
+                    {
+                        Ciudad origen = new Ciudad(reader.GetInt32(1), reader.GetString(9));
+                        Ciudad destino = new Ciudad(reader.GetInt32(2), reader.GetString(10));
+                        vuelo = new Vuelo(
+                            reader.GetInt32(0), origen, destino, reader.GetInt32(3), reader.GetDouble(5), reader.GetDateTime(6), reader.GetString(7), reader.GetString(8));
+                        
+                    }
+
+                    reader.Close();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+            }
+
+            return vuelo;
+        }
+
+        //public List<ReservaVuelo> reservasPorVuelo (Usuario usuario)
+        //{
+        //    List<Vuelo> reservas = new List<Vuelo>();
+        //    string queryString = "SELECT V.id, V.origen, V.destino, V.costo, V.fecha, V.aerolinea, V.avion " +
+        //               "FROM [sistema].[dbo].[Vuelo_Usuario] as VU " +
+        //               "INNER JOIN [sistema].[dbo].[Vuelo] as V ON VU.idVuelo = V.id " +
+        //               "WHERE VU.idUsuario = " + usuario.id;
+        //    using (SqlConnection conex = new SqlConnection(connectionStr))
+        //    {
+        //        SqlCommand command = new SqlCommand(queryString, conex);
+        //        try
+        //        {
+        //            conex.Open();
+        //            SqlDataReader reader = command.ExecuteReader();
+
+        //            Ciudad origen = new Ciudad(reader.GetInt32(1), reader.GetString(9));
+        //            Ciudad destino = new Ciudad(reader.GetInt32(2), reader.GetString(10));
+        //            while (reader.Read())
+        //            {
+        //                Vuelo vuelo = new Vuelo(
+        //            reader.GetInt32(0),  // ID del vuelo
+        //            reader.GetInt32(1), // Origen
+        //            reader.GetInt32(2), // Destino
+        //            reader.GetDouble(3), // Costo
+        //            reader.GetDateTime(4), // Fecha
+        //            reader.GetString(5), // Aerolínea
+        //            reader.GetString(6))
+        //                reservas.Add(reserva);
+        //            }
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            Console.WriteLine(ex.Message);
+        //        }
+        //    }
+        //    return reservas;
+
+        //}
+        public int ObtenerCantidadComprada(int idVuelo, int idUsuario)
+        {
+            int cantidadComprada = 0;
+
+            using (SqlConnection conex = new SqlConnection(connectionStr))
+            {
+                string queryString = "SELECT [cantidad] FROM [dbo].[Vuelo_Usuario] WHERE [idvuelo] = @idVuelo AND [idusuario] = @idUsuario";
+                SqlCommand cmd = new SqlCommand(queryString, conex);
+                cmd.Parameters.Add(new SqlParameter("@idReserva", SqlDbType.Int));
+                cmd.Parameters.Add(new SqlParameter("@idUsuario", SqlDbType.Int));
+                cmd.Parameters["@idReserva"].Value = idVuelo;
+                cmd.Parameters["@idUsuario"].Value = idUsuario;
+
+                try
+                {
+                    conex.Open();
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    if (reader.Read())
+                    {
+                        cantidadComprada = reader.GetInt32(reader.GetOrdinal("cantidad"));
+                    }
+
+                    reader.Close();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                   
+                }
+            }
+
+            return cantidadComprada;
         }
         #region reservaHotel
         public List<ReservaHotel> traerReservasPorHotel(Hotel hotel)

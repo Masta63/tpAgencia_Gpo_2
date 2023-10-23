@@ -570,6 +570,10 @@ public class Agencia
 
     public string comprarVuelo(int vueloId, Usuario usuarioActual, int cantidad)
     {
+        if (DB.usuarioHaCompradoVuelo(usuarioActual.id, vueloId))
+        {
+            return "yaCompro";
+        }
         Vuelo vuelo = vuelos.FirstOrDefault(v => v.id == vueloId);
 
         if (vuelo != null && cantidad > 0 && cantidad <= vuelo.capacidad - vuelo.vendido)
@@ -590,18 +594,18 @@ public class Agencia
 
                 if (reservaId != -1)
                 {
+                    DB.agregarVueloAUsuario(reserva.miVuelo.id, reserva.miUsuario.id, cantidad);
+                    vuelo.capacidad = vuelo.capacidad - cantidad;
+                    DB.modificarCapacidadVuelo(reserva.miVuelo.id, vuelo.capacidad);
 
-                    usuarioActual.agregarReservaVuelo(reserva);
-                    usuarioActual.agregarVueloTomado(vuelo);
-                    vuelo.agregarReservaAlVuelo(reserva);
-
-
+                    usuarioActual.credito = usuarioActual.credito - reserva.pagado;
+                    DB.modificarCreditoUsuario(reserva.miUsuario.id, usuarioActual.credito);
 
                     return "exito";
                 }
                 else
                 {
-                    // Maneja el caso en que la inserción en la base de datos falle.
+                    
                     return "error";
                 }
             }
@@ -623,18 +627,16 @@ public class Agencia
     {
         DateTime fechaActual = DateTime.Now;
         List<Vuelo> vuelosReservados = new List<Vuelo>();
+       // List<ReservaVuelo> reservasUsuario = DB.reservasPorVuelo(usuario);
+      
+        
+        //foreach (ReservaVuelo reserva in reservasUsuarioFiltradas)
+        //{
+        //    vuelosReservados.Add(reserva.miVuelo);
+        //}
 
-        foreach (ReservaVuelo reserva in usuario.listMisReservasVuelo)
-        {
-
-            vuelosReservados.Add(reserva.miVuelo);
-
-
-
-        }
         return vuelosReservados;
     }
-
     //METODO DE RESERVA DE HOTEL
     public List<Hotel> misReservasHoteles(Usuario usuario)
     {

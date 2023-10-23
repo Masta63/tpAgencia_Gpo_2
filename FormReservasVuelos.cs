@@ -185,7 +185,7 @@ namespace tpAgencia_Gpo_2
                 }
                 catch (FormatException)
                 {
-                    MessageBox.Show("Error al querer convertir los datos");
+                    MessageBox.Show("Error ");
                 }
             }
             else
