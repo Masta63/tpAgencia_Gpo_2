@@ -1030,15 +1030,17 @@ namespace tpAgencia_Gpo_2
         {
             int resultadoQuery;
             int idNuevaReservaHotel = -1;
-            string queryString = "INSERT INTO [dbo].[Hotel_Usuario]([idUsuario],[idHotel]) VALUES (@idUsuario, @idHotel);";
+            string queryString = "INSERT INTO [dbo].[Hotel_Usuario]([idUsuario],[idHotel],[cantidad]) VALUES (@idUsuario, @idHotel, @cantidad);";
 
             using (SqlConnection conex = new SqlConnection(connectionStr))
             {
                 SqlCommand cmd = new SqlCommand(queryString, conex);
                 cmd.Parameters.Add(new SqlParameter("@idUsuario", SqlDbType.Int));
                 cmd.Parameters.Add(new SqlParameter("@idHotel", SqlDbType.Int));
+                cmd.Parameters.Add(new SqlParameter("@cantidad", SqlDbType.Int));
                 cmd.Parameters["@idUsuario"].Value = idUsuario;
                 cmd.Parameters["@idHotel"].Value = idHotel;
+                cmd.Parameters["@cantidad"].Value = 1;
 
                 try
                 {
@@ -1063,20 +1065,57 @@ namespace tpAgencia_Gpo_2
 
         }
 
-
-
-        public int modificarCapacidadHotel(Int32 idHotel, int capacidad)
+        public int traerCantidadDeUsuarioHotel(Int32 idUsuario, Int32 idHotel)
         {
+            Int32 cantidad = 0;
+            //string con la consulta que quiero realizar
+            string queryString = "SELECT * FROM [sistema].[dbo].[Hotel_Usuario] where idHotel=" + idHotel + " and idUsuario=" + idUsuario
+;
+            //creo conexion con la base de datos el using al finalizar el metodo utiliza el dispose y cierra la conexion para ahorrar recursos
+            using (SqlConnection conex = new SqlConnection(connectionStr))//OBJETO<--1
+            {
+                SqlCommand command = new SqlCommand(queryString, conex);//OBJETO<--2
+                try
+                {
+
+                    conex.Open();//metodo que ejecuta la conexion con la base de datos
+                    //OBJETO<--3
+                    SqlDataReader reader = command.ExecuteReader();// creo el objeto para leer la base de datos y ejecutar el comando
+                    while (reader.Read())//metodo devuelve true mientras siga leyendo una fila sigue el bucle
+                    {
+                        //leo la fila, la carga en la variable aux y la agrega a mis usuarios para trabajar en tiempo de ejecucion 
+                        cantidad = reader.GetInt32(2);
+                    }
+                    reader.Close();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+            }
+            return cantidad;
+        }
+
+
+        public int modificarCantidadDeVisitantes(Int32 idHotel,Int32 idUsuario ,int cantidad)
+        {
+            Int32 cantidadBase = this.traerCantidadDeUsuarioHotel(idUsuario, idHotel);
+            Int32 cantidadTotal = cantidadBase + cantidad;
+
+
+
             string connectionString = Properties.Resources.ConnectionStr;
-            string queryString = "UPDATE [dbo].[Hotel] SET capacidad=@capacidad WHERE idHotel=@idHotel;";
+            string queryString = "UPDATE [dbo].[Hotel_Usuario] SET cantidad=@cantidad WHERE idHotel=@idHotel and idUsuario =@idUsuario;";
             using (SqlConnection conex = new SqlConnection(connectionString))
             {
                 SqlCommand cmd = new SqlCommand(queryString, conex);
                 cmd.Parameters.Add(new SqlParameter("@idHotel", SqlDbType.Int));
-                cmd.Parameters.Add(new SqlParameter("@capacidad", SqlDbType.Int));
+                cmd.Parameters.Add(new SqlParameter("@idUsuario", SqlDbType.Int));
+                cmd.Parameters.Add(new SqlParameter("@cantidad", SqlDbType.Int));
 
                 cmd.Parameters["@idHotel"].Value = idHotel;
-                cmd.Parameters["@capacidad"].Value = capacidad;
+                cmd.Parameters["@idUsuario"].Value = idUsuario;
+                cmd.Parameters["@cantidad"].Value = cantidadTotal;
 
                 try
                 {

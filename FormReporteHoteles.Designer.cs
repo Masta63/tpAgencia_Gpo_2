@@ -36,13 +36,6 @@
             label3 = new Label();
             label4 = new Label();
             dataGridViewHotel = new DataGridView();
-            id = new DataGridViewTextBoxColumn();
-            ubicacion = new DataGridViewTextBoxColumn();
-            capacidad = new DataGridViewTextBoxColumn();
-            costo = new DataGridViewTextBoxColumn();
-            nombre = new DataGridViewTextBoxColumn();
-            Fdesde = new DataGridViewTextBoxColumn();
-            FHasta = new DataGridViewTextBoxColumn();
             boxCiudades = new ComboBox();
             textCantPer = new TextBox();
             buttonComprar = new Button();
@@ -53,6 +46,13 @@
             labelNombreHotel = new Label();
             TextMonto = new TextBox();
             label5 = new Label();
+            id = new DataGridViewTextBoxColumn();
+            ubicacion = new DataGridViewTextBoxColumn();
+            capacidad = new DataGridViewTextBoxColumn();
+            costo = new DataGridViewTextBoxColumn();
+            nombre = new DataGridViewTextBoxColumn();
+            Fdesde = new DataGridViewTextBoxColumn();
+            FHasta = new DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)dataGridViewHotel).BeginInit();
             SuspendLayout();
             // 
@@ -127,41 +127,6 @@
             dataGridViewHotel.Size = new Size(701, 150);
             dataGridViewHotel.TabIndex = 9;
             dataGridViewHotel.CellContentClick += dataGridView1_CellContentClick;
-            // 
-            // id
-            // 
-            id.HeaderText = "id";
-            id.Name = "id";
-            // 
-            // ubicacion
-            // 
-            ubicacion.HeaderText = "ubicacion";
-            ubicacion.Name = "ubicacion";
-            // 
-            // capacidad
-            // 
-            capacidad.HeaderText = "capacidad";
-            capacidad.Name = "capacidad";
-            // 
-            // costo
-            // 
-            costo.HeaderText = "costo";
-            costo.Name = "costo";
-            // 
-            // nombre
-            // 
-            nombre.HeaderText = "nombre";
-            nombre.Name = "nombre";
-            // 
-            // Fdesde
-            // 
-            Fdesde.HeaderText = "FechaDesde";
-            Fdesde.Name = "Fdesde";
-            // 
-            // FHasta
-            // 
-            FHasta.HeaderText = "FechaHasta";
-            FHasta.Name = "FHasta";
             // 
             // boxCiudades
             // 
@@ -251,6 +216,41 @@
             label5.TabIndex = 39;
             label5.Text = "Monto";
             // 
+            // id
+            // 
+            id.HeaderText = "id";
+            id.Name = "id";
+            // 
+            // ubicacion
+            // 
+            ubicacion.HeaderText = "ubicacion";
+            ubicacion.Name = "ubicacion";
+            // 
+            // capacidad
+            // 
+            capacidad.HeaderText = "disponibilidad";
+            capacidad.Name = "capacidad";
+            // 
+            // costo
+            // 
+            costo.HeaderText = "costo";
+            costo.Name = "costo";
+            // 
+            // nombre
+            // 
+            nombre.HeaderText = "nombre";
+            nombre.Name = "nombre";
+            // 
+            // Fdesde
+            // 
+            Fdesde.HeaderText = "FechaDesde";
+            Fdesde.Name = "Fdesde";
+            // 
+            // FHasta
+            // 
+            FHasta.HeaderText = "FechaHasta";
+            FHasta.Name = "FHasta";
+            // 
             // FormReporteHoteles
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -295,13 +295,6 @@
         private ComboBox boxCiudades;
         private TextBox textCantPer;
         private Button buttonComprar;
-        private DataGridViewTextBoxColumn id;
-        private DataGridViewTextBoxColumn ubicacion;
-        private DataGridViewTextBoxColumn capacidad;
-        private DataGridViewTextBoxColumn costo;
-        private DataGridViewTextBoxColumn nombre;
-        private DataGridViewTextBoxColumn Fdesde;
-        private DataGridViewTextBoxColumn FHasta;
         private Button Volver_desde_usuario;
         private Label tituloreporte;
         private Label labelTituloComprar;
@@ -309,5 +302,12 @@
         private Label labelNombreHotel;
         private TextBox TextMonto;
         private Label label5;
+        private DataGridViewTextBoxColumn id;
+        private DataGridViewTextBoxColumn ubicacion;
+        private DataGridViewTextBoxColumn capacidad;
+        private DataGridViewTextBoxColumn costo;
+        private DataGridViewTextBoxColumn nombre;
+        private DataGridViewTextBoxColumn Fdesde;
+        private DataGridViewTextBoxColumn FHasta;
     }
 }
