@@ -607,9 +607,6 @@ public class Agencia
 
     public bool agregarHotel (int idHotel,Ciudad ubicacion, int capacidad, float costo, string nombre)
     {
-
-
-        int cant = hoteles.OrderByDescending(x => x.id).FirstOrDefault().id + 1;
         int idNuevoHotel;
         idNuevoHotel = DB.agregarHotel(idHotel, ubicacion, capacidad, costo, nombre);
         if (idNuevoHotel != -1)

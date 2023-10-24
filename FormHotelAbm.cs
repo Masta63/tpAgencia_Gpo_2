@@ -131,6 +131,7 @@ namespace tpAgencia_Gpo_2
         {
             string ubicacion = comboBoxHospedaje.Text;
             string nombre = textBoxNombre.Text;
+            int id = Convert.ToInt32(textBoxId.Text);
             Ciudad ciudadHospedaje = agencia.GetCiudades().FirstOrDefault(ciudad => ciudad.nombre == ubicacion);
 
 
@@ -155,18 +156,15 @@ namespace tpAgencia_Gpo_2
                     MessageBox.Show("El costo debe tener dos decimales");
                 }
 
-                int idHotel;
-                if (!int.TryParse(textBoxId.Text, out idHotel))
-                {
-                    MessageBox.Show("El id debe ser un entero");
-                }
-             
+               // var idHotel = Convert.ToInt32(id);
 
 
 
-                if (agencia.agregarHotel(idHotel, ciudadHospedaje, capacidad, costo, nombre))
+
+
+                if (agencia.agregarHotel(id, ciudadHospedaje, capacidad, costo, nombre))
                     MessageBox.Show("Hotel agregado exitosamente");
-               else
+                else
                     MessageBox.Show("Ocurrió un error al querer agregar un Hotel");
             }
         }
