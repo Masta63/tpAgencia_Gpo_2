@@ -132,9 +132,8 @@ namespace tpAgencia_Gpo_2
             string ubicacion = comboBoxHospedaje.Text;
             string nombre = textBoxNombre.Text;
             Ciudad ciudadHospedaje = agencia.GetCiudades().FirstOrDefault(ciudad => ciudad.nombre == ubicacion);
-            Hotel idHotel = agencia.getHoteles().FirstOrDefault(id => id == id);
-            ReservaHotel idMisReservas = agencia.getReservasHotel().FirstOrDefault(id => id == idMisReservas);
-            
+
+
 
 
             //string.IsNullOrEmpty(textBoxId.Text) Eliminar si el proyecto esta co,
@@ -155,12 +154,19 @@ namespace tpAgencia_Gpo_2
                 {
                     MessageBox.Show("El costo debe tener dos decimales");
                 }
-               
+
+                int idHotel;
+                if (!int.TryParse(textBoxId.Text, out idHotel))
+                {
+                    MessageBox.Show("El id debe ser un entero");
+                }
+             
 
 
-                if (agencia.agregarHotel(idHotel, ciudadHospedaje, capacidad, costo, idMisReservas))
+
+                if (agencia.agregarHotel(idHotel, ciudadHospedaje, capacidad, costo, nombre))
                     MessageBox.Show("Hotel agregado exitosamente");
-                else
+               else
                     MessageBox.Show("Ocurrió un error al querer agregar un Hotel");
             }
         }
@@ -175,11 +181,12 @@ namespace tpAgencia_Gpo_2
                     var ubicacion1 = comboBoxHospedaje.Text;
                     Ciudad ciudadHospedaje1 = agencia.GetCiudades().FirstOrDefault(ciudad => ciudad.nombre == ubicacion1);
                     int capacidad = int.Parse(textBoxCapacidad.Text);
-                    double costo = double.Parse(textBoxCosto.Text);
-                    int id = int.Parse(textBoxId.Text);
+                    float costo = float.Parse(textBoxCosto.Text);
+                    //int id = int.Parse(textBoxId.Text);
+                    string nombre = textBoxNombre.Text;
 
 
-                    if (agencia.modificarHotel(hotelSeleccionado, ciudadHospedaje1, capacidad, costo, textBoxNombre.Text))
+                    if (agencia.modificarHotel(hotelSeleccionado, ciudadHospedaje1, capacidad, costo, nombre))
                     {
                         MessageBox.Show("Datos del hotel modificado exitosamente");
                     }

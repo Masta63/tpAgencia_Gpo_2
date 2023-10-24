@@ -605,16 +605,16 @@ public class Agencia
 
     //INICIO METODOS DE HOTEL
 
-    public bool agregarHotel(int idHotel, Ciudad ubicacion, int capacidad, float costo, string nombre, ReservaHotel idMisReservas)
+    public bool agregarHotel (int idHotel,Ciudad ubicacion, int capacidad, float costo, string nombre)
     {
 
 
         int cant = hoteles.OrderByDescending(x => x.id).FirstOrDefault().id + 1;
         int idNuevoHotel;
-        idNuevoHotel = DB.agregarHotel(idHotel, ubicacion, capacidad, costo, nombre, idMisReservas);
+        idNuevoHotel = DB.agregarHotel(idHotel, ubicacion, capacidad, costo, nombre);
         if (idNuevoHotel != -1)
         {
-            Hotel nuevo = new Hotel(idHotel,ubicacion, capacidad, costo, nombre);
+            Hotel nuevo = new Hotel (idHotel, ubicacion, capacidad, costo, nombre);
             hoteles.Add(nuevo);
             return true;
         }
@@ -626,9 +626,9 @@ public class Agencia
 
 
 
-    public string modificarHotel(int idHotel, Ciudad ubicacion, int capacidad, float costo, string nombre, int idMisReservas)
+    public bool modificarHotel(int idHotel, Ciudad ubicacion, int capacidad, float costo, string nombre)
     {
-        if (DB.modificarHotel(idHotel, ubicacion, capacidad, costo, nombre, idMisReservas) == 1)
+        if (DB.modificarHotel(idHotel, ubicacion, capacidad, costo, nombre) == 1)
         {
             try
             {
@@ -644,11 +644,11 @@ public class Agencia
                             hotel.costo = costo;
                             hotel.nombre = nombre;
 
-                            return "exito";
+                            return true;
                         }
                         else
                         {
-                            return "capacidad";
+                            return false;
                         }
                     }
 
@@ -656,10 +656,10 @@ public class Agencia
             }
             catch (Exception e)
             {
-                return "error";
+                return false;
             }
         }
-        return "error";
+        return false;
 
 
     }
