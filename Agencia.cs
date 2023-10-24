@@ -605,7 +605,7 @@ public class Agencia
 
     //INICIO METODOS DE HOTEL
 
-    public bool agregarHotel (int idHotel,Ciudad ubicacion, int capacidad, float costo, string nombre)
+    public bool agregarHotel (Int32 idHotel,Ciudad ubicacion, int capacidad, float costo, string nombre)
     {
         int idNuevoHotel;
         idNuevoHotel = DB.agregarHotel(idHotel, ubicacion, capacidad, costo, nombre);
