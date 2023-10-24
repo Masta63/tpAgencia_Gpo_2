@@ -6,6 +6,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data;
 using System.Data.SqlClient;//debemos agregar para poder usar los metodos de conexion dy reader
+using System.Transactions;
+using System.Data.Common;
+using static System.ComponentModel.Design.ObjectSelectorEditor;
+using System.Reflection;
+using System.Runtime.Intrinsics.X86;
 
 namespace tpAgencia_Gpo_2
 {
@@ -65,6 +70,7 @@ namespace tpAgencia_Gpo_2
         }
 
         //devuelve el ID del usuario agregado a la base, si algo falla devuelve -1
+        //[idUsuario],[dni],[nombre],[apellido],[mail],[password],[intentosFallidos],[bloqueado],[credito],[esAdmin]
         public int agregarUsuario(string Dni, string Nombre, string Apellido, string Mail, string Password, bool EsADM, bool Bloqueado)
         {
             //primero me aseguro que lo pueda agregar a la base
@@ -146,33 +152,45 @@ namespace tpAgencia_Gpo_2
             }
         }
 
-        //devuelve la cantidad de elementos modificados en la base (debería ser 1 si anduvo bien)
-        public int modificarUsuario(int Id, int Dni, string Nombre, string Mail, string Password, bool EsADM, bool Bloqueado)
+        public int modificarUsuarioConContraseña(int Id, string Nombre, string Apellido, int Dni, string Mail, string nuevaContraseña)
         {
             string connectionString = Properties.Resources.ConnectionStr;
-            string queryString = "UPDATE [dbo].[Usuario] SET nombre=@nombre, mail=@mail,password=@password, bloqueado=@bloqueado, esAdmin=@esadm WHERE [idUsuario]=@id;";
-            using (SqlConnection connection =
-                new SqlConnection(connectionString))
+            string queryString;
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                SqlCommand command = new SqlCommand(queryString, connection);
+                SqlCommand command = new SqlCommand();
                 command.Parameters.Add(new SqlParameter("@id", SqlDbType.Int));
-                command.Parameters.Add(new SqlParameter("@dni", SqlDbType.Int));
                 command.Parameters.Add(new SqlParameter("@nombre", SqlDbType.NVarChar));
+                command.Parameters.Add(new SqlParameter("@apellido", SqlDbType.NVarChar));
+                command.Parameters.Add(new SqlParameter("@dni", SqlDbType.NVarChar));
                 command.Parameters.Add(new SqlParameter("@mail", SqlDbType.NVarChar));
-                command.Parameters.Add(new SqlParameter("@password", SqlDbType.NVarChar));
-                command.Parameters.Add(new SqlParameter("@esadm", SqlDbType.Bit));
-                command.Parameters.Add(new SqlParameter("@bloqueado", SqlDbType.Bit));
+
                 command.Parameters["@id"].Value = Id;
-                command.Parameters["@dni"].Value = Dni;
                 command.Parameters["@nombre"].Value = Nombre;
+                command.Parameters["@apellido"].Value = Apellido;
+                command.Parameters["@dni"].Value = Dni;
                 command.Parameters["@mail"].Value = Mail;
-                command.Parameters["@password"].Value = Password;
-                command.Parameters["@esadm"].Value = EsADM;
-                command.Parameters["@bloqueado"].Value = Bloqueado;
+
+                if (!string.IsNullOrEmpty(nuevaContraseña))
+                {
+                    // Si se proporciona una nueva contraseña, se incluye en la actualización
+                    queryString = "UPDATE [dbo].[Usuario] SET nombre = @nombre, apellido = @apellido, dni = @dni, mail = @mail, password = @nuevaContraseña WHERE [idUsuario] = @id;";
+                    command.Parameters.Add(new SqlParameter("@nuevaContraseña", SqlDbType.NVarChar));
+                    command.Parameters["@nuevaContraseña"].Value = nuevaContraseña;
+                }
+                else
+                {
+                    // Si no se proporciona una nueva contraseña, se excluye de la actualización
+                    queryString = "UPDATE [dbo].[Usuario] SET nombre = @nombre, apellido = @apellido, dni = @dni, mail = @mail WHERE [idUsuario] = @id;";
+                }
+
+                command.CommandText = queryString;
+                command.Connection = connection;
+
                 try
                 {
                     connection.Open();
-                    //esta consulta NO espera un resultado para leer, es del tipo NON Query
                     return command.ExecuteNonQuery();
                 }
                 catch (Exception ex)
@@ -182,6 +200,8 @@ namespace tpAgencia_Gpo_2
                 }
             }
         }
+
+
 
         public int agregoCreditoUsuario(int idUsuario, double nuevoCredito)
         {
@@ -195,6 +215,34 @@ namespace tpAgencia_Gpo_2
 
                 cmd.Parameters["@idUsuario"].Value = idUsuario;
                 cmd.Parameters["@credito"].Value = nuevoCredito;
+
+                try
+                {
+                    conex.Open();
+                    return cmd.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    return 0;
+                }
+            }
+        }
+
+        //modificar el password
+
+        public int modificarPassword(int idUsuario, string nuevaPassword)
+        {
+            string connectionString = Properties.Resources.ConnectionStr;
+            string queryString = "UPDATE [tp_agencia].[dbo].[Usuario] SET [password] = @nuevaPassword WHERE [idUsuario] = @idUsuario;";
+            using (SqlConnection conex = new SqlConnection(connectionString))
+            {
+                SqlCommand cmd = new SqlCommand(queryString, conex);
+                cmd.Parameters.Add(new SqlParameter("@idUsuario", SqlDbType.Int));
+                cmd.Parameters.Add(new SqlParameter("@nuevaPassword", SqlDbType.NVarChar));
+
+                cmd.Parameters["@idUsuario"].Value = idUsuario;
+                cmd.Parameters["@nuevaPassword"].Value = nuevaPassword;
 
                 try
                 {
@@ -298,7 +346,7 @@ namespace tpAgencia_Gpo_2
             return vuelos;
         }
 
-
+        
         public int agregarVuelo(int idOrigen, int idDestino, int capacidad, double costo, DateTime fecha, string aerolinea, string avion)
         {
             int resultadoQuery;
@@ -409,8 +457,437 @@ namespace tpAgencia_Gpo_2
             }
         }
 
+        //CONTROLAR LA CONEXIÓN CON LA BASE CUANDO FUNCIONE AGREGAR USUARIO
+        public int modificarReservaVuelo(int idVuelo, int idReserva, int cantidad, double costo)
+        {
+            string connectionString = Properties.Resources.ConnectionStr;
+            string queryString = "UPDATE [dbo].[ReservaVuelo] SET pagado=@costo  WHERE idReservaVuelo=@idReserva;";
+            using (SqlConnection conex = new SqlConnection(connectionString))
+            {
+                SqlCommand cmd = new SqlCommand(queryString, conex);
+                cmd.Parameters.Add(new SqlParameter("@id", SqlDbType.Int));
+                cmd.Parameters.Add(new SqlParameter("@costo", SqlDbType.Float));
 
+                cmd.Parameters["@id"].Value = idVuelo;
+                cmd.Parameters["@costo"].Value = costo;
+
+                string getVueloIdQuery = "SELECT idVuelo FROM [dbo].[ReservaVuelo] WHERE idReservaVuelo = @id;";
+                int vueloId = -1;
+                try
+                {
+                    conex.Open();
+
+                    using (SqlCommand getVueloIdCmd = new SqlCommand(getVueloIdQuery, conex))
+                    {
+                        getVueloIdCmd.Parameters.Add(new SqlParameter("@id", SqlDbType.Int));
+                        getVueloIdCmd.Parameters["@id"].Value = idVuelo;
+
+                        using (SqlDataReader reader = getVueloIdCmd.ExecuteReader())
+                        {
+                            reader.Read();
+
+                            vueloId = reader.GetInt32(0);
+
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    return 0;
+                }
+                string updateCapacidadQuery = "UPDATE [dbo].[Vuelo] SET capacidad = capacidad + @cantidad WHERE idVuelo = @idVuelo;";
+                try
+                {
+                    using (SqlCommand updateCapacidadCmd = new SqlCommand(updateCapacidadQuery, conex))
+                    {
+                        updateCapacidadCmd.Parameters.Add(new SqlParameter("@idVuelo", SqlDbType.Int));
+                        updateCapacidadCmd.Parameters.Add(new SqlParameter("@cantidad", SqlDbType.Int));
+                        updateCapacidadCmd.Parameters["@idVuelo"].Value = vueloId;
+                        updateCapacidadCmd.Parameters["@cantidad"].Value = cantidad;
+
+                        updateCapacidadCmd.ExecuteNonQuery();
+                    }
+                    return cmd.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    return 0;
+                }
+
+
+
+                //    try
+                //    {
+                //        conex.Open();
+                //        return cmd.ExecuteNonQuery();
+                //    }
+                //    catch (Exception ex)
+                //    {
+                //        Console.WriteLine(ex.Message);
+                //        return 0;
+                //    }
+            }
+        }
+
+       
+        public int agregarReservaVuelo(int idVuelo, double costo, int idUsuario)
+        {
+            int resultadoQuery;
+            int idNuevaReservaVuelo = -1;
+            string queryString = "INSERT INTO [dbo].[ReservaVuelo]([idVuelo], [idUsuario], [pagado]) VALUES (@idVuelo, @idUsuario, @costo);";
+
+            using (SqlConnection conex = new SqlConnection(connectionStr))
+            {
+                SqlCommand cmd = new SqlCommand(queryString, conex);
+                cmd.Parameters.Add(new SqlParameter("@idVuelo", SqlDbType.Int));
+                cmd.Parameters.Add(new SqlParameter("@idUsuario", SqlDbType.Int));
+                cmd.Parameters.Add(new SqlParameter("@costo", SqlDbType.Float));
+
+                cmd.Parameters["@idVuelo"].Value = idVuelo;
+                cmd.Parameters["@idUsuario"].Value = idUsuario;
+                cmd.Parameters["@costo"].Value = costo;
+
+
+                try
+                {
+                    conex.Open();
+                    resultadoQuery = cmd.ExecuteNonQuery();
+
+                    string ConsultaId = "SELECT MAX([idReservaVuelo]) FROM [dbo].[ReservaVuelo]";
+                    cmd = new SqlCommand(ConsultaId, conex);
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    reader.Read();
+                    idNuevaReservaVuelo = reader.GetInt32(0);
+                    reader.Close();
+
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    return -1;
+                }
+                return idNuevaReservaVuelo;
+            }
+
+
+        }
+        public bool usuarioHaCompradoVuelo(int idUsuario, int idVuelo)
+        {
+            using (SqlConnection conex = new SqlConnection(connectionStr))
+            {
+                string queryString = "SELECT COUNT(*) FROM [dbo].[Vuelo_Usuario] WHERE [idUsuario] = @idUsuario AND [idVuelo] = @idVuelo;";
+                SqlCommand cmd = new SqlCommand(queryString, conex);
+                cmd.Parameters.Add(new SqlParameter("@idUsuario", SqlDbType.Int)).Value = idUsuario;
+                cmd.Parameters.Add(new SqlParameter("@idVuelo", SqlDbType.Int)).Value = idVuelo;
+
+                conex.Open();
+                int count = (int)cmd.ExecuteScalar();
+
+                // Si count es mayor que 0, significa que el usuario ya compró el vuelo
+                return count > 0;
+            }
+        }
+        public int agregarVueloAUsuario(int idVuelo, int idUsuario, int cantidad)
+        {
+            int resultadoQuery;
+            int idNuevaReservaVuelo = -1;
+            string queryString = "INSERT INTO [dbo].[Vuelo_Usuario]([idVuelo],[idUsuario],[cantidad]) VALUES (@idVuelo, @idUsuario, @cantidad);";
+
+            using (SqlConnection conex = new SqlConnection(connectionStr))
+            {
+                SqlCommand cmd = new SqlCommand(queryString, conex);
+                cmd.Parameters.Add(new SqlParameter("@idVuelo", SqlDbType.Int));
+                cmd.Parameters.Add(new SqlParameter("@idUsuario", SqlDbType.Int));
+                cmd.Parameters.Add(new SqlParameter("@cantidad", SqlDbType.Int));
+                cmd.Parameters["@idVuelo"].Value = idVuelo;
+                cmd.Parameters["@idUsuario"].Value = idUsuario;
+                cmd.Parameters["@cantidad"].Value = cantidad;
+               
+                try
+                {
+                    conex.Open();
+                    resultadoQuery = cmd.ExecuteNonQuery();
+
+                    string ConsultaId = "SELECT MAX([idUsuario]), MAX([idVuelo]) FROM [dbo].[Vuelo_Usuario]";
+                    cmd = new SqlCommand(ConsultaId, conex);
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    reader.Read();
+                    idNuevaReservaVuelo = reader.GetInt32(0);
+                    reader.Close();
+
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    return -1;
+                }
+                return idNuevaReservaVuelo;
+            }
+
+        }
+
+        public int modificarCapacidadVuelo(int idVuelo, int capacidad)
+        {
+            string connectionString = Properties.Resources.ConnectionStr;
+            string queryString = "UPDATE [dbo].[Vuelo] SET capacidad=@capacidad WHERE idVuelo=@idVuelo;";
+            using (SqlConnection conex = new SqlConnection(connectionString))
+            {
+                SqlCommand cmd = new SqlCommand(queryString, conex);
+                cmd.Parameters.Add(new SqlParameter("@idVuelo", SqlDbType.Int));
+                cmd.Parameters.Add(new SqlParameter("@capacidad", SqlDbType.Int));
+
+                cmd.Parameters["@idVuelo"].Value = idVuelo;
+                cmd.Parameters["@capacidad"].Value = capacidad;
+
+                try
+                {
+                    conex.Open();
+                    return cmd.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    return 0;
+                }
+            }
+        }
+        public Vuelo ObtenerVueloPorID(int vueloID)
+        {
+            Vuelo vuelo = null;
+            string queryString = "SELECT * FROM [sistema].[dbo].[Vuelo] WHERE id = " + vueloID;
+
+            using (SqlConnection conex = new SqlConnection(connectionStr))
+            {
+                SqlCommand command = new SqlCommand(queryString, conex);
+                try
+                {
+                    conex.Open();
+                    SqlDataReader reader = command.ExecuteReader();
+
+                    if (reader.Read())
+                    {
+                        Ciudad origen = new Ciudad(reader.GetInt32(1), reader.GetString(9));
+                        Ciudad destino = new Ciudad(reader.GetInt32(2), reader.GetString(10));
+                        vuelo = new Vuelo(
+                            reader.GetInt32(0), origen, destino, reader.GetInt32(3), reader.GetDouble(5), reader.GetDateTime(6), reader.GetString(7), reader.GetString(8));
+                        
+                    }
+
+                    reader.Close();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+            }
+
+            return vuelo;
+        }
+
+        public List<ReservaVuelo> traerReservasVuelo(int idUsuario)
+        {
+            List<ReservaVuelo> reservasVuelos = new List<ReservaVuelo>();
+            string queryString = "SELECT * FROM [dbo].[ReservaVuelo] as re inner join [dbo].[Usuario] as s on re.idUsuario = s.idUsuario inner join [dbo].[Vuelo] as h on re.idVuelo = h.idVuelo  where s.idUsuario = " + idUsuario;
+            using (SqlConnection conex = new SqlConnection(connectionStr))
+            {
+                SqlCommand command = new SqlCommand(queryString, conex);
+                try
+                {
+                    conex.Open();
+                    SqlDataReader reader = command.ExecuteReader();
+                    ReservaVuelo aux;
+
+                    while (reader.Read())
+                    {
+                        Ciudad ciudadOrigen = traerCiudadPorId(reader.GetInt32(15));
+                        Ciudad ciudadDestino = traerCiudadPorId(reader.GetInt32(16));//me lee dni
+                        Usuario usuario = this.traerUsuarioPorId(reader.GetInt32(4));//ok
+                        Vuelo vuelo = new Vuelo(reader.GetInt32(1), ciudadOrigen, ciudadDestino, reader.GetInt32(17), reader.GetDouble(19), reader.GetDateTime(20), reader.GetString(21), reader.GetString(22));
+                        aux = new ReservaVuelo(vuelo, usuario, reader.GetDouble(3));
+                        aux.idReservaVuelo = reader.GetInt32(0);
+                        reservasVuelos.Add(aux);
+                    }
+                    reader.Close();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+            }
+            return reservasVuelos;
+
+        }
+        public int ObtenerCantidadComprada(int idVuelo, int idUsuario)
+        {
+            int cantidadComprada = 0;
+
+            using (SqlConnection conex = new SqlConnection(connectionStr))
+            {
+                string queryString = "SELECT [cantidad] FROM [dbo].[Vuelo_Usuario] WHERE [idvuelo] = @idVuelo AND [idusuario] = @idUsuario";
+                SqlCommand cmd = new SqlCommand(queryString, conex);
+                cmd.Parameters.Add(new SqlParameter("@idReserva", SqlDbType.Int));
+                cmd.Parameters.Add(new SqlParameter("@idUsuario", SqlDbType.Int));
+                cmd.Parameters["@idReserva"].Value = idVuelo;
+                cmd.Parameters["@idUsuario"].Value = idUsuario;
+
+                try
+                {
+                    conex.Open();
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    if (reader.Read())
+                    {
+                        cantidadComprada = reader.GetInt32(reader.GetOrdinal("cantidad"));
+                    }
+
+                    reader.Close();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                   
+                }
+            }
+
+            return cantidadComprada;
+        }
         #region reservaHotel
+
+
+        public int eliminarMiReserva(int Id)
+        {
+            string connectionString = Properties.Resources.ConnectionStr;
+            string queryString = "DELETE FROM [dbo].[ReservaHotel] WHERE [idReservaHotel]=@idReservaHotel";
+            using (SqlConnection connection =
+                new SqlConnection(connectionString))
+            {
+                SqlCommand command = new SqlCommand(queryString, connection);
+                command.Parameters.Add(new SqlParameter("@idReservaHotel", SqlDbType.Int));
+                command.Parameters["@idReservaHotel"].Value = Id;
+                try
+                {
+                    connection.Open();
+                    //esta consulta NO espera un resultado para leer, es del tipo NON Query
+                    return command.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    return 0;
+                }
+            }
+        }
+
+
+
+        public Usuario? traerUsuarioPorId(Int32 idUsuario)
+        {
+            Usuario? aux = null;
+            //string con la consulta que quiero realizar
+            string queryString = "SELECT * from Usuario where idUsuario =" + idUsuario;
+            //creo conexion con la base de datos el using al finalizar el metodo utiliza el dispose y cierra la conexion para ahorrar recursos
+            using (SqlConnection conex = new SqlConnection(connectionStr))//OBJETO<--1
+            {
+                SqlCommand command = new SqlCommand(queryString, conex);//OBJETO<--2
+                try
+                {
+
+                    conex.Open();//metodo que ejecuta la conexion con la base de datos
+                    //OBJETO<--3
+                    SqlDataReader reader = command.ExecuteReader();// creo el objeto para leer la base de datos y ejecutar el comando
+                    while (reader.Read())//metodo devuelve true mientras siga leyendo una fila sigue el bucle
+                    {
+                        //leo la fila, la carga en la variable aux y la agrega a mis usuarios para trabajar en tiempo de ejecucion 
+                        aux = new Usuario(reader.GetInt32(0), reader.GetInt32(1), reader.GetString(2), reader.GetString(3), reader.GetString(4), reader.GetString(5), reader.GetInt32(6), reader.GetBoolean(7), reader.GetDouble(8), reader.GetBoolean(9));
+
+                    }
+                    reader.Close();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+            }
+            return aux;
+        }
+
+        public Ciudad? traerCiudadPorId(Int32 idCiudad)
+        {
+            Ciudad? aux = null;
+            //string con la consulta que quiero realizar
+            string queryString = "SELECT * FROM [dbo].[Ciudad] where idCiudad =" + idCiudad;
+            //creo conexion con la base de datos el using al finalizar el metodo utiliza el dispose y cierra la conexion para ahorrar recursos
+            using (SqlConnection conex = new SqlConnection(connectionStr))//OBJETO<--1
+            {
+                SqlCommand command = new SqlCommand(queryString, conex);//OBJETO<--2
+                try
+                {
+
+                    conex.Open();//metodo que ejecuta la conexion con la base de datos
+                    //OBJETO<--3
+                    SqlDataReader reader = command.ExecuteReader();// creo el objeto para leer la base de datos y ejecutar el comando
+                    while (reader.Read())//metodo devuelve true mientras siga leyendo una fila sigue el bucle
+                    {
+                        //leo la fila, la carga en la variable aux y la agrega a mis usuarios para trabajar en tiempo de ejecucion 
+                        aux = new Ciudad(reader.GetInt32(0), reader.GetString(1));
+
+                    }
+                    reader.Close();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+            }
+            return aux;
+        }
+
+        public List<ReservaHotel> traerMisReservasHotel(Int32 idUsuario)
+        {
+            List<ReservaHotel> reservaHotels = new List<ReservaHotel>();
+
+            //string con la consulta que quiero realizar
+            string queryString = "SELECT *  FROM [sistema].[dbo].[ReservaHotel] as re inner join [sistema].[dbo].[Usuario]  as s on re.idUsuario = s.idUsuario inner join [sistema].[dbo].[Hotel] as h on re.idHotel = h.idHotel  where s.idUsuario =" + idUsuario;
+
+
+            //creo conexion con la base de datos el using al finalizar el metodo utiliza el dispose y cierra la conexion para ahorrar recursos
+            using (SqlConnection conex = new SqlConnection(connectionStr))//OBJETO<--1
+            {
+
+                SqlCommand command = new SqlCommand(queryString, conex);//OBJETO<--2
+                try
+                {
+
+                    conex.Open();//metodo que ejecuta la conexion con la base de datos
+
+                    //OBJETO<--3
+                    SqlDataReader reader = command.ExecuteReader();// creo el objeto para leer la base de datos y ejecutar el comando
+                    ReservaHotel aux;
+
+                    while (reader.Read())//metodo devuelve true mientras siga leyendo una fila sigue el bucle
+                    {
+                        Ciudad ciudad = traerCiudadPorId(reader.GetInt32(17));
+                        Hotel hotel = new Hotel(reader.GetInt32(5), ciudad, reader.GetInt32(18), reader.GetDouble(19), reader.GetString(20));
+                        Usuario usuario = this.traerUsuarioPorId(reader.GetInt32(1));
+                        //leo la fila, la carga en la variable aux y la agrega a mis usuarios para trabajar en tiempo de ejecucion 
+                        aux = new ReservaHotel(hotel,usuario,reader.GetDateTime(2), reader.GetDateTime(3), reader.GetDouble(4));
+                        aux.idReservaHotel = reader.GetInt32(0);
+                        reservaHotels.Add(aux);
+                    }
+                    reader.Close();
+
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+            }
+            return reservaHotels;
+
+        }
+
         public List<ReservaHotel> traerReservasPorHotel(Hotel hotel)
         {
             List<ReservaHotel> reservasPorHotel = new List<ReservaHotel>();
@@ -544,18 +1021,96 @@ namespace tpAgencia_Gpo_2
 
         }
 
-        public int modificarCapacidadHotel(Int32 idHotel, int capacidad)
+        public int agregarRelacionUsuarioHotel(Int32 idUsuario, Int32 idHotel)
         {
+            int resultadoQuery;
+            int idNuevaReservaHotel = -1;
+            string queryString = "INSERT INTO [dbo].[Hotel_Usuario]([idUsuario],[idHotel],[cantidad]) VALUES (@idUsuario, @idHotel, @cantidad);";
+
+            using (SqlConnection conex = new SqlConnection(connectionStr))
+            {
+                SqlCommand cmd = new SqlCommand(queryString, conex);
+                cmd.Parameters.Add(new SqlParameter("@idUsuario", SqlDbType.Int));
+                cmd.Parameters.Add(new SqlParameter("@idHotel", SqlDbType.Int));
+                cmd.Parameters.Add(new SqlParameter("@cantidad", SqlDbType.Int));
+                cmd.Parameters["@idUsuario"].Value = idUsuario;
+                cmd.Parameters["@idHotel"].Value = idHotel;
+                cmd.Parameters["@cantidad"].Value = 1;
+
+                try
+                {
+                    conex.Open();
+                    resultadoQuery = cmd.ExecuteNonQuery();
+
+                    string ConsultaId = "SELECT MAX([idUsuario]), MAX([idHotel]) FROM [dbo].[Hotel_Usuario]";
+                    cmd = new SqlCommand(ConsultaId, conex);
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    reader.Read();
+                    idNuevaReservaHotel = reader.GetInt32(0);
+                    reader.Close();
+
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    return -1;
+                }
+                return idNuevaReservaHotel;
+            }
+
+        }
+
+        public int traerCantidadDeUsuarioHotel(Int32 idUsuario, Int32 idHotel)
+        {
+            Int32 cantidad = 0;
+            //string con la consulta que quiero realizar
+            string queryString = "SELECT * FROM [sistema].[dbo].[Hotel_Usuario] where idHotel=" + idHotel + " and idUsuario=" + idUsuario
+;
+            //creo conexion con la base de datos el using al finalizar el metodo utiliza el dispose y cierra la conexion para ahorrar recursos
+            using (SqlConnection conex = new SqlConnection(connectionStr))//OBJETO<--1
+            {
+                SqlCommand command = new SqlCommand(queryString, conex);//OBJETO<--2
+                try
+                {
+
+                    conex.Open();//metodo que ejecuta la conexion con la base de datos
+                    //OBJETO<--3
+                    SqlDataReader reader = command.ExecuteReader();// creo el objeto para leer la base de datos y ejecutar el comando
+                    while (reader.Read())//metodo devuelve true mientras siga leyendo una fila sigue el bucle
+                    {
+                        //leo la fila, la carga en la variable aux y la agrega a mis usuarios para trabajar en tiempo de ejecucion 
+                        cantidad = reader.GetInt32(2);
+                    }
+                    reader.Close();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+            }
+            return cantidad;
+        }
+
+
+        public int modificarCantidadDeVisitantes(Int32 idHotel,Int32 idUsuario ,int cantidad)
+        {
+            Int32 cantidadBase = this.traerCantidadDeUsuarioHotel(idUsuario, idHotel);
+            Int32 cantidadTotal = cantidadBase + cantidad;
+
+
+
             string connectionString = Properties.Resources.ConnectionStr;
-            string queryString = "UPDATE [dbo].[Hotel] SET capacidad=@capacidad WHERE idHotel=@idHotel;";
+            string queryString = "UPDATE [dbo].[Hotel_Usuario] SET cantidad=@cantidad WHERE idHotel=@idHotel and idUsuario =@idUsuario;";
             using (SqlConnection conex = new SqlConnection(connectionString))
             {
                 SqlCommand cmd = new SqlCommand(queryString, conex);
                 cmd.Parameters.Add(new SqlParameter("@idHotel", SqlDbType.Int));
-                cmd.Parameters.Add(new SqlParameter("@capacidad", SqlDbType.Int));
+                cmd.Parameters.Add(new SqlParameter("@idUsuario", SqlDbType.Int));
+                cmd.Parameters.Add(new SqlParameter("@cantidad", SqlDbType.Int));
 
                 cmd.Parameters["@idHotel"].Value = idHotel;
-                cmd.Parameters["@capacidad"].Value = capacidad;
+                cmd.Parameters["@idUsuario"].Value = idUsuario;
+                cmd.Parameters["@cantidad"].Value = cantidadTotal;
 
                 try
                 {
@@ -597,7 +1152,38 @@ namespace tpAgencia_Gpo_2
             }
         }
 
+        public bool traerHotel_Usuario(Int32 idHotel, Int32 idUsuario)
+        {
+            bool existe = false;
+            string queryString = "SELECT * FROM [sistema].[dbo].[Hotel_Usuario]  where idHotel=" + idHotel + "and idUsuario=" + idUsuario;
 
+            using (SqlConnection conex = new SqlConnection(connectionStr))
+            {
+                SqlCommand command = new SqlCommand(queryString, conex);
+                try
+                {
+                    conex.Open();
+                    SqlDataReader reader = command.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        if (reader.GetInt32(0) != null && reader.GetInt32(1) != null)
+                        {
+                            existe = true;
+                        }
+                        else
+                        {
+                            existe = false;
+                        }
+                    }
+                    reader.Close();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+            }
+            return existe;
+        }
 
 
         #endregion

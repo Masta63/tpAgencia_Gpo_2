@@ -44,43 +44,43 @@
             // 
             // textBox_nombre
             // 
-            textBox_nombre.Location = new Point(308, 71);
+            textBox_nombre.Location = new Point(288, 67);
             textBox_nombre.Name = "textBox_nombre";
-            textBox_nombre.Size = new Size(100, 23);
+            textBox_nombre.Size = new Size(170, 23);
             textBox_nombre.TabIndex = 0;
             // 
             // textBox_apellido
             // 
-            textBox_apellido.Location = new Point(308, 100);
+            textBox_apellido.Location = new Point(288, 96);
             textBox_apellido.Name = "textBox_apellido";
-            textBox_apellido.Size = new Size(100, 23);
+            textBox_apellido.Size = new Size(170, 23);
             textBox_apellido.TabIndex = 1;
             // 
             // textBox_dni
             // 
-            textBox_dni.Location = new Point(308, 133);
+            textBox_dni.Location = new Point(288, 129);
             textBox_dni.Name = "textBox_dni";
-            textBox_dni.Size = new Size(100, 23);
+            textBox_dni.Size = new Size(170, 23);
             textBox_dni.TabIndex = 2;
             // 
             // textBox_email
             // 
-            textBox_email.Location = new Point(308, 164);
+            textBox_email.Location = new Point(288, 160);
             textBox_email.Name = "textBox_email";
-            textBox_email.Size = new Size(100, 23);
+            textBox_email.Size = new Size(170, 23);
             textBox_email.TabIndex = 3;
             // 
             // textBox_pass
             // 
-            textBox_pass.Location = new Point(308, 193);
+            textBox_pass.Location = new Point(288, 189);
             textBox_pass.Name = "textBox_pass";
-            textBox_pass.Size = new Size(100, 23);
+            textBox_pass.Size = new Size(170, 23);
             textBox_pass.TabIndex = 4;
             // 
             // lbl_Nombre
             // 
             lbl_Nombre.AutoSize = true;
-            lbl_Nombre.Location = new Point(212, 79);
+            lbl_Nombre.Location = new Point(192, 75);
             lbl_Nombre.Name = "lbl_Nombre";
             lbl_Nombre.Size = new Size(51, 15);
             lbl_Nombre.TabIndex = 5;
@@ -89,7 +89,7 @@
             // lbl_apellido
             // 
             lbl_apellido.AutoSize = true;
-            lbl_apellido.Location = new Point(212, 108);
+            lbl_apellido.Location = new Point(192, 104);
             lbl_apellido.Name = "lbl_apellido";
             lbl_apellido.Size = new Size(51, 15);
             lbl_apellido.TabIndex = 6;
@@ -98,7 +98,7 @@
             // lbl_dni
             // 
             lbl_dni.AutoSize = true;
-            lbl_dni.Location = new Point(212, 141);
+            lbl_dni.Location = new Point(192, 137);
             lbl_dni.Name = "lbl_dni";
             lbl_dni.Size = new Size(25, 15);
             lbl_dni.TabIndex = 7;
@@ -107,7 +107,7 @@
             // lbl_email
             // 
             lbl_email.AutoSize = true;
-            lbl_email.Location = new Point(212, 172);
+            lbl_email.Location = new Point(192, 168);
             lbl_email.Name = "lbl_email";
             lbl_email.Size = new Size(36, 15);
             lbl_email.TabIndex = 8;
@@ -116,7 +116,7 @@
             // lbl_pass
             // 
             lbl_pass.AutoSize = true;
-            lbl_pass.Location = new Point(212, 201);
+            lbl_pass.Location = new Point(192, 197);
             lbl_pass.Name = "lbl_pass";
             lbl_pass.Size = new Size(57, 15);
             lbl_pass.TabIndex = 9;

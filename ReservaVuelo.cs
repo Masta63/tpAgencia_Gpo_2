@@ -2,6 +2,7 @@
 {
     public class ReservaVuelo
     {
+        public int idReservaVuelo { get; set; }
         public Vuelo miVuelo { get; set; }
         public Usuario miUsuario { get; set; }
         public double pagado {  get; set; }
