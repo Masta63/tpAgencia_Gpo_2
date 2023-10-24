@@ -605,13 +605,15 @@ public class Agencia
 
     //INICIO METODOS DE HOTEL
 
-    public bool agregarHotel (Int32 idHotel,Ciudad ubicacion, int capacidad, float costo, string nombre)
+    public bool agregarHotel (int ubicacionHotel, Int32 capacidad, float costo, string nombre)
+
     {
+        Ciudad ubicacion = ciudades.FirstOrDefault(ciudad => ciudad.id == ubicacionHotel);
         int idNuevoHotel;
-        idNuevoHotel = DB.agregarHotel(idHotel, ubicacion, capacidad, costo, nombre);
+        idNuevoHotel = DB.agregarHotel(ubicacionHotel, capacidad, costo, nombre);
         if (idNuevoHotel != -1)
         {
-            Hotel nuevo = new Hotel (idHotel, ubicacion, capacidad, costo, nombre);
+            Hotel nuevo = new Hotel (ubicacion, capacidad, costo, nombre);
             hoteles.Add(nuevo);
             return true;
         }
@@ -623,9 +625,11 @@ public class Agencia
 
 
 
-    public bool modificarHotel(int idHotel, Ciudad ubicacion, int capacidad, float costo, string nombre)
+    public string modificarHotel(int idHotel, int ubicacionHotel, int capacidad, float costo, string nombre)
     {
-        if (DB.modificarHotel(idHotel, ubicacion, capacidad, costo, nombre) == 1)
+
+        Ciudad nuevaUbicacion = ciudades.FirstOrDefault(ciudad => ciudad.id == ubicacionHotel);
+        if (DB.modificarHotel(idHotel, ubicacionHotel, capacidad, costo, nombre) == 1)
         {
             try
             {
@@ -636,16 +640,16 @@ public class Agencia
                         int cantReservas = hotel.listMisReservas.Count;
                         if (capacidad >= cantReservas)
                         {
-                            hotel.ubicacion = ubicacion;
+                            hotel.ubicacion = nuevaUbicacion;
                             hotel.capacidad = capacidad;
                             hotel.costo = costo;
                             hotel.nombre = nombre;
 
-                            return true;
+                            return "exito";
                         }
                         else
                         {
-                            return false;
+                            return "fallo";
                         }
                     }
 
@@ -653,10 +657,10 @@ public class Agencia
             }
             catch (Exception e)
             {
-                return false;
+                return "fallo2";
             }
         }
-        return false;
+        return "fallo3";
 
 
     }

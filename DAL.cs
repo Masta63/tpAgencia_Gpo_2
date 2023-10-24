@@ -468,7 +468,7 @@ namespace tpAgencia_Gpo_2
         public List<Hotel> inicializarHoteles()
         {
             List<Hotel> Hoteles = new List<Hotel>();
-            string queryString = "SELECT *  FROM [sistema].[dbo].[Hotel] as h inner join [sistema].[dbo].[Ciudad] as c on h.ubicacion = c.idCiudad";
+            string queryString = "SELECT *  FROM [dbo].[Hotel] as h inner join [dbo].[Ciudad] as c on h.ubicacion = c.idCiudad";
             using (SqlConnection conex = new SqlConnection(connectionStr))
             {
                 SqlCommand command = new SqlCommand(queryString, conex);
@@ -604,28 +604,24 @@ namespace tpAgencia_Gpo_2
 
         #region ABM Hotel
 
-        public int agregarHotel(int idHotel, Ciudad ubicacion, int capacidad, float costo, string nombre)
+        public int agregarHotel(int ubicacion, int capacidad, float costo, string nombre)
         {
             int resultadoQuery;
             int idNuevoHotel = -1;
-            string queryString = "INSERT INTO [dbo].[Hotel]([idHotel], [ubicacion], [capacidad], [costo], [nombre]) VALUES (@idHotel, @ubicacion, @capacidad ,@costo, @nombre);";
+            string queryString = "INSERT INTO [dbo].[Hotel]([ubicacion], [capacidad], [costo], [nombre]) VALUES (@ubicacion, @capacidad ,@costo, @nombre);";
 
             using (SqlConnection conex = new SqlConnection(connectionStr))
             {
                 SqlCommand cmd = new SqlCommand(queryString, conex);
-                cmd.Parameters.Add(new SqlParameter("@idHotel", SqlDbType.Int));
-                cmd.Parameters.Add(new SqlParameter("@ubicacion", SqlDbType.NVarChar));
+                cmd.Parameters.Add(new SqlParameter("@ubicacion", SqlDbType.Int));
                 cmd.Parameters.Add(new SqlParameter("@capacidad", SqlDbType.Int));
                 cmd.Parameters.Add(new SqlParameter("@costo", SqlDbType.Float));
                 cmd.Parameters.Add(new SqlParameter("@nombre", SqlDbType.NVarChar));
-                cmd.Parameters["@idHotel"].Value = idHotel;
                 cmd.Parameters["@ubicacion"].Value = ubicacion;
                 cmd.Parameters["@capacidad"].Value = capacidad;
                 cmd.Parameters["@costo"].Value = costo;
                 cmd.Parameters["@nombre"].Value = nombre;
-    
-
-
+   
                 try
                 {
                     conex.Open();
@@ -650,15 +646,15 @@ namespace tpAgencia_Gpo_2
 
         }
 
-        public int eliminarHotel(int id)
+        public int eliminarHotel(int idHotel)
         {
             string connectionString = Properties.Resources.ConnectionStr;
-            string queryString = "DELETE FROM [dbo].[Hotel] WHERE idHotel=@id";
+            string queryString = "DELETE FROM [dbo].[Hotel] WHERE idHotel=@idHotel";
             using (SqlConnection conex = new SqlConnection(connectionString))
             {
                 SqlCommand cmd = new SqlCommand(queryString, conex);
-                cmd.Parameters.Add(new SqlParameter("@id", SqlDbType.Int));
-                cmd.Parameters["@id"].Value = id;
+                cmd.Parameters.Add(new SqlParameter("@idHotel", SqlDbType.Int));
+                cmd.Parameters["@idHotel"].Value = idHotel;
 
                 try
                 {
@@ -675,15 +671,15 @@ namespace tpAgencia_Gpo_2
         }
 
 
-        public int modificarHotel(int idHotel, Ciudad ubicacion, int capacidad, float costo, string nombre)
+        public int modificarHotel(int idHotel, int ubicacion, int capacidad, float costo, string nombre)
         {
             string connectionString = Properties.Resources.ConnectionStr;
-            string queryString = "UPDATE [dbo].[Hotel] SET idHotel=@idHotel, ubicacion = @ubicacion, capacidad=@capacidad, costo=@costo, nombre=@nombre, WHERE idHotel=@id;";
+            string queryString = "UPDATE [dbo].[Hotel] SET ubicacion = @ubicacion, capacidad=@capacidad, costo=@costo, nombre=@nombre WHERE idHotel=@idHotel;";
             using (SqlConnection conex = new SqlConnection(connectionString))
             {
                 SqlCommand cmd = new SqlCommand(queryString, conex);
                 cmd.Parameters.Add(new SqlParameter("@idHotel", SqlDbType.Int));
-                cmd.Parameters.Add(new SqlParameter("@ubicacion", SqlDbType.NVarChar));
+                cmd.Parameters.Add(new SqlParameter("@ubicacion", SqlDbType.Int));
                 cmd.Parameters.Add(new SqlParameter("@capacidad", SqlDbType.Int));
                 cmd.Parameters.Add(new SqlParameter("@costo", SqlDbType.Float));
                 cmd.Parameters.Add(new SqlParameter("@nombre", SqlDbType.NVarChar));

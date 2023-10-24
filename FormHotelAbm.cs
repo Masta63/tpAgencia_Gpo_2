@@ -40,15 +40,17 @@ namespace tpAgencia_Gpo_2
         {
             dataGridViewHoteles.Rows.Clear();
 
-            foreach (Hotel hotel in agencia.getHotel())
+            foreach (Hotel ho in agencia.getHotel())//para cada usuario en el clon de listado de usuarios de mi referencia de agencia
             {
-                dataGridViewHoteles.Rows.Add(hotel.ToString());
+
+                dataGridViewHoteles.Rows.Add(new string[] { ho.id.ToString(), ho.ubicacion.nombre, Convert.ToString(ho.capacidad), Convert.ToString(ho.costo), ho.nombre});
 
                 textBoxId.Text = "";
                 textBoxNombre.Text = "";
                 comboBoxHospedaje.Text = "";
                 textBoxCapacidad.Text = "";
                 textBoxCosto.Text = "";
+
             }
         }
 
@@ -129,26 +131,17 @@ namespace tpAgencia_Gpo_2
 
         private void buttonAgregar_Click(object sender, EventArgs e)
         {
-            string ubicacion = comboBoxHospedaje.Text;
+            string ubicacionTextBox = comboBoxHospedaje.Text;
             string nombre = textBoxNombre.Text;
-            int id = Convert.ToInt32(textBoxId.Text);
-            Ciudad ciudadHospedaje = agencia.GetCiudades().FirstOrDefault(ciudad => ciudad.nombre == ubicacion);
+            Int32 capacidad = Convert.ToInt32(textBoxCapacidad.Text);
+            int ubicacion = agencia.obtenerNombreCiudad(ubicacionTextBox);
 
-
-
-
-            //string.IsNullOrEmpty(textBoxId.Text) Eliminar si el proyecto esta co,
-            if (ciudadHospedaje == null || string.IsNullOrEmpty(textBoxCapacidad.Text) || string.IsNullOrEmpty(textBoxCosto.Text) || string.IsNullOrEmpty(textBoxNombre.Text))
+            if (string.IsNullOrEmpty(textBoxCapacidad.Text) || string.IsNullOrEmpty(textBoxCosto.Text) || string.IsNullOrEmpty(textBoxNombre.Text))
 
                 MessageBox.Show("Debe completar todos los campos para poder agregar un nuevo hotel");
 
             else
             {
-                int capacidad;
-                if (!int.TryParse(textBoxCapacidad.Text, out capacidad))
-                {
-                    MessageBox.Show("La capacidad debe ser un número válido");
-                }
 
                 float costo;
                 if (!float.TryParse(textBoxCosto.Text, out costo))
@@ -156,16 +149,15 @@ namespace tpAgencia_Gpo_2
                     MessageBox.Show("El costo debe tener dos decimales");
                 }
 
-               // var idHotel = Convert.ToInt32(id);
 
-
-
-
-
-                if (agencia.agregarHotel(id, ciudadHospedaje, capacidad, costo, nombre))
+                if (agencia.agregarHotel(ubicacion, capacidad, costo, nombre))
+                {
                     MessageBox.Show("Hotel agregado exitosamente");
+                }
                 else
+                {
                     MessageBox.Show("Ocurrió un error al querer agregar un Hotel");
+                }
             }
         }
 
@@ -176,21 +168,25 @@ namespace tpAgencia_Gpo_2
             {
                 try
                 {
-                    var ubicacion1 = comboBoxHospedaje.Text;
-                    Ciudad ciudadHospedaje1 = agencia.GetCiudades().FirstOrDefault(ciudad => ciudad.nombre == ubicacion1);
-                    int capacidad = int.Parse(textBoxCapacidad.Text);
+                    int ubicacion = agencia.obtenerNombreCiudad(comboBoxHospedaje.Text);
+                    Int32 capacidad = Convert.ToInt32(textBoxCapacidad.Text);
                     float costo = float.Parse(textBoxCosto.Text);
                     //int id = int.Parse(textBoxId.Text);
                     string nombre = textBoxNombre.Text;
 
 
-                    if (agencia.modificarHotel(hotelSeleccionado, ciudadHospedaje1, capacidad, costo, nombre))
+                    string resultado = (agencia.modificarHotel(hotelSeleccionado,ubicacion, capacidad, costo, nombre));
+                    switch (resultado)
                     {
-                        MessageBox.Show("Datos del hotel modificado exitosamente");
-                    }
-                    else
-                    {
-                        MessageBox.Show("Ocurrió un problema al querer modificar los datos del hotel");
+                        case "exito":
+                            MessageBox.Show("Vuelo modificado exitosamente");
+                            break;
+                        case "capacidad":
+                            MessageBox.Show("La capacidad es menor a la cantidad de personas que reservaron el vuelo");
+                            break;
+                        case "error":
+                            MessageBox.Show("Ocurrió un problema al querer modificar el vuelo");
+                            break;
                     }
                 }
                 catch (FormatException)

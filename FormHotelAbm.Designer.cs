@@ -38,11 +38,6 @@
             textBoxId = new TextBox();
             label5 = new Label();
             dataGridViewHoteles = new DataGridView();
-            ID = new DataGridViewTextBoxColumn();
-            Ubicacion = new DataGridViewTextBoxColumn();
-            Capacidad = new DataGridViewTextBoxColumn();
-            Costo = new DataGridViewTextBoxColumn();
-            Nombre = new DataGridViewTextBoxColumn();
             buttonActualizarInformacion = new Button();
             buttonAgregar = new Button();
             buttonModificar = new Button();
@@ -50,6 +45,11 @@
             label6 = new Label();
             buttonVolver = new Button();
             textBoxCapacidad = new TextBox();
+            ID = new DataGridViewTextBoxColumn();
+            Ubicacion = new DataGridViewTextBoxColumn();
+            Capacidad = new DataGridViewTextBoxColumn();
+            Costo = new DataGridViewTextBoxColumn();
+            Nombre = new DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)dataGridViewHoteles).BeginInit();
             SuspendLayout();
             // 
@@ -148,31 +148,6 @@
             dataGridViewHoteles.TabIndex = 12;
             dataGridViewHoteles.CellContentClick += dataGridViewHoteles_CellContentClick;
             // 
-            // ID
-            // 
-            ID.HeaderText = "ID";
-            ID.Name = "ID";
-            // 
-            // Ubicacion
-            // 
-            Ubicacion.HeaderText = "Ubicacion";
-            Ubicacion.Name = "Ubicacion";
-            // 
-            // Capacidad
-            // 
-            Capacidad.HeaderText = "Capacidad";
-            Capacidad.Name = "Capacidad";
-            // 
-            // Costo
-            // 
-            Costo.HeaderText = "Costo";
-            Costo.Name = "Costo";
-            // 
-            // Nombre
-            // 
-            Nombre.HeaderText = "Nombre";
-            Nombre.Name = "Nombre";
-            // 
             // buttonActualizarInformacion
             // 
             buttonActualizarInformacion.Location = new Point(12, 70);
@@ -245,6 +220,32 @@
             textBoxCapacidad.TabIndex = 19;
             textBoxCapacidad.TextChanged += textBoxCapacidad_TextChanged;
             // 
+            // ID
+            // 
+            ID.HeaderText = "ID";
+            ID.Name = "ID";
+            ID.Visible = false;
+            // 
+            // Ubicacion
+            // 
+            Ubicacion.HeaderText = "Ubicacion";
+            Ubicacion.Name = "Ubicacion";
+            // 
+            // Capacidad
+            // 
+            Capacidad.HeaderText = "Capacidad";
+            Capacidad.Name = "Capacidad";
+            // 
+            // Costo
+            // 
+            Costo.HeaderText = "Costo";
+            Costo.Name = "Costo";
+            // 
+            // Nombre
+            // 
+            Nombre.HeaderText = "Nombre";
+            Nombre.Name = "Nombre";
+            // 
             // FormHotelAbm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -290,13 +291,13 @@
         private Button buttonAgregar;
         private Button buttonModificar;
         private Button buttonCancelar;
+        private Label label6;
+        private Button buttonVolver;
+        private TextBox textBoxCapacidad;
         private DataGridViewTextBoxColumn ID;
         private DataGridViewTextBoxColumn Ubicacion;
         private DataGridViewTextBoxColumn Capacidad;
         private DataGridViewTextBoxColumn Costo;
         private DataGridViewTextBoxColumn Nombre;
-        private Label label6;
-        private Button buttonVolver;
-        private TextBox textBoxCapacidad;
     }
 }
