@@ -31,6 +31,14 @@
             label1 = new Label();
             label2 = new Label();
             dataGridView1 = new DataGridView();
+            idReserva = new DataGridViewTextBoxColumn();
+            id = new DataGridViewTextBoxColumn();
+            Origen = new DataGridViewTextBoxColumn();
+            Destino = new DataGridViewTextBoxColumn();
+            Costo = new DataGridViewTextBoxColumn();
+            Fecha = new DataGridViewTextBoxColumn();
+            Aerolinea = new DataGridViewTextBoxColumn();
+            Avion = new DataGridViewTextBoxColumn();
             Volver_desde_usuario = new Button();
             Modificar = new Button();
             Eliminar = new Button();
@@ -50,15 +58,6 @@
             label9 = new Label();
             textBoxIdReserva = new TextBox();
             label10 = new Label();
-            idReserva = new DataGridViewTextBoxColumn();
-            id = new DataGridViewTextBoxColumn();
-            Origen = new DataGridViewTextBoxColumn();
-            Destino = new DataGridViewTextBoxColumn();
-            Costo = new DataGridViewTextBoxColumn();
-            Fecha = new DataGridViewTextBoxColumn();
-            Aerolinea = new DataGridViewTextBoxColumn();
-            Avion = new DataGridViewTextBoxColumn();
-            Cantidad = new DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
             // 
@@ -85,7 +84,7 @@
             // dataGridView1
             // 
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { idReserva, id, Origen, Destino, Costo, Fecha, Aerolinea, Avion, Cantidad });
+            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { idReserva, id, Origen, Destino, Costo, Fecha, Aerolinea, Avion });
             dataGridView1.Location = new Point(75, 199);
             dataGridView1.Name = "dataGridView1";
             dataGridView1.RowHeadersWidth = 62;
@@ -94,6 +93,71 @@
             dataGridView1.TabIndex = 2;
             dataGridView1.CellContentClick += dataGridView1_CellContentClick;
             dataGridView1.CellDoubleClick += dataGridView1_CellDoubleClick;
+            // 
+            // idReserva
+            // 
+            idReserva.HeaderText = "idReserva";
+            idReserva.MinimumWidth = 8;
+            idReserva.Name = "idReserva";
+            idReserva.Visible = false;
+            idReserva.Width = 150;
+            // 
+            // id
+            // 
+            id.HeaderText = "Id";
+            id.MinimumWidth = 8;
+            id.Name = "id";
+            id.ReadOnly = true;
+            id.Visible = false;
+            id.Width = 150;
+            // 
+            // Origen
+            // 
+            Origen.HeaderText = "Origen";
+            Origen.MinimumWidth = 8;
+            Origen.Name = "Origen";
+            Origen.ReadOnly = true;
+            Origen.Width = 150;
+            // 
+            // Destino
+            // 
+            Destino.HeaderText = "Destino";
+            Destino.MinimumWidth = 8;
+            Destino.Name = "Destino";
+            Destino.ReadOnly = true;
+            Destino.Width = 150;
+            // 
+            // Costo
+            // 
+            Costo.HeaderText = "Costo";
+            Costo.MinimumWidth = 8;
+            Costo.Name = "Costo";
+            Costo.ReadOnly = true;
+            Costo.Width = 150;
+            // 
+            // Fecha
+            // 
+            Fecha.HeaderText = "Fecha";
+            Fecha.MinimumWidth = 8;
+            Fecha.Name = "Fecha";
+            Fecha.ReadOnly = true;
+            Fecha.Width = 150;
+            // 
+            // Aerolinea
+            // 
+            Aerolinea.HeaderText = "Aerolinea";
+            Aerolinea.MinimumWidth = 8;
+            Aerolinea.Name = "Aerolinea";
+            Aerolinea.ReadOnly = true;
+            Aerolinea.Width = 150;
+            // 
+            // Avion
+            // 
+            Avion.HeaderText = "Avion";
+            Avion.MinimumWidth = 8;
+            Avion.Name = "Avion";
+            Avion.ReadOnly = true;
+            Avion.Width = 150;
             // 
             // Volver_desde_usuario
             // 
@@ -125,6 +189,7 @@
             Eliminar.TabIndex = 29;
             Eliminar.Text = "Eliminar";
             Eliminar.UseVisualStyleBackColor = true;
+            Eliminar.Click += Eliminar_Click;
             // 
             // textBoxId
             // 
@@ -261,80 +326,6 @@
             label10.TabIndex = 46;
             label10.Text = "Id Reserva";
             // 
-            // idReserva
-            // 
-            idReserva.HeaderText = "idReserva";
-            idReserva.MinimumWidth = 8;
-            idReserva.Name = "idReserva";
-            idReserva.Visible = false;
-            idReserva.Width = 150;
-            // 
-            // id
-            // 
-            id.HeaderText = "Id";
-            id.MinimumWidth = 8;
-            id.Name = "id";
-            id.ReadOnly = true;
-            id.Visible = false;
-            id.Width = 150;
-            // 
-            // Origen
-            // 
-            Origen.HeaderText = "Origen";
-            Origen.MinimumWidth = 8;
-            Origen.Name = "Origen";
-            Origen.ReadOnly = true;
-            Origen.Width = 150;
-            // 
-            // Destino
-            // 
-            Destino.HeaderText = "Destino";
-            Destino.MinimumWidth = 8;
-            Destino.Name = "Destino";
-            Destino.ReadOnly = true;
-            Destino.Width = 150;
-            // 
-            // Costo
-            // 
-            Costo.HeaderText = "Costo";
-            Costo.MinimumWidth = 8;
-            Costo.Name = "Costo";
-            Costo.ReadOnly = true;
-            Costo.Width = 150;
-            // 
-            // Fecha
-            // 
-            Fecha.HeaderText = "Fecha";
-            Fecha.MinimumWidth = 8;
-            Fecha.Name = "Fecha";
-            Fecha.ReadOnly = true;
-            Fecha.Width = 150;
-            // 
-            // Aerolinea
-            // 
-            Aerolinea.HeaderText = "Aerolinea";
-            Aerolinea.MinimumWidth = 8;
-            Aerolinea.Name = "Aerolinea";
-            Aerolinea.ReadOnly = true;
-            Aerolinea.Width = 150;
-            // 
-            // Avion
-            // 
-            Avion.HeaderText = "Avion";
-            Avion.MinimumWidth = 8;
-            Avion.Name = "Avion";
-            Avion.ReadOnly = true;
-            Avion.Width = 150;
-            // 
-            // Cantidad
-            // 
-            Cantidad.HeaderText = "Cantidad";
-            Cantidad.MinimumWidth = 8;
-            Cantidad.Name = "Cantidad";
-            Cantidad.ReadOnly = true;
-            Cantidad.Visible = false;
-            Cantidad.Width = 150;
-            // 
             // FormReservasVuelos
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
@@ -404,6 +395,5 @@
         private DataGridViewTextBoxColumn Fecha;
         private DataGridViewTextBoxColumn Aerolinea;
         private DataGridViewTextBoxColumn Avion;
-        private DataGridViewTextBoxColumn Cantidad;
     }
 }

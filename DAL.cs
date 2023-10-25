@@ -531,7 +531,29 @@ namespace tpAgencia_Gpo_2
             }
         }
 
-       
+        public int eliminarMiReservaVuelo(int Id)
+        {
+            string connectionString = Properties.Resources.ConnectionStr;
+            string queryString = "DELETE FROM [dbo].[ReservaVuelo] WHERE [idReservaVuelo]=@idReservaVuelo";
+            using (SqlConnection connection =
+                new SqlConnection(connectionString))
+            {
+                SqlCommand command = new SqlCommand(queryString, connection);
+                command.Parameters.Add(new SqlParameter("@idReservaVuelo", SqlDbType.Int));
+                command.Parameters["@idReservaVuelo"].Value = Id;
+                try
+                {
+                    connection.Open();
+                   
+                    return command.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    return 0;
+                }
+            }
+        }
         public int agregarReservaVuelo(int idVuelo, double costo, int idUsuario)
         {
             int resultadoQuery;
@@ -702,8 +724,8 @@ namespace tpAgencia_Gpo_2
                     while (reader.Read())
                     {
                         Ciudad ciudadOrigen = traerCiudadPorId(reader.GetInt32(15));
-                        Ciudad ciudadDestino = traerCiudadPorId(reader.GetInt32(16));//me lee dni
-                        Usuario usuario = this.traerUsuarioPorId(reader.GetInt32(4));//ok
+                        Ciudad ciudadDestino = traerCiudadPorId(reader.GetInt32(16));
+                        Usuario usuario = this.traerUsuarioPorId(reader.GetInt32(4));
                         Vuelo vuelo = new Vuelo(reader.GetInt32(1), ciudadOrigen, ciudadDestino, reader.GetInt32(17), reader.GetDouble(19), reader.GetDateTime(20), reader.GetString(21), reader.GetString(22));
                         aux = new ReservaVuelo(vuelo, usuario, reader.GetDouble(3));
                         aux.idReservaVuelo = reader.GetInt32(0);
