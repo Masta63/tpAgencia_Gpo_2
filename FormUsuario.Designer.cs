@@ -395,9 +395,8 @@
             // 
             textBox_pass.Location = new Point(1044, 263);
             textBox_pass.Name = "textBox_pass";
-            textBox_pass.Size = new Size(100, 23);
+            textBox_pass.Size = new Size(269, 23);
             textBox_pass.TabIndex = 44;
-            textBox_pass.Text = "password";
             // 
             // label_pass
             // 

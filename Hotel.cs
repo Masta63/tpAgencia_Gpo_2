@@ -14,6 +14,7 @@ namespace tpAgencia_Gpo_2
         public int id { get; set; }
         public Ciudad ubicacion { get; set; }
         public int capacidad { get; set; }
+        public int disponibilidad { get; set; }
         public double costo { get; set; }
         public List<Usuario> listHuespedes { get; set; }
 

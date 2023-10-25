@@ -35,47 +35,90 @@ namespace tpAgencia_Gpo_2
         {
             MostrarHoteles();
         }
-        private void MostrarHoteles()
+
+        private void refrescar()
         {
             dataGridView1.Rows.Clear();
 
             if (usuarioActual != null)
             {
-                List<Hotel> hotelesFuturos = agencia.misReservasHoteles(usuarioActual);
-
-                var hotelesIguales = hotelesFuturos.GroupBy(v => v.id).Select(group => new
+                foreach (var reservas in agencia.getUsuarioActual().listMisReservasHoteles)
                 {
-                    Hotel = group.Key,
-                    Cantidad = group.Count(),
-                    MontoTotal = group.Sum(v => v.costo)
-                });
+                    TimeSpan ts = reservas.fechaHasta.Date.Subtract(reservas.fechaDesde.Date);
+                    double costo = ((ts.Days + 1) * reservas.miHotel.costo);
 
-                foreach (var hotelesAgrupado in hotelesIguales)
-                {
-                    Hotel hotel = hotelesFuturos.FirstOrDefault(v => v.id == hotelesAgrupado.Hotel);
-                    if (hotel != null)
-                    {
-
-                        dataGridView1.Rows.Add(
-                            hotel.ubicacion.nombre,
-                            hotelesAgrupado.MontoTotal,
-                            hotel.nombre, hotel.capacidad, hotelesAgrupado.Cantidad);
-                    }
-
+                    dataGridView1.Rows.Add(
+                        reservas.idReservaHotel,
+                        reservas.miHotel.ubicacion.nombre,
+                        costo,
+                       reservas.miHotel.nombre, reservas.miHotel.capacidad, reservas.fechaDesde, reservas.fechaHasta);
                 }
-
-
-
             }
+        }
 
+        private void MostrarHoteles()
+        {
+            refrescar();
         }
 
         private void Volver_desde_usuario_Click(object sender, EventArgs e)
         {
             this.Close();
-            MenuAgencia MenuAgencia = new MenuAgencia(agencia, form1);
-            MenuAgencia.MdiParent = form1;
-            MenuAgencia.Show();
+            if (agencia.getUsuarioActual().esAdmin)
+            {
+                MenuAgenciaAdm menuAgenciaAdm = new MenuAgenciaAdm(agencia, form1);
+                menuAgenciaAdm.MdiParent = form1;
+                menuAgenciaAdm.Show();
+            }
+            else
+            {
+                MenuAgencia MenuAgencia = new MenuAgencia(agencia, form1);
+                MenuAgencia.MdiParent = form1;
+                MenuAgencia.Show();
+            }
+        }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            try
+            {
+                string? id = dataGridView1[0, e.RowIndex]?.Value?.ToString().Trim();
+                string? ubicacion = dataGridView1[1, e.RowIndex]?.Value?.ToString().Trim();
+                string? costo = dataGridView1[2, e.RowIndex]?.Value?.ToString().Trim();
+                string? nombre = dataGridView1[3, e.RowIndex]?.Value?.ToString().Trim();
+                string? capacidad = dataGridView1[4, e.RowIndex]?.Value?.ToString().Trim();
+                string? fechaDesde = dataGridView1[5, e.RowIndex]?.Value?.ToString().Trim();
+                string? fechaHasta = dataGridView1[6, e.RowIndex]?.Value?.ToString().Trim();
+
+
+                textBox_id.Text = id;
+                textUbicacion.Text = ubicacion;
+                textCosto.Text = costo;
+                textBoxName.Text = nombre;
+                textBoxCapacidad.Text = capacidad;
+                dateTimePickerFechaDesde.Value = Convert.ToDateTime(fechaDesde);
+                dateTimePickerFechaHasta.Value = Convert.ToDateTime(fechaHasta);
+                button1.Enabled = true;
+
+                //(usuarioSeleccionado = int.Parse(id);
+            }
+            catch (Exception)
+            {
+            }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            agencia.eliminarRerservaHotel(Convert.ToInt32(textBox_id.Text));
+            refrescar();
+            textBox_id.Text = "";
+            textUbicacion.Text = "";
+            textCosto.Text = "";
+            textBoxName.Text = "";
+            textBoxCapacidad.Text = "";
+            dateTimePickerFechaDesde.Value = Convert.ToDateTime(DateTime.Now);
+            dateTimePickerFechaHasta.Value = Convert.ToDateTime(DateTime.Now);
+            button1.Enabled = false;
         }
     }
 }

@@ -47,7 +47,7 @@ namespace tpAgencia_Gpo_2
             {
                 if (double.TryParse(textBox_MiCredito.Text, out double nuevoCredito))
                 {
-                    if (refAgencia.agregarCredito(usuarioActual.id, nuevoCredito))
+                    if (refAgencia.AgregarCreditoDal(usuarioActual.id, nuevoCredito))
                     {
                         MessageBox.Show("Modificado con éxito");
                     }
@@ -79,7 +79,7 @@ namespace tpAgencia_Gpo_2
                 if (refAgencia.getUsuarioActual().password == textBox_pass_viejo.Text)
                 {
 
-                    if (refAgencia.modificarPassword(usuarioActual.id, textBox_pass_nuevo.Text))
+                    if (refAgencia.modificarUsuarioDal(usuarioActual.id,usuarioActual.name,usuarioActual.apellido,int.Parse(usuarioActual.dni),usuarioActual.mail, textBox_pass_nuevo.Text))
                     {
 
                         MessageBox.Show("Modificado con éxito");
@@ -105,15 +105,15 @@ namespace tpAgencia_Gpo_2
 
             if (usuarioActual != null)
             {
-                label_ver_saldo_credito.Text = refAgencia.getUsuarioActual().credito.ToString();
+                label_ver_saldo_credito.Text = refAgencia.getUsuarioActual().credito.ToString().Trim();
                 usuarioActual = refAgencia.getUsuarioActual();
-                label_set_usuario_actual.Text = refAgencia.getUsuarioActual().name;
-                label_ver_saldo_credito.Text = (refAgencia.getUsuarioActual()?.credito ?? 0) == 0 ? "No posee saldo actual" : refAgencia.getUsuarioActual().credito.ToString();
-                textBox_id.Text = refAgencia.getUsuarioActual().id.ToString();
-                textBox_nombre.Text = refAgencia.getUsuarioActual().name; ;
-                textBox_apellido.Text = refAgencia.getUsuarioActual().apellido; ;
-                textBox_email.Text = refAgencia.getUsuarioActual().mail;
-                textBox_dni.Text = refAgencia.getUsuarioActual().dni;
+                label_set_usuario_actual.Text = refAgencia.getUsuarioActual().name.Trim();
+                label_ver_saldo_credito.Text = (refAgencia.getUsuarioActual()?.credito ?? 0) == 0 ? "No posee saldo actual" : refAgencia.getUsuarioActual().credito.ToString().Trim();
+                textBox_id.Text = refAgencia.getUsuarioActual().id.ToString().Trim();
+                textBox_nombre.Text = refAgencia.getUsuarioActual().name.Trim(); ;
+                textBox_apellido.Text = refAgencia.getUsuarioActual().apellido.Trim(); ;
+                textBox_email.Text = refAgencia.getUsuarioActual().mail.Trim();
+                textBox_dni.Text = refAgencia.getUsuarioActual().dni.Trim();
             }
 
 
@@ -128,7 +128,8 @@ namespace tpAgencia_Gpo_2
                 if (!string.IsNullOrEmpty(textBox_nombre.Text) && !string.IsNullOrEmpty(textBox_apellido.Text) &&
                     !string.IsNullOrEmpty(textBox_dni.Text) && !string.IsNullOrEmpty(textBox_email.Text))
                 {
-                    if (refAgencia.modificarUsuario(usuarioActual.id, textBox_nombre.Text, textBox_apellido.Text, textBox_dni.Text, textBox_email.Text))
+                    //id    nombre  apellido    dni     email
+                    if (refAgencia.modificarUsuarioDal(usuarioActual.id, textBox_nombre.Text, textBox_apellido.Text, int.Parse(textBox_dni.Text), textBox_email.Text,textBox_pass_nuevo.Text))
                     {
                         MessageBox.Show("Modificado con éxito");
                     }
@@ -154,9 +155,18 @@ namespace tpAgencia_Gpo_2
         private void Volver_desde_usuario_Click(object sender, EventArgs e)
         {
             this.Close();
-            MenuAgencia MenuAgencia = new MenuAgencia(refAgencia, form1);
-            MenuAgencia.MdiParent = form1;
-            MenuAgencia.Show();
+            if (refAgencia.getUsuarioActual().esAdmin)
+            {
+                MenuAgenciaAdm menuAgenciaAdm = new MenuAgenciaAdm(refAgencia, form1);
+                menuAgenciaAdm.MdiParent = form1;
+                menuAgenciaAdm.Show();
+            }
+            else
+            {
+                MenuAgencia MenuAgencia = new MenuAgencia(refAgencia, form1);
+                MenuAgencia.MdiParent = form1;
+                MenuAgencia.Show();
+            }
         }
     }
 }

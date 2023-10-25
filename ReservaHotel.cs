@@ -2,6 +2,7 @@
 {
     public class ReservaHotel
     {
+        public int idReservaHotel { get; set; }
         public Hotel miHotel { get; set; }
         public Usuario miUsuario { get; set; }
         public DateTime fechaDesde { get; set; }

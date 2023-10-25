@@ -220,9 +220,18 @@ namespace tpAgencia_Gpo_2
         private void buttonVolver_Click(object sender, EventArgs e)
         {
             this.Close();
-            MenuAgencia MenuAgencia = new MenuAgencia(agencia, Form1);
-            MenuAgencia.MdiParent = Form1;
-            MenuAgencia.Show();
+            if (agencia.getUsuarioActual().esAdmin)
+            {
+                MenuAgenciaAdm menuAgenciaAdm = new MenuAgenciaAdm(agencia, Form1);
+                menuAgenciaAdm.MdiParent = Form1;
+                menuAgenciaAdm.Show();
+            }
+            else
+            {
+                MenuAgencia MenuAgencia = new MenuAgencia(agencia, Form1);
+                MenuAgencia.MdiParent = Form1;
+                MenuAgencia.Show();
+            }
         }
 
         private void textBoxCapacidad_TextChanged(object sender, EventArgs e)
