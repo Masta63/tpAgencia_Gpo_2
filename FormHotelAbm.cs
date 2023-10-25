@@ -179,13 +179,13 @@ namespace tpAgencia_Gpo_2
                     switch (resultado)
                     {
                         case "exito":
-                            MessageBox.Show("Vuelo modificado exitosamente");
+                            MessageBox.Show("Hotel modificado exitosamente");
                             break;
                         case "capacidad":
-                            MessageBox.Show("La capacidad es menor a la cantidad de personas que reservaron el vuelo");
+                            MessageBox.Show("La capacidad es menor a la cantidad de personas que reservaron el hotel");
                             break;
                         case "error":
-                            MessageBox.Show("Ocurrió un problema al querer modificar el vuelo");
+                            MessageBox.Show("Ocurrió un problema al querer modificar el hotel");
                             break;
                     }
                 }

@@ -605,7 +605,7 @@ public class Agencia
 
     //INICIO METODOS DE HOTEL
 
-    public bool agregarHotel (int ubicacionHotel, Int32 capacidad, float costo, string nombre)
+    public bool agregarHotel(int ubicacionHotel, Int32 capacidad, float costo, string nombre)
 
     {
         Ciudad ubicacion = ciudades.FirstOrDefault(ciudad => ciudad.id == ubicacionHotel);
@@ -613,7 +613,8 @@ public class Agencia
         idNuevoHotel = DB.agregarHotel(ubicacionHotel, capacidad, costo, nombre);
         if (idNuevoHotel != -1)
         {
-            Hotel nuevo = new Hotel (ubicacion, capacidad, costo, nombre);
+            Hotel nuevo = new Hotel(ubicacion, capacidad, costo, nombre);
+            nuevo.id = idNuevoHotel;
             hoteles.Add(nuevo);
             return true;
         }
@@ -637,20 +638,14 @@ public class Agencia
                 {
                     if (hotel.id == idHotel)
                     {
-                        int cantReservas = hotel.listMisReservas.Count;
-                        if (capacidad >= cantReservas)
-                        {
-                            hotel.ubicacion = nuevaUbicacion;
-                            hotel.capacidad = capacidad;
-                            hotel.costo = costo;
-                            hotel.nombre = nombre;
+                        hotel.ubicacion = nuevaUbicacion;
+                        hotel.capacidad = capacidad;
+                        hotel.costo = costo;
+                        hotel.nombre = nombre;
 
-                            return "exito";
-                        }
-                        else
-                        {
-                            return "fallo";
-                        }
+                        return "exito";
+
+
                     }
 
                 }
