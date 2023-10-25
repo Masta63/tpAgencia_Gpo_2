@@ -531,7 +531,7 @@ namespace tpAgencia_Gpo_2
             }
         }
 
-        //CONTROLAR LA CONEXIÓN CON LA BASE CUANDO FUNCIONE AGREGAR USUARIO
+       
         public int agregarReservaVuelo(int idVuelo, double costo, int idUsuario)
         {
             int resultadoQuery;
@@ -686,44 +686,39 @@ namespace tpAgencia_Gpo_2
             return vuelo;
         }
 
-        //public List<ReservaVuelo> reservasPorVuelo (Usuario usuario)
-        //{
-        //    List<Vuelo> reservas = new List<Vuelo>();
-        //    string queryString = "SELECT V.id, V.origen, V.destino, V.costo, V.fecha, V.aerolinea, V.avion " +
-        //               "FROM [sistema].[dbo].[Vuelo_Usuario] as VU " +
-        //               "INNER JOIN [sistema].[dbo].[Vuelo] as V ON VU.idVuelo = V.id " +
-        //               "WHERE VU.idUsuario = " + usuario.id;
-        //    using (SqlConnection conex = new SqlConnection(connectionStr))
-        //    {
-        //        SqlCommand command = new SqlCommand(queryString, conex);
-        //        try
-        //        {
-        //            conex.Open();
-        //            SqlDataReader reader = command.ExecuteReader();
+        public List<ReservaVuelo> traerReservasVuelo(int idUsuario)
+        {
+            List<ReservaVuelo> reservasVuelos = new List<ReservaVuelo>();
+            string queryString = "SELECT * FROM [dbo].[ReservaVuelo] as re inner join [dbo].[Usuario] as s on re.idUsuario = s.idUsuario inner join [dbo].[Vuelo] as h on re.idVuelo = h.idVuelo  where s.idUsuario = " + idUsuario;
+            using (SqlConnection conex = new SqlConnection(connectionStr))
+            {
+                SqlCommand command = new SqlCommand(queryString, conex);
+                try
+                {
+                    conex.Open();
+                    SqlDataReader reader = command.ExecuteReader();
+                    ReservaVuelo aux;
 
-        //            Ciudad origen = new Ciudad(reader.GetInt32(1), reader.GetString(9));
-        //            Ciudad destino = new Ciudad(reader.GetInt32(2), reader.GetString(10));
-        //            while (reader.Read())
-        //            {
-        //                Vuelo vuelo = new Vuelo(
-        //            reader.GetInt32(0),  // ID del vuelo
-        //            reader.GetInt32(1), // Origen
-        //            reader.GetInt32(2), // Destino
-        //            reader.GetDouble(3), // Costo
-        //            reader.GetDateTime(4), // Fecha
-        //            reader.GetString(5), // Aerolínea
-        //            reader.GetString(6))
-        //                reservas.Add(reserva);
-        //            }
-        //        }
-        //        catch (Exception ex)
-        //        {
-        //            Console.WriteLine(ex.Message);
-        //        }
-        //    }
-        //    return reservas;
+                    while (reader.Read())
+                    {
+                        Ciudad ciudadOrigen = traerCiudadPorId(reader.GetInt32(15));
+                        Ciudad ciudadDestino = traerCiudadPorId(reader.GetInt32(16));//me lee dni
+                        Usuario usuario = this.traerUsuarioPorId(reader.GetInt32(4));//ok
+                        Vuelo vuelo = new Vuelo(reader.GetInt32(1), ciudadOrigen, ciudadDestino, reader.GetInt32(17), reader.GetDouble(19), reader.GetDateTime(20), reader.GetString(21), reader.GetString(22));
+                        aux = new ReservaVuelo(vuelo, usuario, reader.GetDouble(3));
+                        aux.idReservaVuelo = reader.GetInt32(0);
+                        reservasVuelos.Add(aux);
+                    }
+                    reader.Close();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+            }
+            return reservasVuelos;
 
-        //}
+        }
         public int ObtenerCantidadComprada(int idVuelo, int idUsuario)
         {
             int cantidadComprada = 0;
@@ -822,7 +817,7 @@ namespace tpAgencia_Gpo_2
         {
             Ciudad? aux = null;
             //string con la consulta que quiero realizar
-            string queryString = "SELECT * FROM [sistema].[dbo].[Ciudad] where idCiudad =" + idCiudad;
+            string queryString = "SELECT * FROM [dbo].[Ciudad] where idCiudad =" + idCiudad;
             //creo conexion con la base de datos el using al finalizar el metodo utiliza el dispose y cierra la conexion para ahorrar recursos
             using (SqlConnection conex = new SqlConnection(connectionStr))//OBJETO<--1
             {

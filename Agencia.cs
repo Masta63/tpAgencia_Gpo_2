@@ -106,6 +106,7 @@ public class Agencia
             codigoReturn = "OK";
             this.usuarioActual = usuarioSeleccionados;
             this.usuarioActual.listMisReservasHoteles = DB.traerMisReservasHotel(usuarioSeleccionados.id);
+            this.usuarioActual.listMisReservasVuelo = DB.traerReservasVuelo(usuarioSeleccionados.id);
         }
         else
         {
@@ -665,14 +666,15 @@ public class Agencia
     {
         DateTime fechaActual = DateTime.Now;
         List<Vuelo> vuelosReservados = new List<Vuelo>();
-        // List<ReservaVuelo> reservasUsuario = DB.reservasPorVuelo(usuario);
+
+        foreach (ReservaVuelo reserva in usuario.listMisReservasVuelo)
+        {
+
+            vuelosReservados.Add(reserva.miVuelo);
 
 
-        //foreach (ReservaVuelo reserva in reservasUsuarioFiltradas)
-        //{
-        //    vuelosReservados.Add(reserva.miVuelo);
-        //}
 
+        }
         return vuelosReservados;
     }
     //METODO DE RESERVA DE HOTEL
