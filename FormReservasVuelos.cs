@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.ToolBar;
 using static tpAgencia_Gpo_2.BuscadorVuelos;
 
 namespace tpAgencia_Gpo_2
@@ -146,15 +147,15 @@ namespace tpAgencia_Gpo_2
                 string Costo = dataGridView1.Rows[e.RowIndex].Cells["Costo"].Value.ToString();
                 string Fecha = dataGridView1.Rows[e.RowIndex].Cells["Fecha"].Value.ToString();
                 string Aerolinea = dataGridView1.Rows[e.RowIndex].Cells["Aerolinea"].Value.ToString();
-                string Cantidad = dataGridView1.Rows[e.RowIndex].Cells["Cantidad"].Value.ToString();
+
 
                 textBoxIdReserva.Text = idReserva;
                 textBoxId.Text = id;
                 textBoxOrigen.Text = Origen;
                 textBoxDestino.Text = Destino;
-                textBoxFecha.Text = Cantidad;
+                textBoxFecha.Text = Fecha;
                 textBoxAerolinea.Text = Aerolinea;
-                textBoxCantidad.Text = Cantidad;
+
                 textBox1.Text = Costo;
 
 
@@ -196,6 +197,18 @@ namespace tpAgencia_Gpo_2
             }
             else
                 MessageBox.Show("Debe seleccionar un vuelo");
+        }
+
+        private void Eliminar_Click(object sender, EventArgs e)
+        {
+            agencia.eliminarReservaVuelo(Convert.ToInt32(textBoxIdReserva.Text));
+            MostrarVuelos();
+            textBoxId.Text = "";
+            textBoxOrigen.Text = "";
+            textBoxDestino.Text = "";
+            textBoxFecha.Text = "";
+            textBoxAerolinea.Text = "";
+           
         }
     }
 }
