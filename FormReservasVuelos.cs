@@ -44,29 +44,35 @@ namespace tpAgencia_Gpo_2
 
             if (usuarioActual != null)
             {
-                List<Vuelo> vuelosFuturos = agencia.misReservasVuelos(usuarioActual);
+                //List<Vuelo> vuelosFuturos = agencia.misReservasVuelos(usuarioActual);
 
-                var vuelosIguales = vuelosFuturos.GroupBy(v => v.id).Select(group => new
+                //var vuelosIguales = vuelosFuturos.GroupBy(v => v.id).Select(group => new
+                //{
+                //    Vuelo = group.Key,
+                //    Cantidad = group.Count(),
+                //    MontoTotal = group.Sum(v => v.costo)
+                //});
+                List<ReservaVuelo> misReservasVuelo = agencia.getUsuarioActual().listMisReservasVuelo;
+
+                // Verifica la longitud de la lista
+                int cantidadReservas = misReservasVuelo.Count;
+                MessageBox.Show("Cantidad de Reservas de Vuelo: " + cantidadReservas); // Muestra la cantidad en una ventana emergente
+
+
+                foreach (var vuelos in misReservasVuelo)
                 {
-                    Vuelo = group.Key,
-                    Cantidad = group.Count(),
-                    MontoTotal = group.Sum(v => v.costo)
-                });
 
-                foreach (var vuelosAgrupado in vuelosIguales)
-                {
-                    Vuelo vuelo = vuelosFuturos.FirstOrDefault(v => v.id == vuelosAgrupado.Vuelo);
-                    if (vuelo != null)
-                    {
 
-                        dataGridView1.Rows.Add(
-                            vuelo.id,
-                            vuelo.origen.nombre,
-                            vuelo.destino.nombre,
-                            vuelosAgrupado.MontoTotal,
-                            vuelo.fecha.ToString("dd/MM/yyyy"),
-                            vuelo.aerolinea, vuelo.avion, vuelosAgrupado.Cantidad);
-                    }
+                    dataGridView1.Rows.Add(
+                        vuelos.idReservaVuelo,
+                        vuelos.miVuelo.id,
+                        vuelos.miVuelo.origen.nombre,
+                        vuelos.miVuelo.destino.nombre,
+                      vuelos.pagado,
+                        vuelos.miVuelo.fecha.ToString("dd/MM/yyyy"),
+                        vuelos.miVuelo.aerolinea,
+                        vuelos.miVuelo.avion);
+
 
                 }
 
