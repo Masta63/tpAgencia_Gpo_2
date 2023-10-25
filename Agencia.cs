@@ -661,7 +661,12 @@ public class Agencia
         return usuarioActual.listVuelosTomados.ToList();
     }
 
-    //METODO DE RESERVA DE VUELO DE LUCAS - REVISAR -
+    public void eliminarReservaVuelo(int idReservaVuelo)
+    {
+        DB.eliminarMiReservaVuelo(idReservaVuelo);
+        ReservaVuelo reservaVuelo = this.usuarioActual.listMisReservasVuelo.FirstOrDefault(x => x.idReservaVuelo == idReservaVuelo);
+        this.usuarioActual.listMisReservasVuelo.Remove(reservaVuelo);
+    }
     public List<Vuelo> misReservasVuelos(Usuario usuario)
     {
         DateTime fechaActual = DateTime.Now;
