@@ -108,7 +108,7 @@ namespace tpAgencia_Gpo_2
 
         private void button1_Click(object sender, EventArgs e)
         {
-            agencia.eliminarRerservaHotel(Convert.ToInt32(textBox_id.Text));
+            agencia.eliminarRerservaHotel(Convert.ToInt32(textBox_id.Text), Convert.ToDouble(textCosto.Text));
             refrescar();
             textBox_id.Text = "";
             textCosto.Text = "";

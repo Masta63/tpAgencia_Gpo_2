@@ -678,7 +678,7 @@ namespace tpAgencia_Gpo_2
         public Vuelo ObtenerVueloPorID(int vueloID)
         {
             Vuelo vuelo = null;
-            string queryString = "SELECT * FROM [sistema].[dbo].[Vuelo] WHERE id = " + vueloID;
+            string queryString = "SELECT * FROM [dbo].[Vuelo] WHERE id = " + vueloID;
 
             using (SqlConnection conex = new SqlConnection(connectionStr))
             {
@@ -808,6 +808,33 @@ namespace tpAgencia_Gpo_2
             }
         }
 
+        public Int32 devolverDineroUsuario(Int32 idUsuario, double credito)
+        {
+            string connectionString = Properties.Resources.ConnectionStr;
+            string queryString = "UPDATE [dbo].[Usuario] SET [credito] =@credito WHERE idUsuario = @idUsuario;";
+
+            using (SqlConnection conex = new SqlConnection(connectionString))
+            {
+                SqlCommand cmd = new SqlCommand(queryString, conex);
+                cmd.Parameters.Add(new SqlParameter("@idUsuario", SqlDbType.Int));
+                cmd.Parameters.Add(new SqlParameter("@credito", SqlDbType.Float));
+
+                cmd.Parameters["@idUsuario"].Value = idUsuario;
+                cmd.Parameters["@credito"].Value = credito;
+
+                try
+                {
+                    conex.Open();
+                    return cmd.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    return 0;
+                }
+            }
+        }
+
         public int eliminarMiReserva(int Id)
         {
             string connectionString = Properties.Resources.ConnectionStr;
@@ -901,7 +928,7 @@ namespace tpAgencia_Gpo_2
             List<ReservaHotel> reservaHotels = new List<ReservaHotel>();
 
             //string con la consulta que quiero realizar
-            string queryString = "SELECT *  FROM [sistema].[dbo].[ReservaHotel] as re inner join [sistema].[dbo].[Usuario]  as s on re.idUsuario = s.idUsuario inner join [sistema].[dbo].[Hotel] as h on re.idHotel = h.idHotel  where s.idUsuario =" + idUsuario;
+            string queryString = "SELECT *  FROM [dbo].[ReservaHotel] as re inner join [dbo].[Usuario]  as s on re.idUsuario = s.idUsuario inner join [dbo].[Hotel] as h on re.idHotel = h.idHotel  where s.idUsuario =" + idUsuario;
 
 
             //creo conexion con la base de datos el using al finalizar el metodo utiliza el dispose y cierra la conexion para ahorrar recursos
@@ -943,7 +970,7 @@ namespace tpAgencia_Gpo_2
         public List<ReservaHotel> traerReservasPorHotel(Hotel hotel)
         {
             List<ReservaHotel> reservasPorHotel = new List<ReservaHotel>();
-            string queryString = "SELECT * FROM [sistema].[dbo].[ReservaHotel] as res inner join [sistema].[dbo].[Usuario] as u on res.idUsuario = u.idUsuario where idHotel=" + hotel.id;
+            string queryString = "SELECT * FROM [dbo].[ReservaHotel] as res inner join [dbo].[Usuario] as u on res.idUsuario = u.idUsuario where idHotel=" + hotel.id;
             using (SqlConnection conex = new SqlConnection(connectionStr))
             {
                 SqlCommand command = new SqlCommand(queryString, conex);
@@ -971,7 +998,7 @@ namespace tpAgencia_Gpo_2
         public List<Usuario> traerMisHuespedesPorHotel(Hotel hotel)
         {
             List<Usuario> huespedes = new List<Usuario>();
-            string queryString = "SELECT *  FROM [sistema].[dbo].[Hotel_Usuario] as hu inner join [sistema].[dbo].[Usuario] as u on hu.idUsuario = u.idUsuario where hu.idHotel =" + hotel.id;
+            string queryString = "SELECT *  FROM [dbo].[Hotel_Usuario] as hu inner join [dbo].[Usuario] as u on hu.idUsuario = u.idUsuario where hu.idHotel =" + hotel.id;
 
             using (SqlConnection conex = new SqlConnection(connectionStr))
             {
@@ -1118,7 +1145,7 @@ namespace tpAgencia_Gpo_2
         {
             Int32 cantidad = 0;
             //string con la consulta que quiero realizar
-            string queryString = "SELECT * FROM [sistema].[dbo].[Hotel_Usuario] where idHotel=" + idHotel + " and idUsuario=" + idUsuario
+            string queryString = "SELECT * FROM [dbo].[Hotel_Usuario] where idHotel=" + idHotel + " and idUsuario=" + idUsuario
 ;
             //creo conexion con la base de datos el using al finalizar el metodo utiliza el dispose y cierra la conexion para ahorrar recursos
             using (SqlConnection conex = new SqlConnection(connectionStr))//OBJETO<--1
@@ -1209,7 +1236,7 @@ namespace tpAgencia_Gpo_2
         public bool traerHotel_Usuario(Int32 idHotel, Int32 idUsuario)
         {
             bool existe = false;
-            string queryString = "SELECT * FROM [sistema].[dbo].[Hotel_Usuario]  where idHotel=" + idHotel + "and idUsuario=" + idUsuario;
+            string queryString = "SELECT * FROM [dbo].[Hotel_Usuario]  where idHotel=" + idHotel + "and idUsuario=" + idUsuario;
 
             using (SqlConnection conex = new SqlConnection(connectionStr))
             {

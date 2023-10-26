@@ -951,10 +951,12 @@ public class Agencia
     }
 
 
-    public void eliminarRerservaHotel(int idReservaHotel)
+    public void eliminarRerservaHotel(int idReservaHotel, double costo)
     {
         DB.eliminarMiReserva(idReservaHotel);
+        DB.devolverDineroUsuario(this.usuarioActual.id, costo);
         ReservaHotel reservaHotel = this.usuarioActual.listMisReservasHoteles.FirstOrDefault(x => x.idReservaHotel == idReservaHotel);
+        this.usuarioActual.credito = this.usuarioActual.credito - costo;
         this.usuarioActual.listMisReservasHoteles.Remove(reservaHotel);
     }
 
