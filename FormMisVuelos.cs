@@ -34,20 +34,10 @@ namespace tpAgencia_Gpo_2
         private void FormMisVuelos_Load(object sender, EventArgs e)
         {
             MostrarVuelos();
-            AddButtonColumn();
-
-        }
-        private void AddButtonColumn()
-        {
            
-            DataGridViewButtonColumn buttonColumn = new DataGridViewButtonColumn();
-            buttonColumn.HeaderText = "Modificar/Cancelar";
-            buttonColumn.Text = "Modificar/Cancelar";
-            buttonColumn.UseColumnTextForButtonValue = true;
 
-            
-            dataGridView1.Columns.Add(buttonColumn);
         }
+      
 
         private void MostrarVuelos()
         {
