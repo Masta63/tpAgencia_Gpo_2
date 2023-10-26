@@ -77,12 +77,6 @@ namespace tpAgencia_Gpo_2
                 ingresar = true;
             }
 
-            if (string.IsNullOrEmpty(textCantPer.Text))
-            {
-                MessageBox.Show("Se debe ingresar cantidad de persona");
-                ingresar = true;
-            }
-
 
             if (fechaHasta.Value == null)
             {
@@ -112,7 +106,7 @@ namespace tpAgencia_Gpo_2
             string ciudadSeleccionada = boxCiudades.SelectedItem.ToString();
             DateTime fechaIngreso = fechaDesde.Value;
             DateTime fechaEgreso = fechaHasta.Value;
-            List<Hotel> hotelesDisponibles = Agencia.TraerDisponibilidadHotel(ciudadSeleccionada, fechaIngreso, fechaEgreso, textCantPer.Text);
+            List<Hotel> hotelesDisponibles = Agencia.TraerDisponibilidadHotel(ciudadSeleccionada, fechaIngreso, fechaEgreso, "1");
             bool disponibilidad = false;
             dataGridViewHotel.Rows.Clear();
             if (hotelesDisponibles.Count > 0)
@@ -155,11 +149,11 @@ namespace tpAgencia_Gpo_2
 
         }
 
-        private void irAreservar(ReservaHotel reservaHotel, string cantPer)
+        private void irAreservar(ReservaHotel reservaHotel)
         {
             this.MdiParent = Form1;
             this.Close();
-            FormReservaHotel = new FormReservaHotel(Agencia, Form1, reservaHotel, cantPer);
+            FormReservaHotel = new FormReservaHotel(Agencia, Form1, reservaHotel);
             FormReservaHotel.Show();
         }
 
@@ -185,7 +179,7 @@ namespace tpAgencia_Gpo_2
             {
                 Hotel? hotelSeleccionado = Agencia.getHoteles().Where(x => x.id == Convert.ToInt32(labelIdComprar.Text)).FirstOrDefault();
                 ReservaHotel reservaHotel = new ReservaHotel(hotelSeleccionado, Agencia.getUsuarioActual(), fechaDesde.Value, fechaHasta.Value, Convert.ToInt32(TextMonto.Text));
-                this.irAreservar(reservaHotel, textCantPer.Text);
+                this.irAreservar(reservaHotel);
             }
         }
 

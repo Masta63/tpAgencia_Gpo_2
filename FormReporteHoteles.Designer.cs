@@ -32,12 +32,17 @@
             fechaDesde = new DateTimePicker();
             label1 = new Label();
             botonBuscar = new Button();
-            label2 = new Label();
             label3 = new Label();
             label4 = new Label();
             dataGridViewHotel = new DataGridView();
+            id = new DataGridViewTextBoxColumn();
+            ubicacion = new DataGridViewTextBoxColumn();
+            capacidad = new DataGridViewTextBoxColumn();
+            costo = new DataGridViewTextBoxColumn();
+            nombre = new DataGridViewTextBoxColumn();
+            Fdesde = new DataGridViewTextBoxColumn();
+            FHasta = new DataGridViewTextBoxColumn();
             boxCiudades = new ComboBox();
-            textCantPer = new TextBox();
             buttonComprar = new Button();
             Volver_desde_usuario = new Button();
             tituloreporte = new Label();
@@ -46,13 +51,6 @@
             labelNombreHotel = new Label();
             TextMonto = new TextBox();
             label5 = new Label();
-            id = new DataGridViewTextBoxColumn();
-            ubicacion = new DataGridViewTextBoxColumn();
-            capacidad = new DataGridViewTextBoxColumn();
-            costo = new DataGridViewTextBoxColumn();
-            nombre = new DataGridViewTextBoxColumn();
-            Fdesde = new DataGridViewTextBoxColumn();
-            FHasta = new DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)dataGridViewHotel).BeginInit();
             SuspendLayout();
             // 
@@ -90,15 +88,6 @@
             botonBuscar.UseVisualStyleBackColor = true;
             botonBuscar.Click += botonBuscar_Click;
             // 
-            // label2
-            // 
-            label2.AutoSize = true;
-            label2.Location = new Point(314, 71);
-            label2.Name = "label2";
-            label2.Size = new Size(183, 15);
-            label2.TabIndex = 6;
-            label2.Text = "Indique la cantidad de huespedes";
-            // 
             // label3
             // 
             label3.AutoSize = true;
@@ -128,6 +117,41 @@
             dataGridViewHotel.TabIndex = 9;
             dataGridViewHotel.CellContentClick += dataGridView1_CellContentClick;
             // 
+            // id
+            // 
+            id.HeaderText = "id";
+            id.Name = "id";
+            // 
+            // ubicacion
+            // 
+            ubicacion.HeaderText = "ubicacion";
+            ubicacion.Name = "ubicacion";
+            // 
+            // capacidad
+            // 
+            capacidad.HeaderText = "disponibilidad";
+            capacidad.Name = "capacidad";
+            // 
+            // costo
+            // 
+            costo.HeaderText = "costo";
+            costo.Name = "costo";
+            // 
+            // nombre
+            // 
+            nombre.HeaderText = "nombre";
+            nombre.Name = "nombre";
+            // 
+            // Fdesde
+            // 
+            Fdesde.HeaderText = "FechaDesde";
+            Fdesde.Name = "Fdesde";
+            // 
+            // FHasta
+            // 
+            FHasta.HeaderText = "FechaHasta";
+            FHasta.Name = "FHasta";
+            // 
             // boxCiudades
             // 
             boxCiudades.FormattingEnabled = true;
@@ -136,13 +160,6 @@
             boxCiudades.Size = new Size(121, 23);
             boxCiudades.TabIndex = 10;
             boxCiudades.SelectedIndexChanged += comboBox1_SelectedIndexChanged;
-            // 
-            // textCantPer
-            // 
-            textCantPer.Location = new Point(314, 106);
-            textCantPer.Name = "textCantPer";
-            textCantPer.Size = new Size(100, 23);
-            textCantPer.TabIndex = 11;
             // 
             // buttonComprar
             // 
@@ -216,41 +233,6 @@
             label5.TabIndex = 39;
             label5.Text = "Monto";
             // 
-            // id
-            // 
-            id.HeaderText = "id";
-            id.Name = "id";
-            // 
-            // ubicacion
-            // 
-            ubicacion.HeaderText = "ubicacion";
-            ubicacion.Name = "ubicacion";
-            // 
-            // capacidad
-            // 
-            capacidad.HeaderText = "disponibilidad";
-            capacidad.Name = "capacidad";
-            // 
-            // costo
-            // 
-            costo.HeaderText = "costo";
-            costo.Name = "costo";
-            // 
-            // nombre
-            // 
-            nombre.HeaderText = "nombre";
-            nombre.Name = "nombre";
-            // 
-            // Fdesde
-            // 
-            Fdesde.HeaderText = "FechaDesde";
-            Fdesde.Name = "Fdesde";
-            // 
-            // FHasta
-            // 
-            FHasta.HeaderText = "FechaHasta";
-            FHasta.Name = "FHasta";
-            // 
             // FormReporteHoteles
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -264,12 +246,10 @@
             Controls.Add(tituloreporte);
             Controls.Add(Volver_desde_usuario);
             Controls.Add(buttonComprar);
-            Controls.Add(textCantPer);
             Controls.Add(boxCiudades);
             Controls.Add(dataGridViewHotel);
             Controls.Add(label4);
             Controls.Add(label3);
-            Controls.Add(label2);
             Controls.Add(botonBuscar);
             Controls.Add(label1);
             Controls.Add(fechaDesde);
@@ -288,12 +268,10 @@
         private DateTimePicker fechaDesde;
         private Label label1;
         private Button botonBuscar;
-        private Label label2;
         private Label label3;
         private Label label4;
         private DataGridView dataGridViewHotel;
         private ComboBox boxCiudades;
-        private TextBox textCantPer;
         private Button buttonComprar;
         private Button Volver_desde_usuario;
         private Label tituloreporte;

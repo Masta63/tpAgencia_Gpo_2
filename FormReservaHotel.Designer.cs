@@ -30,7 +30,6 @@
         {
             tituloreporte = new Label();
             buttonComprar = new Button();
-            textCantPer = new TextBox();
             boxHoteles = new ComboBox();
             dataGridViewHotel = new DataGridView();
             nombre = new DataGridViewTextBoxColumn();
@@ -40,7 +39,6 @@
             FHasta = new DataGridViewTextBoxColumn();
             label4 = new Label();
             label3 = new Label();
-            label2 = new Label();
             label1 = new Label();
             fechaDesde = new DateTimePicker();
             fechaHasta = new DateTimePicker();
@@ -69,14 +67,6 @@
             buttonComprar.Text = "Confirmar comprar";
             buttonComprar.UseVisualStyleBackColor = true;
             buttonComprar.Click += buttonComprar_Click;
-            // 
-            // textCantPer
-            // 
-            textCantPer.Enabled = false;
-            textCantPer.Location = new Point(257, 112);
-            textCantPer.Name = "textCantPer";
-            textCantPer.Size = new Size(100, 23);
-            textCantPer.TabIndex = 46;
             // 
             // boxHoteles
             // 
@@ -141,15 +131,6 @@
             label3.TabIndex = 42;
             label3.Text = "Fecha desde:";
             // 
-            // label2
-            // 
-            label2.AutoSize = true;
-            label2.Location = new Point(257, 77);
-            label2.Name = "label2";
-            label2.Size = new Size(130, 15);
-            label2.TabIndex = 41;
-            label2.Text = "Cantidad de huespedes";
-            // 
             // label1
             // 
             label1.AutoSize = true;
@@ -177,7 +158,7 @@
             // 
             // textBoxMonto
             // 
-            textBoxMonto.Location = new Point(485, 112);
+            textBoxMonto.Location = new Point(287, 112);
             textBoxMonto.Name = "textBoxMonto";
             textBoxMonto.Size = new Size(100, 23);
             textBoxMonto.TabIndex = 48;
@@ -185,7 +166,7 @@
             // label5
             // 
             label5.AutoSize = true;
-            label5.Location = new Point(485, 77);
+            label5.Location = new Point(287, 77);
             label5.Name = "label5";
             label5.Size = new Size(43, 15);
             label5.TabIndex = 49;
@@ -211,12 +192,10 @@
             Controls.Add(label5);
             Controls.Add(textBoxMonto);
             Controls.Add(buttonComprar);
-            Controls.Add(textCantPer);
             Controls.Add(boxHoteles);
             Controls.Add(dataGridViewHotel);
             Controls.Add(label4);
             Controls.Add(label3);
-            Controls.Add(label2);
             Controls.Add(label1);
             Controls.Add(fechaDesde);
             Controls.Add(fechaHasta);
@@ -234,12 +213,10 @@
         private Label tituloreporte;
         private Label labelIdCompra;
         private Button buttonComprar;
-        private TextBox textCantPer;
         private ComboBox boxHoteles;
         private DataGridView dataGridViewHotel;
         private Label label4;
         private Label label3;
-        private Label label2;
         private Label label1;
         private DateTimePicker fechaDesde;
         private DateTimePicker fechaHasta;

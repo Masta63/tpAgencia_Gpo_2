@@ -80,7 +80,7 @@ namespace tpAgencia_Gpo_2
             FormReporteHoteles.MdiParent = form1;
             FormReporteHoteles.TransfEventoFormCiudad += TransfDelegadoReporteHoteles;
 
-            FormReservaHotel = new FormReservaHotel(agencia, form1, null, string.Empty);
+            FormReservaHotel = new FormReservaHotel(agencia, form1, null);
             FormReporteHoteles.MdiParent = form1;
             FormReservaHotel.transfDelegadoFormAltaReserva += TransfDelegadoAltaReservaHotel;
 
@@ -213,7 +213,7 @@ namespace tpAgencia_Gpo_2
         {
             this.MdiParent = Form1;
             this.Close();
-            FormReservaHotel = new FormReservaHotel(Agencia, Form1, null, string.Empty);
+            FormReservaHotel = new FormReservaHotel(Agencia, Form1, null);
             FormReservaHotel.Show();
         }
 

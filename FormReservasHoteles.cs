@@ -131,14 +131,22 @@ namespace tpAgencia_Gpo_2
             TimeSpan ts = fechaHasta.Date.Subtract(fechaDesde.Date);
             double costo = (ts.Days + 1) * miHotel.costo;
 
-            agencia.editarReservaHotel(fechaDesde, fechaHasta, costo, idReservaHotel);
-            refrescar();
-            textBox_id.Text = "";
-            textCosto.Text = "";
-            button1.Enabled = false;
-            button2.Enabled = false;
-            dateTimePickerFechaDesde.Enabled = false;
-            dateTimePickerFechaHasta.Enabled = false;
+
+            if (agencia.TraerDisponibilidadHotelParaEdicion(miHotel, fechaDesde, fechaHasta, 1))
+            {
+                agencia.editarReservaHotel(fechaDesde, fechaHasta, costo, idReservaHotel);
+                refrescar();
+                textBox_id.Text = "";
+                textCosto.Text = "";
+                button1.Enabled = false;
+                button2.Enabled = false;
+                dateTimePickerFechaDesde.Enabled = false;
+                dateTimePickerFechaHasta.Enabled = false;
+            }
+            else
+            {
+                MessageBox.Show("No hay disponibilidad");
+            }
         }
 
         private void dateTimePickerFechaHasta_ValueChanged(object sender, EventArgs e)
@@ -173,5 +181,9 @@ namespace tpAgencia_Gpo_2
             }
         }
 
+        private void textBoxidHotel_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

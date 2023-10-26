@@ -158,7 +158,7 @@
             // textBox_id
             // 
             textBox_id.Enabled = false;
-            textBox_id.Location = new Point(944, 166);
+            textBox_id.Location = new Point(944, 176);
             textBox_id.Name = "textBox_id";
             textBox_id.Size = new Size(161, 23);
             textBox_id.TabIndex = 28;
@@ -166,7 +166,7 @@
             // label_id
             // 
             label_id.AutoSize = true;
-            label_id.Location = new Point(920, 174);
+            label_id.Location = new Point(920, 185);
             label_id.Name = "label_id";
             label_id.Size = new Size(18, 15);
             label_id.TabIndex = 29;
@@ -252,11 +252,12 @@
             // textBoxidHotel
             // 
             textBoxidHotel.Enabled = false;
-            textBoxidHotel.Location = new Point(944, 123);
+            textBoxidHotel.Location = new Point(944, 133);
             textBoxidHotel.Name = "textBoxidHotel";
             textBoxidHotel.Size = new Size(161, 23);
             textBoxidHotel.TabIndex = 46;
             textBoxidHotel.Visible = false;
+            textBoxidHotel.TextChanged += textBoxidHotel_TextChanged;
             // 
             // FormReservasHoteles
             // 

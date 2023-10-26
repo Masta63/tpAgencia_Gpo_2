@@ -17,7 +17,7 @@ namespace tpAgencia_Gpo_2
         public TransfDelegadoFormAltaReserva transfDelegadoFormAltaReserva;
         private Agencia Agencia;
         private Form1 Form1;
-        public FormReservaHotel(Agencia agencia, Form1 form1, ReservaHotel? reservaHotel, string cantHuesp)
+        public FormReservaHotel(Agencia agencia, Form1 form1, ReservaHotel? reservaHotel)
         {
             InitializeComponent();
             this.Agencia = agencia;
@@ -31,7 +31,6 @@ namespace tpAgencia_Gpo_2
                 fechaDesde.Value = reservaHotel.fechaDesde;
                 fechaHasta.Value = reservaHotel.fechaHasta;
                 textBoxMonto.Text = Convert.ToString(reservaHotel.pagado);
-                textCantPer.Text = cantHuesp;
                 TimeSpan ts = fechaHasta.Value.Date.Subtract(fechaDesde.Value.Date);
                 double costo = ((ts.Days + 1) * reservaHotel.miHotel.costo);
                 dataGridViewHotel.Rows.Add(new string[] { reservaHotel.miHotel.nombre, Convert.ToString(costo), Convert.ToString(reservaHotel.miHotel.capacidad), reservaHotel.fechaDesde.ToLongDateString(), reservaHotel.fechaHasta.ToLongDateString() });
@@ -64,7 +63,7 @@ namespace tpAgencia_Gpo_2
             if (validaciones(hotelSeleccionado))
             {
                 dataGridViewHotel.Rows.Clear();
-                if (Agencia.GenerarReserva(hotelSeleccionado, fechaIngreso, fechaEgreso, textBoxMonto.Text, textCantPer.Text) != null)
+                if (Agencia.GenerarReserva(hotelSeleccionado, fechaIngreso, fechaEgreso, textBoxMonto.Text) != null)
                 {
                     dataGridViewHotel.Rows.Add(new string[] { hotelSeleccionado.nombre, textBoxMonto.Text, Convert.ToString(hotelSeleccionado.capacidad), fechaIngreso.ToShortDateString(), fechaEgreso.ToShortDateString() });
                     disponibilidad = true;
@@ -75,11 +74,6 @@ namespace tpAgencia_Gpo_2
 
         private bool validacionesInput()
         {
-            if (textCantPer.Text == string.Empty)
-            {
-                MessageBox.Show("Debe seleccionar cantidad de personas");
-                return false;
-            }
 
             if (boxHoteles.Text == string.Empty)
             {
@@ -95,11 +89,6 @@ namespace tpAgencia_Gpo_2
         }
         private bool validaciones(Hotel? hotelSeleccionado)
         {
-            if (Convert.ToInt32(textCantPer.Text) > hotelSeleccionado.capacidad)
-            {
-                MessageBox.Show("No hay capacidad");
-                return false;
-            }
             if (hotelSeleccionado.costo > Convert.ToDouble(textBoxMonto.Text))
             {
                 MessageBox.Show("No cubre el costo");
@@ -129,7 +118,7 @@ namespace tpAgencia_Gpo_2
         {
             this.Close();
 
-            if(Agencia.getUsuarioActual().esAdmin)
+            if (Agencia.getUsuarioActual().esAdmin)
             {
                 MenuAgenciaAdm menuAgenciaAdm = new MenuAgenciaAdm(Agencia, Form1);
                 menuAgenciaAdm.MdiParent = Form1;
