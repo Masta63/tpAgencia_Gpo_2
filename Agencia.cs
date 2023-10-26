@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualBasic.ApplicationServices;
 using System;
 using System.CodeDom;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Xml.Linq;
@@ -903,6 +904,21 @@ public class Agencia
         this.usuarioActual.listMisReservasHoteles.Remove(reservaHotel);
     }
 
+    public void editarReservaHotel(DateTime fechaDesde, DateTime fechaHasta, double pagado, Int32 idReservaHotel)
+    {
+        DB.modificarReservaHotel(fechaDesde, fechaHasta, pagado, idReservaHotel);
+        ReservaHotel reservaHotelUsuarioActual = this.usuarioActual.listMisReservasHoteles.FirstOrDefault(x => x.idReservaHotel == idReservaHotel);
+        ReservaHotel objEnReservaHoteles = this.getReservasHotel().FirstOrDefault(reservaHotelUsuarioActual);
+        objEnReservaHoteles.fechaDesde = fechaDesde;
+        objEnReservaHoteles.fechaHasta = fechaHasta;
+        objEnReservaHoteles.pagado = pagado;
+
+        ReservaHotel reservaHotelLista=  this.getReservasHotel().FirstOrDefault(objEnReservaHoteles);
+        reservaHotelLista.fechaDesde = fechaDesde;
+        reservaHotelLista.fechaHasta = fechaHasta;
+        reservaHotelLista.pagado = pagado;
+    }
+
     public ReservaHotel? GenerarReserva(Hotel hotelSeleccionado, DateTime fechaIngreso, DateTime fechaEgreso, string textBoxMonto, string textCantPer)
     {
         TimeSpan ts = fechaEgreso.Date.Subtract(fechaIngreso.Date);
@@ -922,10 +938,6 @@ public class Agencia
             {
                 DB.modificarCantidadDeVisitantes(reservaHotel.miHotel.id, reservaHotel.miUsuario.id, 1);
             }
-
-            //Recalcula la capacidad del hotel
-            //hotelSeleccionado.capacidad = hotelSeleccionado.capacidad - Convert.ToInt32(textCantPer);
-            //DB.modificarCapacidadHotel(reservaHotel.miHotel.id, hotelSeleccionado.capacidad);
 
             Usuario usuarioActual = this.getUsuarioActual();
 

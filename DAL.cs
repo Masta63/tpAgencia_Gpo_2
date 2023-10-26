@@ -346,7 +346,7 @@ namespace tpAgencia_Gpo_2
             return vuelos;
         }
 
-        
+
         public int agregarVuelo(int idOrigen, int idDestino, int capacidad, double costo, DateTime fecha, string aerolinea, string avion)
         {
             int resultadoQuery;
@@ -544,7 +544,7 @@ namespace tpAgencia_Gpo_2
                 try
                 {
                     connection.Open();
-                   
+
                     return command.ExecuteNonQuery();
                 }
                 catch (Exception ex)
@@ -626,7 +626,7 @@ namespace tpAgencia_Gpo_2
                 cmd.Parameters["@idVuelo"].Value = idVuelo;
                 cmd.Parameters["@idUsuario"].Value = idUsuario;
                 cmd.Parameters["@cantidad"].Value = cantidad;
-               
+
                 try
                 {
                     conex.Open();
@@ -694,7 +694,7 @@ namespace tpAgencia_Gpo_2
                         Ciudad destino = new Ciudad(reader.GetInt32(2), reader.GetString(10));
                         vuelo = new Vuelo(
                             reader.GetInt32(0), origen, destino, reader.GetInt32(3), reader.GetDouble(5), reader.GetDateTime(6), reader.GetString(7), reader.GetString(8));
-                        
+
                     }
 
                     reader.Close();
@@ -769,7 +769,7 @@ namespace tpAgencia_Gpo_2
                 catch (Exception ex)
                 {
                     Console.WriteLine(ex.Message);
-                   
+
                 }
             }
 
@@ -777,6 +777,36 @@ namespace tpAgencia_Gpo_2
         }
         #region reservaHotel
 
+        public int modificarReservaHotel(DateTime fechaDesde, DateTime fechaHasta, double pagado, Int32 idReservaHotel)
+        {
+            string connectionString = Properties.Resources.ConnectionStr;
+            string queryString = "UPDATE[dbo].[ReservaHotel] SET [fechaDesde] =@fechaDesde ,[fechaHasta] =@fechaHasta ,[pagado] =@pagado  WHERE idReservaHotel = @idReservaHotel;";
+
+            using (SqlConnection conex = new SqlConnection(connectionString))
+            {
+                SqlCommand cmd = new SqlCommand(queryString, conex);
+                cmd.Parameters.Add(new SqlParameter("@fechaDesde", SqlDbType.DateTime));
+                cmd.Parameters.Add(new SqlParameter("@fechaHasta", SqlDbType.DateTime));
+                cmd.Parameters.Add(new SqlParameter("@pagado", SqlDbType.Float));
+                cmd.Parameters.Add(new SqlParameter("@idReservaHotel", SqlDbType.Int));
+
+                cmd.Parameters["@fechaDesde"].Value = fechaDesde;
+                cmd.Parameters["@fechaHasta"].Value = fechaHasta;
+                cmd.Parameters["@pagado"].Value = pagado;
+                cmd.Parameters["@idReservaHotel"].Value = idReservaHotel;
+
+                try
+                {
+                    conex.Open();
+                    return cmd.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    return 0;
+                }
+            }
+        }
 
         public int eliminarMiReserva(int Id)
         {
@@ -894,7 +924,7 @@ namespace tpAgencia_Gpo_2
                         Hotel hotel = new Hotel(reader.GetInt32(5), ciudad, reader.GetInt32(18), reader.GetDouble(19), reader.GetString(20));
                         Usuario usuario = this.traerUsuarioPorId(reader.GetInt32(1));
                         //leo la fila, la carga en la variable aux y la agrega a mis usuarios para trabajar en tiempo de ejecucion 
-                        aux = new ReservaHotel(hotel,usuario,reader.GetDateTime(2), reader.GetDateTime(3), reader.GetDouble(4));
+                        aux = new ReservaHotel(hotel, usuario, reader.GetDateTime(2), reader.GetDateTime(3), reader.GetDouble(4));
                         aux.idReservaHotel = reader.GetInt32(0);
                         reservaHotels.Add(aux);
                     }
@@ -1114,7 +1144,7 @@ namespace tpAgencia_Gpo_2
         }
 
 
-        public int modificarCantidadDeVisitantes(Int32 idHotel,Int32 idUsuario ,int cantidad)
+        public int modificarCantidadDeVisitantes(Int32 idHotel, Int32 idUsuario, int cantidad)
         {
             Int32 cantidadBase = this.traerCantidadDeUsuarioHotel(idUsuario, idHotel);
             Int32 cantidadTotal = cantidadBase + cantidad;
@@ -1229,7 +1259,7 @@ namespace tpAgencia_Gpo_2
                 cmd.Parameters["@capacidad"].Value = capacidad;
                 cmd.Parameters["@costo"].Value = costo;
                 cmd.Parameters["@nombre"].Value = nombre;
-   
+
                 try
                 {
                     conex.Open();

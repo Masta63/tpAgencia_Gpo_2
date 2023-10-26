@@ -33,27 +33,25 @@
             dataGridView1 = new DataGridView();
             idReservaHotel = new DataGridViewTextBoxColumn();
             Ubicacion = new DataGridViewTextBoxColumn();
-            Costo = new DataGridViewTextBoxColumn();
+            CostoHotel = new DataGridViewTextBoxColumn();
             Nombre = new DataGridViewTextBoxColumn();
             Capacidad = new DataGridViewTextBoxColumn();
             fechaDesde = new DataGridViewTextBoxColumn();
             fechaHasta = new DataGridViewTextBoxColumn();
+            idHotel = new DataGridViewTextBoxColumn();
+            Costo = new DataGridViewTextBoxColumn();
             Volver_desde_usuario = new Button();
             textBox_id = new TextBox();
             label_id = new Label();
-            label3 = new Label();
-            textUbicacion = new TextBox();
             label4 = new Label();
             textCosto = new TextBox();
-            label5 = new Label();
-            textBoxName = new TextBox();
-            label6 = new Label();
-            textBoxCapacidad = new TextBox();
             label7 = new Label();
             label8 = new Label();
             button1 = new Button();
             dateTimePickerFechaDesde = new DateTimePicker();
             dateTimePickerFechaHasta = new DateTimePicker();
+            button2 = new Button();
+            textBoxidHotel = new TextBox();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
             // 
@@ -82,7 +80,7 @@
             // dataGridView1
             // 
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { idReservaHotel, Ubicacion, Costo, Nombre, Capacidad, fechaDesde, fechaHasta });
+            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { idReservaHotel, Ubicacion, CostoHotel, Nombre, Capacidad, fechaDesde, fechaHasta, idHotel, Costo });
             dataGridView1.Location = new Point(11, 176);
             dataGridView1.Margin = new Padding(2);
             dataGridView1.Name = "dataGridView1";
@@ -104,12 +102,10 @@
             Ubicacion.Name = "Ubicacion";
             Ubicacion.Width = 150;
             // 
-            // Costo
+            // CostoHotel
             // 
-            Costo.HeaderText = "Costo";
-            Costo.MinimumWidth = 8;
-            Costo.Name = "Costo";
-            Costo.Width = 150;
+            CostoHotel.HeaderText = "MontoPagado";
+            CostoHotel.Name = "CostoHotel";
             // 
             // Nombre
             // 
@@ -135,6 +131,19 @@
             fechaHasta.HeaderText = "fechaHasta";
             fechaHasta.Name = "fechaHasta";
             // 
+            // idHotel
+            // 
+            idHotel.HeaderText = "idHotel";
+            idHotel.Name = "idHotel";
+            idHotel.Visible = false;
+            // 
+            // Costo
+            // 
+            Costo.HeaderText = "Costo";
+            Costo.MinimumWidth = 8;
+            Costo.Name = "Costo";
+            Costo.Width = 150;
+            // 
             // Volver_desde_usuario
             // 
             Volver_desde_usuario.BackColor = Color.FromArgb(192, 255, 255);
@@ -149,7 +158,7 @@
             // textBox_id
             // 
             textBox_id.Enabled = false;
-            textBox_id.Location = new Point(892, 121);
+            textBox_id.Location = new Point(944, 166);
             textBox_id.Name = "textBox_id";
             textBox_id.Size = new Size(161, 23);
             textBox_id.TabIndex = 28;
@@ -157,32 +166,16 @@
             // label_id
             // 
             label_id.AutoSize = true;
-            label_id.Location = new Point(868, 129);
+            label_id.Location = new Point(920, 174);
             label_id.Name = "label_id";
             label_id.Size = new Size(18, 15);
             label_id.TabIndex = 29;
             label_id.Text = "ID";
             // 
-            // label3
-            // 
-            label3.AutoSize = true;
-            label3.Location = new Point(826, 176);
-            label3.Name = "label3";
-            label3.Size = new Size(60, 15);
-            label3.TabIndex = 30;
-            label3.Text = "Ubicacion";
-            // 
-            // textUbicacion
-            // 
-            textUbicacion.Location = new Point(892, 168);
-            textUbicacion.Name = "textUbicacion";
-            textUbicacion.Size = new Size(161, 23);
-            textUbicacion.TabIndex = 31;
-            // 
             // label4
             // 
             label4.AutoSize = true;
-            label4.Location = new Point(848, 223);
+            label4.Location = new Point(900, 223);
             label4.Name = "label4";
             label4.Size = new Size(38, 15);
             label4.TabIndex = 32;
@@ -190,47 +183,16 @@
             // 
             // textCosto
             // 
-            textCosto.Location = new Point(892, 215);
+            textCosto.Enabled = false;
+            textCosto.Location = new Point(944, 215);
             textCosto.Name = "textCosto";
             textCosto.Size = new Size(161, 23);
             textCosto.TabIndex = 33;
             // 
-            // label5
-            // 
-            label5.AutoSize = true;
-            label5.Location = new Point(835, 270);
-            label5.Name = "label5";
-            label5.Size = new Size(51, 15);
-            label5.TabIndex = 34;
-            label5.Text = "Nombre";
-            // 
-            // textBoxName
-            // 
-            textBoxName.Location = new Point(892, 262);
-            textBoxName.Name = "textBoxName";
-            textBoxName.Size = new Size(161, 23);
-            textBoxName.TabIndex = 35;
-            // 
-            // label6
-            // 
-            label6.AutoSize = true;
-            label6.Location = new Point(823, 318);
-            label6.Name = "label6";
-            label6.Size = new Size(63, 15);
-            label6.TabIndex = 36;
-            label6.Text = "Capacidad";
-            // 
-            // textBoxCapacidad
-            // 
-            textBoxCapacidad.Location = new Point(892, 310);
-            textBoxCapacidad.Name = "textBoxCapacidad";
-            textBoxCapacidad.Size = new Size(161, 23);
-            textBoxCapacidad.TabIndex = 37;
-            // 
             // label7
             // 
             label7.AutoSize = true;
-            label7.Location = new Point(793, 366);
+            label7.Location = new Point(833, 275);
             label7.Name = "label7";
             label7.Size = new Size(72, 15);
             label7.TabIndex = 40;
@@ -239,7 +201,7 @@
             // label8
             // 
             label8.AutoSize = true;
-            label8.Location = new Point(793, 419);
+            label8.Location = new Point(836, 324);
             label8.Name = "label8";
             label8.Size = new Size(69, 15);
             label8.TabIndex = 41;
@@ -259,36 +221,57 @@
             // 
             // dateTimePickerFechaDesde
             // 
-            dateTimePickerFechaDesde.Location = new Point(871, 360);
+            dateTimePickerFechaDesde.Enabled = false;
+            dateTimePickerFechaDesde.Location = new Point(920, 267);
             dateTimePickerFechaDesde.Name = "dateTimePickerFechaDesde";
             dateTimePickerFechaDesde.Size = new Size(200, 23);
             dateTimePickerFechaDesde.TabIndex = 43;
+            dateTimePickerFechaDesde.ValueChanged += dateTimePickerFechaDesde_ValueChanged;
             // 
             // dateTimePickerFechaHasta
             // 
-            dateTimePickerFechaHasta.Location = new Point(871, 411);
+            dateTimePickerFechaHasta.Enabled = false;
+            dateTimePickerFechaHasta.Location = new Point(920, 316);
             dateTimePickerFechaHasta.Name = "dateTimePickerFechaHasta";
             dateTimePickerFechaHasta.Size = new Size(200, 23);
             dateTimePickerFechaHasta.TabIndex = 44;
+            dateTimePickerFechaHasta.ValueChanged += dateTimePickerFechaHasta_ValueChanged;
+            // 
+            // button2
+            // 
+            button2.BackColor = Color.FromArgb(192, 255, 255);
+            button2.Enabled = false;
+            button2.Location = new Point(628, 148);
+            button2.Name = "button2";
+            button2.Size = new Size(75, 23);
+            button2.TabIndex = 45;
+            button2.Text = "editar";
+            button2.UseVisualStyleBackColor = false;
+            button2.Click += button2_Click;
+            // 
+            // textBoxidHotel
+            // 
+            textBoxidHotel.Enabled = false;
+            textBoxidHotel.Location = new Point(944, 123);
+            textBoxidHotel.Name = "textBoxidHotel";
+            textBoxidHotel.Size = new Size(161, 23);
+            textBoxidHotel.TabIndex = 46;
+            textBoxidHotel.Visible = false;
             // 
             // FormReservasHoteles
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1096, 490);
+            ClientSize = new Size(1150, 490);
+            Controls.Add(textBoxidHotel);
+            Controls.Add(button2);
             Controls.Add(dateTimePickerFechaHasta);
             Controls.Add(dateTimePickerFechaDesde);
             Controls.Add(button1);
             Controls.Add(label8);
             Controls.Add(label7);
-            Controls.Add(textBoxCapacidad);
-            Controls.Add(label6);
-            Controls.Add(textBoxName);
-            Controls.Add(label5);
             Controls.Add(textCosto);
             Controls.Add(label4);
-            Controls.Add(textUbicacion);
-            Controls.Add(label3);
             Controls.Add(label_id);
             Controls.Add(textBox_id);
             Controls.Add(Volver_desde_usuario);
@@ -310,27 +293,25 @@
         private Label label2;
         private DataGridView dataGridView1;
         private Button Volver_desde_usuario;
-        private DataGridViewTextBoxColumn idReservaHotel;
-        private DataGridViewTextBoxColumn Ubicacion;
-        private DataGridViewTextBoxColumn Costo;
-        private DataGridViewTextBoxColumn Nombre;
-        private DataGridViewTextBoxColumn Capacidad;
-        private DataGridViewTextBoxColumn fechaDesde;
-        private DataGridViewTextBoxColumn fechaHasta;
         private TextBox textBox_id;
         private Label label_id;
-        private Label label3;
-        private TextBox textUbicacion;
         private Label label4;
         private TextBox textCosto;
-        private Label label5;
-        private TextBox textBoxName;
-        private Label label6;
-        private TextBox textBoxCapacidad;
         private Label label7;
         private Label label8;
         private Button button1;
         private DateTimePicker dateTimePickerFechaDesde;
         private DateTimePicker dateTimePickerFechaHasta;
+        private Button button2;
+        private TextBox textBoxidHotel;
+        private DataGridViewTextBoxColumn idReservaHotel;
+        private DataGridViewTextBoxColumn Ubicacion;
+        private DataGridViewTextBoxColumn CostoHotel;
+        private DataGridViewTextBoxColumn Nombre;
+        private DataGridViewTextBoxColumn Capacidad;
+        private DataGridViewTextBoxColumn fechaDesde;
+        private DataGridViewTextBoxColumn fechaHasta;
+        private DataGridViewTextBoxColumn idHotel;
+        private DataGridViewTextBoxColumn Costo;
     }
 }

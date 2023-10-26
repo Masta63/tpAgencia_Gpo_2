@@ -51,7 +51,7 @@ namespace tpAgencia_Gpo_2
                         reservas.idReservaHotel,
                         reservas.miHotel.ubicacion.nombre,
                         costo,
-                       reservas.miHotel.nombre, reservas.miHotel.capacidad, reservas.fechaDesde, reservas.fechaHasta);
+                       reservas.miHotel.nombre, reservas.miHotel.capacidad, reservas.fechaDesde, reservas.fechaHasta, reservas.miHotel.id, reservas.miHotel.costo);
                 }
             }
         }
@@ -89,18 +89,17 @@ namespace tpAgencia_Gpo_2
                 string? capacidad = dataGridView1[4, e.RowIndex]?.Value?.ToString().Trim();
                 string? fechaDesde = dataGridView1[5, e.RowIndex]?.Value?.ToString().Trim();
                 string? fechaHasta = dataGridView1[6, e.RowIndex]?.Value?.ToString().Trim();
+                string? idHotel = dataGridView1[7, e.RowIndex]?.Value?.ToString().Trim();
 
-
+                textBoxidHotel.Text = idHotel;
                 textBox_id.Text = id;
-                textUbicacion.Text = ubicacion;
                 textCosto.Text = costo;
-                textBoxName.Text = nombre;
-                textBoxCapacidad.Text = capacidad;
                 dateTimePickerFechaDesde.Value = Convert.ToDateTime(fechaDesde);
                 dateTimePickerFechaHasta.Value = Convert.ToDateTime(fechaHasta);
                 button1.Enabled = true;
-
-                //(usuarioSeleccionado = int.Parse(id);
+                button2.Enabled = true;
+                dateTimePickerFechaDesde.Enabled = true;
+                dateTimePickerFechaHasta.Enabled = true;
             }
             catch (Exception)
             {
@@ -112,13 +111,67 @@ namespace tpAgencia_Gpo_2
             agencia.eliminarRerservaHotel(Convert.ToInt32(textBox_id.Text));
             refrescar();
             textBox_id.Text = "";
-            textUbicacion.Text = "";
             textCosto.Text = "";
-            textBoxName.Text = "";
-            textBoxCapacidad.Text = "";
             dateTimePickerFechaDesde.Value = Convert.ToDateTime(DateTime.Now);
             dateTimePickerFechaHasta.Value = Convert.ToDateTime(DateTime.Now);
             button1.Enabled = false;
+            button2.Enabled = false;
+            dateTimePickerFechaDesde.Enabled = false;
+            dateTimePickerFechaHasta.Enabled = false;
         }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            Int32 idHotel = Convert.ToInt32(textBoxidHotel.Text);
+            Int32 idReservaHotel = Convert.ToInt32(textBox_id.Text);
+            DateTime fechaDesde = dateTimePickerFechaDesde.Value;
+            DateTime fechaHasta = dateTimePickerFechaHasta.Value;
+
+            Hotel miHotel = agencia.getHoteles().FirstOrDefault(x => x.id == Convert.ToInt32(textBoxidHotel.Text));
+            TimeSpan ts = fechaHasta.Date.Subtract(fechaDesde.Date);
+            double costo = (ts.Days + 1) * miHotel.costo;
+
+            agencia.editarReservaHotel(fechaDesde, fechaHasta, costo, idReservaHotel);
+            refrescar();
+            textBox_id.Text = "";
+            textCosto.Text = "";
+            button1.Enabled = false;
+            button2.Enabled = false;
+            dateTimePickerFechaDesde.Enabled = false;
+            dateTimePickerFechaHasta.Enabled = false;
+        }
+
+        private void dateTimePickerFechaHasta_ValueChanged(object sender, EventArgs e)
+        {
+            caluclarCostoParaFecha();
+        }
+
+        private void dateTimePickerFechaDesde_ValueChanged(object sender, EventArgs e)
+        {
+            caluclarCostoParaFecha();
+        }
+
+        private void caluclarCostoParaFecha()
+        {
+
+            if (dateTimePickerFechaHasta.Value.Date < dateTimePickerFechaDesde.Value.Date)
+            {
+                MessageBox.Show("La fecha desde no puede ser mayor a fecha hasta");
+                button1.Enabled = false;
+                button2.Enabled = false;
+            }
+            else
+            {
+                Hotel miHotel = agencia.getHoteles().FirstOrDefault(x => x.id == Convert.ToInt32(textBoxidHotel.Text));
+                TimeSpan ts = dateTimePickerFechaHasta.Value.Date.Subtract(dateTimePickerFechaDesde.Value.Date);
+                double costo = (ts.Days + 1) * miHotel.costo;
+                textCosto.Text = Convert.ToString(costo);
+                button1.Enabled = true;
+                button2.Enabled = true;
+                dateTimePickerFechaDesde.Enabled = true;
+                dateTimePickerFechaHasta.Enabled = true;
+            }
+        }
+
     }
 }
