@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualBasic.ApplicationServices;
 using System;
 using System.CodeDom;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Xml.Linq;
@@ -107,6 +108,7 @@ public class Agencia
             this.usuarioActual = usuarioSeleccionados;
             this.usuarioActual.listMisReservasHoteles = DB.traerMisReservasHotel(usuarioSeleccionados.id);
             this.usuarioActual.listMisReservasVuelo = DB.traerReservasVuelo(usuarioSeleccionados.id);
+            
         }
         else
         {
@@ -658,14 +660,25 @@ public class Agencia
     //FIN METODOS DE VUELO
     public List<Vuelo> misVuelos(Usuario usuarioActual)
     {
-        return usuarioActual.listVuelosTomados.ToList();
+       List < ReservaVuelo > reservasVuelo = DB.traerReservasVuelo(usuarioActual.id);
+       return usuarioActual.vuelosTomados = reservasVuelo.Select(reserva => reserva.miVuelo).ToList();
     }
 
     public void eliminarReservaVuelo(int idReservaVuelo)
     {
         DB.eliminarMiReservaVuelo(idReservaVuelo);
         ReservaVuelo reservaVuelo = this.usuarioActual.listMisReservasVuelo.FirstOrDefault(x => x.idReservaVuelo == idReservaVuelo);
-        this.usuarioActual.listMisReservasVuelo.Remove(reservaVuelo);
+        if(reservaVuelo != null)
+        {
+            double costoTotalReserva = reservaVuelo.pagado;
+           
+                usuarioActual.credito += costoTotalReserva;
+                
+               
+                    usuarioActual.listMisReservasVuelo.Remove(reservaVuelo);
+                         
+        }       
+       
     }
     public List<Vuelo> misReservasVuelos(Usuario usuario)
     {
@@ -676,7 +689,7 @@ public class Agencia
         {
 
             vuelosReservados.Add(reserva.miVuelo);
-
+           
 
 
         }
