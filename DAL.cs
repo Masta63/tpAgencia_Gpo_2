@@ -808,7 +808,7 @@ namespace tpAgencia_Gpo_2
             }
         }
 
-        public Int32 devolverDineroUsuario(Int32 idUsuario, double credito)
+        public Int32 modiFicarCredito(Int32 idUsuario, double credito)
         {
             string connectionString = Properties.Resources.ConnectionStr;
             string queryString = "UPDATE [dbo].[Usuario] SET [credito] =@credito WHERE idUsuario = @idUsuario;";

@@ -131,9 +131,9 @@ namespace tpAgencia_Gpo_2
             TimeSpan ts = fechaHasta.Date.Subtract(fechaDesde.Date);
             double costo = (ts.Days + 1) * miHotel.costo;
 
-
             if (agencia.TraerDisponibilidadHotelParaEdicion(miHotel, fechaDesde, fechaHasta, 1))
             {
+                agencia.devolverDinero(fechaDesde, fechaHasta, agencia.getUsuarioActual().listMisReservasHoteles, idReservaHotel, miHotel);
                 agencia.editarReservaHotel(fechaDesde, fechaHasta, costo, idReservaHotel);
                 refrescar();
                 textBox_id.Text = "";

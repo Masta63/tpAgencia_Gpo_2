@@ -954,10 +954,22 @@ public class Agencia
     public void eliminarRerservaHotel(int idReservaHotel, double costo)
     {
         DB.eliminarMiReserva(idReservaHotel);
-        DB.devolverDineroUsuario(this.usuarioActual.id, costo);
+        this.usuarioActual.credito = this.usuarioActual.credito + costo;
+        DB.modiFicarCredito(this.usuarioActual.id, this.usuarioActual.credito);
         ReservaHotel reservaHotel = this.usuarioActual.listMisReservasHoteles.FirstOrDefault(x => x.idReservaHotel == idReservaHotel);
-        this.usuarioActual.credito = this.usuarioActual.credito - costo;
         this.usuarioActual.listMisReservasHoteles.Remove(reservaHotel);
+    }
+
+    public void devolverDinero(DateTime fechaDesde, DateTime fechaHasta, List<ReservaHotel> misReservas, Int32 idReservaHotel, Hotel miHotel)
+    {
+        double costo = 0;
+        ReservaHotel miReserva = misReservas.FirstOrDefault(x => x.idReservaHotel == idReservaHotel);
+        TimeSpan tsseleccion = fechaHasta.Date.Subtract(fechaDesde.Date);
+        TimeSpan tsBase = miReserva.fechaHasta.Date.Subtract(miReserva.fechaDesde.Date);
+        Int32 sumarCostoPorDia = (tsseleccion.Days + 1) - tsBase.Days;
+        costo = this.usuarioActual.credito + (sumarCostoPorDia * miHotel.costo);
+        DB.modiFicarCredito(this.usuarioActual.id, costo);
+        this.getUsuarioActual().credito = costo;
     }
 
     public void editarReservaHotel(DateTime fechaDesde, DateTime fechaHasta, double pagado, Int32 idReservaHotel)
