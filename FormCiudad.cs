@@ -44,7 +44,7 @@ namespace tpAgencia_Gpo_2
                     if (resultado)
                     {
                        
-                        string mensaje = $"Ciudad: {nombreCiudad};
+                        string mensaje = $"Ciudad: {nombreCiudad}";
                         MessageBox.Show(mensaje, "Información de Ciudad");
                     }
                     else
