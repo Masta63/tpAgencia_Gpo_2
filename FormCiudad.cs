@@ -32,39 +32,29 @@ namespace tpAgencia_Gpo_2
 
         private void btnAlta_Click(object sender, EventArgs e)
         {
-
             try
             {
                 if (!string.IsNullOrEmpty(txtNombre.Text))
                 {
-                    var ciudad = Agencia.GetCiudades().OrderByDescending(x => x.id).FirstOrDefault();
+                    string nombreCiudad = txtNombre.Text;
 
-                    if (ciudad != null)
+                  
+                    bool resultado = Agencia.agregarCiudad(nombreCiudad);
+
+                    if (resultado)
                     {
-                        int id = Agencia.GetCiudades().OrderByDescending(x => x.id).FirstOrDefault().id + 1;
-                        Ciudad oCiudad = new Ciudad(Convert.ToInt32(id), txtNombre.Text);
-                        Agencia.setCiudad(oCiudad);
-                        textCiudadId.Text = Convert.ToString(id);
-                        //Validacion para verificar que se cargo correctamente la ciudad
-                        string mensaje = $"Ciudad: {oCiudad.nombre}\n";
-
+                       
+                        string mensaje = $"Ciudad: {nombreCiudad}";
                         MessageBox.Show(mensaje, "Información de Ciudad");
                     }
                     else
                     {
-                        int id = 1;
-                        Ciudad oCiudad = new Ciudad(Convert.ToInt32(id), txtNombre.Text);
-                        Agencia.setCiudad(oCiudad);
-                        textCiudadId.Text = Convert.ToString(id);
-                        //Validacion para verificar que se cargo correctamente la ciudad
-                        string mensaje = $"Ciudad: {oCiudad.nombre}\n";
-
-                        MessageBox.Show(mensaje, "Información de Ciudad");
+                        MessageBox.Show("Error al agregar la ciudad");
                     }
                 }
                 else
                 {
-                    MessageBox.Show( "Debe ingresar la ciudad");
+                    MessageBox.Show("Debe ingresar el nombre de la ciudad");
                 }
             }
             catch (Exception ex)
@@ -73,9 +63,10 @@ namespace tpAgencia_Gpo_2
             }
             finally
             {
-                //Llamo el metodo que actualiza el datagridview para mostrar las ciudades
+               
                 MostrarDGV();
             }
+
         }
         public delegate void TransfDelegadoFormCiudad();
         public void MostrarDGV()

@@ -24,13 +24,6 @@ namespace tpAgencia_Gpo_2
 
 
 
-            //Vuelos hardcodeados
-
-            //Agencia.agregarVuelo(Agencia.obtenerNombreCiudad("Bariloche"), Agencia.obtenerNombreCiudad("Mendoza"), 20, 50000, new DateTime(2023, 10, 30), "AA", "Airbus");
-            //Agencia.agregarVuelo(Agencia.obtenerNombreCiudad("Mendoza"), Agencia.obtenerNombreCiudad("Buenos Aires"), 50, 100000, new DateTime(2023, 10, 20), "AA", "Airbus320");
-            //Agencia.agregarVuelo(Agencia.obtenerNombreCiudad("Bariloche"), Agencia.obtenerNombreCiudad("Buenos Aires"), 2, 200000, new DateTime(2023, 10, 10), "JetSmart", "Airbus300");
-            //Agencia.agregarVuelo(Agencia.obtenerNombreCiudad("Buenos Aires"), Agencia.obtenerNombreCiudad("Mendoza"), 2, 200000, new DateTime(2023, 09, 10), "JetSmart", "Airbus300");
-
         }
 
 

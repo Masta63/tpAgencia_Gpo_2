@@ -85,6 +85,20 @@ public class Agencia
         ciudades.Add(ciudad);
     }
 
+    public bool eliminarCiudad(int id)
+    {
+        foreach (Ciudad itemCiudad in ciudades)
+        {
+            if (itemCiudad.id == id)
+            {
+                ciudades.Remove(itemCiudad);
+
+                return true;
+            }
+        }
+        return false;
+    }
+
     public Usuario? getUsuarioActual()
     {
         return this.usuarioActual;
@@ -369,20 +383,7 @@ public class Agencia
 
 
 
-    public bool eliminarCiudad(int id)
-    {
-        foreach (Ciudad itemCiudad in ciudades)
-        {
-            if (itemCiudad.id == id)
-            {
-                ciudades.Remove(itemCiudad);
-
-                return true;
-            }
-        }
-        return false;
-    }
-
+   
 
     public string? nombreLogueado()
     {
@@ -439,6 +440,24 @@ public class Agencia
         {
             Vuelo nuevo = new Vuelo(idNuevoVuelo, cOrigen, cDestino, capacidad, costo, fecha, aerolinea, avion);
             vuelos.Add(nuevo);
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+
+    }
+
+    public bool agregarCiudad( string nombre)
+    {
+
+        int idNuevoCiudad;
+        idNuevoCiudad = DB.agregarCiudad(nombre);
+        if (idNuevoCiudad != -1)
+        {
+            Ciudad nuevo = new Ciudad(idNuevoCiudad, nombre);
+            ciudades.Add(nuevo);
             return true;
         }
         else
