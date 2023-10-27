@@ -76,7 +76,7 @@ namespace tpAgencia_Gpo_2
 
             if (usuarioActual != null)
             {
-                if (refAgencia.getUsuarioActual().password == textBox_pass_viejo.Text)
+                if (refAgencia.getUsuarioActual().password.Trim() != textBox_pass_nuevo.Text.Trim())
                 {
 
                     if (refAgencia.modificarUsuarioDal(usuarioActual.id,usuarioActual.name,usuarioActual.apellido,int.Parse(usuarioActual.dni),usuarioActual.mail, textBox_pass_nuevo.Text))

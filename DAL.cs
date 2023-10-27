@@ -206,7 +206,7 @@ namespace tpAgencia_Gpo_2
         public int agregoCreditoUsuario(int idUsuario, double nuevoCredito)
         {
             string connectionString = Properties.Resources.ConnectionStr;
-            string queryString = "UPDATE [tp_agencia].[dbo].[Usuario] SET [credito] = [credito] + @credito  WHERE [idUsuario] = @idUsuario;";
+            string queryString = "UPDATE [dbo].[Usuario] SET [credito] = [credito] + @credito  WHERE [idUsuario] = @idUsuario;";
             using (SqlConnection conex = new SqlConnection(connectionString))
             {
                 SqlCommand cmd = new SqlCommand(queryString, conex);
@@ -234,7 +234,7 @@ namespace tpAgencia_Gpo_2
         public int modificarPassword(int idUsuario, string nuevaPassword)
         {
             string connectionString = Properties.Resources.ConnectionStr;
-            string queryString = "UPDATE [tp_agencia].[dbo].[Usuario] SET [password] = @nuevaPassword WHERE [idUsuario] = @idUsuario;";
+            string queryString = "UPDATE [dbo].[Usuario] SET [password] = @nuevaPassword WHERE [idUsuario] = @idUsuario;";
             using (SqlConnection conex = new SqlConnection(connectionString))
             {
                 SqlCommand cmd = new SqlCommand(queryString, conex);
@@ -866,7 +866,7 @@ namespace tpAgencia_Gpo_2
         public int modificarReservaHotel(DateTime fechaDesde, DateTime fechaHasta, double pagado, Int32 idReservaHotel)
         {
             string connectionString = Properties.Resources.ConnectionStr;
-            string queryString = "UPDATE[dbo].[ReservaHotel] SET [fechaDesde] =@fechaDesde ,[fechaHasta] =@fechaHasta ,[pagado] =@pagado  WHERE idReservaHotel = @idReservaHotel;";
+            string queryString = "UPDATE [dbo].[ReservaHotel] SET [fechaDesde] =@fechaDesde ,[fechaHasta] =@fechaHasta ,[pagado] =@pagado  WHERE idReservaHotel = @idReservaHotel;";
 
             using (SqlConnection conex = new SqlConnection(connectionString))
             {
