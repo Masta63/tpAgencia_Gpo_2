@@ -88,16 +88,26 @@ public class Agencia
 
     public bool eliminarCiudad(int id)
     {
-        foreach (Ciudad itemCiudad in ciudades)
+        if (DB.eliminarCiudad(id) == 1)
         {
-            if (itemCiudad.id == id)
+            try
             {
-                ciudades.Remove(itemCiudad);
+                foreach (Ciudad itemCiudad in ciudades)
+                {
+                    if (itemCiudad.id == id)
+                    {
+                        ciudades.Remove(itemCiudad);
 
-                return true;
+                        return true;
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                return false;
             }
         }
-        return false;
+            return false;
     }
 
     public bool agregarCiudad(string nombre)
@@ -116,6 +126,24 @@ public class Agencia
             return false;
         }
 
+    }
+
+    public int modificarCiudad(int id, string nombre)
+    {
+        if (DB.modificarCiudad(id, nombre) == 1)
+        {
+            foreach (Ciudad c in ciudades)
+            {
+                if (c.id == id)
+                {
+                    c.nombre = nombre;
+
+                    return 1;
+                }
+            }
+            return 1;
+        }
+        return -1;
     }
     public Usuario? getUsuarioActual()
     {
@@ -510,23 +538,7 @@ public class Agencia
         return "error";
     }
 
-    public int modificarCiudad(int id, string nombre)
-    {
-        if(DB.modificarCiudad(id, nombre) == 1)
-        {
-            foreach (Ciudad c in ciudades)
-            {
-                if (c.id == id)
-                {
-                    c.nombre = nombre;
-                   
-                    return 1;
-                }
-            }
-            return 1;
-        }
-        return -1;
-    }
+  
     public string modificarReservaVuelo(int idVuelo, int idReserva, int cantidad, double costo)
     {
         if (DB.modificarReservaVuelo(idVuelo, idReserva, cantidad, costo) == 1)

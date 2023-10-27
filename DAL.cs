@@ -361,6 +361,30 @@ namespace tpAgencia_Gpo_2
                     }
                 }
             }
+
+        public int eliminarCiudad(int id)
+        {
+            string connectionString = Properties.Resources.ConnectionStr;
+            string queryString = "DELETE FROM [dbo].[Ciudad] WHERE idCiudad=@id";
+            using (SqlConnection conex = new SqlConnection(connectionString))
+            {
+                SqlCommand cmd = new SqlCommand(queryString, conex);
+                cmd.Parameters.Add(new SqlParameter("@id", SqlDbType.Int));
+                cmd.Parameters["@id"].Value = id;
+
+                try
+                {
+                    conex.Open();
+                    return cmd.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    return 0;
+
+                }
+            }
+        }
         public List<Vuelo> inicializarVuelos()
         {
             List<Vuelo> vuelos = new List<Vuelo>();

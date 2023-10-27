@@ -91,7 +91,7 @@ namespace tpAgencia_Gpo_2
                         MessageBox.Show("Eliminado con éxito");
                     }
                     else
-                        MessageBox.Show("Problemas al eliminar");
+                        MessageBox.Show("Problemas al eliminar. La ciudad tiene asociado un vuelo y/o un hotel");
                 }
                 else
                     MessageBox.Show("Debe seleccionar una ciudad");
