@@ -131,10 +131,6 @@ namespace tpAgencia_Gpo_2
 
         private void buttonAgregar_Click(object sender, EventArgs e)
         {
-            string ubicacionTextBox = comboBoxHospedaje.Text;
-            string nombre = textBoxNombre.Text;
-            Int32 capacidad = Convert.ToInt32(textBoxCapacidad.Text);
-            int ubicacion = agencia.obtenerNombreCiudad(ubicacionTextBox);
 
             if (string.IsNullOrEmpty(textBoxCapacidad.Text) || string.IsNullOrEmpty(textBoxCosto.Text) || string.IsNullOrEmpty(textBoxNombre.Text))
 
@@ -142,13 +138,15 @@ namespace tpAgencia_Gpo_2
 
             else
             {
-
+                string ubicacionTextBox = comboBoxHospedaje.Text;
+                string nombre = textBoxNombre.Text;
+                Int32 capacidad = Convert.ToInt32(textBoxCapacidad.Text);
+                int ubicacion = agencia.obtenerNombreCiudad(ubicacionTextBox);
                 float costo;
                 if (!float.TryParse(textBoxCosto.Text, out costo))
                 {
                     MessageBox.Show("El costo debe tener dos decimales");
                 }
-
 
                 if (agencia.agregarHotel(ubicacion, capacidad, costo, nombre))
                 {

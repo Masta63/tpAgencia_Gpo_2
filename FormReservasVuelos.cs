@@ -173,13 +173,20 @@ namespace tpAgencia_Gpo_2
 
         private void Eliminar_Click(object sender, EventArgs e)
         {
-            agencia.eliminarReservaVuelo(Convert.ToInt32(textBoxIdReserva.Text));
-            MostrarVuelos();
-            textBoxId.Text = "";
-            textBoxOrigen.Text = "";
-            textBoxDestino.Text = "";
-            textBoxFecha.Text = "";
-            textBoxAerolinea.Text = "";
+            if (textBoxIdReserva.Text != string.Empty)
+            {
+                agencia.eliminarReservaVuelo(Convert.ToInt32(textBoxIdReserva.Text));
+                MostrarVuelos();
+                textBoxId.Text = "";
+                textBoxOrigen.Text = "";
+                textBoxDestino.Text = "";
+                textBoxFecha.Text = "";
+                textBoxAerolinea.Text = "";
+            }
+            else
+            {
+                MessageBox.Show("Debe seleccionar un vuelo");
+            }
            
         }
     }
