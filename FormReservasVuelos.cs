@@ -19,6 +19,7 @@ namespace tpAgencia_Gpo_2
         private Agencia agencia;
         private Form1 form1;
         private Usuario usuarioActual;
+        private int reservaSeleccionad;
         private int vueloSeleccionado;
         public TransfDelegadoReservasVuelos TransfEventoReservasVuelos;
         public FormReservasVuelos(Agencia agencia, Form1 form1)
@@ -38,6 +39,7 @@ namespace tpAgencia_Gpo_2
         {
             MostrarVuelos();
             vueloSeleccionado = -1;
+            reservaSeleccionad = -1;
         }
         private void MostrarVuelos()
         {
@@ -45,24 +47,16 @@ namespace tpAgencia_Gpo_2
 
             if (usuarioActual != null)
             {
-                //List<Vuelo> vuelosFuturos = agencia.misReservasVuelos(usuarioActual);
-
-                //var vuelosIguales = vuelosFuturos.GroupBy(v => v.id).Select(group => new
-                //{
-                //    Vuelo = group.Key,
-                //    Cantidad = group.Count(),
-                //    MontoTotal = group.Sum(v => v.costo)
-                //});
+                
                 List<ReservaVuelo> misReservasVuelo = agencia.getUsuarioActual().listMisReservasVuelo;
 
-                // Verifica la longitud de la lista
+               
                 int cantidadReservas = misReservasVuelo.Count;
                 MessageBox.Show("Cantidad de Reservas de Vuelo: " + cantidadReservas); // Muestra la cantidad en una ventana emergente
 
 
                 foreach (var vuelos in misReservasVuelo)
                 {
-
 
                     dataGridView1.Rows.Add(
                         vuelos.idReservaVuelo,
@@ -76,8 +70,6 @@ namespace tpAgencia_Gpo_2
 
 
                 }
-
-
 
             }
 
@@ -109,31 +101,7 @@ namespace tpAgencia_Gpo_2
 
         private void dataGridView1_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            //try
-            //{
-
-            //    string Origen = dataGridView1.Rows[e.RowIndex].Cells["Origen"].Value.ToString();
-            //    string Destino = dataGridView1.Rows[e.RowIndex].Cells["Destino"].Value.ToString();
-            //    string Costo = dataGridView1.Rows[e.RowIndex].Cells["Costo"].Value.ToString();
-            //    string Fecha = dataGridView1.Rows[e.RowIndex].Cells["Fecha"].Value.ToString();
-            //    string Aerolinea = dataGridView1.Rows[e.RowIndex].Cells["Aerolinea"].Value.ToString();
-            //    string Cantidad = dataGridView1.Rows[e.RowIndex].Cells["Cantidad"].Value.ToString();
-
-
-            //    textBoxOrigen.Text = Origen;
-            //    textBoxDestino.Text = Destino;
-            //    textBoxFecha.Text = Cantidad;
-            //    textBoxAerolinea.Text = Aerolinea;
-            //    textBoxCantidad.Text = Cantidad;
-            //    textBox1.Text = Costo;
-
-
-            //    //vueloSeleccionado = int.Parse(id);
-            //}
-            //catch (Exception)
-            //{
-            //}
-
+           
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -160,6 +128,7 @@ namespace tpAgencia_Gpo_2
 
 
                 vueloSeleccionado = int.Parse(id);
+                reservaSeleccionad = int.Parse(idReserva);
             }
             catch (Exception)
             {
@@ -167,7 +136,6 @@ namespace tpAgencia_Gpo_2
 
         }
 
-        ////CONTROLAR LA CONEXIÓN CON LA BASE CUANDO FUNCIONE AGREGAR USUARIO
         private void Modificar_Click(object sender, EventArgs e)
         {
             if (vueloSeleccionado != -1)
@@ -176,19 +144,23 @@ namespace tpAgencia_Gpo_2
                 {
                     int nuevaCantidad = int.Parse(textBoxCantidad.Text);
                     double nuevoCosto = agencia.CalcularNuevoCosto(vueloSeleccionado, nuevaCantidad);
-                    //string resultado = (agencia.modificarReservaVuelo(vueloSeleccionado, nuevaCantidad, nuevoCosto));
-                    //switch (resultado)
-                    //{
-                    //    case "exito":
-                    //        MessageBox.Show("Vuelo modificado exitosamente");
-                    //        break;
-                    //    case "capacidad":
-                    //        MessageBox.Show("La capacidad es menor a la cantidad de personas que reservaron el vuelo");
-                    //        break;
-                    //    case "error":
-                    //        MessageBox.Show("Ocurrió un problema al querer modificar el vuelo");
-                    //        break;
-                    //}
+                    string resultado = (agencia.modificarReservaVuelo(vueloSeleccionado, reservaSeleccionad, nuevaCantidad, nuevoCosto));
+                    MostrarVuelos();
+                    switch (resultado)
+                    {
+                        case "exito":
+                            MessageBox.Show("Vuelo modificado exitosamente");
+                            MostrarVuelos();
+                            dataGridView1.Invalidate();
+                            dataGridView1.Update();
+                            break;
+                        case "capacidad":
+                            MessageBox.Show("La capacidad es menor a la cantidad de personas que reservaron el vuelo o no hay más lugar disponible");
+                            break;
+                        case "error":
+                            MessageBox.Show("Ocurrió un problema al querer modificar el vuelo");
+                            break;
+                    }
                 }
                 catch (FormatException)
                 {

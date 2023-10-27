@@ -45,32 +45,20 @@ namespace tpAgencia_Gpo_2
 
             if (usuarioActual != null)
             {
-                List<Vuelo> vuelosPasados = agencia.misVuelos(usuarioActual);
+                List<ReservaVuelo> misReservasVuelo = agencia.getUsuarioActual().listMisReservasVuelo;
 
-                var vuelosIguales = vuelosPasados.GroupBy(v => v.id).Select(group => new
+                foreach (var vuelos in misReservasVuelo)
                 {
-                    Vuelo = group.Key,
-                    Cantidad = group.Count(),
-                    MontoTotal = group.Sum(v => v.costo)
-                });
 
-                foreach (var vuelosAgrupado in vuelosIguales)
-                {
-                    Vuelo vuelo = vuelosPasados.FirstOrDefault(v => v.id == vuelosAgrupado.Vuelo);
-                    if (vuelo != null)
-                    {
+                    dataGridView1.Rows.Add(
 
-                        dataGridView1.Rows.Add(
-                            vuelo.origen.nombre,
-                            vuelo.destino.nombre,
-                            vuelosAgrupado.MontoTotal,
-                            vuelo.fecha.ToString("dd/MM/yyyy"),
-                            vuelo.aerolinea, vuelo.avion);
-                    }
-
-                }
-
-
+                        vuelos.miVuelo.origen.nombre,
+                        vuelos.miVuelo.destino.nombre,
+                        vuelos.pagado,
+                        vuelos.miVuelo.fecha.ToString("dd/MM/yyyy"),
+                        vuelos.miVuelo.aerolinea,
+                        vuelos.miVuelo.avion);
+                 }
 
             }
 

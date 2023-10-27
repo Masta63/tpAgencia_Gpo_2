@@ -457,7 +457,7 @@ namespace tpAgencia_Gpo_2
             }
         }
 
-        //CONTROLAR LA CONEXIÓN CON LA BASE CUANDO FUNCIONE AGREGAR USUARIO
+       
         public int modificarReservaVuelo(int idVuelo, int idReserva, int cantidad, double costo)
         {
             string connectionString = Properties.Resources.ConnectionStr;
@@ -465,69 +465,69 @@ namespace tpAgencia_Gpo_2
             using (SqlConnection conex = new SqlConnection(connectionString))
             {
                 SqlCommand cmd = new SqlCommand(queryString, conex);
-                cmd.Parameters.Add(new SqlParameter("@id", SqlDbType.Int));
+                cmd.Parameters.Add(new SqlParameter("@idReserva", SqlDbType.Int));
                 cmd.Parameters.Add(new SqlParameter("@costo", SqlDbType.Float));
 
-                cmd.Parameters["@id"].Value = idVuelo;
+                cmd.Parameters["@idReserva"].Value = idReserva;
                 cmd.Parameters["@costo"].Value = costo;
 
-                string getVueloIdQuery = "SELECT idVuelo FROM [dbo].[ReservaVuelo] WHERE idReservaVuelo = @id;";
+                string getVueloIdQuery = "SELECT idVuelo FROM [dbo].[ReservaVuelo] WHERE idReservaVuelo = @idReserva;";
                 int vueloId = -1;
                 try
                 {
                     conex.Open();
 
-                    using (SqlCommand getVueloIdCmd = new SqlCommand(getVueloIdQuery, conex))
+                    int rowsAffected = cmd.ExecuteNonQuery();
+                    if (rowsAffected > 0)
                     {
-                        getVueloIdCmd.Parameters.Add(new SqlParameter("@id", SqlDbType.Int));
-                        getVueloIdCmd.Parameters["@id"].Value = idVuelo;
+                        string vueloUpdateQuery = "UPDATE [dbo].[Vuelo] SET capacidad = capacidad - @cantidad WHERE idvuelo = @idVuelo;";
+                        SqlCommand vueloCmd = new SqlCommand(vueloUpdateQuery, conex);
+                        vueloCmd.Parameters.Add(new SqlParameter("@idVuelo", SqlDbType.Int));
+                        vueloCmd.Parameters.Add(new SqlParameter("@cantidad", SqlDbType.Int));
 
-                        using (SqlDataReader reader = getVueloIdCmd.ExecuteReader())
+                        vueloCmd.Parameters["@idVuelo"].Value = idVuelo;
+                        vueloCmd.Parameters["@cantidad"].Value = cantidad;
+
+                        int vueloRowsAffected = vueloCmd.ExecuteNonQuery();
+                        if (vueloRowsAffected > 0)
                         {
-                            reader.Read();
 
-                            vueloId = reader.GetInt32(0);
-
+                            return 1;
                         }
+                        return 1;
                     }
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex.Message);
-                    return 0;
-                }
-                string updateCapacidadQuery = "UPDATE [dbo].[Vuelo] SET capacidad = capacidad + @cantidad WHERE idVuelo = @idVuelo;";
-                try
-                {
-                    using (SqlCommand updateCapacidadCmd = new SqlCommand(updateCapacidadQuery, conex))
+                    else
                     {
-                        updateCapacidadCmd.Parameters.Add(new SqlParameter("@idVuelo", SqlDbType.Int));
-                        updateCapacidadCmd.Parameters.Add(new SqlParameter("@cantidad", SqlDbType.Int));
-                        updateCapacidadCmd.Parameters["@idVuelo"].Value = vueloId;
-                        updateCapacidadCmd.Parameters["@cantidad"].Value = cantidad;
-
-                        updateCapacidadCmd.ExecuteNonQuery();
+                        // No se encontró una reserva con el ID especificado.
+                        return 0;
                     }
-                    return cmd.ExecuteNonQuery();
                 }
                 catch (Exception ex)
                 {
                     Console.WriteLine(ex.Message);
                     return 0;
                 }
-
-
-
-                //    try
+                //string updateCapacidadQuery = "UPDATE [dbo].[Vuelo] SET capacidad = capacidad + @cantidad WHERE idVuelo = @idVuelo;";
+                //try
+                //{
+                //    using (SqlCommand updateCapacidadCmd = new SqlCommand(updateCapacidadQuery, conex))
                 //    {
-                //        conex.Open();
-                //        return cmd.ExecuteNonQuery();
+                //        updateCapacidadCmd.Parameters.Add(new SqlParameter("@idVuelo", SqlDbType.Int));
+                //        updateCapacidadCmd.Parameters.Add(new SqlParameter("@cantidad", SqlDbType.Int));
+                //        updateCapacidadCmd.Parameters["@idVuelo"].Value = vueloId;
+                //        updateCapacidadCmd.Parameters["@cantidad"].Value = cantidad;
+
+                //        updateCapacidadCmd.ExecuteNonQuery();
                 //    }
-                //    catch (Exception ex)
-                //    {
-                //        Console.WriteLine(ex.Message);
-                //        return 0;
-                //    }
+                //    return cmd.ExecuteNonQuery();
+                //}
+                //catch (Exception ex)
+                //{
+                //    Console.WriteLine(ex.Message);
+                //    return 0;
+                //}
+
+
             }
         }
 

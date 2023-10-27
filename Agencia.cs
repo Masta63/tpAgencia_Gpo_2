@@ -503,7 +503,11 @@ public class Agencia
                         {
 
                             vuelo.costo = costo;
-
+                            vuelo.capacidad = vuelo.capacidad - cantidad;
+                            DB.modificarCapacidadVuelo(vuelo.id, vuelo.capacidad);
+                            usuarioActual.credito = usuarioActual.credito - vuelo.costo;
+                            DB.modificarCreditoUsuario(usuarioActual.id, usuarioActual.credito);
+                            RecargarMisReservasVuelo();
 
                             return "exito";
                         }
@@ -522,7 +526,14 @@ public class Agencia
         }
         return "error";
     }
+    public void RecargarMisReservasVuelo()
+    {
 
+        List<ReservaVuelo> nuevasReservas = DB.traerReservasVuelo(usuarioActual.id);
+
+
+        usuarioActual.listMisReservasVuelo = nuevasReservas;
+    }
     public double CalcularNuevoCosto(int vueloId, int nuevaCantidad)
     {
 
@@ -642,7 +653,7 @@ public class Agencia
 
                     usuarioActual.credito = usuarioActual.credito - reserva.pagado;
                     DB.modificarCreditoUsuario(reserva.miUsuario.id, usuarioActual.credito);
-
+                    RecargarMisReservasVuelo();
                     return "exito";
                 }
                 else
