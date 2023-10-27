@@ -113,13 +113,19 @@ namespace tpAgencia_Gpo_2
             {
                 if (ciudadSeleccionada != -1)
                 {
-                    foreach (Ciudad itemCiudad in Agencia.GetCiudades())
-                    {
-                        if (itemCiudad.id == ciudadSeleccionada)
-                            itemCiudad.nombre = txtNombre.Text;
-                    }
+                    int idCiudad = ciudadSeleccionada;
+                    string nombreCiudad = txtNombre.Text;
+                    int resultado = Agencia.modificarCiudad(idCiudad, nombreCiudad);
 
-                    MostrarDGV();
+                    if (resultado == 1)
+                    {
+                        MessageBox.Show("Ciudad modificada exitosamente");
+                        MostrarDGV();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Error al modificar la ciudad");
+                    }
                 }
             }
             catch (Exception ex)
