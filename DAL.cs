@@ -395,7 +395,40 @@ namespace tpAgencia_Gpo_2
 
 
         }
+        public int agregarCiudad(string nombre)
+        {
+            int resultadoQuery;
+            int idNuevoCiudad = -1;
+            string queryString = "INSERT INTO [dbo].[Ciudad]( [nombre]) VALUES ( @nombre);";
+            using (SqlConnection conex = new SqlConnection(connectionStr))
+            {
+                SqlCommand cmd = new SqlCommand(queryString, conex);
+               
+                cmd.Parameters.Add(new SqlParameter("@nombre", SqlDbType.NVarChar));
+             
+                cmd.Parameters["@nombre"].Value = nombre;
 
+                try
+                {
+                    conex.Open();
+                    resultadoQuery = cmd.ExecuteNonQuery();
+
+                    string ConsultaId = "SELECT MAX([idCiudad]) FROM [dbo].[Ciudad]";
+                    cmd = new SqlCommand(ConsultaId, conex);
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    reader.Read();
+                    idNuevoCiudad = reader.GetInt32(0);
+                    reader.Close();
+
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    return -1;
+                }
+                return idNuevoCiudad;
+            }
+        }
         public int eliminarVuelo(int id)
         {
             string connectionString = Properties.Resources.ConnectionStr;
