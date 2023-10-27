@@ -299,6 +299,68 @@ namespace tpAgencia_Gpo_2
 
         }
 
+        public int agregarCiudad(string nombre)
+        {
+            int resultadoQuery;
+            int idNuevoCiudad = -1;
+            string queryString = "INSERT INTO [dbo].[Ciudad]( [nombre]) VALUES ( @nombre);";
+            using (SqlConnection conex = new SqlConnection(connectionStr))
+            {
+                SqlCommand cmd = new SqlCommand(queryString, conex);
+
+                cmd.Parameters.Add(new SqlParameter("@nombre", SqlDbType.NVarChar));
+
+                cmd.Parameters["@nombre"].Value = nombre;
+
+                try
+                {
+                    conex.Open();
+                    resultadoQuery = cmd.ExecuteNonQuery();
+
+                    string ConsultaId = "SELECT MAX([idCiudad]) FROM [dbo].[Ciudad]";
+                    cmd = new SqlCommand(ConsultaId, conex);
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    reader.Read();
+                    idNuevoCiudad = reader.GetInt32(0);
+                    reader.Close();
+
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    return -1;
+                }
+                return idNuevoCiudad;
+            }
+        }
+
+
+        public int modificarCiudad(int id,string nombre)
+        {
+          
+                string connectionString = Properties.Resources.ConnectionStr;
+                string queryString = "UPDATE [dbo].[Ciudad] SET nombre = @nombre WHERE idCiudad=@id;";
+                using (SqlConnection conex = new SqlConnection(connectionString))
+                {
+                    SqlCommand cmd = new SqlCommand(queryString, conex);
+                    cmd.Parameters.Add(new SqlParameter("@id", SqlDbType.Int));
+                  
+                    cmd.Parameters.Add(new SqlParameter("@nombre", SqlDbType.NVarChar));
+                    cmd.Parameters["@id"].Value = id;
+                    cmd.Parameters["@nombre"].Value = nombre;
+                   
+                    try
+                    {
+                        conex.Open();
+                        return cmd.ExecuteNonQuery();
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                        return 0;
+                    }
+                }
+            }
         public List<Vuelo> inicializarVuelos()
         {
             List<Vuelo> vuelos = new List<Vuelo>();
@@ -395,40 +457,7 @@ namespace tpAgencia_Gpo_2
 
 
         }
-        public int agregarCiudad(string nombre)
-        {
-            int resultadoQuery;
-            int idNuevoCiudad = -1;
-            string queryString = "INSERT INTO [dbo].[Ciudad]( [nombre]) VALUES ( @nombre);";
-            using (SqlConnection conex = new SqlConnection(connectionStr))
-            {
-                SqlCommand cmd = new SqlCommand(queryString, conex);
-               
-                cmd.Parameters.Add(new SqlParameter("@nombre", SqlDbType.NVarChar));
-             
-                cmd.Parameters["@nombre"].Value = nombre;
-
-                try
-                {
-                    conex.Open();
-                    resultadoQuery = cmd.ExecuteNonQuery();
-
-                    string ConsultaId = "SELECT MAX([idCiudad]) FROM [dbo].[Ciudad]";
-                    cmd = new SqlCommand(ConsultaId, conex);
-                    SqlDataReader reader = cmd.ExecuteReader();
-                    reader.Read();
-                    idNuevoCiudad = reader.GetInt32(0);
-                    reader.Close();
-
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex.Message);
-                    return -1;
-                }
-                return idNuevoCiudad;
-            }
-        }
+     
         public int eliminarVuelo(int id)
         {
             string connectionString = Properties.Resources.ConnectionStr;

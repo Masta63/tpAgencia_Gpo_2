@@ -8,6 +8,7 @@ using System.Net;
 using System.Xml.Linq;
 using tpAgencia_Gpo_2;
 using static System.Net.Mime.MediaTypeNames;
+using static Azure.Core.HttpHeader;
 
 public class Agencia
 {
@@ -99,6 +100,23 @@ public class Agencia
         return false;
     }
 
+    public bool agregarCiudad(string nombre)
+    {
+
+        int idNuevoCiudad;
+        idNuevoCiudad = DB.agregarCiudad(nombre);
+        if (idNuevoCiudad != -1)
+        {
+            Ciudad nuevo = new Ciudad(idNuevoCiudad, nombre);
+            ciudades.Add(nuevo);
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+
+    }
     public Usuario? getUsuarioActual()
     {
         return this.usuarioActual;
@@ -449,23 +467,7 @@ public class Agencia
 
     }
 
-    public bool agregarCiudad( string nombre)
-    {
-
-        int idNuevoCiudad;
-        idNuevoCiudad = DB.agregarCiudad(nombre);
-        if (idNuevoCiudad != -1)
-        {
-            Ciudad nuevo = new Ciudad(idNuevoCiudad, nombre);
-            ciudades.Add(nuevo);
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-
-    }
+   
 
     public string modificarVuelo(int id, int origen, int destino, int capacidad, double costo, DateTime fecha, string aerolinea, string avion)
     {
@@ -506,6 +508,24 @@ public class Agencia
             }
         }
         return "error";
+    }
+
+    public int modificarCiudad(int id, string nombre)
+    {
+        if(DB.modificarCiudad(id, nombre) == 1)
+        {
+            foreach (Ciudad c in ciudades)
+            {
+                if (c.id == id)
+                {
+                    c.nombre = nombre;
+                   
+                    return 1;
+                }
+            }
+            return 1;
+        }
+        return -1;
     }
     public string modificarReservaVuelo(int idVuelo, int idReserva, int cantidad, double costo)
     {
