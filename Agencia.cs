@@ -1028,7 +1028,7 @@ public class Agencia
         ReservaHotel miReserva = misReservas.FirstOrDefault(x => x.idReservaHotel == idReservaHotel);
         TimeSpan tsseleccion = fechaHasta.Date.Subtract(fechaDesde.Date);
         TimeSpan tsBase = miReserva.fechaHasta.Date.Subtract(miReserva.fechaDesde.Date);
-        Int32 sumarCostoPorDia = (tsseleccion.Days + 1) - tsBase.Days;
+        Int32 sumarCostoPorDia = (tsseleccion.Days + 1) - (tsBase.Days + 1);
         costo = this.usuarioActual.credito + (sumarCostoPorDia * miHotel.costo);
         DB.modiFicarCredito(this.usuarioActual.id, costo);
         this.getUsuarioActual().credito = costo;
