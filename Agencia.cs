@@ -230,6 +230,8 @@ public class Agencia
 
     public bool eliminarUsuarioDal(int Id)
     {
+        DB.eliminarUsuarioHotel(Id);
+        DB.eliminarReservaHoteldeUsuario(Id);
         //primero me aseguro que lo pueda eliminar en la base
         if (DB.eliminarUsuario(Id) == 1)
         {
@@ -853,7 +855,7 @@ public class Agencia
     public bool eliminarHotel(int idHotel)
     {
         DB.eliminarReservaHotel(idHotel);
-        DB.eliminarHotelUsuario(idHotel, this.usuarioActual.id);
+        DB.eliminarHotelUsuario(idHotel);
         if (DB.eliminarHotel(idHotel) == 1)
         {
             try

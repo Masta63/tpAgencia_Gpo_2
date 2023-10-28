@@ -1420,11 +1420,11 @@ namespace tpAgencia_Gpo_2
             }
         }
 
-        public int eliminarHotelUsuario(Int32 idUsuario, Int32 idHotel)
+        public int eliminarHotelUsuario(Int32 idHotel)
         {
 
             string connectionString = Properties.Resources.ConnectionStr;
-            string queryString = "DELETE FROM [dbo].[Hotel_Usuario];";
+            string queryString = "DELETE FROM [dbo].[Hotel_Usuario] where idHotel=" + idHotel;
             using (SqlConnection conex = new SqlConnection(connectionString))
             {
                 SqlCommand cmd = new SqlCommand(queryString, conex);
@@ -1521,6 +1521,51 @@ namespace tpAgencia_Gpo_2
                     Console.WriteLine(ex.Message);
                 }
                 return hoteles;
+            }
+        }
+
+
+        public int eliminarUsuarioHotel(Int32 idUsuario)
+        {
+
+            string connectionString = Properties.Resources.ConnectionStr;
+            string queryString = "DELETE FROM [dbo].[Hotel_Usuario] where idUsuario=" + idUsuario;
+            using (SqlConnection conex = new SqlConnection(connectionString))
+            {
+                SqlCommand cmd = new SqlCommand(queryString, conex);
+                try
+                {
+                    conex.Open();
+                    return cmd.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    return 0;
+                }
+            }
+        }
+
+
+        public int eliminarReservaHoteldeUsuario(int idUsuario)
+        {
+            string connectionString = Properties.Resources.ConnectionStr;
+            string queryString = "DELETE FROM [dbo].[ReservaHotel] where idUsuario=@idUsuario;";
+            using (SqlConnection conex = new SqlConnection(connectionString))
+            {
+                SqlCommand cmd = new SqlCommand(queryString, conex);
+                cmd.Parameters.Add(new SqlParameter("@idUsuario", SqlDbType.Int));
+                cmd.Parameters["@idUsuario"].Value = idUsuario;
+                try
+                {
+                    conex.Open();
+                    return cmd.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    return 0;
+                }
             }
         }
 
