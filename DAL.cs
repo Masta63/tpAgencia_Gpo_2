@@ -335,32 +335,32 @@ namespace tpAgencia_Gpo_2
         }
 
 
-        public int modificarCiudad(int id,string nombre)
+        public int modificarCiudad(int id, string nombre)
         {
-          
-                string connectionString = Properties.Resources.ConnectionStr;
-                string queryString = "UPDATE [dbo].[Ciudad] SET nombre = @nombre WHERE idCiudad=@id;";
-                using (SqlConnection conex = new SqlConnection(connectionString))
+
+            string connectionString = Properties.Resources.ConnectionStr;
+            string queryString = "UPDATE [dbo].[Ciudad] SET nombre = @nombre WHERE idCiudad=@id;";
+            using (SqlConnection conex = new SqlConnection(connectionString))
+            {
+                SqlCommand cmd = new SqlCommand(queryString, conex);
+                cmd.Parameters.Add(new SqlParameter("@id", SqlDbType.Int));
+
+                cmd.Parameters.Add(new SqlParameter("@nombre", SqlDbType.NVarChar));
+                cmd.Parameters["@id"].Value = id;
+                cmd.Parameters["@nombre"].Value = nombre;
+
+                try
                 {
-                    SqlCommand cmd = new SqlCommand(queryString, conex);
-                    cmd.Parameters.Add(new SqlParameter("@id", SqlDbType.Int));
-                  
-                    cmd.Parameters.Add(new SqlParameter("@nombre", SqlDbType.NVarChar));
-                    cmd.Parameters["@id"].Value = id;
-                    cmd.Parameters["@nombre"].Value = nombre;
-                   
-                    try
-                    {
-                        conex.Open();
-                        return cmd.ExecuteNonQuery();
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine(ex.Message);
-                        return 0;
-                    }
+                    conex.Open();
+                    return cmd.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    return 0;
                 }
             }
+        }
 
         public int eliminarCiudad(int id)
         {
@@ -481,7 +481,7 @@ namespace tpAgencia_Gpo_2
 
 
         }
-     
+
         public int eliminarVuelo(int id)
         {
             string connectionString = Properties.Resources.ConnectionStr;
@@ -543,7 +543,7 @@ namespace tpAgencia_Gpo_2
             }
         }
 
-       
+
         public int modificarReservaVuelo(int idVuelo, int idReserva, int cantidad, double costo)
         {
             string connectionString = Properties.Resources.ConnectionStr;
@@ -1398,6 +1398,48 @@ namespace tpAgencia_Gpo_2
 
 
         }
+        public int eliminarReservaHotel(int idHotel)
+        {
+            string connectionString = Properties.Resources.ConnectionStr;
+            string queryString = "DELETE FROM [dbo].[ReservaHotel] where idHotel=@idHotel;";
+            using (SqlConnection conex = new SqlConnection(connectionString))
+            {
+                SqlCommand cmd = new SqlCommand(queryString, conex);
+                cmd.Parameters.Add(new SqlParameter("@idHotel", SqlDbType.Int));
+                cmd.Parameters["@idHotel"].Value = idHotel;
+                try
+                {
+                    conex.Open();
+                    return cmd.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    return 0;
+                }
+            }
+        }
+
+        public int eliminarHotelUsuario(Int32 idUsuario, Int32 idHotel)
+        {
+
+            string connectionString = Properties.Resources.ConnectionStr;
+            string queryString = "DELETE FROM [dbo].[Hotel_Usuario];";
+            using (SqlConnection conex = new SqlConnection(connectionString))
+            {
+                SqlCommand cmd = new SqlCommand(queryString, conex);
+                try
+                {
+                    conex.Open();
+                    return cmd.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    return 0;
+                }
+            }
+        }
 
         public int eliminarHotel(int idHotel)
         {
@@ -1451,6 +1493,34 @@ namespace tpAgencia_Gpo_2
                     Console.WriteLine(ex.Message);
                     return 0;
                 }
+            }
+        }
+
+        public List<Hotel> misHotelesQueVisite(int idUsuario)
+        {
+            List<Hotel> hoteles = new List<Hotel>();
+            using (SqlConnection conex = new SqlConnection(connectionStr))
+            {
+                string queryString = "SELECT *  FROM [dbo].[Hotel_Usuario] as hu inner join [dbo].[Hotel] as h on hu.idHotel = h.idHotel inner join  [dbo].[Ciudad] as c on h.ubicacion = c.idCiudad where idUsuario = @idUsuario;";
+                SqlCommand cmd = new SqlCommand(queryString, conex);
+                cmd.Parameters.Add(new SqlParameter("@idUsuario", SqlDbType.Int)).Value = idUsuario;
+                try
+                {
+                    conex.Open();
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        Ciudad ciudad = new Ciudad(reader.GetInt32(8), reader.GetString(9));
+                        Hotel h = new Hotel(reader.GetInt32(0), ciudad, reader.GetInt32(5), reader.GetDouble(6), reader.GetString(7));
+                        hoteles.Add(h);
+                    }
+                    reader.Close();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+                return hoteles;
             }
         }
 

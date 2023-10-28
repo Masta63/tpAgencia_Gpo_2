@@ -107,7 +107,7 @@ public class Agencia
                 return false;
             }
         }
-            return false;
+        return false;
     }
 
     public bool agregarCiudad(string nombre)
@@ -429,7 +429,7 @@ public class Agencia
 
 
 
-   
+
 
     public string? nombreLogueado()
     {
@@ -495,7 +495,7 @@ public class Agencia
 
     }
 
-   
+
 
     public string modificarVuelo(int id, int origen, int destino, int capacidad, double costo, DateTime fecha, string aerolinea, string avion)
     {
@@ -538,7 +538,7 @@ public class Agencia
         return "error";
     }
 
-  
+
     public string modificarReservaVuelo(int idVuelo, int idReserva, int cantidad, double costo)
     {
         if (DB.modificarReservaVuelo(idVuelo, idReserva, cantidad, costo) == 1)
@@ -852,7 +852,8 @@ public class Agencia
 
     public bool eliminarHotel(int idHotel)
     {
-
+        DB.eliminarReservaHotel(idHotel);
+        DB.eliminarHotelUsuario(idHotel, this.usuarioActual.id);
         if (DB.eliminarHotel(idHotel) == 1)
         {
             try
@@ -949,7 +950,7 @@ public class Agencia
             if (itemHotel.ubicacion.nombre.Trim().ToUpper() == ciudadSeleccionada.Trim().ToUpper())
             {
                 porHotel = true;
-                foreach (var itemReserva in itemHotel.listMisReservas)
+                foreach (var itemReserva in itemHotel?.listMisReservas)
                 {
                     estaRango = this.verificacionRango(itemReserva, itemHotel, fechaIngreso, fechaEgreso);
 
@@ -995,17 +996,17 @@ public class Agencia
         if (itemReserva.miHotel.id == itemHotel.id)
         {
 
-            if((itemReserva.fechaDesde.Date >= fechaIngreso.Date) && (itemReserva.fechaHasta.Date <= fechaEgreso.Date))
+            if ((itemReserva.fechaDesde.Date >= fechaIngreso.Date) && (itemReserva.fechaHasta.Date <= fechaEgreso.Date))
             {
                 estaRango = true;
             }
 
-            if(fechaIngreso.Date >= itemReserva.fechaDesde && fechaIngreso.Date <= itemReserva.fechaHasta.Date)
+            if (fechaIngreso.Date >= itemReserva.fechaDesde && fechaIngreso.Date <= itemReserva.fechaHasta.Date)
             {
                 estaRango = true;
             }
 
-            if(fechaEgreso.Date <= itemReserva.fechaHasta.Date && fechaEgreso.Date >= itemReserva.fechaDesde.Date)
+            if (fechaEgreso.Date <= itemReserva.fechaHasta.Date && fechaEgreso.Date >= itemReserva.fechaDesde.Date)
             {
                 estaRango = true;
             }
@@ -1089,7 +1090,7 @@ public class Agencia
             //agregar la nueva reserva en memoria
             usuarioActual.listMisReservasHoteles.Add(reservaHotel);
 
-            this.getHoteles().FirstOrDefault(x =>x.id == hotelSeleccionado.id).listMisReservas.Add(reservaHotel);
+            this.getHoteles().FirstOrDefault(x => x.id == hotelSeleccionado.id).listMisReservas.Add(reservaHotel);
             //setea el usuario actual
             this.setUsuario(usuarioActual);
             return reservaHotel;
@@ -1098,6 +1099,10 @@ public class Agencia
         {
             return null;
         }
+    }
+    public List<Hotel> traerMisHoteles(Int32 idUsuario)
+    {
+        return DB.misHotelesQueVisite(idUsuario);
     }
 
 

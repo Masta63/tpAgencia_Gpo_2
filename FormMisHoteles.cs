@@ -42,23 +42,10 @@ namespace tpAgencia_Gpo_2
 
             if (usuarioActual != null)
             {
-
-                foreach (var item in agencia.getUsuarioActual().listMisReservasHoteles) {
-
-                    if(item.fechaHasta < fechaActual)
-                    
-                    dataGridView1.Rows.Add(
-                        item.miHotel.nombre,
-                        item.miHotel.ubicacion.nombre,
-                        item.miHotel.capacidad,
-                        item.miHotel.costo,
-                        item.fechaDesde,
-                        item.fechaHasta
-                        );
-
-
+                foreach (var item in agencia.traerMisHoteles(agencia.getUsuarioActual().id))
+                {
+                    dataGridView1.Rows.Add(item.nombre, item.ubicacion.nombre, item.capacidad, item.costo);
                 }
-
             }
         }
 
@@ -78,6 +65,10 @@ namespace tpAgencia_Gpo_2
                 MenuAgencia.Show();
             }
         }
-  
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
     }
 }

@@ -31,13 +31,11 @@
             label1 = new Label();
             label2 = new Label();
             dataGridView1 = new DataGridView();
+            Volver_desde_usuario = new Button();
             Nombre = new DataGridViewTextBoxColumn();
             Ciudad = new DataGridViewTextBoxColumn();
             Huespedes = new DataGridViewTextBoxColumn();
             Costo = new DataGridViewTextBoxColumn();
-            FechaDesde = new DataGridViewTextBoxColumn();
-            FechaHasta = new DataGridViewTextBoxColumn();
-            Volver_desde_usuario = new Button();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
             // 
@@ -66,7 +64,7 @@
             // dataGridView1
             // 
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { Nombre, Ciudad, Huespedes, Costo, FechaDesde, FechaHasta });
+            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { Nombre, Ciudad, Huespedes, Costo });
             dataGridView1.Location = new Point(11, 181);
             dataGridView1.Margin = new Padding(2);
             dataGridView1.Name = "dataGridView1";
@@ -74,6 +72,18 @@
             dataGridView1.RowTemplate.Height = 33;
             dataGridView1.Size = new Size(745, 175);
             dataGridView1.TabIndex = 3;
+            dataGridView1.CellContentClick += dataGridView1_CellContentClick;
+            // 
+            // Volver_desde_usuario
+            // 
+            Volver_desde_usuario.BackColor = Color.FromArgb(192, 255, 255);
+            Volver_desde_usuario.Location = new Point(56, 394);
+            Volver_desde_usuario.Name = "Volver_desde_usuario";
+            Volver_desde_usuario.Size = new Size(75, 23);
+            Volver_desde_usuario.TabIndex = 28;
+            Volver_desde_usuario.Text = "Volver";
+            Volver_desde_usuario.UseVisualStyleBackColor = false;
+            Volver_desde_usuario.Click += Volver_desde_usuario_Click;
             // 
             // Nombre
             // 
@@ -94,27 +104,6 @@
             // 
             Costo.HeaderText = "Costo";
             Costo.Name = "Costo";
-            // 
-            // FechaDesde
-            // 
-            FechaDesde.HeaderText = "FechaDesde";
-            FechaDesde.Name = "FechaDesde";
-            // 
-            // FechaHasta
-            // 
-            FechaHasta.HeaderText = "FechaHasta";
-            FechaHasta.Name = "FechaHasta";
-            // 
-            // Volver_desde_usuario
-            // 
-            Volver_desde_usuario.BackColor = Color.FromArgb(192, 255, 255);
-            Volver_desde_usuario.Location = new Point(56, 394);
-            Volver_desde_usuario.Name = "Volver_desde_usuario";
-            Volver_desde_usuario.Size = new Size(75, 23);
-            Volver_desde_usuario.TabIndex = 28;
-            Volver_desde_usuario.Text = "Volver";
-            Volver_desde_usuario.UseVisualStyleBackColor = false;
-            Volver_desde_usuario.Click += Volver_desde_usuario_Click;
             // 
             // FormMisHoteles
             // 
@@ -137,12 +126,10 @@
         private Label label1;
         private Label label2;
         private DataGridView dataGridView1;
+        private Button Volver_desde_usuario;
         private DataGridViewTextBoxColumn Nombre;
         private DataGridViewTextBoxColumn Ciudad;
         private DataGridViewTextBoxColumn Huespedes;
         private DataGridViewTextBoxColumn Costo;
-        private DataGridViewTextBoxColumn FechaDesde;
-        private DataGridViewTextBoxColumn FechaHasta;
-        private Button Volver_desde_usuario;
     }
 }
