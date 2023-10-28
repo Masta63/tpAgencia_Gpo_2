@@ -89,13 +89,13 @@ namespace tpAgencia_Gpo_2
         }
         private bool validaciones(Hotel? hotelSeleccionado)
         {
-            if (hotelSeleccionado.costo > Convert.ToDouble(textBoxMonto.Text))
+            TimeSpan ts = fechaHasta.Value.Date.Subtract(fechaDesde.Value.Date);
+            double costo = ((ts.Days + 1) * hotelSeleccionado.costo);
+            if (costo > Convert.ToDouble(textBoxMonto.Text))
             {
                 MessageBox.Show("No cubre el costo");
                 return false;
             }
-            TimeSpan ts = fechaHasta.Value.Date.Subtract(fechaDesde.Value.Date);
-            double costo = ((ts.Days + 1) * hotelSeleccionado.costo);
             if (costo < Convert.ToDouble(textBoxMonto.Text))
             {
                 MessageBox.Show("El costo es mayor");

@@ -994,16 +994,22 @@ public class Agencia
 
         if (itemReserva.miHotel.id == itemHotel.id)
         {
-            if (itemReserva.fechaDesde.Date <= fechaIngreso.Date && itemReserva.fechaHasta.Date >= fechaIngreso.Date)
-            {
-                estaRango = true;
 
-            }
-
-            if (itemReserva.fechaDesde.Date <= fechaEgreso.Date && itemReserva.fechaHasta.Date >= fechaEgreso.Date)
+            if((itemReserva.fechaDesde.Date >= fechaIngreso.Date) && (itemReserva.fechaHasta.Date <= fechaEgreso.Date))
             {
                 estaRango = true;
             }
+
+            if(fechaIngreso.Date >= itemReserva.fechaDesde && fechaIngreso.Date <= itemReserva.fechaHasta.Date)
+            {
+                estaRango = true;
+            }
+
+            if(fechaEgreso.Date <= itemReserva.fechaHasta.Date && fechaEgreso.Date >= itemReserva.fechaDesde.Date)
+            {
+                estaRango = true;
+            }
+
         }
         else
         {
@@ -1013,13 +1019,14 @@ public class Agencia
     }
 
 
-    public void eliminarRerservaHotel(int idReservaHotel, double costo)
+    public void eliminarRerservaHotel(int idReservaHotel, double costo, Int32 idHotel)
     {
         DB.eliminarMiReserva(idReservaHotel);
         this.usuarioActual.credito = this.usuarioActual.credito + costo;
         DB.modiFicarCredito(this.usuarioActual.id, this.usuarioActual.credito);
         ReservaHotel reservaHotel = this.usuarioActual.listMisReservasHoteles.FirstOrDefault(x => x.idReservaHotel == idReservaHotel);
         this.usuarioActual.listMisReservasHoteles.Remove(reservaHotel);
+        this.getHoteles().FirstOrDefault(x => x.id == idHotel).listMisReservas.Remove(reservaHotel);
     }
 
     public void devolverDinero(DateTime fechaDesde, DateTime fechaHasta, List<ReservaHotel> misReservas, Int32 idReservaHotel, Hotel miHotel)
@@ -1082,7 +1089,7 @@ public class Agencia
             //agregar la nueva reserva en memoria
             usuarioActual.listMisReservasHoteles.Add(reservaHotel);
 
-            this.getHoteles().FirstOrDefault(hotelSeleccionado).listMisReservas.Add(reservaHotel);
+            this.getHoteles().FirstOrDefault(x =>x.id == hotelSeleccionado.id).listMisReservas.Add(reservaHotel);
             //setea el usuario actual
             this.setUsuario(usuarioActual);
             return reservaHotel;
