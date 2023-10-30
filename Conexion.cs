@@ -125,6 +125,35 @@ namespace tpAgencia_Gpo_2
                 }
                 );
 
+            modelBuilder.Entity<ReservaHotel>(
+                rh =>
+                {//verificar el ordden
+                    rh.Property(r => r.miUsuario).HasColumnType("int");
+                    rh.Property(r => r.miUsuario).IsRequired(true);
+                    rh.Property(r => r.miHotel).HasColumnType("int");
+                    rh.Property(r => r.miHotel).IsRequired(true);
+                    rh.Property(r => r.fechaDesde).HasColumnType("datetime");
+                    rh.Property(r => r.fechaDesde).IsRequired(true);
+                    rh.Property(r => r.fechaHasta).HasColumnType("datetime");
+                    rh.Property(r => r.fechaHasta).IsRequired(true);
+                    rh.Property(r => r.pagado).HasColumnType("float");
+
+
+                }
+                );
+
+            modelBuilder.Entity<ReservaVuelo>(
+                rv =>
+                {//verificar orden
+                    rv.Property(r => r.miVuelo).HasColumnType("int");
+                    rv.Property(r => r.miVuelo).IsRequired(true);
+                    rv.Property(r => r.miUsuario).HasColumnType("int");
+                    rv.Property(r => r.miUsuario).IsRequired(true);
+                    rv.Property(r => r.pagado).HasColumnType("float");
+                    rv.Property(r => r.pagado).IsRequired(true);
+                }
+                );
+
 
 
         }
