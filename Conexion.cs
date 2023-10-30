@@ -31,6 +31,7 @@ namespace tpAgencia_Gpo_2
         {
             base.OnModelCreating(modelBuilder);
 
+            //tablas de la base
             modelBuilder.Ignore<Agencia>();//dejamos fuera del modelo a la clase logica
 
             modelBuilder.Entity<Usuario>()
@@ -56,9 +57,24 @@ namespace tpAgencia_Gpo_2
             modelBuilder.Entity<ReservaVuelo>()
                 .ToTable("ReservasVuelos")
                 .HasKey(r => r.idReservaVuelo);
-                
+
 
             
+            
+            //propiedades de los datos
+            modelBuilder.Entity<Usuario>(
+                usr =>
+                {
+                    usr.Property(u => u.name).HasColumnType("varchar(50)");
+                    usr.Property(u => u.apellido).HasColumnType("varchar(50)");
+                    usr.Property(u => u.dni).HasColumnType("varchar(10)");
+                    usr.Property(u => u.password).HasColumnType("varchar(50)");
+                    usr.Property(u => u.intentosFallidos).HasColumnType("int");
+                    usr.Property(u => u.bloqueado).HasColumnType("bit");
+                    usr.Property(u => u.credito).HasColumnType("float");
+                    usr.Property(u => u.esAdmin).HasColumnType("bit");
+                    
+                });
 
         }
     }
