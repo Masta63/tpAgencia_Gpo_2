@@ -88,10 +88,44 @@ namespace tpAgencia_Gpo_2
                 
                 );
 
+            modelBuilder.Entity<Hotel>(
+                hts =>
+                {//verificar orden de las propiedades con dev
+                    hts.Property(h => h.nombre).HasColumnType("varchar(50)");
+                    hts.Property(h => h.nombre).IsRequired(true);
+                    hts.Property(h => h.capacidad).HasColumnType("int");
+                    hts.Property(h => h.capacidad).IsRequired(true);
+                    hts.Property(h => h.costo).HasColumnType("float");
+                    hts.Property(h => h.costo).IsRequired(true);
+                    hts.Property(h => h.ubicacion).HasColumnType("int");
+                    hts.Property(h => h.ubicacion).IsRequired(true);
+                }
 
-                
+                );
 
-            
+            modelBuilder.Entity<Vuelo>(
+                vue =>
+                {//verificar datos y ordes con los metodos
+                    vue.Property(v => v.origen).HasColumnType("int");
+                    vue.Property(v => v.origen).IsRequired(true);
+                    vue.Property(v => v.destino).HasColumnType("int");
+                    vue.Property(v => v.destino).IsRequired(true);
+                    vue.Property(v => v.capacidad).HasColumnType("int");
+                    vue.Property(v => v.capacidad).IsRequired(true);
+                    vue.Property(v => v.vendido).HasColumnType("int");
+                    vue.Property(v => v.costo).HasColumnType("float");
+                    vue.Property(v => v.costo).IsRequired(true);
+                    vue.Property(v => v.fecha).HasColumnType("datetime");
+                    vue.Property(v => v.fecha).IsRequired(true);
+                    vue.Property(v => v.aerolinea).HasColumnType("varchar(50)");
+                    vue.Property(v => v.aerolinea).IsRequired(true);
+                    vue.Property(v => v.avion).HasColumnType("varchar(50");
+                    vue.Property(v => v.avion).IsRequired(true);
+
+                }
+                );
+
+
 
         }
     }
