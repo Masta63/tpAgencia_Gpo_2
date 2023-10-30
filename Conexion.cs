@@ -63,18 +63,35 @@ namespace tpAgencia_Gpo_2
             
             //propiedades de los datos
             modelBuilder.Entity<Usuario>(
-                usr =>
+                usr =>//armo un array de todas las propiedades que deseo setear, sino seria una instruccion por cada dato
                 {
                     usr.Property(u => u.name).HasColumnType("varchar(50)");
                     usr.Property(u => u.apellido).HasColumnType("varchar(50)");
+                    usr.Property(u => u.mail).HasColumnType("varchar(256)");
+                    usr.Property(u => u.mail).IsRequired(true);
                     usr.Property(u => u.dni).HasColumnType("varchar(10)");
+                    usr.Property(u => u.dni).IsRequired(true);
                     usr.Property(u => u.password).HasColumnType("varchar(50)");
+                    usr.Property(u => u.password).IsRequired(true);
                     usr.Property(u => u.intentosFallidos).HasColumnType("int");
                     usr.Property(u => u.bloqueado).HasColumnType("bit");
                     usr.Property(u => u.credito).HasColumnType("float");
                     usr.Property(u => u.esAdmin).HasColumnType("bit");
                     
                 });
+
+            modelBuilder.Entity<Ciudad>(
+                c =>
+                {
+                    c.Property(c=> c.nombre).HasColumnType("varchar(50)");
+                }
+                
+                );
+
+
+                
+
+            
 
         }
     }
