@@ -8,6 +8,7 @@
         public double pagado {  get; set; }
 
         //constructor
+        public ReservaVuelo() { }
         public ReservaVuelo(Vuelo miVuelo, Usuario miUsuario, double pagado)
         {
             this.miVuelo = miVuelo;

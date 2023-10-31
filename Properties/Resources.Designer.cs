@@ -61,6 +61,15 @@ namespace tpAgencia_Gpo_2.Properties {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Data Source=DESKTOP-M5PF5S9\SQLEXPRESS;Initial Catalog=agencia;Integrated Security=True.
+        /// </summary>
+        internal static string conexion {
+            get {
+                return ResourceManager.GetString("conexion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Data Source=DESKTOP-RHNJB3Q\SQLEXPRESS;Initial Catalog=sistema;Integrated Security=True.
         /// </summary>
         internal static string ConnectionStr {

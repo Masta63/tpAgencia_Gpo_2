@@ -15,6 +15,7 @@ namespace tpAgencia_Gpo_2
 
 
         //Constructores
+        public Ciudad() { }
         public Ciudad(int id, string nombre)
         {
             this.id = id;
