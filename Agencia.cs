@@ -9,6 +9,7 @@ using System.Xml.Linq;
 using tpAgencia_Gpo_2;
 using static System.Net.Mime.MediaTypeNames;
 using static Azure.Core.HttpHeader;
+using Microsoft.EntityFrameworkCore;
 
 public class Agencia
 {
@@ -23,7 +24,12 @@ public class Agencia
     private int cantUsuarios = 0;
     private int cantHoteles = 0;
     private int cantIdHoteles = 0;
-    private DAL DB; //clase adicional para intercambio con base de datos
+    private DAL DB; //clase adicional para intercambio con base de datos // esta clase se debe remover
+   
+    
+    private MiContexto contexto; //Agrego la clase con el contexto de entity
+
+    
 
     //metodo constructor
     public Agencia()
@@ -37,18 +43,33 @@ public class Agencia
         reservasVuelo = new List<ReservaVuelo>();
         listUsuarios = new List<Usuario>();
         DB = new DAL();//inicializar constructor
-        inicializarAtributos();//inicializo los metodos de la clase DB
+        inicializarAtributos();//inicializo los metodos de la clase DB/entity
+        
     }
 
     private void inicializarAtributos()
     {
         //aca deberiamos agregar los metodos para inicializar vuelos hoteles paises etc
 
-        listUsuarios = DB.inicializarUsuarios();//metodo para inicializar usuarios
-        hoteles = DB.inicializarHoteles();
-        ciudades = DB.inicializarCiudades();
-        vuelos = DB.inicializarVuelos();
+        //listUsuarios = DB.inicializarUsuarios();//metodo para inicializar usuarios
+       //hoteles = DB.inicializarHoteles();
+        //ciudades = DB.inicializarCiudades();
+        //vuelos = DB.inicializarVuelos();
         //le asigno todo lo del metodo a la sita de la clase logica que trabaja en tiempo de ejecucion
+
+        try
+        {
+            //creo el contexto
+            contexto = new MiContexto();
+            //forma de cargar la tabla, un load para cada dbset de clase
+            contexto.usuarios.Load();
+        }
+        catch (Exception e)
+        {
+
+            Console.WriteLine(e.Message);
+        }
+
     }
 
 

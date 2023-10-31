@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace tpAgencia_Gpo_2
 {
-     class Conexion : DbContext
+     class MiContexto : DbContext
     {
         public DbSet<Usuario> usuarios { get; set; }
         public DbSet<Ciudad> ciudades { get; set; }
@@ -20,7 +20,7 @@ namespace tpAgencia_Gpo_2
 
 
         private String _connectionStr = Properties.Resources.conexion;
-        public Conexion() { }
+        public MiContexto() { }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
