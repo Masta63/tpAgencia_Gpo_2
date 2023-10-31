@@ -10,6 +10,7 @@
         public double pagado { get; set; }
 
         //constructor
+        public ReservaHotel() { }
         public ReservaHotel(Hotel miHotel,
                             Usuario miUsuario,
                             DateTime fechaDesde,

@@ -17,6 +17,7 @@
         public string avion { get; set; }
         public List<ReservaVuelo> listMisReservas { get; set; }
 
+        public Vuelo() { }
         public Vuelo(int id, Ciudad origen, Ciudad destino, int capacidad,int vendido, double costo, DateTime fecha, string aerolinea, string avion)
         {
             this.id = id;

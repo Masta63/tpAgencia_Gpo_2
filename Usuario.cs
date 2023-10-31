@@ -30,6 +30,7 @@ namespace tpAgencia_Gpo_2
 
         public List<Vuelo> vuelosTomados { get; set; }
 
+        public Usuario() { }
 
         //constructor para formUsuarioRegistro
         //nombre, apellido, dni, mail, password

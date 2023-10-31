@@ -19,7 +19,7 @@ namespace tpAgencia_Gpo_2
 
 
 
-        private String _connectionStr = Properties.Resources.ConnectionStr;
+        private String _connectionStr = Properties.Resources.conexion;
         public Conexion() { }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
