@@ -7,7 +7,7 @@ namespace tpAgencia_Gpo_2
     public class Usuario 
     {
 
-        private List<Hotel> listHotelesVisitados;
+        
 
         public int id { get; set; }
         public string name { get; set; }
@@ -22,13 +22,10 @@ namespace tpAgencia_Gpo_2
         public List<ReservaVuelo> listMisReservasVuelo { get; set; }
         public List<Vuelo> listVuelosTomados { get; set; }
 
+        private List<Hotel> listHotelesVisitados;
         public double credito { get; set; }
         public bool esAdmin { get; set; }
 
-        public List<Hotel> hotelesVisitados { get; set; }
-
-
-        public List<Vuelo> vuelosTomados { get; set; }
 
         public Usuario() { }
 

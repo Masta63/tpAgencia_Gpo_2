@@ -747,7 +747,7 @@ public class Agencia
     public List<Vuelo> misVuelos(Usuario usuarioActual)
     {
         List<ReservaVuelo> reservasVuelo = DB.traerReservasVuelo(usuarioActual.id);
-        return usuarioActual.vuelosTomados = reservasVuelo.Select(reserva => reserva.miVuelo).ToList();
+        return usuarioActual.listVuelosTomados = reservasVuelo.Select(reserva => reserva.miVuelo).ToList();
     }
 
     public void eliminarReservaVuelo(int idReservaVuelo)
