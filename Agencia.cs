@@ -75,6 +75,7 @@ public class Agencia
 
     //INICIO METODOS DE USUARIO
 
+    #region metodos usuarios
 
     public string login(string? _contraseña, string? _mail)
     {
@@ -90,6 +91,7 @@ public class Agencia
     }
 
 
+    
 
     private string validacionEstadoUsuario(Usuario? usuarioSeleccionados, string mailInput, string Inputpass)
     {
@@ -479,6 +481,7 @@ public class Agencia
         return getUsuarios().Any(u => u.dni == dni || u.mail == mail);
     }
 
+    #endregion
 
     //FIN METODOS USUARIO
 
