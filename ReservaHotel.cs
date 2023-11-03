@@ -9,6 +9,8 @@
         public DateTime fechaHasta { get; set; }
         public double pagado { get; set; }
 
+        public int idUsuario { get; set; }
+
         //constructor
         public ReservaHotel() { }
         public ReservaHotel(Hotel miHotel,
