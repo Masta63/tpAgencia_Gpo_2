@@ -22,10 +22,12 @@ namespace tpAgencia_Gpo_2
         public List<ReservaVuelo> listMisReservasVuelo { get; set; }
         public List<Vuelo> listVuelosTomados { get; set; }
 
-        private List<Hotel> listHotelesVisitados;
+        public List<Hotel> listHotelesVisitados { get; set; }
         public double credito { get; set; }
         public bool esAdmin { get; set; }
 
+        public List<HotelUsuario> hotelUsuario { get; set; }
+        public List<VueloUsuario> vueloUsuarios { get; set; }
 
         public Usuario() { }
 
