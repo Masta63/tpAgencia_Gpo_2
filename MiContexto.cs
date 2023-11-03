@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace tpAgencia_Gpo_2
 {
-     class MiContexto : DbContext
+    class MiContexto : DbContext
     {
         public DbSet<Usuario> usuarios { get; set; }
         public DbSet<Ciudad> ciudades { get; set; }
@@ -41,7 +41,7 @@ namespace tpAgencia_Gpo_2
             modelBuilder.Entity<Ciudad>()
                 .ToTable("Ciudades")
                 .HasKey(c => c.id);
-            
+
             modelBuilder.Entity<Hotel>()
                 .ToTable("Hoteles")
                 .HasKey(h => h.id);
@@ -83,7 +83,7 @@ namespace tpAgencia_Gpo_2
                .HasForeignKey(R => R.idUsuario)
                .OnDelete(DeleteBehavior.Cascade);
 
-           
+
             //USUARIO -> RESERVAVUELO
 
             modelBuilder.Entity<ReservaVuelo>()
@@ -97,9 +97,9 @@ namespace tpAgencia_Gpo_2
                 .HasMany(U => U.listVuelosTomados)
                 .WithMany(V => V.listPasajeros)
                 .UsingEntity<VueloUsuario>(
-                euv => euv.HasOne(uv => uv.vuelo).WithMany(v=>v.vueloUsuarios).HasForeignKey(u=>u.idVuelo),
-                euv => euv.HasOne(uv=>uv.user).WithMany(u=>u.vueloUsuarios).HasForeignKey(u=>u.idUsuario),
-                euv=>euv.HasKey(k=>new {k.idVuelo, k.idUsuario})
+                euv => euv.HasOne(uv => uv.vuelo).WithMany(v => v.vueloUsuarios).HasForeignKey(u => u.idVuelo),
+                euv => euv.HasOne(uv => uv.user).WithMany(u => u.vueloUsuarios).HasForeignKey(u => u.idUsuario),
+                euv => euv.HasKey(k => new { k.idVuelo, k.idUsuario })
                 );
 
             //USUARIO -> HOTEL many to many
@@ -130,16 +130,16 @@ namespace tpAgencia_Gpo_2
                     usr.Property(u => u.bloqueado).HasColumnType("bit");
                     usr.Property(u => u.credito).HasColumnType("float");
                     usr.Property(u => u.esAdmin).HasColumnType("bit");
-                    
+
                 });
 
             modelBuilder.Entity<Ciudad>(
                 c =>
                 {
-                    c.Property(c=> c.nombre).HasColumnType("varchar(50)");
+                    c.Property(c => c.nombre).HasColumnType("varchar(50)");
                     c.Property(c => c.nombre).IsRequired(true);
                 }
-                
+
                 );
 
             modelBuilder.Entity<Hotel>(
