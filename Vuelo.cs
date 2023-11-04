@@ -7,7 +7,11 @@
 
         public int id { get; set; }
         public Ciudad origen { get; set; }
+        //ferign key
+        public int CiudadOrigenId { get; set; }
         public Ciudad destino { get; set; }
+        //ferign key
+        public int CiudadDestinoId{ get; set; }
         public int capacidad { get; set; }
         public int vendido { get; set; }
         public List<Usuario> listPasajeros { get; set; }// ICollection en vez de List?

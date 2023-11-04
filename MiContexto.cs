@@ -36,11 +36,11 @@ namespace tpAgencia_Gpo_2
                 .HasKey(u => u.id);
 
             modelBuilder.Entity<Ciudad>()
-                .ToTable("Ciudade")
+                .ToTable("Ciudad")
                 .HasKey(c => c.id);
 
             modelBuilder.Entity<Hotel>()
-                .ToTable("Hotele")
+                .ToTable("Hotel")
                 .HasKey(h => h.id);
 
             modelBuilder.Entity<Vuelo>()
@@ -48,11 +48,11 @@ namespace tpAgencia_Gpo_2
                 .HasKey(v => v.id);
 
             modelBuilder.Entity<ReservaHotel>()
-                .ToTable("ReservasHotele")
+                .ToTable("ReservaHotel")
                 .HasKey(r => r.idReservaHotel);
 
             modelBuilder.Entity<ReservaVuelo>()
-                .ToTable("ReservasVuelo")
+                .ToTable("ReservaVuelo")
                 .HasKey(r => r.idReservaVuelo);
 
 
@@ -116,14 +116,19 @@ namespace tpAgencia_Gpo_2
             //CIUDAD -> VUELO one to many
 
             modelBuilder.Entity<Vuelo>()
-                .HasOne(V => V.origen)//relacion para origen
-                .WithMany(C => C.listVuelos)
-                .HasForeignKey(V => V.id);
+                .HasOne(v => v.origen)
+                .WithMany()
+                .HasForeignKey(v => v.CiudadOrigenId)
+                .OnDelete(DeleteBehavior.Restrict);//para que no se elimine una ciudad si elimino un vuelo
+            
+            modelBuilder.Entity<Vuelo>()
+                .HasOne(v => v.destino)
+                .WithMany()
+                .HasForeignKey(v => v.CiudadDestinoId)
+                .OnDelete(DeleteBehavior.Restrict); // Define el comportamiento de eliminación, si es necesario
 
-            //modelbuilder.entity<vuelo>()
-            //    .hasone(v => v.destino)//relacion para destino
-            //    .withmany(c => c.listvuelos)
-            //    .hasforeignkey(v => v.id);
+
+            
 
             #endregion
 
@@ -191,8 +196,8 @@ namespace tpAgencia_Gpo_2
             modelBuilder.Entity<Hotel>(
                 hts =>
                 {
-                    hts.Property(h => h.ubicacion).HasColumnType("int");
-                    hts.Property(h => h.ubicacion).IsRequired(true);
+                    //hts.Property(h => h.ubicacion).HasColumnType("int");
+                    //hts.Property(h => h.ubicacion).IsRequired(true);
                     hts.Property(h => h.capacidad).HasColumnType("int");
                     hts.Property(h => h.capacidad).IsRequired(true);
                     hts.Property(h => h.costo).HasColumnType("float");
@@ -206,10 +211,10 @@ namespace tpAgencia_Gpo_2
             modelBuilder.Entity<Vuelo>(
                 vue =>
                 {//verificar datos y ordes con los metodos
-                    vue.Property(v => v.origen).HasColumnType("int");
-                    vue.Property(v => v.origen).IsRequired(true);
-                    vue.Property(v => v.destino).HasColumnType("int");
-                    vue.Property(v => v.destino).IsRequired(true);
+                    //vue.Property(v => v.origen).HasColumnType("int");
+                    //vue.Property(v => v.origen).IsRequired(true);
+                    //vue.Property(v => v.destino).HasColumnType("int");
+                    //vue.Property(v => v.destino).IsRequired(true);
                     vue.Property(v => v.capacidad).HasColumnType("int");
                     vue.Property(v => v.capacidad).IsRequired(true);
                     vue.Property(v => v.vendido).HasColumnType("int");
