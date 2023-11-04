@@ -1,13 +1,19 @@
-﻿namespace tpAgencia_Gpo_2
+﻿using System.Collections;
+
+namespace tpAgencia_Gpo_2
 {
     public class ReservaVuelo
     {
         public int idReservaVuelo { get; set; }
         public Vuelo miVuelo { get; set; }
+        //foreign key
+        public int idVuelo { get; set; }
         public Usuario miUsuario { get; set; }
-        public double pagado {  get; set; }
-
+        
+       //foreign key
         public int idUsuario { get; set; }
+
+        public double pagado {  get; set; }
         //constructor
         public ReservaVuelo() { }
         public ReservaVuelo(Vuelo miVuelo, Usuario miUsuario, double pagado)

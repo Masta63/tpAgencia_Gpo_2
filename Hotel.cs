@@ -16,7 +16,7 @@ namespace tpAgencia_Gpo_2
         public int capacidad { get; set; }
         public int disponibilidad { get; set; }
         public double costo { get; set; }
-        public List<Usuario> listHuespedes { get; set; }
+        public ICollection<Usuario> listHuespedes { get; set; }//ICollection?
 
         public string nombre { get; set; }
 

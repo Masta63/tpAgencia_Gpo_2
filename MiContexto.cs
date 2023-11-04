@@ -100,17 +100,30 @@ namespace tpAgencia_Gpo_2
             #region Relaciones de Vuelo
             //RELACIONES VUELO
 
-            //VUELO -> RESERVAVUELO
+            //VUELO -> USUARIO con la tabla intermedia ReservaHotel
+            modelBuilder.Entity<Usuario>()
+                .HasMany(u => u.listVuelosTomados)
+                .WithMany(v => v.listPasajeros)
+                .UsingEntity<ReservaVuelo>(
+                evu => evu.HasOne(rvu => rvu.miVuelo).WithMany(v => v.listMisReservas).HasForeignKey(v => v.idVuelo),
+                evu => evu.HasOne(rvu => rvu.miUsuario).WithMany(u => u.listMisReservasVuelo).HasForeignKey(v => v.idUsuario),
+                evu => evu.HasKey(k => new { k.idVuelo, k.idUsuario })
+                );
 
-            //VUELO -> USUARIO
+
 
             //VUELO -> CIUDAD
-            //CIUDAD -> VUELO many to many
+            //CIUDAD -> VUELO one to many
 
-            //modelBuilder.Entity<Vuelo>()
-            //    .HasOne(V => V.origen)
-            //    .WithMany(C => C.listVuelos)
-            //    .HasForeignKey(V => V.)
+            modelBuilder.Entity<Vuelo>()
+                .HasOne(V => V.origen)//relacion para origen
+                .WithMany(C => C.listVuelos)
+                .HasForeignKey(V => V.id);
+
+            modelBuilder.Entity<Vuelo>()
+                .HasOne(V => V.destino)//relacion para destino
+                .WithMany(C => C.listVuelos)
+                .HasForeignKey(V => V.id);
 
             #endregion
 
@@ -118,14 +131,25 @@ namespace tpAgencia_Gpo_2
             //RELACIONES HOTEL
 
             //HOTEL -> CIUDAD
-            //CIUDAD -> HOTEL many to many
+            //CIUDAD -> HOTEL one to many
+
             modelBuilder.Entity<Hotel>()
                 .HasOne(H => H.ubicacion)
                 .WithMany(C => C.listHoteles)
                 .HasForeignKey(H => H.idCiudad)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            //HOTEL -> HOTEL_USUARIO
+            //HOTEL -> USUARIO con la tabla intermedia ReservaHotel
+            modelBuilder.Entity<Usuario>()
+                .HasMany(u => u.listHotelesVisitados)
+                .WithMany(h => h.listHuespedes)
+                .UsingEntity<ReservaHotel>(
+                ehu => ehu.HasOne(rh => rh.miHotel).WithMany(h => h.listMisReservas).HasForeignKey(u => u.idHotel),
+
+                ehu => ehu.HasOne(hu => hu.miUsuario).WithMany(u => u.listMisReservasHoteles).HasForeignKey(u => u.idUsuario),
+
+                ehu => ehu.HasKey(k => new { k.idHotel, k.idUsuario })
+                );
 
             //HOTEL -> ReservaHotel
 

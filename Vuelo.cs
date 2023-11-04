@@ -10,13 +10,15 @@
         public Ciudad destino { get; set; }
         public int capacidad { get; set; }
         public int vendido { get; set; }
-        public List<Usuario> listPasajeros { get; set; }
+        public ICollection<Usuario> listPasajeros { get; set; }// ICollection en vez de List?
         public double costo { get; set; }
         public DateTime fecha { get; set; }
         public string aerolinea { get; set; }
         public string avion { get; set; }
         public List<ReservaVuelo> listMisReservas { get; set; }
         public List<VueloUsuario> vueloUsuarios { get; set; }
+
+
         public Vuelo() { }
         public Vuelo(int id, Ciudad origen, Ciudad destino, int capacidad,int vendido, double costo, DateTime fecha, string aerolinea, string avion)
         {
