@@ -7,8 +7,6 @@ namespace tpAgencia_Gpo_2
     public class Usuario 
     {
 
-        
-
         public int id { get; set; }
         public string name { get; set; }
         public string apellido { get; set; }
@@ -20,9 +18,9 @@ namespace tpAgencia_Gpo_2
         public List<ReservaHotel> listMisReservasHoteles { get; set; }
 
         public List<ReservaVuelo> listMisReservasVuelo { get; set; }
-        public List<Vuelo> listVuelosTomados { get; set; }
+        public ICollection<Vuelo> listVuelosTomados { get; set; }//Icoleccion en vez de List?
 
-        public List<Hotel> listHotelesVisitados { get; set; }
+        public ICollection<Hotel> listHotelesVisitados { get; set; }//Icoleccion en vez de List?
         public double credito { get; set; }
         public bool esAdmin { get; set; }
 
