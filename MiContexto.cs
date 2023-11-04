@@ -16,10 +16,7 @@ namespace tpAgencia_Gpo_2
         public DbSet<ReservaHotel> reservaHoteles { get; set; }
         public DbSet<ReservaVuelo> reservaVuelos { get; set; }
 
-
-
-
-        private String _connectionStr = Properties.Resources.conexion;
+        private readonly String _connectionStr = Properties.Resources.conexion;
         public MiContexto() { }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -35,46 +32,33 @@ namespace tpAgencia_Gpo_2
             modelBuilder.Ignore<Agencia>();//dejamos fuera del modelo a la clase logica
 
             modelBuilder.Entity<Usuario>()
-                .ToTable("Usuarios")
+                .ToTable("Usuario")
                 .HasKey(u => u.id);
 
             modelBuilder.Entity<Ciudad>()
-                .ToTable("Ciudades")
+                .ToTable("Ciudade")
                 .HasKey(c => c.id);
 
             modelBuilder.Entity<Hotel>()
-                .ToTable("Hoteles")
+                .ToTable("Hotele")
                 .HasKey(h => h.id);
 
             modelBuilder.Entity<Vuelo>()
-                .ToTable("Vuelos")
+                .ToTable("Vuelo")
                 .HasKey(v => v.id);
 
             modelBuilder.Entity<ReservaHotel>()
-                .ToTable("ReservasHoteles")
+                .ToTable("ReservasHotele")
                 .HasKey(r => r.idReservaHotel);
 
             modelBuilder.Entity<ReservaVuelo>()
-                .ToTable("ReservasVuelos")
+                .ToTable("ReservasVuelo")
                 .HasKey(r => r.idReservaVuelo);
 
 
             //RELACIONES
 
-            //CIUDAD -> HOTEL
-            modelBuilder.Entity<Hotel>()
-                .HasOne(H => H.ubicacion)
-                .WithMany(C => C.listHoteles)
-                .HasForeignKey(H => H.idCiudad)
-                .OnDelete(DeleteBehavior.Cascade);
-
-            //CIUDAD -> VUELO
-            //modelBuilder.Entity<Vuelo>()
-            //    .HasOne(V => V.origen)
-            //    .WithMany(C => C.listVuelos)
-            //    .HasForeignKey(V => V.)
-
-
+            #region Relaciones de Usuario
             //USUARIO -> RESERVAHOTEL
 
             modelBuilder.Entity<ReservaHotel>()
@@ -111,6 +95,44 @@ namespace tpAgencia_Gpo_2
                 ehu => ehu.HasOne(hu => hu.user).WithMany(u => u.hotelUsuario).HasForeignKey(u => u.idUsuario),
                 ehu => ehu.HasKey(k => new { k.idHotel, k.idUsuario })
                 );
+            #endregion
+
+            #region Relaciones de Vuelo
+            //RELACIONES VUELO
+
+            //VUELO -> RESERVAVUELO
+
+            //VUELO -> USUARIO
+
+            //VUELO -> CIUDAD
+            //CIUDAD -> VUELO many to many
+
+            //modelBuilder.Entity<Vuelo>()
+            //    .HasOne(V => V.origen)
+            //    .WithMany(C => C.listVuelos)
+            //    .HasForeignKey(V => V.)
+
+            #endregion
+
+            #region Relaciones de Hotel
+            //RELACIONES HOTEL
+
+            //HOTEL -> CIUDAD
+            //CIUDAD -> HOTEL many to many
+            modelBuilder.Entity<Hotel>()
+                .HasOne(H => H.ubicacion)
+                .WithMany(C => C.listHoteles)
+                .HasForeignKey(H => H.idCiudad)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            //HOTEL -> HOTEL_USUARIO
+
+            //HOTEL -> ReservaHotel
+
+            #endregion
+
+            //
+
             //
 
 
