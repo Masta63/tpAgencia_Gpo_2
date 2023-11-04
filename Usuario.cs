@@ -18,9 +18,9 @@ namespace tpAgencia_Gpo_2
         public List<ReservaHotel> listMisReservasHoteles { get; set; }
 
         public List<ReservaVuelo> listMisReservasVuelo { get; set; }
-        public ICollection<Vuelo> listVuelosTomados { get; set; }//Icoleccion en vez de List?
+        public List<Vuelo> listVuelosTomados { get; set; }//Icoleccion en vez de List?
 
-        public ICollection<Hotel> listHotelesVisitados { get; set; }//Icoleccion en vez de List?
+        public List<Hotel> listHotelesVisitados { get; set; }//Icoleccion en vez de List?
         public double credito { get; set; }
         public bool esAdmin { get; set; }
 

@@ -120,10 +120,10 @@ namespace tpAgencia_Gpo_2
                 .WithMany(C => C.listVuelos)
                 .HasForeignKey(V => V.id);
 
-            modelBuilder.Entity<Vuelo>()
-                .HasOne(V => V.destino)//relacion para destino
-                .WithMany(C => C.listVuelos)
-                .HasForeignKey(V => V.id);
+            //modelbuilder.entity<vuelo>()
+            //    .hasone(v => v.destino)//relacion para destino
+            //    .withmany(c => c.listvuelos)
+            //    .hasforeignkey(v => v.id);
 
             #endregion
 

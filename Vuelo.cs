@@ -10,7 +10,7 @@
         public Ciudad destino { get; set; }
         public int capacidad { get; set; }
         public int vendido { get; set; }
-        public ICollection<Usuario> listPasajeros { get; set; }// ICollection en vez de List?
+        public List<Usuario> listPasajeros { get; set; }// ICollection en vez de List?
         public double costo { get; set; }
         public DateTime fecha { get; set; }
         public string aerolinea { get; set; }
