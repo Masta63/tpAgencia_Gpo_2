@@ -11,7 +11,10 @@ namespace tpAgencia_Gpo_2
         public string nombre {  get; set; }
         public List<Hotel> listHoteles { get; set; }
 
+        //foreing key
         public List<Vuelo> listVuelos { get; set; }
+        public int idVuelo {  get; set; }
+       
 
 
         //Constructores
