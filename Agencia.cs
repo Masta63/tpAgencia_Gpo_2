@@ -13,6 +13,7 @@ using Microsoft.EntityFrameworkCore;
 
 public class Agencia
 {
+
     private List<Usuario> listUsuarios;
     private List<Hotel> hoteles;
     private List<Vuelo> vuelos;
