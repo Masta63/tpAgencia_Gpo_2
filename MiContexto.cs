@@ -211,21 +211,16 @@ namespace tpAgencia_Gpo_2
             modelBuilder.Entity<Vuelo>(
                 vue =>
                 {//verificar datos y ordes con los metodos
-                    //vue.Property(v => v.origen).HasColumnType("int");
-                    //vue.Property(v => v.origen).IsRequired(true);
-                    //vue.Property(v => v.destino).HasColumnType("int");
-                    //vue.Property(v => v.destino).IsRequired(true);
-                    vue.Property(v => v.capacidad).HasColumnType("int");
-                    vue.Property(v => v.capacidad).IsRequired(true);
-                    vue.Property(v => v.vendido).HasColumnType("int");
-                    vue.Property(v => v.costo).HasColumnType("float");
-                    vue.Property(v => v.costo).IsRequired(true);
-                    vue.Property(v => v.fecha).HasColumnType("datetime");
-                    vue.Property(v => v.fecha).IsRequired(true);
-                    vue.Property(v => v.aerolinea).HasColumnType("varchar(50)");
-                    vue.Property(v => v.aerolinea).IsRequired(true);
-                    vue.Property(v => v.avion).HasColumnType("varchar(50");
-                    vue.Property(v => v.avion).IsRequired(true);
+                 //vue.Property(v => v.origen).HasColumnType("int");
+                 //vue.Property(v => v.origen).IsRequired(true);
+                 //vue.Property(v => v.destino).HasColumnType("int");
+                 //vue.Property(v => v.destino).IsRequired(true);
+                    vue.Property(v => v.capacidad).HasColumnType("int").IsRequired(true);
+                    vue.Property(v => v.vendido).HasColumnType("int").IsRequired(true);
+                    vue.Property(v => v.costo).HasColumnType("float").IsRequired(true);
+                    vue.Property(v => v.fecha).HasColumnType("datetime").IsRequired(true);
+                    vue.Property(v => v.aerolinea).HasColumnType("varchar(50)").IsRequired(true);
+                    vue.Property(v => v.avion).HasColumnType("varchar(50)").IsRequired(true);
 
                 }
                 );
