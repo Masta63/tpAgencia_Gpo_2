@@ -120,7 +120,7 @@ namespace tpAgencia_Gpo_2
                 .WithMany()
                 .HasForeignKey(v => v.CiudadOrigenId)
                 .OnDelete(DeleteBehavior.Restrict);//para que no se elimine una ciudad si elimino un vuelo
-            
+
             modelBuilder.Entity<Vuelo>()
                 .HasOne(v => v.destino)
                 .WithMany()
@@ -128,7 +128,7 @@ namespace tpAgencia_Gpo_2
                 .OnDelete(DeleteBehavior.Restrict); // Define el comportamiento de eliminación, si es necesario
 
 
-            
+
 
             #endregion
 
@@ -254,6 +254,64 @@ namespace tpAgencia_Gpo_2
                 }
                 );
 
+            #region carga de usuario al modelo
+            modelBuilder.Entity<Usuario>().HasData(
+        new
+        {
+            id = 1,
+            name = "admin",
+            apellido = "admin",
+            dni = "10111222",
+            mail = "admin@admin.com",
+            password = "12345",
+            intentosFallidos = 0,
+            bloqueado = false,
+            credito = 0.0,
+            esAdmin = true
+        },
+        new
+        {
+            id = 2,
+            name = "juan",
+            apellido = "perez",
+            dni = "11222333",
+            mail = "juan@juan.com",
+            password = "12345",
+            intentosFallidos = 0,
+            bloqueado = false,
+            credito = 0.0,
+            esAdmin = false
+        },
+        new
+        {
+            id = 3,
+            name = "luciana",
+            apellido = "perez",
+            dni = "33222111",
+            mail = "luciana@luciana.com",
+            password = "12345",
+            intentosFallidos = 0,
+            bloqueado = false,
+            credito = 0.0,
+            esAdmin = false
+        },
+        new
+        {
+            id = 4,
+            name = "pedro ",
+            apellido = "gomez",
+            dni = "22333444",
+            mail = "perdo@pedro.com",
+            password = "12345",
+            intentosFallidos = 0,
+            bloqueado = false,
+            credito = 0.0,
+            esAdmin = false
+        }
+
+
+        ); ; 
+            #endregion
 
 
         }
