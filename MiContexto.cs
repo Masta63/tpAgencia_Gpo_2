@@ -254,6 +254,7 @@ namespace tpAgencia_Gpo_2
                 }
                 );
 
+            //carga de usuarios amodelo
             #region carga de usuario al modelo
             modelBuilder.Entity<Usuario>().HasData(
         new
