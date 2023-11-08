@@ -12,8 +12,9 @@ namespace tpAgencia_Gpo_2
         public List<Hotel> listHoteles { get; set; }
 
         //foreing key
-        public List<Vuelo> listVuelos { get; set; }
-        public int idVuelo {  get; set; }
+        public List<Vuelo> listVuelosOrigen { get; set; }
+        public List<Vuelo> listVuelosDestino { get; set; }
+        //public int idVuelo {  get; set; }//borrar
        
 
 
@@ -24,7 +25,7 @@ namespace tpAgencia_Gpo_2
             this.id = id;
             this.nombre = nombre;
             listHoteles = new List<Hotel>();
-            listVuelos = new List<Vuelo>();
+            //listVuelos = new List<Vuelo>();
         }
 
         public string[] ToString()
