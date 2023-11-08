@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using tpAgencia_Gpo_2;
 
@@ -11,9 +12,11 @@ using tpAgencia_Gpo_2;
 namespace tpAgencia_Gpo_2.Migrations
 {
     [DbContext(typeof(MiContexto))]
-    partial class MiContextoModelSnapshot : ModelSnapshot
+    [Migration("20231108010139_fix3")]
+    partial class fix3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -238,6 +241,9 @@ namespace tpAgencia_Gpo_2.Migrations
                     b.Property<int>("CiudadOrigenId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("Ciudadid")
+                        .HasColumnType("int");
+
                     b.Property<string>("aerolinea")
                         .IsRequired()
                         .HasColumnType("varchar(50)");
@@ -263,6 +269,8 @@ namespace tpAgencia_Gpo_2.Migrations
                     b.HasIndex("CiudadDestinoId");
 
                     b.HasIndex("CiudadOrigenId");
+
+                    b.HasIndex("Ciudadid");
 
                     b.ToTable("Vuelo", (string)null);
 
@@ -370,16 +378,20 @@ namespace tpAgencia_Gpo_2.Migrations
             modelBuilder.Entity("tpAgencia_Gpo_2.Vuelo", b =>
                 {
                     b.HasOne("tpAgencia_Gpo_2.Ciudad", "destino")
-                        .WithMany("listVuelosDestino")
+                        .WithMany()
                         .HasForeignKey("CiudadDestinoId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("tpAgencia_Gpo_2.Ciudad", "origen")
-                        .WithMany("listVuelosOrigen")
+                        .WithMany()
                         .HasForeignKey("CiudadOrigenId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.HasOne("tpAgencia_Gpo_2.Ciudad", null)
+                        .WithMany("listVuelos")
+                        .HasForeignKey("Ciudadid");
 
                     b.Navigation("destino");
 
@@ -409,9 +421,7 @@ namespace tpAgencia_Gpo_2.Migrations
                 {
                     b.Navigation("listHoteles");
 
-                    b.Navigation("listVuelosDestino");
-
-                    b.Navigation("listVuelosOrigen");
+                    b.Navigation("listVuelos");
                 });
 
             modelBuilder.Entity("tpAgencia_Gpo_2.Hotel", b =>

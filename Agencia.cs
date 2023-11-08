@@ -64,6 +64,7 @@ public class Agencia
             contexto = new MiContexto();
             //forma de cargar la tabla, un load para cada dbset de clase
             contexto.usuarios.Load();
+            contexto.vuelos.Load();
         }
         catch (Exception e)
         {
@@ -507,19 +508,20 @@ public class Agencia
 
         Ciudad cOrigen = ciudades.FirstOrDefault(ciudad => ciudad.id == idOrigen);
         Ciudad cDestino = ciudades.FirstOrDefault(ciudad => ciudad.id == idDestino);
-        int idNuevoVuelo;
-        idNuevoVuelo = DB.agregarVuelo(idOrigen, idDestino, capacidad, costo, fecha, aerolinea, avion);
-        if (idNuevoVuelo != -1)
+        try
         {
-            Vuelo nuevo = new Vuelo(idNuevoVuelo, cOrigen, cDestino, capacidad, costo, fecha, aerolinea, avion);
-            vuelos.Add(nuevo);
+
+        
+            Vuelo nuevo = new Vuelo( cOrigen, cDestino, capacidad, costo, fecha, aerolinea, avion);
+            contexto.vuelos.Add(nuevo);
+            contexto.SaveChanges();
             return true;
         }
-        else
+        catch (Exception ex)
         {
             return false;
         }
-
+       
     }
 
 
@@ -528,11 +530,10 @@ public class Agencia
     {
         Ciudad cOrigen = ciudades.FirstOrDefault(ciudad => ciudad.id == origen);
         Ciudad cDestino = ciudades.FirstOrDefault(ciudad => ciudad.id == destino);
-        if (DB.modificarVuelo(id, origen, destino, capacidad, costo, fecha, aerolinea, avion) == 1)
-        {
+        
             try
             {
-                foreach (Vuelo vuelo in vuelos)
+                foreach (Vuelo vuelo in contexto.vuelos)
                 {
                     if (vuelo.id == id)
                     {
@@ -546,8 +547,9 @@ public class Agencia
                             vuelo.aerolinea = aerolinea;
                             vuelo.avion = avion;
                             vuelo.capacidad = capacidad;
-
-                            return "exito";
+                        contexto.vuelos.Update(vuelo);
+                        contexto.SaveChanges();
+                        return "exito";
                         }
                         else
                         {
@@ -561,7 +563,7 @@ public class Agencia
             {
                 return "error";
             }
-        }
+        
         return "error";
     }
 
@@ -636,44 +638,48 @@ public class Agencia
     public bool eliminarVuelo(int id)
     {
         DateTime fechaActual = DateTime.Now;
-        if (DB.eliminarVuelo(id) == 1)
+
+        try
         {
 
-            try
+            bool salida = false;
+            foreach (Vuelo vuelo in contexto.vuelos)
             {
+                if (vuelo.id == id)
 
-
-                foreach (Vuelo vuelo in vuelos)
                 {
-                    if (vuelo.id == id)
-
+                    if (vuelo.fecha > fechaActual)
                     {
-                        if (vuelo.fecha > fechaActual)
+
+                        foreach (ReservaVuelo reservas in vuelo.listMisReservas)
                         {
-
-                            foreach (ReservaVuelo reservas in vuelo.listMisReservas)
-                            {
-                                reservas.miUsuario.credito += reservas.pagado;
-                            }
+                            reservas.miUsuario.credito += reservas.pagado;
                         }
-                        vuelos.Remove(vuelo);
-
-                        return true;
                     }
-                }
-            }
-            catch (Exception e)
-            {
-                return false;
-            }
+                    contexto.vuelos.Remove(vuelo);
 
+                    salida = true;
+                    break;
+                }
+                
+            }
+            if (salida)
+                contexto.SaveChanges();
+            return salida;
         }
-        return false;
+
+        catch (Exception e)
+        {
+            return false;
+        }
+
     }
+      
+    
 
     public List<Vuelo> getVuelos()
     {
-        return vuelos.ToList();
+        return contexto.vuelos.ToList();
     }
 
 

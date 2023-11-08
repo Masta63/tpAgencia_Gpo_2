@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="conexion" xml:space="preserve">
-    <value>Data Source=DESKTOP-M5PF5S9\SQLEXPRESS;Initial Catalog=agencia;Integrated Security=True;TrustServerCertificate=True</value>
+    <value>Data Source=AKASHA\SQLEXPRESS;Initial Catalog=Agencia2;Integrated Security=True;TrustServerCertificate=True;</value>
   </data>
   <data name="ConnectionStr" xml:space="preserve">
     <value>Data Source=DESKTOP-RHNJB3Q\SQLEXPRESS;Initial Catalog=sistema;Integrated Security=True</value>

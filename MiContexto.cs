@@ -117,15 +117,15 @@ namespace tpAgencia_Gpo_2
 
             modelBuilder.Entity<Vuelo>()
                 .HasOne(v => v.origen)
-                .WithMany()
+                .WithMany(C=> C.listVuelosOrigen)
                 .HasForeignKey(v => v.CiudadOrigenId)
                 .OnDelete(DeleteBehavior.Restrict);//para que no se elimine una ciudad si elimino un vuelo
             
             modelBuilder.Entity<Vuelo>()
                 .HasOne(v => v.destino)
-                .WithMany()
+                .WithMany(C => C.listVuelosDestino)
                 .HasForeignKey(v => v.CiudadDestinoId)
-                .OnDelete(DeleteBehavior.Restrict); // Define el comportamiento de eliminación, si es necesario
+                .OnDelete(DeleteBehavior.Restrict); // 
 
 
             
@@ -254,8 +254,18 @@ namespace tpAgencia_Gpo_2
                 }
                 );
 
+            //DATOS DE PRUEBA
 
+            modelBuilder.Entity<Usuario>().HasData(
+                new { id = 10, name = "romi", apellido = "gno", mail = "r@gmail.com", dni = "222", password = "123", intentosFallidos = 0, bloqueado = false, credito = 10000.0, esAdmin = true },
+                new { id = 12, name = "romina", apellido = "gnoa", mail = "ro@gmail.com", dni = "222", password = "123", intentosFallidos = 0, bloqueado = false, credito = 10000.0, esAdmin = true });
 
+            modelBuilder.Entity<Ciudad>().HasData(
+                new { id = 1, nombre = "Salta" },
+                new { id = 2, nombre = "Mendoza" });
+
+            modelBuilder.Entity<Vuelo>().HasData(
+                new { id = 1, CiudadOrigenId= 1, CiudadDestinoId= 2,capacidad = 30, vendido = 10, costo = 50.0, fecha = DateTime.Parse("01/01/2022"), aerolinea = "AA", avion = "Airbus" });
         }
     }
 }
