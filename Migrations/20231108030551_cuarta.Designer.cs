@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using tpAgencia_Gpo_2;
 
@@ -11,9 +12,11 @@ using tpAgencia_Gpo_2;
 namespace tpAgencia_Gpo_2.Migrations
 {
     [DbContext(typeof(MiContexto))]
-    partial class MiContextoModelSnapshot : ModelSnapshot
+    [Migration("20231108030551_cuarta")]
+    partial class cuarta
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -93,11 +96,11 @@ namespace tpAgencia_Gpo_2.Migrations
 
             modelBuilder.Entity("tpAgencia_Gpo_2.ReservaHotel", b =>
                 {
-                    b.Property<int>("idReservaHotel")
-                        .ValueGeneratedOnAdd()
+                    b.Property<int>("idHotel")
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("idReservaHotel"));
+                    b.Property<int>("idUsuario")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("fechaDesde")
                         .HasColumnType("datetime");
@@ -105,52 +108,36 @@ namespace tpAgencia_Gpo_2.Migrations
                     b.Property<DateTime>("fechaHasta")
                         .HasColumnType("datetime");
 
-                    b.Property<int>("idHotel")
-                        .HasColumnType("int");
-
-                    b.Property<int>("idUsuario")
-                        .HasColumnType("int");
-
-                    b.Property<int>("miHotelid")
+                    b.Property<int>("idReservaHotel")
                         .HasColumnType("int");
 
                     b.Property<double>("pagado")
                         .HasColumnType("float");
 
-                    b.HasKey("idReservaHotel");
+                    b.HasKey("idHotel", "idUsuario");
 
                     b.HasIndex("idUsuario");
-
-                    b.HasIndex("miHotelid");
 
                     b.ToTable("ReservaHotel", (string)null);
                 });
 
             modelBuilder.Entity("tpAgencia_Gpo_2.ReservaVuelo", b =>
                 {
-                    b.Property<int>("idReservaVuelo")
-                        .ValueGeneratedOnAdd()
+                    b.Property<int>("idVuelo")
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("idReservaVuelo"));
 
                     b.Property<int>("idUsuario")
                         .HasColumnType("int");
 
-                    b.Property<int>("idVuelo")
-                        .HasColumnType("int");
-
-                    b.Property<int>("miVueloid")
+                    b.Property<int>("idReservaVuelo")
                         .HasColumnType("int");
 
                     b.Property<double>("pagado")
                         .HasColumnType("float");
 
-                    b.HasKey("idReservaVuelo");
+                    b.HasKey("idVuelo", "idUsuario");
 
                     b.HasIndex("idUsuario");
-
-                    b.HasIndex("miVueloid");
 
                     b.ToTable("ReservaVuelo", (string)null);
                 });
@@ -198,6 +185,60 @@ namespace tpAgencia_Gpo_2.Migrations
                     b.HasKey("id");
 
                     b.ToTable("Usuario", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            id = 1,
+                            apellido = "admin",
+                            bloqueado = false,
+                            credito = 0.0,
+                            dni = "10111222",
+                            esAdmin = true,
+                            intentosFallidos = 0,
+                            mail = "admin@admin.com",
+                            name = "admin",
+                            password = "12345"
+                        },
+                        new
+                        {
+                            id = 2,
+                            apellido = "perez",
+                            bloqueado = false,
+                            credito = 0.0,
+                            dni = "11222333",
+                            esAdmin = false,
+                            intentosFallidos = 0,
+                            mail = "juan@juan.com",
+                            name = "juan",
+                            password = "12345"
+                        },
+                        new
+                        {
+                            id = 3,
+                            apellido = "perez",
+                            bloqueado = false,
+                            credito = 0.0,
+                            dni = "33222111",
+                            esAdmin = false,
+                            intentosFallidos = 0,
+                            mail = "luciana@luciana.com",
+                            name = "luciana",
+                            password = "12345"
+                        },
+                        new
+                        {
+                            id = 4,
+                            apellido = "gomez",
+                            bloqueado = false,
+                            credito = 0.0,
+                            dni = "22333444",
+                            esAdmin = false,
+                            intentosFallidos = 0,
+                            mail = "perdo@pedro.com",
+                            name = "pedro ",
+                            password = "12345"
+                        });
                 });
 
             modelBuilder.Entity("tpAgencia_Gpo_2.Vuelo", b =>
@@ -293,15 +334,15 @@ namespace tpAgencia_Gpo_2.Migrations
 
             modelBuilder.Entity("tpAgencia_Gpo_2.ReservaHotel", b =>
                 {
-                    b.HasOne("tpAgencia_Gpo_2.Usuario", "miUsuario")
-                        .WithMany("listMisReservasHoteles")
-                        .HasForeignKey("idUsuario")
+                    b.HasOne("tpAgencia_Gpo_2.Hotel", "miHotel")
+                        .WithMany("listMisReservas")
+                        .HasForeignKey("idHotel")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("tpAgencia_Gpo_2.Hotel", "miHotel")
-                        .WithMany("listMisReservas")
-                        .HasForeignKey("miHotelid")
+                    b.HasOne("tpAgencia_Gpo_2.Usuario", "miUsuario")
+                        .WithMany("listMisReservasHoteles")
+                        .HasForeignKey("idUsuario")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -320,7 +361,7 @@ namespace tpAgencia_Gpo_2.Migrations
 
                     b.HasOne("tpAgencia_Gpo_2.Vuelo", "miVuelo")
                         .WithMany("listMisReservas")
-                        .HasForeignKey("miVueloid")
+                        .HasForeignKey("idVuelo")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

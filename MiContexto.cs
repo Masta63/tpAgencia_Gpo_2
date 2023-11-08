@@ -101,31 +101,29 @@ namespace tpAgencia_Gpo_2
             //RELACIONES VUELO
 
             //VUELO -> USUARIO con la tabla intermedia ReservaHotel
-            modelBuilder.Entity<Usuario>()
-                .HasMany(u => u.listVuelosTomados)
-                .WithMany(v => v.listPasajeros)
-                .UsingEntity<ReservaVuelo>(
-                evu => evu.HasOne(rvu => rvu.miVuelo).WithMany(v => v.listMisReservas).HasForeignKey(v => v.idVuelo),
-                evu => evu.HasOne(rvu => rvu.miUsuario).WithMany(u => u.listMisReservasVuelo).HasForeignKey(v => v.idUsuario),
-                evu => evu.HasKey(k => new { k.idVuelo, k.idUsuario })
-                );
-
-
+            //modelBuilder.Entity<Usuario>()
+            //    .HasMany(u => u.listVuelosTomados)
+            //    .WithMany(v => v.listPasajeros)
+            //    .UsingEntity<ReservaVuelo>(
+            //    evu => evu.HasOne(rvu => rvu.miVuelo).WithMany(v => v.listMisReservas).HasForeignKey(v => v.idVuelo),
+            //    evu => evu.HasOne(rvu => rvu.miUsuario).WithMany(u => u.listMisReservasVuelo).HasForeignKey(v => v.idUsuario)
+                //evu => evu.HasKey(k => new { k.idVuelo, k.idUsuario })
+              //  ); ;
 
             //VUELO -> CIUDAD
             //CIUDAD -> VUELO one to many
 
             modelBuilder.Entity<Vuelo>()
                 .HasOne(v => v.origen)
-                .WithMany()
+                .WithMany(c => c.listVuelosOrigen)
                 .HasForeignKey(v => v.CiudadOrigenId)
                 .OnDelete(DeleteBehavior.Restrict);//para que no se elimine una ciudad si elimino un vuelo
 
             modelBuilder.Entity<Vuelo>()
                 .HasOne(v => v.destino)
-                .WithMany()
+                .WithMany(c => c.listVuelosDestino)
                 .HasForeignKey(v => v.CiudadDestinoId)
-                .OnDelete(DeleteBehavior.Restrict); // Define el comportamiento de eliminación, si es necesario
+                .OnDelete(DeleteBehavior.NoAction);
 
 
 
@@ -145,16 +143,16 @@ namespace tpAgencia_Gpo_2
                 .OnDelete(DeleteBehavior.Cascade);
 
             //HOTEL -> USUARIO con la tabla intermedia ReservaHotel
-            modelBuilder.Entity<Usuario>()
-                .HasMany(u => u.listHotelesVisitados)
-                .WithMany(h => h.listHuespedes)
-                .UsingEntity<ReservaHotel>(
-                ehu => ehu.HasOne(rh => rh.miHotel).WithMany(h => h.listMisReservas).HasForeignKey(u => u.idHotel),
+            //modelBuilder.Entity<Usuario>()
+            //    .HasMany(u => u.listHotelesVisitados)
+            //    .WithMany(h => h.listHuespedes)
+            //    .UsingEntity<ReservaHotel>(
+            //    ehu => ehu.HasOne(rh => rh.miHotel).WithMany(h => h.listMisReservas).HasForeignKey(u => u.idHotel),
 
-                ehu => ehu.HasOne(hu => hu.miUsuario).WithMany(u => u.listMisReservasHoteles).HasForeignKey(u => u.idUsuario),
+            //    ehu => ehu.HasOne(hu => hu.miUsuario).WithMany(u => u.listMisReservasHoteles).HasForeignKey(u => u.idUsuario)
 
-                ehu => ehu.HasKey(k => new { k.idHotel, k.idUsuario })
-                );
+                //ehu => ehu.HasKey(k => new { k.idHotel, k.idUsuario })
+               // ); ;
 
             //HOTEL -> ReservaHotel
 
@@ -256,62 +254,117 @@ namespace tpAgencia_Gpo_2
 
             //carga de usuarios amodelo
             #region carga de usuario al modelo
-            modelBuilder.Entity<Usuario>().HasData(
-        new
-        {
-            id = 1,
-            name = "admin",
-            apellido = "admin",
-            dni = "10111222",
-            mail = "admin@admin.com",
-            password = "12345",
-            intentosFallidos = 0,
-            bloqueado = false,
-            credito = 0.0,
-            esAdmin = true
-        },
-        new
-        {
-            id = 2,
-            name = "juan",
-            apellido = "perez",
-            dni = "11222333",
-            mail = "juan@juan.com",
-            password = "12345",
-            intentosFallidos = 0,
-            bloqueado = false,
-            credito = 0.0,
-            esAdmin = false
-        },
-        new
-        {
-            id = 3,
-            name = "luciana",
-            apellido = "perez",
-            dni = "33222111",
-            mail = "luciana@luciana.com",
-            password = "12345",
-            intentosFallidos = 0,
-            bloqueado = false,
-            credito = 0.0,
-            esAdmin = false
-        },
-        new
-        {
-            id = 4,
-            name = "pedro ",
-            apellido = "gomez",
-            dni = "22333444",
-            mail = "perdo@pedro.com",
-            password = "12345",
-            intentosFallidos = 0,
-            bloqueado = false,
-            credito = 0.0,
-            esAdmin = false
-        }
+        //    modelBuilder.Entity<Usuario>().HasData(
+        //new
+        //{
+        //    id = 1,
+        //    name = "admin",
+        //    apellido = "admin",
+        //    dni = "10111222",
+        //    mail = "admin@admin.com",
+        //    password = "12345",
+        //    intentosFallidos = 0,
+        //    bloqueado = false,
+        //    credito = 0.0,
+        //    esAdmin = true
+        //},
+        //new
+        //{
+        //    id = 2,
+        //    name = "juan",
+        //    apellido = "perez",
+        //    dni = "11222333",
+        //    mail = "juan@juan.com",
+        //    password = "12345",
+        //    intentosFallidos = 0,
+        //    bloqueado = false,
+        //    credito = 0.0,
+        //    esAdmin = false
+        //},
+        //new
+        //{
+        //    id = 3,
+        //    name = "luciana",
+        //    apellido = "perez",
+        //    dni = "33222111",
+        //    mail = "luciana@luciana.com",
+        //    password = "12345",
+        //    intentosFallidos = 0,
+        //    bloqueado = false,
+        //    credito = 0.0,
+        //    esAdmin = false
+        //},
+        //new
+        //{
+        //    id = 4,
+        //    name = "pedro ",
+        //    apellido = "gomez",
+        //    dni = "22333444",
+        //    mail = "perdo@pedro.com",
+        //    password = "12345",
+        //    intentosFallidos = 0,
+        //    bloqueado = false,
+        //    credito = 0.0,
+        //    esAdmin = false
+        //}
 
 
-        ); ; 
+        //); ; modelBuilder.Entity<Usuario>().HasData(
+        //new
+        //{
+        //    id = 1,
+        //    name = "admin",
+        //    apellido = "admin",
+        //    dni = "10111222",
+        //    mail = "admin@admin.com",
+        //    password = "12345",
+        //    intentosFallidos = 0,
+        //    bloqueado = false,
+        //    credito = 0.0,
+        //    esAdmin = true
+        //},
+        //new
+        //{
+        //    id = 2,
+        //    name = "juan",
+        //    apellido = "perez",
+        //    dni = "11222333",
+        //    mail = "juan@juan.com",
+        //    password = "12345",
+        //    intentosFallidos = 0,
+        //    bloqueado = false,
+        //    credito = 0.0,
+        //    esAdmin = false
+        //},
+        //new
+        //{
+        //    id = 3,
+        //    name = "luciana",
+        //    apellido = "perez",
+        //    dni = "33222111",
+        //    mail = "luciana@luciana.com",
+        //    password = "12345",
+        //    intentosFallidos = 0,
+        //    bloqueado = false,
+        //    credito = 0.0,
+        //    esAdmin = false
+        //},
+        //new
+        //{
+        //    id = 4,
+        //    name = "pedro ",
+        //    apellido = "gomez",
+        //    dni = "22333444",
+        //    mail = "perdo@pedro.com",
+        //    password = "12345",
+        //    intentosFallidos = 0,
+        //    bloqueado = false,
+        //    credito = 0.0,
+        //    esAdmin = false
+        //}
+
+
+        //); ;
             #endregion
 
 
