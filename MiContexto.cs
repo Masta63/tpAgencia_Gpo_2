@@ -101,14 +101,14 @@ namespace tpAgencia_Gpo_2
             //RELACIONES VUELO
 
             //VUELO -> USUARIO con la tabla intermedia ReservaHotel
-            //modelBuilder.Entity<Usuario>()
-            //    .HasMany(u => u.listVuelosTomados)
-            //    .WithMany(v => v.listPasajeros)
-            //    .UsingEntity<ReservaVuelo>(
-            //    evu => evu.HasOne(rvu => rvu.miVuelo).WithMany(v => v.listMisReservas).HasForeignKey(v => v.idVuelo),
-            //    evu => evu.HasOne(rvu => rvu.miUsuario).WithMany(u => u.listMisReservasVuelo).HasForeignKey(v => v.idUsuario)
-                //evu => evu.HasKey(k => new { k.idVuelo, k.idUsuario })
-              //  ); ;
+            modelBuilder.Entity<Usuario>()
+                .HasMany(u => u.listVuelosTomados)
+                .WithMany(v => v.listPasajeros)
+                .UsingEntity<ReservaVuelo>(
+                evu => evu.HasOne(rvu => rvu.miVuelo).WithMany(v => v.listMisReservas).HasForeignKey(v => v.idVuelo),
+                evu => evu.HasOne(rvu => rvu.miUsuario).WithMany(u => u.listMisReservasVuelo).HasForeignKey(v => v.idUsuario)
+
+                ); ;
 
             //VUELO -> CIUDAD
             //CIUDAD -> VUELO one to many
@@ -143,16 +143,16 @@ namespace tpAgencia_Gpo_2
                 .OnDelete(DeleteBehavior.Cascade);
 
             //HOTEL -> USUARIO con la tabla intermedia ReservaHotel
-            //modelBuilder.Entity<Usuario>()
-            //    .HasMany(u => u.listHotelesVisitados)
-            //    .WithMany(h => h.listHuespedes)
-            //    .UsingEntity<ReservaHotel>(
-            //    ehu => ehu.HasOne(rh => rh.miHotel).WithMany(h => h.listMisReservas).HasForeignKey(u => u.idHotel),
+            modelBuilder.Entity<Usuario>()
+                .HasMany(u => u.listHotelesVisitados)
+                .WithMany(h => h.listHuespedes)
+                .UsingEntity<ReservaHotel>(
+                ehu => ehu.HasOne(rh => rh.miHotel).WithMany(h => h.listMisReservas).HasForeignKey(u => u.idHotel),
 
-            //    ehu => ehu.HasOne(hu => hu.miUsuario).WithMany(u => u.listMisReservasHoteles).HasForeignKey(u => u.idUsuario)
+                ehu => ehu.HasOne(hu => hu.miUsuario).WithMany(u => u.listMisReservasHoteles).HasForeignKey(u => u.idUsuario)
 
-                //ehu => ehu.HasKey(k => new { k.idHotel, k.idUsuario })
-               // ); ;
+
+             ); ;
 
             //HOTEL -> ReservaHotel
 
