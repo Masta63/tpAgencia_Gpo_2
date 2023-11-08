@@ -12,7 +12,7 @@ using tpAgencia_Gpo_2;
 namespace tpAgencia_Gpo_2.Migrations
 {
     [DbContext(typeof(MiContexto))]
-    [Migration("20231106203652_primera")]
+    [Migration("20231108221924_primera")]
     partial class primera
     {
         /// <inheritdoc />
@@ -32,9 +32,6 @@ namespace tpAgencia_Gpo_2.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
-
-                    b.Property<int>("idVuelo")
-                        .HasColumnType("int");
 
                     b.Property<string>("nombre")
                         .IsRequired()
@@ -99,11 +96,11 @@ namespace tpAgencia_Gpo_2.Migrations
 
             modelBuilder.Entity("tpAgencia_Gpo_2.ReservaHotel", b =>
                 {
-                    b.Property<int>("idHotel")
+                    b.Property<int>("idReservaHotel")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int>("idUsuario")
-                        .HasColumnType("int");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("idReservaHotel"));
 
                     b.Property<DateTime>("fechaDesde")
                         .HasColumnType("datetime");
@@ -111,13 +108,18 @@ namespace tpAgencia_Gpo_2.Migrations
                     b.Property<DateTime>("fechaHasta")
                         .HasColumnType("datetime");
 
-                    b.Property<int>("idReservaHotel")
+                    b.Property<int>("idHotel")
+                        .HasColumnType("int");
+
+                    b.Property<int>("idUsuario")
                         .HasColumnType("int");
 
                     b.Property<double>("pagado")
                         .HasColumnType("float");
 
-                    b.HasKey("idHotel", "idUsuario");
+                    b.HasKey("idReservaHotel");
+
+                    b.HasIndex("idHotel");
 
                     b.HasIndex("idUsuario");
 
@@ -126,21 +128,26 @@ namespace tpAgencia_Gpo_2.Migrations
 
             modelBuilder.Entity("tpAgencia_Gpo_2.ReservaVuelo", b =>
                 {
-                    b.Property<int>("idVuelo")
+                    b.Property<int>("idReservaVuelo")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("idReservaVuelo"));
 
                     b.Property<int>("idUsuario")
                         .HasColumnType("int");
 
-                    b.Property<int>("idReservaVuelo")
+                    b.Property<int>("idVuelo")
                         .HasColumnType("int");
 
                     b.Property<double>("pagado")
                         .HasColumnType("float");
 
-                    b.HasKey("idVuelo", "idUsuario");
+                    b.HasKey("idReservaVuelo");
 
                     b.HasIndex("idUsuario");
+
+                    b.HasIndex("idVuelo");
 
                     b.ToTable("ReservaVuelo", (string)null);
                 });
@@ -188,6 +195,60 @@ namespace tpAgencia_Gpo_2.Migrations
                     b.HasKey("id");
 
                     b.ToTable("Usuario", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            id = 1,
+                            apellido = "admin",
+                            bloqueado = false,
+                            credito = 0.0,
+                            dni = "10111222",
+                            esAdmin = true,
+                            intentosFallidos = 0,
+                            mail = "admin@admin.com",
+                            name = "admin",
+                            password = "12345"
+                        },
+                        new
+                        {
+                            id = 2,
+                            apellido = "perez",
+                            bloqueado = false,
+                            credito = 0.0,
+                            dni = "11222333",
+                            esAdmin = false,
+                            intentosFallidos = 0,
+                            mail = "juan@juan.com",
+                            name = "juan",
+                            password = "12345"
+                        },
+                        new
+                        {
+                            id = 3,
+                            apellido = "perez",
+                            bloqueado = false,
+                            credito = 0.0,
+                            dni = "33222111",
+                            esAdmin = false,
+                            intentosFallidos = 0,
+                            mail = "luciana@luciana.com",
+                            name = "luciana",
+                            password = "12345"
+                        },
+                        new
+                        {
+                            id = 4,
+                            apellido = "gomez",
+                            bloqueado = false,
+                            credito = 0.0,
+                            dni = "22333444",
+                            esAdmin = false,
+                            intentosFallidos = 0,
+                            mail = "perdo@pedro.com",
+                            name = "pedro ",
+                            password = "12345"
+                        });
                 });
 
             modelBuilder.Entity("tpAgencia_Gpo_2.Vuelo", b =>
@@ -202,9 +263,6 @@ namespace tpAgencia_Gpo_2.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("CiudadOrigenId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("Ciudadid")
                         .HasColumnType("int");
 
                     b.Property<string>("aerolinea")
@@ -232,8 +290,6 @@ namespace tpAgencia_Gpo_2.Migrations
                     b.HasIndex("CiudadDestinoId");
 
                     b.HasIndex("CiudadOrigenId");
-
-                    b.HasIndex("Ciudadid");
 
                     b.ToTable("Vuelo", (string)null);
                 });
@@ -327,20 +383,16 @@ namespace tpAgencia_Gpo_2.Migrations
             modelBuilder.Entity("tpAgencia_Gpo_2.Vuelo", b =>
                 {
                     b.HasOne("tpAgencia_Gpo_2.Ciudad", "destino")
-                        .WithMany()
+                        .WithMany("listVuelosDestino")
                         .HasForeignKey("CiudadDestinoId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("tpAgencia_Gpo_2.Ciudad", "origen")
-                        .WithMany()
+                        .WithMany("listVuelosOrigen")
                         .HasForeignKey("CiudadOrigenId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
-
-                    b.HasOne("tpAgencia_Gpo_2.Ciudad", null)
-                        .WithMany("listVuelos")
-                        .HasForeignKey("Ciudadid");
 
                     b.Navigation("destino");
 
@@ -370,7 +422,9 @@ namespace tpAgencia_Gpo_2.Migrations
                 {
                     b.Navigation("listHoteles");
 
-                    b.Navigation("listVuelos");
+                    b.Navigation("listVuelosDestino");
+
+                    b.Navigation("listVuelosOrigen");
                 });
 
             modelBuilder.Entity("tpAgencia_Gpo_2.Hotel", b =>

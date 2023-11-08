@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace tpAgencia_Gpo_2.Migrations
 {
     /// <inheritdoc />
@@ -17,8 +19,7 @@ namespace tpAgencia_Gpo_2.Migrations
                 {
                     id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    nombre = table.Column<string>(type: "varchar(50)", nullable: false),
-                    idVuelo = table.Column<int>(type: "int", nullable: false)
+                    nombre = table.Column<string>(type: "varchar(50)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -83,8 +84,7 @@ namespace tpAgencia_Gpo_2.Migrations
                     costo = table.Column<double>(type: "float", nullable: false),
                     fecha = table.Column<DateTime>(type: "datetime", nullable: false),
                     aerolinea = table.Column<string>(type: "varchar(50)", nullable: false),
-                    avion = table.Column<string>(type: "varchar(50)", nullable: false),
-                    Ciudadid = table.Column<int>(type: "int", nullable: true)
+                    avion = table.Column<string>(type: "varchar(50)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -93,19 +93,13 @@ namespace tpAgencia_Gpo_2.Migrations
                         name: "FK_Vuelo_Ciudad_CiudadDestinoId",
                         column: x => x.CiudadDestinoId,
                         principalTable: "Ciudad",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "id");
                     table.ForeignKey(
                         name: "FK_Vuelo_Ciudad_CiudadOrigenId",
                         column: x => x.CiudadOrigenId,
                         principalTable: "Ciudad",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Vuelo_Ciudad_Ciudadid",
-                        column: x => x.Ciudadid,
-                        principalTable: "Ciudad",
-                        principalColumn: "id");
                 });
 
             migrationBuilder.CreateTable(
@@ -137,16 +131,17 @@ namespace tpAgencia_Gpo_2.Migrations
                 name: "ReservaHotel",
                 columns: table => new
                 {
+                    idReservaHotel = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     idHotel = table.Column<int>(type: "int", nullable: false),
                     idUsuario = table.Column<int>(type: "int", nullable: false),
-                    idReservaHotel = table.Column<int>(type: "int", nullable: false),
                     fechaDesde = table.Column<DateTime>(type: "datetime", nullable: false),
                     fechaHasta = table.Column<DateTime>(type: "datetime", nullable: false),
                     pagado = table.Column<double>(type: "float", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ReservaHotel", x => new { x.idHotel, x.idUsuario });
+                    table.PrimaryKey("PK_ReservaHotel", x => x.idReservaHotel);
                     table.ForeignKey(
                         name: "FK_ReservaHotel_Hotel_idHotel",
                         column: x => x.idHotel,
@@ -165,14 +160,15 @@ namespace tpAgencia_Gpo_2.Migrations
                 name: "ReservaVuelo",
                 columns: table => new
                 {
+                    idReservaVuelo = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     idVuelo = table.Column<int>(type: "int", nullable: false),
                     idUsuario = table.Column<int>(type: "int", nullable: false),
-                    idReservaVuelo = table.Column<int>(type: "int", nullable: false),
                     pagado = table.Column<double>(type: "float", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ReservaVuelo", x => new { x.idVuelo, x.idUsuario });
+                    table.PrimaryKey("PK_ReservaVuelo", x => x.idReservaVuelo);
                     table.ForeignKey(
                         name: "FK_ReservaVuelo_Usuario_idUsuario",
                         column: x => x.idUsuario,
@@ -212,6 +208,17 @@ namespace tpAgencia_Gpo_2.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.InsertData(
+                table: "Usuario",
+                columns: new[] { "id", "apellido", "bloqueado", "credito", "dni", "esAdmin", "intentosFallidos", "mail", "name", "password" },
+                values: new object[,]
+                {
+                    { 1, "admin", false, 0.0, "10111222", true, 0, "admin@admin.com", "admin", "12345" },
+                    { 2, "perez", false, 0.0, "11222333", false, 0, "juan@juan.com", "juan", "12345" },
+                    { 3, "perez", false, 0.0, "33222111", false, 0, "luciana@luciana.com", "luciana", "12345" },
+                    { 4, "gomez", false, 0.0, "22333444", false, 0, "perdo@pedro.com", "pedro ", "12345" }
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Hotel_idCiudad",
                 table: "Hotel",
@@ -221,6 +228,11 @@ namespace tpAgencia_Gpo_2.Migrations
                 name: "IX_HotelUsuario_idUsuario",
                 table: "HotelUsuario",
                 column: "idUsuario");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ReservaHotel_idHotel",
+                table: "ReservaHotel",
+                column: "idHotel");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ReservaHotel_idUsuario",
@@ -233,14 +245,14 @@ namespace tpAgencia_Gpo_2.Migrations
                 column: "idUsuario");
 
             migrationBuilder.CreateIndex(
+                name: "IX_ReservaVuelo_idVuelo",
+                table: "ReservaVuelo",
+                column: "idVuelo");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Vuelo_CiudadDestinoId",
                 table: "Vuelo",
                 column: "CiudadDestinoId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Vuelo_Ciudadid",
-                table: "Vuelo",
-                column: "Ciudadid");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Vuelo_CiudadOrigenId",
