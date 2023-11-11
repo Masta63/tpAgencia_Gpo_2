@@ -27,7 +27,7 @@ namespace tpAgencia_Gpo_2
         //fereing key
         public int idCiudad { get; set; }
 
-        public int idUsuario {  get; set; }
+       // public int idUsuario {  get; set; }
 
 
 
