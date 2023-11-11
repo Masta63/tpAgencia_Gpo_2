@@ -78,12 +78,11 @@ public class Agencia
     //metodos de sesion
     #region Metodos de sesion
 
-
     public string login(string? _contraseña, string? _mail)
     {
         if (_contraseña != null && _mail != "" && _contraseña != null && _mail != "")
         {
-            Usuario usuarioSeleccionados = contexto.usuarios.Where(u => u.mail == _mail).Where(u => u.password == _contraseña).FirstOrDefault();
+            Usuario usuarioSeleccionados = contexto.usuarios.Where(u => u.mail == _mail).FirstOrDefault();
             return validacionEstadoUsuario(usuarioSeleccionados, _mail, _contraseña);
         }
         else
@@ -125,21 +124,22 @@ public class Agencia
 
             codigoReturn = "FALTAUSUARIO";
         }
-        else if (usuarioSeleccionados.mail.Trim().Equals(inputMail) && usuarioSeleccionados.password.Trim() == inputpass)
+        else if (usuarioSeleccionados.mail.Trim().Equals(inputMail) && usuarioSeleccionados.password.Trim() == inputpass && !usuarioSeleccionados.bloqueado)
         {
             codigoReturn = "OK";
             this.usuarioActual = usuarioSeleccionados;
-            //this.usuarioActual.listMisReservasHoteles = DB.traerMisReservasHotel(usuarioSeleccionados.id);
-            //this.usuarioActual.listMisReservasVuelo = DB.traerReservasVuelo(usuarioSeleccionados.id);
-
         }
         else
         {
             usuarioSeleccionados.intentosFallidos++;
-            if (usuarioSeleccionados.intentosFallidos == 3)
+            this.IngresarIntentosFallidosContext(usuarioSeleccionados);
+            this.modificarUsuarioActual(usuarioSeleccionados);
+            if (usuarioSeleccionados.intentosFallidos >= 3)
             {
+                IngresarUsuarioBloqueadoContext();
                 usuarioSeleccionados.bloqueado = true;
                 codigoReturn = "BLOQUEADO";
+
             }
             else
             {
@@ -1271,6 +1271,50 @@ public class Agencia
         }
     }
 
+    public void volverIntentosFallidosCeroContext()
+    {
+        try
+        {
+            Usuario usuario = this.getUsuarioActual();
+            usuario.intentosFallidos = 0;
+            contexto.usuarios.Update(usuario);
+            contexto.SaveChanges();
+        }
+        catch (Exception)
+        {
+            throw;
+        }
+    }
+
+    public void IngresarIntentosFallidosContext(Usuario usu)
+    {
+        try
+        {
+            Usuario usuario = contexto.usuarios.FirstOrDefault(x => x.id == usu.id);
+            usuario.intentosFallidos = usuario.intentosFallidos;
+            contexto.usuarios.Update(usuario);
+            contexto.SaveChanges();
+        }
+        catch (Exception ex)
+        {
+            throw;
+        }
+    }
+
+    public void IngresarUsuarioBloqueadoContext()
+    {
+        try
+        {
+            Usuario usuario = this.getUsuarioActual();
+            usuario.bloqueado = true;
+            contexto.usuarios.Update(usuario);
+            contexto.SaveChanges();
+        }
+        catch (Exception)
+        {
+            throw;
+        }
+    }
 
     #endregion
 

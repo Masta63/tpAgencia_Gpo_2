@@ -21,8 +21,7 @@ namespace tpAgencia_Gpo_2
         public Login(Agencia agencia, Form1 form1)
         {
             this.agencia = agencia;
-            InitializeComponent();
-
+            InitializeComponent();        
             this.FormRegistroUsuario = new FormRegistroUsuario(agencia, form1);
             FormRegistroUsuario.MdiParent = form1;
             FormRegistroUsuario.TransfEventoRegistro += TransfDelegadoRegistro;
@@ -64,6 +63,7 @@ namespace tpAgencia_Gpo_2
             switch (resp)
             {
                 case "OK":
+                    agencia.volverIntentosFallidosCeroContext();
                     this.TransfEventoLogin();
                     break;
                 case "BLOQUEADO":
