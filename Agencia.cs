@@ -46,21 +46,15 @@ public class Agencia
         //DB = new DAL();//inicializar constructor
         inicializarAtributos();//inicializo los metodos de la clase DB/entity
         
-    }
-
+    }//conexion
+    #region conexion y carga
     public void cerrarContexto()
     {
         contexto.Dispose();
     }
     private void inicializarAtributos()
     {
-        //aca deberiamos agregar los metodos para inicializar vuelos hoteles paises etc
-
-        //listUsuarios = DB.inicializarUsuarios();//metodo para inicializar usuarios
-       //hoteles = DB.inicializarHoteles();
-        //ciudades = DB.inicializarCiudades();
-        //vuelos = DB.inicializarVuelos();
-        //le asigno todo lo del metodo a la sita de la clase logica que trabaja en tiempo de ejecucion
+       
 
         try
         {
@@ -76,7 +70,7 @@ public class Agencia
         }
 
     }
-
+    #endregion
 
     //INICIO METODOS DE USUARIO
 
@@ -195,8 +189,8 @@ public class Agencia
         {
             codigoReturn = "OK";
             this.usuarioActual = usuarioSeleccionados;
-            this.usuarioActual.listMisReservasHoteles = DB.traerMisReservasHotel(usuarioSeleccionados.id);
-            this.usuarioActual.listMisReservasVuelo = DB.traerReservasVuelo(usuarioSeleccionados.id);
+            //this.usuarioActual.listMisReservasHoteles = DB.traerMisReservasHotel(usuarioSeleccionados.id);
+            //this.usuarioActual.listMisReservasVuelo = DB.traerReservasVuelo(usuarioSeleccionados.id);
 
         }
         else
@@ -480,7 +474,7 @@ public class Agencia
     //devuelve true si encuentra
     public bool existeUsuarioConDniOMail(string dni, string mail)
     {
-        return getUsuarios().Any(u => u.dni == dni || u.mail == mail);
+        return contexto.usuarios.Any(u => u.dni == dni || u.mail == mail);
     }
 
     #endregion
@@ -492,6 +486,7 @@ public class Agencia
 
 
     // INICIO METODOS DE VUELO
+    #region Metodos de vuelo
 
     public int obtenerNombreCiudad(string nombre)
     {
@@ -748,7 +743,7 @@ public class Agencia
 
     }
 
-    
+
     public List<Vuelo> misVuelos(Usuario usuarioActual)
     {
         List<ReservaVuelo> reservasVuelo = DB.traerReservasVuelo(usuarioActual.id);
@@ -787,45 +782,15 @@ public class Agencia
         return vuelosReservados;
     }
 
+    #endregion
     //FIN METODOS DE VUELO
 
 
-    //METODO DE RESERVA DE HOTEL
-    public List<Hotel> misReservasHoteles(Usuario usuario)
-    {
-        DateTime fechaActual = DateTime.Now;
-        List<Hotel> hotelesReservados = new List<Hotel>();
-
-        foreach (ReservaHotel reserva in usuario.listMisReservasHoteles)
-        {
-            if (reserva.fechaHasta.Date >= fechaActual.Date)
-            {
-                hotelesReservados.Add(reserva.miHotel);
-            }
-
-
-        }
-        return hotelesReservados;
-    }
-
-    public List<Hotel> getHoteles()
-    {
-        return hoteles.ToList();
-    }
-
-    public Hotel? getHotelesByHotel(string boxHoteles)
-    {
-        return getHoteles()?.FirstOrDefault(x => x.nombre == boxHoteles);
-    }
-
-
-    public void setHotel(Hotel hotel)
-    {
-        hoteles.Add(hotel);
-    }
+   
 
 
     //INICIO METODOS DE HOTEL
+    #region Metodos hotel
 
     public bool agregarHotel(int ubicacionHotel, Int32 capacidad, float costo, string nombre)
 
@@ -915,9 +880,45 @@ public class Agencia
     }
 
 
+    #endregion
 
     //FIN METODOS DE HOTEL
 
+
+    //METODO DE RESERVA DE HOTEL
+    #region Reserva de hotel
+    public List<Hotel> misReservasHoteles(Usuario usuario)
+    {
+        DateTime fechaActual = DateTime.Now;
+        List<Hotel> hotelesReservados = new List<Hotel>();
+
+        foreach (ReservaHotel reserva in usuario.listMisReservasHoteles)
+        {
+            if (reserva.fechaHasta.Date >= fechaActual.Date)
+            {
+                hotelesReservados.Add(reserva.miHotel);
+            }
+
+
+        }
+        return hotelesReservados;
+    }
+
+    public List<Hotel> getHoteles()
+    {
+        return hoteles.ToList();
+    }
+
+    public Hotel? getHotelesByHotel(string boxHoteles)
+    {
+        return getHoteles()?.FirstOrDefault(x => x.nombre == boxHoteles);
+    }
+
+
+    public void setHotel(Hotel hotel)
+    {
+        hoteles.Add(hotel);
+    }
 
     public void setReservasHotel(ReservaHotel reservaHotel)
     {
@@ -1137,5 +1138,6 @@ public class Agencia
         return DB.misHotelesQueVisite(idUsuario);
     }
 
+    #endregion
 
 }
