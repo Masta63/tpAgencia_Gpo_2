@@ -50,7 +50,7 @@ public class Agencia
     #region conexion y carga
     public void cerrarContexto()
     {
-        contexto.Dispose();
+        contexto.Dispose();//continuar
     }
     private void inicializarAtributos()
     {
@@ -75,9 +75,9 @@ public class Agencia
     }
     #endregion
 
-    //INICIO METODOS DE USUARIO
+    //metodos de sesion
+    #region Metodos de sesion
 
-    #region metodos usuarios
 
     public string login(string? _contraseña, string? _mail)
     {
@@ -95,6 +95,7 @@ public class Agencia
 
 
 
+
     private string validacionEstadoUsuario(Usuario? usuarioSeleccionados, string mailInput, string Inputpass)
     {
         return this.iniciarSesion(usuarioSeleccionados, mailInput, Inputpass);
@@ -106,70 +107,6 @@ public class Agencia
         listUsuarios.Add(usuario);
     }
 
-    public void setCiudad(Ciudad ciudad)
-    {
-        ciudades.Add(ciudad);
-    }
-
-    public bool eliminarCiudad(int id)
-    {
-        if (DB.eliminarCiudad(id) == 1)
-        {
-            try
-            {
-                foreach (Ciudad itemCiudad in ciudades)
-                {
-                    if (itemCiudad.id == id)
-                    {
-                        ciudades.Remove(itemCiudad);
-
-                        return true;
-                    }
-                }
-            }
-            catch (Exception)
-            {
-                return false;
-            }
-        }
-        return false;
-    }
-
-    public bool agregarCiudad(string nombre)
-    {
-
-        int idNuevoCiudad;
-        idNuevoCiudad = DB.agregarCiudad(nombre);
-        if (idNuevoCiudad != -1)
-        {
-            Ciudad nuevo = new Ciudad(idNuevoCiudad, nombre);
-            ciudades.Add(nuevo);
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-
-    }
-
-    public int modificarCiudad(int id, string nombre)
-    {
-        if (DB.modificarCiudad(id, nombre) == 1)
-        {
-            foreach (Ciudad c in ciudades)
-            {
-                if (c.id == id)
-                {
-                    c.nombre = nombre;
-
-                    return 1;
-                }
-            }
-            return 1;
-        }
-        return -1;
-    }
     public Usuario? getUsuarioActual()
     {
         return this.usuarioActual;
@@ -212,6 +149,12 @@ public class Agencia
 
         return codigoReturn;
     }
+    #endregion
+
+    //INICIO METODOS DE USUARIO
+
+    #region metodos usuarios
+
 
     //-- metodos del formUsuario
     public List<Usuario> getUsuarios()
@@ -481,10 +424,79 @@ public class Agencia
     }
 
     #endregion
-
     //FIN METODOS USUARIO
 
 
+    //metodos de ciudad
+    #region Metodos de Ciudad
+
+
+    public void setCiudad(Ciudad ciudad)
+    {
+        ciudades.Add(ciudad);
+    }
+
+    public bool eliminarCiudad(int id)
+    {
+        if (DB.eliminarCiudad(id) == 1)
+        {
+            try
+            {
+                foreach (Ciudad itemCiudad in ciudades)
+                {
+                    if (itemCiudad.id == id)
+                    {
+                        ciudades.Remove(itemCiudad);
+
+                        return true;
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+        return false;
+    }
+
+    public bool agregarCiudad(string nombre)
+    {
+
+        int idNuevoCiudad;
+        idNuevoCiudad = DB.agregarCiudad(nombre);
+        if (idNuevoCiudad != -1)
+        {
+            Ciudad nuevo = new Ciudad(idNuevoCiudad, nombre);
+            ciudades.Add(nuevo);
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+
+    }
+
+    public int modificarCiudad(int id, string nombre)
+    {
+        if (DB.modificarCiudad(id, nombre) == 1)
+        {
+            foreach (Ciudad c in ciudades)
+            {
+                if (c.id == id)
+                {
+                    c.nombre = nombre;
+
+                    return 1;
+                }
+            }
+            return 1;
+        }
+        return -1;
+    }
+
+    #endregion
 
 
 
