@@ -161,6 +161,7 @@
             Controls.Add(textBox_nombre);
             Name = "FormRegistroUsuario";
             Text = "FormRegistroUsuario";
+            Load += FormRegistroUsuario_Load;
             ResumeLayout(false);
             PerformLayout();
         }
