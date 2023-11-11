@@ -40,7 +40,7 @@ namespace tpAgencia_Gpo_2
         {
             dataGridViewHoteles.Rows.Clear();
 
-            foreach (Hotel ho in agencia.getHotel())//para cada usuario en el clon de listado de usuarios de mi referencia de agencia
+            foreach (Hotel ho in agencia.getHoteles())//para cada usuario en el clon de listado de usuarios de mi referencia de agencia
             {
 
                 dataGridViewHoteles.Rows.Add(new string[] { ho.id.ToString(), ho.ubicacion.nombre, Convert.ToString(ho.capacidad), Convert.ToString(ho.costo), ho.nombre});

@@ -26,11 +26,11 @@ public class Agencia
     private int cantHoteles = 0;
     private int cantIdHoteles = 0;
     private DAL DB; //clase adicional para intercambio con base de datos // esta clase se debe remover
-   
-    
+
+
     private MiContexto contexto; //Agrego la clase con el contexto de entity
 
-    
+
 
     //metodo constructor
     public Agencia()
@@ -45,7 +45,7 @@ public class Agencia
         listUsuarios = new List<Usuario>();
         //DB = new DAL();//inicializar constructor
         inicializarAtributos();//inicializo los metodos de la clase DB/entity
-        
+
     }//conexion
     #region conexion y carga
     public void cerrarContexto()
@@ -54,7 +54,7 @@ public class Agencia
     }
     private void inicializarAtributos()
     {
-       
+
 
         try
         {
@@ -62,6 +62,9 @@ public class Agencia
             contexto = new MiContexto();
             //forma de cargar la tabla, un load para cada dbset de clase
             contexto.usuarios.Load();
+            contexto.reservaHoteles.Load();
+            contexto.hoteles.Load();
+            contexto.ciudades.Load();
         }
         catch (Exception e)
         {
@@ -80,7 +83,7 @@ public class Agencia
     {
         if (_contraseña != null && _mail != "" && _contraseña != null && _mail != "")
         {
-            Usuario usuarioSeleccionados = contexto.usuarios.Where(u=> u.mail == _mail).Where(u=> u.password == _contraseña).FirstOrDefault();
+            Usuario usuarioSeleccionados = contexto.usuarios.Where(u => u.mail == _mail).Where(u => u.password == _contraseña).FirstOrDefault();
             return validacionEstadoUsuario(usuarioSeleccionados, _mail, _contraseña);
         }
         else
@@ -90,7 +93,7 @@ public class Agencia
     }
 
 
-    
+
 
     private string validacionEstadoUsuario(Usuario? usuarioSeleccionados, string mailInput, string Inputpass)
     {
@@ -490,12 +493,12 @@ public class Agencia
 
     public int obtenerNombreCiudad(string nombre)
     {
-        Ciudad ciudad = ciudades.FirstOrDefault(ciudad => ciudad.nombre == nombre);
+        Ciudad ciudad = contexto.ciudades.FirstOrDefault(ciudad => ciudad.nombre == nombre);
         return ciudad != null ? ciudad.id : -1;
     }
     public string obtenerCiudadPorId(int id)
     {
-        Ciudad ciudad = ciudades.FirstOrDefault(ciudad => ciudad.id == id);
+        Ciudad ciudad = contexto.ciudades.FirstOrDefault(ciudad => ciudad.id == id);
         return ciudad != null ? ciudad.nombre : string.Empty;
     }
     public bool agregarVuelo(int idOrigen, int idDestino, int capacidad, double costo, DateTime fecha, string aerolinea, string avion)
@@ -675,7 +678,7 @@ public class Agencia
 
     public List<Ciudad> GetCiudades()
     {
-        return ciudades.ToList();
+        return contexto.ciudades.ToList();
     }
     // Reporte de vuelos
     public List<Vuelo> buscarVuelos(Ciudad origen, Ciudad destino, DateTime fecha, int cantidadPax)
@@ -786,7 +789,7 @@ public class Agencia
     //FIN METODOS DE VUELO
 
 
-   
+
 
 
     //INICIO METODOS DE HOTEL
@@ -874,11 +877,6 @@ public class Agencia
         }
     }
 
-    public List<Hotel> getHotel()
-    {
-        return hoteles.ToList();
-    }
-
 
     #endregion
 
@@ -906,7 +904,7 @@ public class Agencia
 
     public List<Hotel> getHoteles()
     {
-        return hoteles.ToList();
+        return contexto.hoteles.ToList();
     }
 
     public Hotel? getHotelesByHotel(string boxHoteles)
@@ -926,7 +924,7 @@ public class Agencia
     }
     public List<ReservaHotel> getReservasHotel()
     {
-        return reservasHotel.ToList();
+        return contexto.reservaHoteles.ToList();
     }
     public bool TraerDisponibilidadHotelParaEdicion(Hotel hotel, DateTime fechaIngreso, DateTime fechaEgreso, Int32 cantReserva)
     {
@@ -1053,14 +1051,15 @@ public class Agencia
     }
 
 
-    public void eliminarRerservaHotel(int idReservaHotel, double costo, Int32 idHotel)
+    public void eliminarRerservaHotel(Int32 idReservaHotel, double costo, Int32 idHotel)
     {
-        DB.eliminarMiReserva(idReservaHotel);
-        this.usuarioActual.credito = this.usuarioActual.credito + costo;
-        DB.modiFicarCredito(this.usuarioActual.id, this.usuarioActual.credito);
-        ReservaHotel reservaHotel = this.usuarioActual.listMisReservasHoteles.FirstOrDefault(x => x.idReservaHotel == idReservaHotel);
-        this.usuarioActual.listMisReservasHoteles.Remove(reservaHotel);
-        this.getHoteles().FirstOrDefault(x => x.id == idHotel).listMisReservas.Remove(reservaHotel);
+        this.elimiarReservaHotelContext(idReservaHotel);
+        Usuario usuarioActual = this.getUsuarioActual();
+        usuarioActual.credito = usuarioActual.credito + costo;
+        this.modificarCreditoContext(usuarioActual.id, usuarioActual.credito);
+        ReservaHotel reservaHotel = this.getUsuarioActual().listMisReservasHoteles.FirstOrDefault(x => x.idReservaHotel == idReservaHotel);
+        this.getUsuarioActual().listMisReservasHoteles.Remove(reservaHotel);
+
     }
 
     public void devolverDinero(DateTime fechaDesde, DateTime fechaHasta, List<ReservaHotel> misReservas, Int32 idReservaHotel, Hotel miHotel)
@@ -1071,61 +1070,52 @@ public class Agencia
         TimeSpan tsBase = miReserva.fechaHasta.Date.Subtract(miReserva.fechaDesde.Date);
         Int32 sumarCostoPorDia = (tsseleccion.Days + 1) - (tsBase.Days + 1);
         costo = this.usuarioActual.credito + (sumarCostoPorDia * miHotel.costo);
-        DB.modiFicarCredito(this.usuarioActual.id, costo);
+        this.modificarCreditoContext(this.usuarioActual.id, costo);
         this.getUsuarioActual().credito = costo;
     }
 
     public void editarReservaHotel(DateTime fechaDesde, DateTime fechaHasta, double pagado, Int32 idReservaHotel)
     {
-        DB.modificarReservaHotel(fechaDesde, fechaHasta, pagado, idReservaHotel);
+        this.modificarReservaHotelContext(fechaDesde, fechaHasta, pagado, idReservaHotel);
         ReservaHotel reservaHotelUsuarioActual = this.usuarioActual.listMisReservasHoteles.FirstOrDefault(x => x.idReservaHotel == idReservaHotel);
-
-        Hotel hotel = this.getHoteles().FirstOrDefault(x => x.id == reservaHotelUsuarioActual.miHotel.id);
-        ReservaHotel reservaHotelDelHotel = hotel.listMisReservas.FirstOrDefault(x => x.idReservaHotel == reservaHotelUsuarioActual.idReservaHotel);
-        reservaHotelDelHotel.fechaDesde = fechaDesde;
-        reservaHotelDelHotel.fechaHasta = fechaHasta;
-        reservaHotelDelHotel.pagado = pagado;
-
-
-        ReservaHotel objEnReservaHoteles = this.getUsuarioActual().listMisReservasHoteles.FirstOrDefault(x => x.idReservaHotel == reservaHotelUsuarioActual.idReservaHotel);
-        objEnReservaHoteles.fechaDesde = fechaDesde;
-        objEnReservaHoteles.fechaHasta = fechaHasta;
-        objEnReservaHoteles.pagado = pagado;
-
+        Usuario usuario = this.getUsuarioActual();
+        foreach (var itemreserva in usuario.listMisReservasHoteles)
+        {
+            if (itemreserva.idReservaHotel == reservaHotelUsuarioActual.idReservaHotel)
+            {
+                itemreserva.fechaDesde = fechaDesde;
+                itemreserva.fechaHasta = fechaHasta;
+                itemreserva.pagado = pagado;
+            }
+        }
+        this.modificarUsuarioActual(usuario);
     }
+
 
     public ReservaHotel? GenerarReserva(Hotel hotelSeleccionado, DateTime fechaIngreso, DateTime fechaEgreso, string textBoxMonto)
     {
         TimeSpan ts = fechaEgreso.Date.Subtract(fechaIngreso.Date);
         double costo = ((ts.Days + 1) * hotelSeleccionado.costo);
-
+        ReservaHotel? reservaHotel = null;
+        Usuario? usuarioActual = null;
         if (costo == Convert.ToDouble(textBoxMonto))
         {
-            //genera objeto reserva en memoria
-            ReservaHotel reservaHotel = new ReservaHotel(hotelSeleccionado, this.getUsuarioActual(), fechaIngreso, fechaEgreso, Convert.ToDouble(textBoxMonto));
-            DB.agregarReserva(reservaHotel.miUsuario.id, reservaHotel.fechaDesde.Date, reservaHotel.fechaHasta.Date, reservaHotel.pagado, reservaHotel.miHotel.id);
-
-            if (!DB.traerHotel_Usuario(reservaHotel.miHotel.id, reservaHotel.miUsuario.id))
+            try
             {
-                DB.agregarRelacionUsuarioHotel(reservaHotel.miUsuario.id, reservaHotel.miHotel.id);
+                reservaHotel = new ReservaHotel(hotelSeleccionado, this.getUsuarioActual(), fechaIngreso, fechaEgreso, Convert.ToDouble(textBoxMonto));
+                this.generarReservaContext(reservaHotel);
+                HotelUsuario? hotelUsuario = contexto.HotelUsuario.Where(x => x.idUsuario == reservaHotel.miUsuario.id && x.idHotel == reservaHotel.miHotel.id).FirstOrDefault();
+                this.generarHotelUsuario(hotelUsuario, reservaHotel);
+                usuarioActual = this.getUsuarioActual();
+                usuarioActual.credito = this.getUsuarioActual().credito - Convert.ToDouble(textBoxMonto);
+                modificarCreditoContext(reservaHotel.miUsuario.id, usuarioActual.credito);
+                this.modificarUsuarioActual(usuarioActual);
             }
-            else
+            catch (Exception)
             {
-                DB.modificarCantidadDeVisitantes(reservaHotel.miHotel.id, reservaHotel.miUsuario.id, 1);
+                return null;
             }
-
-            Usuario usuarioActual = this.getUsuarioActual();
-
-            //le resta el credito al usuario
-            usuarioActual.credito = usuarioActual.credito - Convert.ToDouble(textBoxMonto);
-            DB.modificarCreditoUsuario(reservaHotel.miUsuario.id, usuarioActual.credito);
-
-            //agregar la nueva reserva en memoria
-            usuarioActual.listMisReservasHoteles.Add(reservaHotel);
-
-            this.getHoteles().FirstOrDefault(x => x.id == hotelSeleccionado.id).listMisReservas.Add(reservaHotel);
             //setea el usuario actual
-            this.setUsuario(usuarioActual);
             return reservaHotel;
         }
         else
@@ -1133,11 +1123,140 @@ public class Agencia
             return null;
         }
     }
+
+    public void modificarUsuarioActual(Usuario usuario)
+    {
+        this.usuarioActual = usuario;
+    }
+
     public List<Hotel> traerMisHoteles(Int32 idUsuario)
     {
+        this.misHotelesQueVisiteContext(idUsuario);
+
         return DB.misHotelesQueVisite(idUsuario);
+        //return this.misHotelesQueVisite(idUsuario);
     }
 
     #endregion
+
+
+    #region reservaHoteles Context
+
+
+    public void misHotelesQueVisiteContext(Int32 idUsuario)
+    {
+        try
+        {
+            //falta codigo
+        }
+        catch(Exception)
+        {
+            throw;
+        }
+    }
+
+
+    public bool generarHotelUsuario(HotelUsuario? hotelUsuario, ReservaHotel reservaHotel)
+    {
+        try
+        {
+            if (hotelUsuario == null)
+            {
+                contexto.HotelUsuario.Add(new HotelUsuario() { idHotel = reservaHotel.miHotel.id, idUsuario = reservaHotel.miUsuario.id, cantidad = 1 });
+            }
+            else
+            {
+                hotelUsuario.cantidad++;
+                contexto.HotelUsuario.Update(hotelUsuario);
+            }
+            contexto.SaveChanges();
+            return true;
+        }
+        catch (Exception)
+        {
+            return false;
+        }
+    }
+
+
+    public bool generarReservaContext(ReservaHotel reservaHotel)
+    {
+        try
+        {
+            contexto.reservaHoteles.Add(reservaHotel);
+            contexto.SaveChanges();
+            return true;
+        }
+        catch (Exception)
+        {
+            return false;
+        }
+    }
+
+
+    public bool modificarCreditoContext(Int32 idUsuario, double nuevoCredito)
+    {
+        try
+        {
+            Usuario? usuario = contexto.usuarios.Where(u => u.id == idUsuario).FirstOrDefault();
+
+            if (usuario != null)
+            {
+                usuario.credito = nuevoCredito;
+                contexto.usuarios.Update(usuario);
+                contexto.SaveChanges();
+                return true;
+            }
+            else
+                return false;
+        }
+        catch (Exception e)
+        {
+            return false;
+        }
+    }
+
+    public bool modificarReservaHotelContext(DateTime fechaDesde, DateTime fechaHasta, double pagado, Int32 idReservaHotel)
+    {
+        try
+        {
+            ReservaHotel? reservaHotel = contexto.reservaHoteles.FirstOrDefault(x => x.idReservaHotel == idReservaHotel);
+            reservaHotel.fechaDesde = fechaDesde;
+            reservaHotel.fechaHasta = fechaHasta;
+            reservaHotel.pagado = pagado;
+            contexto.reservaHoteles.Update(reservaHotel);
+            contexto.SaveChanges();
+            return true;
+        }
+        catch (Exception)
+        {
+            return false;
+        }
+    }
+
+    public bool elimiarReservaHotelContext(Int32 idReservaHotel)
+    {
+        try
+        {
+            ReservaHotel reservaHotel = contexto.reservaHoteles.Where(x => x.idReservaHotel == idReservaHotel).FirstOrDefault();
+            if (reservaHotel != null)
+            {
+                contexto.reservaHoteles.Remove(reservaHotel);
+                contexto.SaveChanges();
+                return true;
+            }
+            else
+                return false;
+        }
+        catch (Exception)
+        {
+            return false;
+        }
+    }
+
+
+    #endregion
+
+
 
 }

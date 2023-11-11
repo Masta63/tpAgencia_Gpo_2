@@ -13,7 +13,6 @@ namespace tpAgencia_Gpo_2
         public int idUsuario { get; set; }
         public Usuario user { get; set; }
         public int cantidad { get; set; }
-
         public HotelUsuario() { }
     }
 }

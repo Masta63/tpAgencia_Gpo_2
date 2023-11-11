@@ -12,6 +12,7 @@ namespace tpAgencia_Gpo_2
         public DbSet<Usuario> usuarios { get; set; }
         public DbSet<Ciudad> ciudades { get; set; }
         public DbSet<Hotel> hoteles { get; set; }
+        public DbSet<HotelUsuario> HotelUsuario { get; set; }
         public DbSet<Vuelo> vuelos { get; set; }
         public DbSet<ReservaHotel> reservaHoteles { get; set; }
         public DbSet<ReservaVuelo> reservaVuelos { get; set; }

@@ -20,7 +20,8 @@ namespace tpAgencia_Gpo_2
 
         public string nombre { get; set; }
 
-        public List<ReservaHotel> listMisReservas { get; set; }
+        //public List<ReservaHotel> listMisReservas { get; set; }
+        public ICollection<ReservaHotel> listMisReservas { get; } = new List<ReservaHotel>();
 
         public List<HotelUsuario> hotelUsuario { get; set; }
 
