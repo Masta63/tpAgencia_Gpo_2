@@ -43,11 +43,15 @@ public class Agencia
         reservasHotel = new List<ReservaHotel>();
         reservasVuelo = new List<ReservaVuelo>();
         listUsuarios = new List<Usuario>();
-        DB = new DAL();//inicializar constructor
+        //DB = new DAL();//inicializar constructor
         inicializarAtributos();//inicializo los metodos de la clase DB/entity
         
     }
 
+    public void cerrarContexto()
+    {
+        contexto.Dispose();
+    }
     private void inicializarAtributos()
     {
         //aca deberiamos agregar los metodos para inicializar vuelos hoteles paises etc
@@ -82,7 +86,7 @@ public class Agencia
     {
         if (_contraseña != null && _mail != "" && _contraseña != null && _mail != "")
         {
-            Usuario? usuarioSeleccionados = this.getUsuarios().Where(x => x?.mail.Trim() == _mail).FirstOrDefault();
+            Usuario usuarioSeleccionados = contexto.usuarios.Where(u=> u.mail == _mail).Where(u=> u.password == _contraseña).FirstOrDefault();
             return validacionEstadoUsuario(usuarioSeleccionados, _mail, _contraseña);
         }
         else
@@ -215,10 +219,10 @@ public class Agencia
     //-- metodos del formUsuario
     public List<Usuario> getUsuarios()
     {
-        return listUsuarios.ToList();
+        return contexto.usuarios.ToList();
     }
 
-    public bool agregarUsuarioDal(string Dni, string Nombre, string apellido, string Mail, string Password, bool EsADM, bool Bloqueado)
+    public bool agregarUsuarioContexto(string Dni, string Nombre, string apellido, string Mail, string Password, bool EsADM, bool Bloqueado)
     {
         //comprobación para que no me agreguen usuarios con DNI duplicado
         bool esValido = true;
@@ -229,26 +233,23 @@ public class Agencia
                 esValido = false;
             }
         }
-        if (esValido)
+        try
         {
-            int idNuevoUsuario;
-            idNuevoUsuario = DB.agregarUsuario(Dni, Nombre, apellido, Mail, Password, EsADM, Bloqueado);
-            //compruebo que se pudo agregar a la base y se le asignó un ID
-            if (idNuevoUsuario != -1)
+            if (esValido)
             {
-                //Ahora sí lo agrego en la lista
-                Usuario nuevo = new Usuario(idNuevoUsuario, Dni, Nombre, apellido, Mail, Password, EsADM, Bloqueado);
-                listUsuarios.Add(nuevo);
+                Usuario nuevo = new Usuario { dni = Dni, name = Nombre, apellido = apellido, mail = Mail, password = Password, esAdmin = EsADM, bloqueado = Bloqueado };
+                contexto.usuarios.Add(nuevo);
+                contexto.SaveChanges();
                 return true;
             }
             else
-            {
-                //algo salió mal con la query porque no generó un id válido
                 return false;
-            }
         }
-        else
-            return false;
+        catch (Exception)
+        {
+
+            throw;
+        }
     }
 
 
@@ -747,7 +748,7 @@ public class Agencia
 
     }
 
-    //FIN METODOS DE VUELO
+    
     public List<Vuelo> misVuelos(Usuario usuarioActual)
     {
         List<ReservaVuelo> reservasVuelo = DB.traerReservasVuelo(usuarioActual.id);
@@ -785,6 +786,10 @@ public class Agencia
         }
         return vuelosReservados;
     }
+
+    //FIN METODOS DE VUELO
+
+
     //METODO DE RESERVA DE HOTEL
     public List<Hotel> misReservasHoteles(Usuario usuario)
     {

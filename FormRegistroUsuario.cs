@@ -49,7 +49,7 @@ namespace tpAgencia_Gpo_2
                 {
                     if (textBox_nombre.Text.Length >= 3 && textBox_apellido.Text.Length >= 3 && textBox_dni.Text.Length == 8 && textBox_email.Text.Contains("@"))
                     {
-                        refAgencia.agregarUsuarioDal(textBox_dni.Text, textBox_nombre.Text, textBox_apellido.Text, textBox_email.Text, textBox_pass.Text,bool.Parse("false"), bool.Parse("false"));
+                        refAgencia.agregarUsuarioContexto(textBox_dni.Text, textBox_nombre.Text, textBox_apellido.Text, textBox_email.Text, textBox_pass.Text, bool.Parse("false"), bool.Parse("false"));
                         MessageBox.Show("Agregado con éxito");
                         this.volver();
                     }
@@ -59,7 +59,7 @@ namespace tpAgencia_Gpo_2
                     }
                 }
             }
-            
+
         }
         public delegate void TransfDelegadoRegistro();
         private void buttonRegistro_volver_Click(object sender, EventArgs e)
@@ -94,6 +94,11 @@ namespace tpAgencia_Gpo_2
                 MenuAgencia.MdiParent = form1;
                 MenuAgencia.Show();
             }
+        }
+
+        private void FormRegistroUsuario_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

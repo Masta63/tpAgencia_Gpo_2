@@ -70,7 +70,7 @@ namespace tpAgencia_Gpo_2
                     if (textBox_nombre.Text.Length >= 3 && textBox_apellido.Text.Length >= 3 && textBox_dni.Text.Length == 8 && textBox_email.Text.Contains("@"))
                     {
                         //Dni, Nombre, apellido, Mail,pass, EsADM, Bloqueado);
-                        refAgencia.agregarUsuarioDal(textBox_dni.Text, textBox_nombre.Text, textBox_apellido.Text, textBox_email.Text, textBox_pass.Text, checkBox_admin.Checked, checkBox_bloqueado.Checked);
+                        refAgencia.agregarUsuarioContexto(textBox_dni.Text, textBox_nombre.Text, textBox_apellido.Text, textBox_email.Text, textBox_pass.Text, checkBox_admin.Checked, checkBox_bloqueado.Checked);
 
                         MessageBox.Show("Agregado con éxito");
                     }
@@ -316,5 +316,7 @@ namespace tpAgencia_Gpo_2
                 MenuAgencia.Show();
             }
         }
+        
+    
     }
-}
+}   
