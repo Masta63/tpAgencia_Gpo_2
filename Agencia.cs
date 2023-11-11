@@ -1143,10 +1143,7 @@ public class Agencia
 
     public List<Hotel> traerMisHoteles(Int32 idUsuario)
     {
-        this.misHotelesQueVisiteContext(idUsuario);
-
-        return DB.misHotelesQueVisite(idUsuario);
-        //return this.misHotelesQueVisite(idUsuario);
+        return this.misHotelesQueVisiteContext(idUsuario);
     }
 
     #endregion
@@ -1155,13 +1152,21 @@ public class Agencia
     #region reservaHoteles Context
 
 
-    public void misHotelesQueVisiteContext(Int32 idUsuario)
+    public List<Hotel> misHotelesQueVisiteContext(Int32 idUsuario)
     {
         try
         {
-            //falta codigo
+            List<Hotel> hotels = new List<Hotel>();
+            List<HotelUsuario> HotelUsuario = contexto.HotelUsuario.Where(x => x.idUsuario == idUsuario).ToList();
+
+            foreach (var itemHotelUsuario in HotelUsuario)
+            {
+                Hotel hotel = contexto.hoteles.FirstOrDefault(x => x.id == itemHotelUsuario.idHotel);
+                hotels.Add(hotel);
+            }
+            return hotels;
         }
-        catch(Exception)
+        catch (Exception)
         {
             throw;
         }
