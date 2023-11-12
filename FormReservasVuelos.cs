@@ -52,7 +52,7 @@ namespace tpAgencia_Gpo_2
 
                
                 int cantidadReservas = misReservasVuelo.Count;
-                MessageBox.Show("Cantidad de Reservas de Vuelo: " + cantidadReservas); // Muestra la cantidad en una ventana emergente
+
 
 
                 foreach (var vuelos in misReservasVuelo)
@@ -175,13 +175,28 @@ namespace tpAgencia_Gpo_2
         {
             if (textBoxIdReserva.Text != string.Empty)
             {
-                agencia.eliminarReservaVuelo(Convert.ToInt32(textBoxIdReserva.Text));
-                MostrarVuelos();
-                textBoxId.Text = "";
-                textBoxOrigen.Text = "";
-                textBoxDestino.Text = "";
-                textBoxFecha.Text = "";
-                textBoxAerolinea.Text = "";
+               
+                  string resultado =  agencia.eliminarReservaVuelo(Convert.ToInt32(textBoxIdReserva.Text));
+                    MostrarVuelos();
+                    textBoxId.Text = "";
+                    textBoxOrigen.Text = "";
+                    textBoxDestino.Text = "";
+                    textBoxFecha.Text = "";
+                    textBoxAerolinea.Text = "";
+                switch (resultado)
+                {
+                    case "ReservaEliminada":
+                    case "ok": 
+                        MessageBox.Show("Reserva eliminada exitosamente");
+                        break;
+                    case "Fecha":
+                        MessageBox.Show("No puede eliminar la reserva porque la misma ya pasó");
+                        break;
+                    case "error":
+                        MessageBox.Show("Ocurrió un error");
+                        break;
+                }
+               
             }
             else
             {
