@@ -64,6 +64,7 @@ public class Agencia
             contexto.usuarios.Load();
             contexto.reservaHoteles.Load();
             contexto.hoteles.Load();
+            contexto.vuelos.Include(v => v.listPasajeros).Include(v => v.listMisReservas).Include(v => v.vueloUsuarios).Load();
             contexto.ciudades.Load();
         }
         catch (Exception e)
@@ -433,7 +434,7 @@ public class Agencia
 
     public void setCiudad(Ciudad ciudad)
     {
-        ciudades.Add(ciudad);
+        contexto.ciudades.Add(ciudad);
     }
 
     public bool eliminarCiudad(int id)
@@ -516,17 +517,16 @@ public class Agencia
     public bool agregarVuelo(int idOrigen, int idDestino, int capacidad, double costo, DateTime fecha, string aerolinea, string avion)
     {
 
-        Ciudad cOrigen = ciudades.FirstOrDefault(ciudad => ciudad.id == idOrigen);
-        Ciudad cDestino = ciudades.FirstOrDefault(ciudad => ciudad.id == idDestino);
-        int idNuevoVuelo;
-        idNuevoVuelo = DB.agregarVuelo(idOrigen, idDestino, capacidad, costo, fecha, aerolinea, avion);
-        if (idNuevoVuelo != -1)
+        Ciudad cOrigen = contexto.ciudades.Where(c => c.id == idOrigen).FirstOrDefault();
+        Ciudad cDestino = contexto.ciudades.Where(c => c.id == idDestino).FirstOrDefault();
+        try
         {
-            Vuelo nuevo = new Vuelo(idNuevoVuelo, cOrigen, cDestino, capacidad, costo, fecha, aerolinea, avion);
-            vuelos.Add(nuevo);
+            Vuelo nuevo = new Vuelo(cOrigen, cDestino, capacidad, costo, fecha, aerolinea, avion);
+            contexto.vuelos.Add(nuevo);
+            contexto.SaveChanges();
             return true;
         }
-        else
+        catch (Exception ex)
         {
             return false;
         }
@@ -537,42 +537,40 @@ public class Agencia
 
     public string modificarVuelo(int id, int origen, int destino, int capacidad, double costo, DateTime fecha, string aerolinea, string avion)
     {
-        Ciudad cOrigen = ciudades.FirstOrDefault(ciudad => ciudad.id == origen);
-        Ciudad cDestino = ciudades.FirstOrDefault(ciudad => ciudad.id == destino);
-        if (DB.modificarVuelo(id, origen, destino, capacidad, costo, fecha, aerolinea, avion) == 1)
+        Ciudad cOrigen = contexto.ciudades.Where(c => c.id == origen).FirstOrDefault();
+        Ciudad cDestino = contexto.ciudades.Where(c => c.id == destino).FirstOrDefault();
+
+        try
         {
-            try
+            Vuelo vueloModificado = contexto.vuelos.Where(v => v.id == id).FirstOrDefault();
+
+            if (vueloModificado != null)
             {
-                foreach (Vuelo vuelo in vuelos)
+                int cantReservas = vueloModificado.listPasajeros.Count;
+                if (capacidad >= cantReservas)
                 {
-                    if (vuelo.id == id)
-                    {
-                        int cantReservas = vuelo.listPasajeros.Count;
-                        if (capacidad >= cantReservas)
-                        {
-                            vuelo.origen = cOrigen;
-                            vuelo.destino = cDestino;
-                            vuelo.costo = costo;
-                            vuelo.fecha = fecha;
-                            vuelo.aerolinea = aerolinea;
-                            vuelo.avion = avion;
-                            vuelo.capacidad = capacidad;
-
-                            return "exito";
-                        }
-                        else
-                        {
-                            return "capacidad";
-                        }
-                    }
-
+                    vueloModificado.origen = cOrigen;
+                    vueloModificado.destino = cDestino;
+                    vueloModificado.costo = costo;
+                    vueloModificado.fecha = fecha;
+                    vueloModificado.aerolinea = aerolinea;
+                    vueloModificado.avion = avion;
+                    vueloModificado.capacidad = capacidad;
+                    contexto.vuelos.Update(vueloModificado);
+                    contexto.SaveChanges();
+                    return "exito";
+                }
+                {
+                    return "capacidad";
                 }
             }
-            catch (Exception e)
-            {
-                return "error";
-            }
+
         }
+        catch (Exception e)
+        {
+            return "error";
+        }
+
         return "error";
     }
 
@@ -647,44 +645,40 @@ public class Agencia
     public bool eliminarVuelo(int id)
     {
         DateTime fechaActual = DateTime.Now;
-        if (DB.eliminarVuelo(id) == 1)
+        try
         {
 
-            try
+            bool salida = false;
+            Vuelo vueloAEliminar = contexto.vuelos.Where(v => v.id == id).FirstOrDefault();
+
+            if (vueloAEliminar != null)
+
             {
-
-
-                foreach (Vuelo vuelo in vuelos)
+                if (vueloAEliminar.fecha > fechaActual)
                 {
-                    if (vuelo.id == id)
-
-                    {
-                        if (vuelo.fecha > fechaActual)
-                        {
-
-                            foreach (ReservaVuelo reservas in vuelo.listMisReservas)
-                            {
-                                reservas.miUsuario.credito += reservas.pagado;
-                            }
-                        }
-                        vuelos.Remove(vuelo);
-
-                        return true;
-                    }
+                    vueloAEliminar.listMisReservas.ForEach(r => r.miUsuario.credito += r.pagado);
                 }
-            }
-            catch (Exception e)
-            {
-                return false;
+
+                contexto.vuelos.Remove(vueloAEliminar);
+                salida = true;
+
             }
 
+
+            if (salida)
+                contexto.SaveChanges();
+            return salida;
         }
-        return false;
+
+        catch (Exception e)
+        {
+            return false;
+        }
     }
 
     public List<Vuelo> getVuelos()
     {
-        return vuelos.ToList();
+        return contexto.vuelos.ToList();
     }
 
 
