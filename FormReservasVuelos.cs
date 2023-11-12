@@ -148,14 +148,17 @@ namespace tpAgencia_Gpo_2
                     MostrarVuelos();
                     switch (resultado)
                     {
-                        case "exito":
+                        case "reservaModificada":
                             MessageBox.Show("Vuelo modificado exitosamente");
                             MostrarVuelos();
                             dataGridView1.Invalidate();
                             dataGridView1.Update();
                             break;
                         case "capacidad":
-                            MessageBox.Show("La capacidad es menor a la cantidad de personas que reservaron el vuelo o no hay más lugar disponible");
+                            MessageBox.Show("No hay más lugar disponible para este vuelo");
+                            break;
+                        case "credito":
+                            MessageBox.Show("No tenes suficiente credito para comprar");
                             break;
                         case "error":
                             MessageBox.Show("Ocurrió un problema al querer modificar el vuelo");

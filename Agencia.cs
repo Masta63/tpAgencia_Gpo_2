@@ -576,49 +576,84 @@ public class Agencia
     }
 
 
-    //Deberían buscar un objeto reservaVuelo con el idReserva, el vuelo no cambia, sólo cantidad o monto. El vuelo de esa reserva ya lo deberían tener por referencia
-    //(solo que no vincularon al inicio), es reservaVuelo.miVuelo. Usar RecargarMisReservasVuelo aquí no tiene sentido, al modificar el objeto reserva por referencia,
-    //la lista de reservas del usuario ya apunta al objeto modificado pero ustedes la están recargando de forma continua desde la base.
+    //Deberían buscar un objeto reservaVuelo con el idReserva, el vuelo no cambia, sólo cantidad o monto. ok
+    //El vuelo de esa reserva ya lo deberían tener por referencia(solo que no vincularon al inicio), es reservaVuelo.miVuelo.
+    //Usar RecargarMisReservasVuelo aquí no tiene sentido, al modificar el objeto reserva por referencia,la lista de reservas del usuario ya apunta al objeto modificado pero ustedes la están recargando de forma continua desde la base.
     //A ver, si cambia la cantidad, hay que cambiar la cantidad en reserva y también en vuelo, ver si son más o menos pasajeros y agregar o quitar pasajeros según corresponda en la property vendido,
-    //no en capacidad (línea 557 mal), ojo tienen que validar que el vuelo tenga capacidad. Lo que modifica costo es la reservaVuelo no el vuelo que mantiene su costo por persona. Línea 556 mal.
-    //usuarioActual.credito = usuarioActual.credito - vuelo.costo; pero no validamos si lo q paga ahora es más o menos que antes quizás tenemos que sumarle crédito, y si le tenemos que restar,
-    //tiene crédito suficiente?
+    //no en capacidad (línea 557 mal), ojo tienen que validar que el vuelo tenga capacidad.ok
+    //Lo que modifica costo es la reservaVuelo no el vuelo que mantiene su costo por persona. Línea 556 mal.
+    //usuarioActual.credito = usuarioActual.credito - vuelo.costo; pero no validamos si lo q paga ahora es más o menos que antes quizás tenemos que sumarle crédito, y si le tenemos que restar,ok
+    //tiene crédito suficiente? ok
     public string modificarReservaVuelo(int idVuelo, int idReserva, int cantidad, double costo)
     {
-        if (DB.modificarReservaVuelo(idVuelo, idReserva, cantidad, costo) == 1)
+
+        try
         {
-            try
+            ReservaVuelo rv = contexto.reservaVuelos.Where(rv => rv.idReservaVuelo == idReserva).FirstOrDefault();
+            Vuelo v = contexto.vuelos.Where(v => v.id == idVuelo).FirstOrDefault();
+            Usuario u = contexto.usuarios.Where(u => u.id == usuarioActual.id).FirstOrDefault();
+
+            if (rv != null)
             {
-                foreach (Vuelo vuelo in vuelos)
+                int cantReservas = (int)(rv.pagado / v.costo);
+                if (cantidad > cantReservas)
                 {
-                    if (vuelo.id == idVuelo)
+                    //sacar la diferencia
+                    int diferencia = cantidad - cantReservas;
+                    double nuevoMonto = diferencia * v.costo;
+                    int disponibilidad = v.capacidad - v.vendido;
+                    if (disponibilidad > diferencia )
                     {
-                        int cantReservas = vuelo.listPasajeros.Count;
-                        if (vuelo.capacidad >= cantReservas)
+                        
+                        //verificar si tiene credito
+                        if (u.credito > nuevoMonto)
                         {
-
-                            vuelo.costo = costo;
-                            vuelo.capacidad = vuelo.capacidad - cantidad;
-                            DB.modificarCapacidadVuelo(vuelo.id, vuelo.capacidad);
-                            usuarioActual.credito = usuarioActual.credito - vuelo.costo;
-                            DB.modificarCreditoUsuario(usuarioActual.id, usuarioActual.credito);
-                            RecargarMisReservasVuelo();
-
-                            return "exito";
+                            //hay que cobrarle la diferencia 
+                            usuarioActual.credito = usuarioActual.credito - nuevoMonto;
+                            rv.pagado = rv.pagado + nuevoMonto;
+                            //sumarle vendido de la diferencia a vuelo
+                            v.vendido += cantReservas;
+                            contexto.SaveChanges();
+                            //modificar la cant en reserva ?????
+                            return "reservaModificada";
                         }
                         else
                         {
-                            return "capacidad";
+                            return "credito";
+                            //el usuario no tiene credito suficiente
                         }
                     }
-
+                    else
+                    {
+                        return "capacidad";
+                    }
                 }
-            }
-            catch (Exception e)
-            {
-                return "error";
+                else
+                {
+                    int diferencia = cantReservas -cantidad;
+                    double nuevoMonto = diferencia * v.costo;
+                    if (nuevoMonto >= 0)
+                    {
+                        usuarioActual.credito = usuarioActual.credito + nuevoMonto;
+                        rv.pagado = rv.pagado - nuevoMonto;
+                        v.vendido -= cantReservas;
+                        contexto.SaveChanges();
+                        return "reservaModificada";
+                    }
+                    else
+                    {
+                        return "error";
+                    }
+                   
+                }
+
             }
         }
+        catch (Exception e)
+        {
+            return "error";
+        }
+
         return "error";
     }
     public void RecargarMisReservasVuelo()
@@ -710,23 +745,24 @@ public class Agencia
         return vuelosDisponibles;
 
     }
-    public bool vincularVueloUsuarios(int vueloId, int usuarioId, int cant )
+    public bool vincularVueloUsuarios(int vueloId, int usuarioId, int cant)
     {
-        try {
+        try
+        {
             Vuelo vu = contexto.vuelos.Where(v => v.id == vueloId).FirstOrDefault();
             Usuario us = contexto.usuarios.Where(u => u.id == usuarioId).FirstOrDefault();
             VueloUsuario vueloUsuarioSelected = contexto.vueloUsuarios.Where(vus => vus.idUsuario == usuarioId && vus.idVuelo == vueloId).FirstOrDefault();
-            if (us != null && vu !=null && vueloUsuarioSelected != null) 
+            if (us != null && vu != null && vueloUsuarioSelected != null)
             {
                 us.listVuelosTomados.Add(vu);
                 contexto.usuarios.Update(us);
                 contexto.SaveChanges();
 
-                
+
                 vueloUsuarioSelected.cantidad = cant;
                 contexto.vueloUsuarios.Update(vueloUsuarioSelected);
                 contexto.SaveChanges();
-               
+
             }
             else
             {
@@ -738,7 +774,7 @@ public class Agencia
                 }
                 contexto.vueloUsuarios.Add(vueloUsuarioSelected);
                 contexto.SaveChanges();
-               
+
             }
             return true;
         }
@@ -746,19 +782,19 @@ public class Agencia
         {
             return false;
         }
-    
+
 
     }
-   
+
     public string comprarVuelo(int vueloId, Usuario usuarioActual, int cantidad)
     {
-        Vuelo vuelo = contexto.vuelos.Where(v=> v.id == vueloId).FirstOrDefault();
-        
-        if (contexto.vueloUsuarios.Any(vu=> vu.idVuelo == vueloId && vu.idUsuario == usuarioActual.id))
+        Vuelo vuelo = contexto.vuelos.Where(v => v.id == vueloId).FirstOrDefault();
+
+        if (contexto.vueloUsuarios.Any(vu => vu.idVuelo == vueloId && vu.idUsuario == usuarioActual.id))
         {
             return "yaCompro";
         }
-    
+
         if (vuelo != null && cantidad > 0 && cantidad <= vuelo.capacidad - vuelo.vendido)
         {
             double costoTotal = vuelo.costo * cantidad;
@@ -767,18 +803,17 @@ public class Agencia
                 usuarioActual.credito -= costoTotal;
                 vuelo.vendido += cantidad;
                 vuelo.listPasajeros.Add(usuarioActual);
-               
+
                 ReservaVuelo reserva = new ReservaVuelo(vuelo, usuarioActual, costoTotal);
                 contexto.reservaVuelos.Add(reserva);
                 usuarioActual.listMisReservasVuelo.Add(reserva);
-                usuarioActual.credito = usuarioActual.credito - reserva.pagado;
                 //esta linea revisar
                 usuarioActual.listVuelosTomados.Add(vuelo);
                 vincularVueloUsuarios(vueloId, usuarioActual.id, cantidad);
-         
+
                 contexto.SaveChanges();
                 return "exito";
-               
+
             }
             return "sinSaldo";
 
@@ -795,7 +830,7 @@ public class Agencia
         return usuarioActual.listVuelosTomados = reservasVuelo.Select(reserva => reserva.miVuelo).ToList();
     }
 
-    
+
     public string eliminarReservaVuelo(int reservaVueloId)
     {
         try
@@ -817,7 +852,7 @@ public class Agencia
                     v.listMisReservas.Remove(reservaVuelo);
                     usuarioActual.listMisReservasVuelo.Remove(reservaVuelo);
                     contexto.SaveChanges();
-                    return  "ReservaEliminada";
+                    return "ReservaEliminada";
 
                 }
                 else
