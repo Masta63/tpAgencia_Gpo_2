@@ -145,7 +145,7 @@ namespace tpAgencia_Gpo_2
             foreach (Usuario us in refAgencia.getUsuarios())//para cada usuario en el clon de listado de usuarios de mi referencia de agencia
             {
 
-                dataGridView_usuarios.Rows.Add(new string[] { us.id.ToString(), us.name, us.apellido, us.dni.ToString(), us.credito.ToString(), us.mail, us.esAdmin.ToString(), us.bloqueado.ToString(), us.listMisReservasHoteles.ToString(), us.listMisReservasVuelo.ToString() });
+                dataGridView_usuarios.Rows.Add(new string[] { us.id.ToString(), us.name, us.apellido, us.dni.ToString(), us.credito.ToString(), us.mail, us.esAdmin.ToString(), us.bloqueado.ToString() });
 
 
                 textBox_id.Text = " ";
@@ -183,6 +183,8 @@ namespace tpAgencia_Gpo_2
                 string? admin = dataGridView_usuarios[6, e.RowIndex]?.Value?.ToString().Trim();
                 string? bloqueado = dataGridView_usuarios[7, e.RowIndex]?.Value?.ToString().Trim();
 
+                
+
                 textBox_id.Text = id;
                 textBox_nombre.Text = nombre;
                 textBox_apellido.Text = apellido;
@@ -191,7 +193,7 @@ namespace tpAgencia_Gpo_2
                 textBox_credito.Text = credito;
                 checkBox_admin.Checked = bool.Parse(admin);
                 checkBox_bloqueado.Checked = bool.Parse(bloqueado);
-
+                0
                 //textBox_resHotel.Text = resHotel;
                 //textBox_resVuelo.Text = resVuelo;
 
