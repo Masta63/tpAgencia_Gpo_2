@@ -17,6 +17,8 @@ namespace tpAgencia_Gpo_2
         public DbSet<ReservaHotel> reservaHoteles { get; set; }
         public DbSet<ReservaVuelo> reservaVuelos { get; set; }
 
+        public DbSet<VueloUsuario> vueloUsuarios { get; set; }
+
         private readonly String _connectionStr = Properties.Resources.conexion;
         public MiContexto() { }
 
