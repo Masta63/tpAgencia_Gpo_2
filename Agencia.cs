@@ -790,24 +790,46 @@ public class Agencia
 
     public List<Vuelo> misVuelos(Usuario usuarioActual)
     {
-        List<ReservaVuelo> reservasVuelo = DB.traerReservasVuelo(usuarioActual.id);
+
+        List<ReservaVuelo> reservasVuelo = contexto.reservaVuelos.Where(rv => rv.idUsuario == usuarioActual.id).ToList();
         return usuarioActual.listVuelosTomados = reservasVuelo.Select(reserva => reserva.miVuelo).ToList();
     }
 
-    //Falta validar la fecha de la reserva (y si ya pasó esta reserva?) Falta disminuir lo vendido al vuelo, falta quitar la reserva de la lista de reservas del vuelo.
-    public void eliminarReservaVuelo(int idReservaVuelo)
+    
+    public string eliminarReservaVuelo(int reservaVueloId)
     {
-        DB.eliminarMiReservaVuelo(idReservaVuelo);
-        ReservaVuelo reservaVuelo = this.usuarioActual.listMisReservasVuelo.FirstOrDefault(x => x.idReservaVuelo == idReservaVuelo);
-        if (reservaVuelo != null)
+        try
         {
-            double costoTotalReserva = reservaVuelo.pagado;
+            ReservaVuelo reservaVuelo = contexto.reservaVuelos.SingleOrDefault(rv => rv.idReservaVuelo == reservaVueloId);
+            Vuelo v = contexto.vuelos.Where(v => v.id == reservaVuelo.idVuelo).FirstOrDefault();
 
-            usuarioActual.credito += costoTotalReserva;
+            if (reservaVuelo != null)
+            {
+                DateTime fechaActual = DateTime.Now;
 
+                if (v.fecha >= fechaActual)
+                {
+                    double costoTotalReserva = reservaVuelo.pagado;
+                    usuarioActual.credito += costoTotalReserva;
 
-            usuarioActual.listMisReservasVuelo.Remove(reservaVuelo);
+                    int cantReservas = (int)(reservaVuelo.pagado / v.costo);
+                    v.vendido -= cantReservas;
+                    v.listMisReservas.Remove(reservaVuelo);
+                    usuarioActual.listMisReservasVuelo.Remove(reservaVuelo);
+                    contexto.SaveChanges();
+                    return  "ReservaEliminada";
 
+                }
+                else
+                {
+                    return "Fecha";
+                }
+            }
+            return "ok";
+        }
+        catch (Exception e)
+        {
+            return "error";
         }
 
     }
