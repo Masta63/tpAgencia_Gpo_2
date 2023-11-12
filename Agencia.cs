@@ -575,6 +575,13 @@ public class Agencia
     }
 
 
+    //Deberían buscar un objeto reservaVuelo con el idReserva, el vuelo no cambia, sólo cantidad o monto. El vuelo de esa reserva ya lo deberían tener por referencia
+    //(solo que no vincularon al inicio), es reservaVuelo.miVuelo. Usar RecargarMisReservasVuelo aquí no tiene sentido, al modificar el objeto reserva por referencia,
+    //la lista de reservas del usuario ya apunta al objeto modificado pero ustedes la están recargando de forma continua desde la base.
+    //A ver, si cambia la cantidad, hay que cambiar la cantidad en reserva y también en vuelo, ver si son más o menos pasajeros y agregar o quitar pasajeros según corresponda en la property vendido,
+    //no en capacidad (línea 557 mal), ojo tienen que validar que el vuelo tenga capacidad. Lo que modifica costo es la reservaVuelo no el vuelo que mantiene su costo por persona. Línea 556 mal.
+    //usuarioActual.credito = usuarioActual.credito - vuelo.costo; pero no validamos si lo q paga ahora es más o menos que antes quizás tenemos que sumarle crédito, y si le tenemos que restar,
+    //tiene crédito suficiente?
     public string modificarReservaVuelo(int idVuelo, int idReserva, int cantidad, double costo)
     {
         if (DB.modificarReservaVuelo(idVuelo, idReserva, cantidad, costo) == 1)
@@ -703,14 +710,19 @@ public class Agencia
 
     }
 
-
+    //Agrego el usuario una sóla vez, vuelo.listPasajeros.Add(usuarioActual);
+    //Falta agregar el vuelo a la lista de vuelos del usuario. OK
+    //Línea 702 mal (vuelo.capacidad = vuelo.capacidad - cantidad;),el vuelo no disminuye su capacidad, ya arriba sumaron vendido. OK
+    //RecargarMisReservasVuelo NO, eso es por el mal manejo de referencias,en la línea 707 debería ir usuarioActual.listMisReservasVuelo.Add(reserva) OK;
     public string comprarVuelo(int vueloId, Usuario usuarioActual, int cantidad)
     {
-        if (DB.usuarioHaCompradoVuelo(usuarioActual.id, vueloId))
+        Vuelo vuelo = contexto.vuelos.Where(v=> v.id == vueloId).FirstOrDefault();
+     //   VueloUsuario vueloUsuario = contexto.HotelUsuario.FirstOrDefault();
+        if (DB.usuarioHaCompradoVuelo(usuarioActual.id, vueloId))// usuarioActual.listVuelosTomados.i
         {
             return "yaCompro";
         }
-        Vuelo vuelo = vuelos.FirstOrDefault(v => v.id == vueloId);
+     //   Vuelo vuelo = vuelos.FirstOrDefault(v => v.id == vueloId);
 
         if (vuelo != null && cantidad > 0 && cantidad <= vuelo.capacidad - vuelo.vendido)
         {
@@ -721,22 +733,23 @@ public class Agencia
                 vuelo.vendido += cantidad;
 
                 //List<Usuario> pax = new List<Usuario>();
-                for (int i = 0; i < cantidad; i++)
-                {
+                //for (int i = 0; i < cantidad; i++)
+                //{
                     vuelo.listPasajeros.Add(usuarioActual);
-                }
+                //}
                 ReservaVuelo reserva = new ReservaVuelo(vuelo, usuarioActual, costoTotal);
                 int reservaId = DB.agregarReservaVuelo(vueloId, costoTotal, usuarioActual.id);
 
                 if (reservaId != -1)
                 {
                     DB.agregarVueloAUsuario(reserva.miVuelo.id, reserva.miUsuario.id, cantidad);
-                    vuelo.capacidad = vuelo.capacidad - cantidad;
-                    DB.modificarCapacidadVuelo(reserva.miVuelo.id, vuelo.capacidad);
+                    usuarioActual.listVuelosTomados.Add(vuelo);
+                    //NO VA vuelo.capacidad = vuelo.capacidad - cantidad;
+                   //NO VA DB.modificarCapacidadVuelo(reserva.miVuelo.id, vuelo.capacidad);
 
                     usuarioActual.credito = usuarioActual.credito - reserva.pagado;
                     DB.modificarCreditoUsuario(reserva.miUsuario.id, usuarioActual.credito);
-                    RecargarMisReservasVuelo();
+                    usuarioActual.listMisReservasVuelo.Add(reserva);
                     return "exito";
                 }
                 else
@@ -759,6 +772,7 @@ public class Agencia
         return usuarioActual.listVuelosTomados = reservasVuelo.Select(reserva => reserva.miVuelo).ToList();
     }
 
+    //Falta validar la fecha de la reserva (y si ya pasó esta reserva?) Falta disminuir lo vendido al vuelo, falta quitar la reserva de la lista de reservas del vuelo.
     public void eliminarReservaVuelo(int idReservaVuelo)
     {
         DB.eliminarMiReservaVuelo(idReservaVuelo);
