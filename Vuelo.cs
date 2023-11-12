@@ -14,13 +14,13 @@
         public int CiudadDestinoId{ get; set; }
         public int capacidad { get; set; }
         public int vendido { get; set; }
-        public List<Usuario> listPasajeros { get; set; }// ICollection en vez de List?
+        public List<Usuario> listPasajeros { get; set; } = new List<Usuario>();
         public double costo { get; set; }
         public DateTime fecha { get; set; }
         public string aerolinea { get; set; }
         public string avion { get; set; }
-        public List<ReservaVuelo> listMisReservas { get; set; }
-        public List<VueloUsuario> vueloUsuarios { get; set; }
+        public List<ReservaVuelo> listMisReservas { get; set; } = new List<ReservaVuelo> ();
+        public List<VueloUsuario> vueloUsuarios { get; set; } = new List<VueloUsuario> ();
 
 
         public Vuelo() { }
