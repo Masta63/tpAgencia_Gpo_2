@@ -576,17 +576,10 @@ public class Agencia
     }
 
 
-    //Deberían buscar un objeto reservaVuelo con el idReserva, el vuelo no cambia, sólo cantidad o monto. ok
-    //El vuelo de esa reserva ya lo deberían tener por referencia(solo que no vincularon al inicio), es reservaVuelo.miVuelo.
-    //Usar RecargarMisReservasVuelo aquí no tiene sentido, al modificar el objeto reserva por referencia,la lista de reservas del usuario ya apunta al objeto modificado pero ustedes la están recargando de forma continua desde la base.
-    //A ver, si cambia la cantidad, hay que cambiar la cantidad en reserva y también en vuelo, ver si son más o menos pasajeros y agregar o quitar pasajeros según corresponda en la property vendido,
-    //no en capacidad (línea 557 mal), ojo tienen que validar que el vuelo tenga capacidad.ok
-    //Lo que modifica costo es la reservaVuelo no el vuelo que mantiene su costo por persona. Línea 556 mal.
-    //usuarioActual.credito = usuarioActual.credito - vuelo.costo; pero no validamos si lo q paga ahora es más o menos que antes quizás tenemos que sumarle crédito, y si le tenemos que restar,ok
-    //tiene crédito suficiente? ok
+  
     public string modificarReservaVuelo(int idVuelo, int idReserva, int cantidad, double costo)
     {
-
+        DateTime fechaActual = DateTime.Now;
         try
         {
             ReservaVuelo rv = contexto.reservaVuelos.Where(rv => rv.idReservaVuelo == idReserva).FirstOrDefault();
@@ -595,6 +588,8 @@ public class Agencia
 
             if (rv != null)
             {
+                if(v.fecha >= fechaActual)
+                { 
                 int cantReservas = (int)(rv.pagado / v.costo);
                 if (cantidad > cantReservas)
                 {
@@ -646,6 +641,10 @@ public class Agencia
                     }
                    
                 }
+                }else
+                {
+                    return "fecha";
+                }
 
             }
         }
@@ -656,14 +655,14 @@ public class Agencia
 
         return "error";
     }
-    public void RecargarMisReservasVuelo()
-    {
+    //public void RecargarMisReservasVuelo()
+    //{
 
-        List<ReservaVuelo> nuevasReservas = DB.traerReservasVuelo(usuarioActual.id);
+    //    List<ReservaVuelo> nuevasReservas = DB.traerReservasVuelo(usuarioActual.id);
 
 
-        usuarioActual.listMisReservasVuelo = nuevasReservas;
-    }
+    //    usuarioActual.listMisReservasVuelo = nuevasReservas;
+    //}
     public double CalcularNuevoCosto(int vueloId, int nuevaCantidad)
     {
 
@@ -826,8 +825,14 @@ public class Agencia
     public List<Vuelo> misVuelos(Usuario usuarioActual)
     {
 
-        List<ReservaVuelo> reservasVuelo = contexto.reservaVuelos.Where(rv => rv.idUsuario == usuarioActual.id).ToList();
-        return usuarioActual.listVuelosTomados = reservasVuelo.Select(reserva => reserva.miVuelo).ToList();
+        //List<ReservaVuelo> reservasVuelo = contexto.reservaVuelos.Where(rv => rv.idUsuario == usuarioActual.id).ToList();
+        //return usuarioActual.listVuelosTomados = reservasVuelo.Select(reserva => reserva.miVuelo).ToList();
+
+        List<VueloUsuario> vueloUsuario = contexto.vueloUsuarios.Where(vu=> vu.idUsuario == usuarioActual.id).ToList();
+   
+        List<Vuelo> misVuelos = vueloUsuario.Select(vu=> vu.vuelo).ToList();
+
+        return misVuelos;
     }
 
 
@@ -872,6 +877,7 @@ public class Agencia
     {
         DateTime fechaActual = DateTime.Now;
         List<Vuelo> vuelosReservados = new List<Vuelo>();
+
 
         foreach (ReservaVuelo reserva in usuario.listMisReservasVuelo)
         {
