@@ -65,6 +65,7 @@ public class Agencia
             contexto.reservaHoteles.Load();
             contexto.hoteles.Load();
             contexto.vuelos.Include(v => v.listPasajeros).Include(v => v.listMisReservas).Include(v => v.vueloUsuarios).Load();
+            contexto.vueloUsuarios.Load();
             contexto.ciudades.Load();
         }
         catch (Exception e)
@@ -546,8 +547,8 @@ public class Agencia
 
             if (vueloModificado != null)
             {
-                int cantReservas = vueloModificado.listPasajeros.Count;
-                if (capacidad >= cantReservas)
+                int disponibilidad = vueloModificado.capacidad - vueloModificado.vendido;
+                if (capacidad >= disponibilidad)
                 {
                     vueloModificado.origen = cOrigen;
                     vueloModificado.destino = cDestino;
@@ -697,7 +698,7 @@ public class Agencia
     public List<Vuelo> buscarVuelos(Ciudad origen, Ciudad destino, DateTime fecha, int cantidadPax)
     {
         List<Vuelo> vuelosDisponibles = new List<Vuelo>();
-        foreach (Vuelo vuelo in vuelos)
+        foreach (Vuelo vuelo in contexto.vuelos)
         {
 
             if (vuelo.origen.nombre == origen.nombre && vuelo.destino.nombre == destino.nombre && vuelo.fecha.Date == fecha.Date && vuelo.capacidad >= cantidadPax + vuelo.vendido)
@@ -709,21 +710,55 @@ public class Agencia
         return vuelosDisponibles;
 
     }
+    public bool vincularVueloUsuarios(int vueloId, int usuarioId, int cant )
+    {
+        try {
+            Vuelo vu = contexto.vuelos.Where(v => v.id == vueloId).FirstOrDefault();
+            Usuario us = contexto.usuarios.Where(u => u.id == usuarioId).FirstOrDefault();
+            VueloUsuario vueloUsuarioSelected = contexto.vueloUsuarios.Where(vus => vus.idUsuario == usuarioId && vus.idVuelo == vueloId).FirstOrDefault();
+            if (us != null && vu !=null && vueloUsuarioSelected != null) 
+            {
+                us.listVuelosTomados.Add(vu);
+                contexto.usuarios.Update(us);
+                contexto.SaveChanges();
 
-    //Agrego el usuario una sóla vez, vuelo.listPasajeros.Add(usuarioActual);
-    //Falta agregar el vuelo a la lista de vuelos del usuario. OK
-    //Línea 702 mal (vuelo.capacidad = vuelo.capacidad - cantidad;),el vuelo no disminuye su capacidad, ya arriba sumaron vendido. OK
-    //RecargarMisReservasVuelo NO, eso es por el mal manejo de referencias,en la línea 707 debería ir usuarioActual.listMisReservasVuelo.Add(reserva) OK;
+                
+                vueloUsuarioSelected.cantidad = cant;
+                contexto.vueloUsuarios.Update(vueloUsuarioSelected);
+                contexto.SaveChanges();
+               
+            }
+            else
+            {
+                vueloUsuarioSelected = new VueloUsuario();
+                {
+                    vueloUsuarioSelected.idVuelo = vueloId;
+                    vueloUsuarioSelected.idUsuario = usuarioId;
+                    vueloUsuarioSelected.cantidad = cant;
+                }
+                contexto.vueloUsuarios.Add(vueloUsuarioSelected);
+                contexto.SaveChanges();
+               
+            }
+            return true;
+        }
+        catch (Exception ex)
+        {
+            return false;
+        }
+    
+
+    }
+   
     public string comprarVuelo(int vueloId, Usuario usuarioActual, int cantidad)
     {
         Vuelo vuelo = contexto.vuelos.Where(v=> v.id == vueloId).FirstOrDefault();
-     //   VueloUsuario vueloUsuario = contexto.HotelUsuario.FirstOrDefault();
-        if (DB.usuarioHaCompradoVuelo(usuarioActual.id, vueloId))// usuarioActual.listVuelosTomados.i
+        
+        if (contexto.vueloUsuarios.Any(vu=> vu.idVuelo == vueloId && vu.idUsuario == usuarioActual.id))
         {
             return "yaCompro";
         }
-     //   Vuelo vuelo = vuelos.FirstOrDefault(v => v.id == vueloId);
-
+    
         if (vuelo != null && cantidad > 0 && cantidad <= vuelo.capacidad - vuelo.vendido)
         {
             double costoTotal = vuelo.costo * cantidad;
@@ -731,32 +766,19 @@ public class Agencia
             {
                 usuarioActual.credito -= costoTotal;
                 vuelo.vendido += cantidad;
-
-                //List<Usuario> pax = new List<Usuario>();
-                //for (int i = 0; i < cantidad; i++)
-                //{
-                    vuelo.listPasajeros.Add(usuarioActual);
-                //}
+                vuelo.listPasajeros.Add(usuarioActual);
+               
                 ReservaVuelo reserva = new ReservaVuelo(vuelo, usuarioActual, costoTotal);
-                int reservaId = DB.agregarReservaVuelo(vueloId, costoTotal, usuarioActual.id);
-
-                if (reservaId != -1)
-                {
-                    DB.agregarVueloAUsuario(reserva.miVuelo.id, reserva.miUsuario.id, cantidad);
-                    usuarioActual.listVuelosTomados.Add(vuelo);
-                    //NO VA vuelo.capacidad = vuelo.capacidad - cantidad;
-                   //NO VA DB.modificarCapacidadVuelo(reserva.miVuelo.id, vuelo.capacidad);
-
-                    usuarioActual.credito = usuarioActual.credito - reserva.pagado;
-                    DB.modificarCreditoUsuario(reserva.miUsuario.id, usuarioActual.credito);
-                    usuarioActual.listMisReservasVuelo.Add(reserva);
-                    return "exito";
-                }
-                else
-                {
-
-                    return "error";
-                }
+                contexto.reservaVuelos.Add(reserva);
+                usuarioActual.listMisReservasVuelo.Add(reserva);
+                usuarioActual.credito = usuarioActual.credito - reserva.pagado;
+                //esta linea revisar
+                usuarioActual.listVuelosTomados.Add(vuelo);
+                vincularVueloUsuarios(vueloId, usuarioActual.id, cantidad);
+         
+                contexto.SaveChanges();
+                return "exito";
+               
             }
             return "sinSaldo";
 

@@ -269,7 +269,7 @@ namespace tpAgencia_Gpo_2
             password = "12345",
             intentosFallidos = 0,
             bloqueado = false,
-            credito = 0.0,
+            credito = 50000.0,
             esAdmin = true
         },
         new
