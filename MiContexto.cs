@@ -313,7 +313,43 @@ namespace tpAgencia_Gpo_2
 
         ); ;
             #endregion
+            //carga ciudad modelo
 
+            modelBuilder.Entity<Ciudad>().HasData(
+                new
+                {
+                    id = 1,
+                    nombre = "Salta"
+                },
+                new
+                {
+                    id = 2,
+                    nombre = "Buenos Aires"
+                },
+                new
+                {
+                    id = 3,
+                    nombre = "Mendoza"
+                }
+                );
+
+            //carga vuelos modelo
+
+
+            modelBuilder.Entity<Vuelo>().HasData(
+                 new
+                 {
+                     id = 1,
+                     CiudadOrigenId = 1,
+                     CiudadDestinoId = 2,
+                     capacidad = 30,
+                     vendido = 0,
+                     costo = 1000.0,
+                     fecha = DateTime.Parse("2023-11-11"),
+                     aerolinea = "AA",
+                     avion = "Airbus"
+                 }
+                 );
 
         }
     }
