@@ -193,7 +193,7 @@ namespace tpAgencia_Gpo_2
                 textBox_credito.Text = credito;
                 checkBox_admin.Checked = bool.Parse(admin);
                 checkBox_bloqueado.Checked = bool.Parse(bloqueado);
-                0
+                
                 //textBox_resHotel.Text = resHotel;
                 //textBox_resVuelo.Text = resVuelo;
 
