@@ -289,7 +289,7 @@ namespace tpAgencia_Gpo_2
                 if (us.dni == dni)
                 {
                     dataGridView_usuarios.Rows.Clear();
-                    dataGridView_usuarios.Rows.Add(new string[] { us.id.ToString(), us.name, us.apellido, us.dni.ToString(), us.credito.ToString(), us.mail, us.listMisReservasHoteles.ToString(), us.listMisReservasVuelo.ToString() });
+                    dataGridView_usuarios.Rows.Add(new string[] { us.id.ToString(), us.name, us.apellido, us.dni.ToString(), us.credito.ToString(), us.mail });
 
                     usuarioEncontrado = true;
                     break; // Como se encontró el usuario, podemos salir del bucle.
