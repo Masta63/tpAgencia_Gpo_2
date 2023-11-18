@@ -7,7 +7,7 @@
         
         public int idHotel { get; set; }//foreign key
         public Usuario miUsuario { get; set; }
-       
+        public int cantidadPersonas { get; set; }
         public int idUsuario { get; set; } //foreign key
         public DateTime fechaDesde { get; set; }
         public DateTime fechaHasta { get; set; }
@@ -21,13 +21,14 @@
                             Usuario miUsuario,
                             DateTime fechaDesde,
                             DateTime fechaHasta,
-                            double pagado)
+                            double pagado,int cantidadPersonas)
         {
             this.miHotel = miHotel;
             this.miUsuario = miUsuario;
             this.fechaDesde = fechaDesde;
             this.fechaHasta = fechaHasta;
             this.pagado = pagado;
+            this.cantidadPersonas = cantidadPersonas;
         }
 
 

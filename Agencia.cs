@@ -1037,93 +1037,54 @@ public class Agencia
     {
         Hotel miHotel = this.getHoteles().FirstOrDefault(x => x.id == Convert.ToInt32(idhotel));
         bool estaRango = false;
-        bool porHotel = true;
-        int cantPer = 0;
-        bool tieneReservas = false;
+        int difcantPer = 0;
         bool hayDisponibilidad = false;
 
-        porHotel = true;
         foreach (var itemReserva in miHotel.listMisReservas)
         {
             estaRango = this.verificacionRango(itemReserva, miHotel, fechaIngreso, fechaEgreso);
 
-            if (porHotel)
-            {
-                miHotel.disponibilidad = miHotel.capacidad;
-                porHotel = false;
-            }
-
             if (estaRango)
             {
-                miHotel.disponibilidad = miHotel.disponibilidad - 1;
-                cantPer = miHotel.disponibilidad;
+                difcantPer = miHotel.capacidad - itemReserva.cantidadPersonas;
             }
             else
             {
-                cantPer = miHotel.capacidad;
+                difcantPer = miHotel.capacidad;
             }
-            tieneReservas = true;
         }
 
-        if (!tieneReservas)
-        {
-            miHotel.disponibilidad = miHotel.capacidad;
-            hayDisponibilidad = true;
-        }
-
-        if (cantReserva <= cantPer)
+        if (cantReserva <= difcantPer)
             hayDisponibilidad = true;
 
         return hayDisponibilidad;
     }
-    public List<Hotel> TraerDisponibilidadHotel(string ciudadSeleccionada, DateTime fechaIngreso, DateTime fechaEgreso, string cantReserva)
+    public List<Hotel> TraerDisponibilidadHotel(string ciudadSeleccionada, DateTime fechaIngreso, DateTime fechaEgreso)
     {
-        bool estaRango = false;
-        bool porHotel = true;
-        int cantPer = 0;
-        bool tieneReservas = false;
+        bool estaRango;
+        int difCantPer = 0;
         List<Hotel> hotelesDisponibles = new List<Hotel>();
 
         foreach (var itemHotel in this.getHoteles())
         {
             if (itemHotel.ubicacion.nombre.Trim().ToUpper() == ciudadSeleccionada.Trim().ToUpper())
             {
-                porHotel = true;
                 foreach (var itemReserva in itemHotel?.listMisReservas)
                 {
                     //Verifica si esta en rango de fecha seleccionada con respecto a la fechas de las reservas que hay en el hotel
                     estaRango = this.verificacionRango(itemReserva, itemHotel, fechaIngreso, fechaEgreso);
-
-                    if (porHotel)
-                    {
-                        itemHotel.disponibilidad = itemHotel.capacidad;
-                        porHotel = false;
-                    }
-
                     if (estaRango)
                     {
-                        itemHotel.disponibilidad = itemHotel.disponibilidad - 1;
-                        cantPer = itemHotel.disponibilidad;
+                        difCantPer = itemHotel.capacidad - itemReserva.cantidadPersonas;
                     }
                     else
                     {
-                        cantPer = itemHotel.capacidad;
+                        difCantPer = itemHotel.capacidad;
                     }
-                    tieneReservas = true;
                 }
-
-
-                if (!tieneReservas)
-                {
-                    itemHotel.disponibilidad = itemHotel.capacidad;
+                if (itemHotel.capacidad <= difCantPer)
                     hotelesDisponibles.Add(itemHotel);
-                }
-
-                if (Convert.ToInt32(cantReserva) <= cantPer)
-                    hotelesDisponibles.Add(itemHotel);
-
             }
-
         }
 
         return hotelesDisponibles;
@@ -1212,7 +1173,7 @@ public class Agencia
     }
 
 
-    public ReservaHotel? GenerarReserva(string nombreHotel, DateTime fechaIngreso, DateTime fechaEgreso, string textBoxMonto)
+    public ReservaHotel? GenerarReserva(string nombreHotel, DateTime fechaIngreso, DateTime fechaEgreso, string textBoxMonto, string cantidadPersonas)
     {
         //Busco el hotel por nombre
         Hotel hotelSeleccionado = this.getHotelesByHotel(nombreHotel);
@@ -1227,7 +1188,7 @@ public class Agencia
             try
             {
                 //crea un objeto reserva hotel
-                reservaHotel = new ReservaHotel(hotelSeleccionado, this.getUsuarioActual(), fechaIngreso, fechaEgreso, Convert.ToDouble(textBoxMonto));
+                reservaHotel = new ReservaHotel(hotelSeleccionado, this.getUsuarioActual(), fechaIngreso, fechaEgreso, Convert.ToDouble(textBoxMonto), Convert.ToInt32(cantidadPersonas));
                 //Genera la reserva en la base a traves del context
                 this.generarReservaContext(reservaHotel);
                 //obtiene el objeto de la tabla intermedia correspondiente al id usuario y al hotel

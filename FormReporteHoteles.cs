@@ -89,6 +89,11 @@ namespace tpAgencia_Gpo_2
                 MessageBox.Show("Se debe ingresar ciudad");
                 ingresar = true;
             }
+            if (cantPerstext.Text == null)
+            {
+                MessageBox.Show("Se debe ingresar cantidad de personas");
+                ingresar = true;
+            }
             return ingresar;
         }
 
@@ -110,7 +115,7 @@ namespace tpAgencia_Gpo_2
             bool disponibilidad = false;
             dataGridViewHotel.Rows.Clear();
             //se genera los datos de la grilla a traves de la disponibilidad generada
-            foreach (var itemHotel in Agencia.TraerDisponibilidadHotel(ciudadSeleccionada, fechaIngreso, fechaEgreso, "1"))
+            foreach (var itemHotel in Agencia.TraerDisponibilidadHotel(ciudadSeleccionada, fechaIngreso, fechaEgreso))
             {
                 dataGridViewHotel.Rows.Add(new string[] { Convert.ToString(itemHotel.id), itemHotel.ubicacion.nombre, Convert.ToString(calcularDisponibilidad(itemHotel)), Convert.ToString(calcularCosto(fechaEgreso, fechaIngreso, itemHotel.costo)), itemHotel.nombre, fechaIngreso.ToShortDateString(), fechaEgreso.ToShortDateString() });
                 disponibilidad = true;
@@ -120,7 +125,12 @@ namespace tpAgencia_Gpo_2
         //Si la capacidad del hotel es distinta a la que se registra agregame la disponibilidad corroborada si no, agrega sobre la capacidad del hotel
         private int calcularDisponibilidad(Hotel itemHotel)
         {
-            return itemHotel.capacidad != itemHotel.disponibilidad ? itemHotel.disponibilidad : itemHotel.capacidad;
+            int difCantPer = itemHotel.capacidad;
+            foreach (var itemMiReserva in itemHotel.listMisReservas)
+            {
+                difCantPer = difCantPer - itemMiReserva.cantidadPersonas;
+            }
+            return difCantPer;
         }
         //se calcula el costo verificando la cantidad de dias por rango de fechas, multiplicando por el valor del hotel por dia
         private double calcularCosto(DateTime fechaEgreso, DateTime fechaIngreso, double itemCosto)
@@ -180,12 +190,14 @@ namespace tpAgencia_Gpo_2
 
             if (string.IsNullOrEmpty(TextMonto.Text))
                 MessageBox.Show("Debe seleccionar una monto para comprar");
+            if (string.IsNullOrEmpty(cantPerstext.Text))
+                MessageBox.Show("Debe ingresar cantidad de personas");
 
-            if (!string.IsNullOrEmpty(labelIdComprar.Text) && !string.IsNullOrEmpty(TextMonto.Text) && monto >= Convert.ToDouble(TextMonto.Text) && !string.IsNullOrEmpty(TextMonto.Text))
+            if (!string.IsNullOrEmpty(cantPerstext.Text) && !string.IsNullOrEmpty(labelIdComprar.Text) && !string.IsNullOrEmpty(TextMonto.Text) && monto >= Convert.ToDouble(TextMonto.Text) && !string.IsNullOrEmpty(TextMonto.Text))
             {
                 // se crea una reserva para pasarcela al formulario de confirmacion de la reserva
                 Hotel? hotelSeleccionado = Agencia.getHoteles().Where(x => x.id == Convert.ToInt32(labelIdComprar.Text)).FirstOrDefault();
-                ReservaHotel reservaHotel = new ReservaHotel(hotelSeleccionado, Agencia.getUsuarioActual(), fechaDesde.Value, fechaHasta.Value, Convert.ToInt32(TextMonto.Text));
+                ReservaHotel reservaHotel = new ReservaHotel(hotelSeleccionado, Agencia.getUsuarioActual(), fechaDesde.Value, fechaHasta.Value, Convert.ToInt32(TextMonto.Text), Convert.ToInt32(cantPerstext.Text));
                 this.irAreservar(reservaHotel);
             }
         }

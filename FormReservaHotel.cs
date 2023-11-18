@@ -32,10 +32,11 @@ namespace tpAgencia_Gpo_2
                 fechaDesde.Value = reservaHotel.fechaDesde;
                 fechaHasta.Value = reservaHotel.fechaHasta;
                 textBoxMonto.Text = Convert.ToString(reservaHotel.pagado);
-                dataGridViewHotel.Rows.Add(new string[] { reservaHotel.miHotel.nombre, Convert.ToString(CalcularCosto(reservaHotel)), Convert.ToString(reservaHotel.miHotel.capacidad), reservaHotel.fechaDesde.ToLongDateString(), reservaHotel.fechaHasta.ToLongDateString() });
+                cantPerstext.Text = reservaHotel.cantidadPersonas.ToString();
+                dataGridViewHotel.Rows.Add(new string[] { reservaHotel.miHotel.nombre, Convert.ToString(CalcularCosto(reservaHotel)), Convert.ToString(reservaHotel.miHotel.capacidad), reservaHotel.fechaDesde.ToLongDateString(), reservaHotel.fechaHasta.ToLongDateString(), reservaHotel.cantidadPersonas.ToString() });
             }
 
-        } 
+        }
         //Calcula el costo por rango de fechas, sobre el costo que sale el hotel lo multiplica por cantidad de dias
         private double CalcularCosto(ReservaHotel reservaHotel)
         {
@@ -66,7 +67,7 @@ namespace tpAgencia_Gpo_2
             if (validaciones())
             {
                 dataGridViewHotel.Rows.Clear();
-                if (Agencia.GenerarReserva(boxHoteles.Text, fechaIngreso, fechaEgreso, textBoxMonto.Text) != null)
+                if (Agencia.GenerarReserva(boxHoteles.Text, fechaIngreso, fechaEgreso, textBoxMonto.Text, cantPerstext.Text) != null)
                 {
                     dataGridViewHotel.Rows.Add(new string[] { Agencia.getHotelesByHotel(boxHoteles.Text).nombre, textBoxMonto.Text, Convert.ToString(Agencia.getHotelesByHotel(boxHoteles.Text).capacidad), fechaIngreso.ToShortDateString(), fechaEgreso.ToShortDateString() });
                     disponibilidad = true;

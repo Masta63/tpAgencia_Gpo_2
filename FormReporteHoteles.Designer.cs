@@ -51,6 +51,8 @@
             labelNombreHotel = new Label();
             TextMonto = new TextBox();
             label5 = new Label();
+            cantPerstext = new TextBox();
+            label2 = new Label();
             ((System.ComponentModel.ISupportInitialize)dataGridViewHotel).BeginInit();
             SuspendLayout();
             // 
@@ -233,11 +235,29 @@
             label5.TabIndex = 39;
             label5.Text = "Monto";
             // 
+            // cantPerstext
+            // 
+            cantPerstext.Location = new Point(314, 106);
+            cantPerstext.Name = "cantPerstext";
+            cantPerstext.Size = new Size(100, 23);
+            cantPerstext.TabIndex = 40;
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Location = new Point(314, 71);
+            label2.Name = "label2";
+            label2.Size = new Size(105, 15);
+            label2.TabIndex = 41;
+            label2.Text = "Cantidad Personas";
+            // 
             // FormReporteHoteles
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(878, 471);
+            Controls.Add(label2);
+            Controls.Add(cantPerstext);
             Controls.Add(label5);
             Controls.Add(TextMonto);
             Controls.Add(labelNombreHotel);
@@ -287,5 +307,7 @@
         private DataGridViewTextBoxColumn nombre;
         private DataGridViewTextBoxColumn Fdesde;
         private DataGridViewTextBoxColumn FHasta;
+        private TextBox cantPerstext;
+        private Label label2;
     }
 }
