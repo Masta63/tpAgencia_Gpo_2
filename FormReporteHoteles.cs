@@ -106,22 +106,26 @@ namespace tpAgencia_Gpo_2
             string ciudadSeleccionada = boxCiudades.SelectedItem.ToString();
             DateTime fechaIngreso = fechaDesde.Value;
             DateTime fechaEgreso = fechaHasta.Value;
-            List<Hotel> hotelesDisponibles = Agencia.TraerDisponibilidadHotel(ciudadSeleccionada, fechaIngreso, fechaEgreso, "1");
             bool disponibilidad = false;
             dataGridViewHotel.Rows.Clear();
-            if (hotelesDisponibles.Count > 0)
+            foreach (var itemHotel in Agencia.TraerDisponibilidadHotel(ciudadSeleccionada, fechaIngreso, fechaEgreso, "1"))
             {
-                foreach (var itemHotel in hotelesDisponibles)
-                {
-                    TimeSpan ts = fechaEgreso.Date.Subtract(fechaIngreso.Date);
-                    double costo = ((ts.Days + 1) * itemHotel.costo);
-                    int disp = itemHotel.capacidad != itemHotel.disponibilidad ? itemHotel.disponibilidad : itemHotel.capacidad;
-                    dataGridViewHotel.Rows.Add(new string[] { Convert.ToString(itemHotel.id), itemHotel.ubicacion.nombre, Convert.ToString(disp), Convert.ToString(costo), itemHotel.nombre, fechaIngreso.ToShortDateString(), fechaEgreso.ToShortDateString() });
-                    disponibilidad = true;
-                }
+                dataGridViewHotel.Rows.Add(new string[] { Convert.ToString(itemHotel.id), itemHotel.ubicacion.nombre, Convert.ToString(calcularDisponibilidad(itemHotel)), Convert.ToString(calcularCosto(fechaEgreso, fechaIngreso, itemHotel.costo)), itemHotel.nombre, fechaIngreso.ToShortDateString(), fechaEgreso.ToShortDateString() });
+                disponibilidad = true;
             }
-
             return disponibilidad;
+        }
+
+        private int calcularDisponibilidad(Hotel itemHotel)
+        {
+            return itemHotel.capacidad != itemHotel.disponibilidad ? itemHotel.disponibilidad : itemHotel.capacidad;
+        }
+
+        private double calcularCosto(DateTime fechaEgreso, DateTime fechaIngreso, double itemCosto)
+        {
+            TimeSpan ts = fechaEgreso.Date.Subtract(fechaIngreso.Date);
+            double costo = ((ts.Days + 1) * itemCosto);
+            return costo;
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
