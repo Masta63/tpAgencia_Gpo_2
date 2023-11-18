@@ -1032,6 +1032,7 @@ public class Agencia
     {
         return contexto.reservaHoteles.ToList();
     }
+    //
     public bool TraerDisponibilidadHotelParaEdicion(Int32 idhotel, DateTime fechaIngreso, DateTime fechaEgreso, Int32 cantReserva)
     {
         Hotel miHotel = this.getHoteles().FirstOrDefault(x => x.id == Convert.ToInt32(idhotel));
@@ -1090,6 +1091,7 @@ public class Agencia
                 porHotel = true;
                 foreach (var itemReserva in itemHotel?.listMisReservas)
                 {
+                    //Verifica si esta en rango de fecha seleccionada con respecto a la fechas de las reservas que hay en el hotel
                     estaRango = this.verificacionRango(itemReserva, itemHotel, fechaIngreso, fechaEgreso);
 
                     if (porHotel)
@@ -1126,7 +1128,7 @@ public class Agencia
 
         return hotelesDisponibles;
     }
-
+    //Corrobora si esta en el reango de las fechas de las reservas del hotel
     private bool verificacionRango(ReservaHotel itemReserva, Hotel itemHotel, DateTime fechaIngreso, DateTime fechaEgreso)
     {
         bool estaRango = false;
@@ -1160,21 +1162,26 @@ public class Agencia
 
     public void eliminarRerservaHotel(Int32 idReservaHotel, double costo)
     {
-        this.elimiarReservaHotelContext(idReservaHotel);
+        //elimina el hotel de la base
+        this.elimiarReservaHotelContext(idReservaHotel); 
+        //Trae el usuario actual y le suma a su credito el valor de la reserva eliminada
         Usuario usuarioActual = this.getUsuarioActual();
         usuarioActual.credito = usuarioActual.credito + costo;
+        //Modifica el credito del usuario en la base
         this.modificarCreditoContext(usuarioActual);
+        //Trae desde la memoria del usuario actual, las listas de sus reservas y la elimina de la memoria del usuario actual
         ReservaHotel reservaHotel = this.getUsuarioActual().listMisReservasHoteles.FirstOrDefault(x => x.idReservaHotel == idReservaHotel);
         this.getUsuarioActual().listMisReservasHoteles.Remove(reservaHotel);
     }
 
-    public void devolverDinero(DateTime fechaDesde, DateTime fechaHasta, List<ReservaHotel> misReservas, Int32 idReservaHotel, Hotel miHotel)
+    public void devolverDineroOsumarDinero(DateTime fechaDesde, DateTime fechaHasta, List<ReservaHotel> misReservas, Int32 idReservaHotel, Hotel miHotel)
     {
         double costo = 0;
         ReservaHotel miReserva = misReservas.FirstOrDefault(x => x.idReservaHotel == idReservaHotel);
         TimeSpan tsseleccion = fechaHasta.Date.Subtract(fechaDesde.Date);
         TimeSpan tsBase = miReserva.fechaHasta.Date.Subtract(miReserva.fechaDesde.Date);
         Int32 sumarCostoPorDia = (tsseleccion.Days + 1) - (tsBase.Days + 1);
+        //si da positivo la  suma de  (sumarCostoPorDia * miHotel.costo) va a sumar si da negativo va a restar porque + * - es menos
         costo = this.usuarioActual.credito + (sumarCostoPorDia * miHotel.costo);
         this.getUsuarioActual().credito = costo;
         this.modificarCreditoContext(this.getUsuarioActual());
@@ -1182,11 +1189,16 @@ public class Agencia
 
     public void editarReservaHotel(DateTime fechaDesde, DateTime fechaHasta, double pagado, Int32 idReservaHotel, Int32 idHotel)
     {
+        //Trae el hotel buscandolo en el contexto por id hotel
         Hotel miHotel = this.getHoteles().FirstOrDefault(x => x.id == idHotel);
-        this.devolverDinero(fechaDesde, fechaHasta, this.getUsuarioActual().listMisReservasHoteles, idReservaHotel, miHotel);
+        //si la fecha es mayor a la editada, suma el costo a lo que tenia, si es menor se lo resta 
+        this.devolverDineroOsumarDinero(fechaDesde, fechaHasta, this.getUsuarioActual().listMisReservasHoteles, idReservaHotel, miHotel);
+        //Modifica la reserva en la base
         this.modificarReservaHotelContext(fechaDesde, fechaHasta, pagado, idReservaHotel);
         ReservaHotel reservaHotelUsuarioActual = this.getUsuarioActual().listMisReservasHoteles.FirstOrDefault(x => x.idReservaHotel == idReservaHotel);
-        foreach (var itemreserva in this.getUsuarioActual().listMisReservasHoteles)
+        //Modifica la reserva en la reserva del usuario actual
+        Usuario usuarioActual = this.getUsuarioActual();
+        foreach (var itemreserva in usuarioActual.listMisReservasHoteles)
         {
             if (itemreserva.idReservaHotel == reservaHotelUsuarioActual.idReservaHotel)
             {
@@ -1195,27 +1207,37 @@ public class Agencia
                 itemreserva.pagado = pagado;
             }
         }
-        this.modificarUsuarioActual(this.getUsuarioActual());
+
+        this.modificarUsuarioActual(usuarioActual);
     }
 
 
     public ReservaHotel? GenerarReserva(string nombreHotel, DateTime fechaIngreso, DateTime fechaEgreso, string textBoxMonto)
     {
+        //Busco el hotel por nombre
         Hotel hotelSeleccionado = this.getHotelesByHotel(nombreHotel);
+        //Calcula el costo por rango de fechas, sobre el costo que sale el hotel lo multiplica por cantidad de dias
         TimeSpan ts = fechaEgreso.Date.Subtract(fechaIngreso.Date);
         double costo = ((ts.Days + 1) * hotelSeleccionado.costo);
         ReservaHotel? reservaHotel = null;
         Usuario? usuarioActual = null;
+        //Verifica que el costo calculado sea igual al costo ingresado
         if (costo == Convert.ToDouble(textBoxMonto))
         {
             try
             {
+                //crea un objeto reserva hotel
                 reservaHotel = new ReservaHotel(hotelSeleccionado, this.getUsuarioActual(), fechaIngreso, fechaEgreso, Convert.ToDouble(textBoxMonto));
+                //Genera la reserva en la base a traves del context
                 this.generarReservaContext(reservaHotel);
+                //obtiene el objeto de la tabla intermedia correspondiente al id usuario y al hotel
                 HotelUsuario? hotelUsuario = contexto.HotelUsuario.Where(x => x.idUsuario == reservaHotel.miUsuario.id && x.idHotel == reservaHotel.miHotel.id).FirstOrDefault();
+                //Modifica la tabla intermedia o genera un registro nuevo dependiendo si existe esa relacion de hotel, usuario
                 this.generarHotelUsuario(hotelUsuario, reservaHotel);
+                //se obtiene el usuario actual, se le resta el credito para que quede registrado en memoria
                 usuarioActual = this.getUsuarioActual();
                 usuarioActual.credito = this.getUsuarioActual().credito - Convert.ToDouble(textBoxMonto);
+                //se modifica el dato en la base a traves del context
                 modificarCreditoContext(usuarioActual);
                 this.modificarUsuarioActual(usuarioActual);
             }
@@ -1273,6 +1295,7 @@ public class Agencia
     {
         try
         {
+            //si no existe el hotel crea una nueva realacion y genera como registro que se visito una ves a ese hotel, si no modifica la cantidad sumandole uno a esa visita
             if (hotelUsuario == null)
             {
                 contexto.HotelUsuario.Add(new HotelUsuario() { idHotel = reservaHotel.miHotel.id, idUsuario = reservaHotel.miUsuario.id, cantidad = 1 });

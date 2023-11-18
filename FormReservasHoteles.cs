@@ -18,6 +18,7 @@ namespace tpAgencia_Gpo_2
         private Form1 form1;
         private Usuario usuarioActual;
         public TransfDelegadoReservasHoteles TransfEventoReservasHoteles;
+        //Inicializa los datos al formulario
         public FormReservasHoteles(Agencia agencia, Form1 form1)
         {
             InitializeComponent();
@@ -33,9 +34,10 @@ namespace tpAgencia_Gpo_2
 
         private void FormReservasHoteles_Load(object sender, EventArgs e)
         {
+            //Trae los hoteles
             MostrarHoteles();
         }
-
+        //recorre sobre el usuario actual y trae la lista de las reservas del usuario actual recorriendolas para agregarlas a la grilla
         private void refrescar()
         {
             dataGridView1.Rows.Clear();
@@ -52,7 +54,7 @@ namespace tpAgencia_Gpo_2
                 }
             }
         }
-
+        //Calcula el costo desde la reserva, verifica cuantos dias hay entre fechas y lo multiplica por lo que sale el hotel por dia
         private double CalcularCosto(ReservaHotel reservas)
         {
             TimeSpan ts = reservas.fechaHasta.Date.Subtract(reservas.fechaDesde.Date);
@@ -122,7 +124,7 @@ namespace tpAgencia_Gpo_2
             dateTimePickerFechaDesde.Enabled = false;
             dateTimePickerFechaHasta.Enabled = false;
         }
-
+        //Calcula el costo directamente con datos de fecha, verifica cuantos dias hay entre fechas y lo multiplica por lo que sale el hotel por dia
         private double CalcularCostoParaEdicion(DateTime fechaDesde, DateTime fechaHasta)
         {
             Hotel miHotel = agencia.getHoteles().FirstOrDefault(x => x.id == Convert.ToInt32(textBoxidHotel.Text));

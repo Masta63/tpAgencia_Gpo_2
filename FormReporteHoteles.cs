@@ -20,6 +20,7 @@ namespace tpAgencia_Gpo_2
         private Agencia Agencia;
         private Form1 Form1;
         private FormReservaHotel FormReservaHotel;
+        //se inicializan los componentes
         public FormReporteHoteles(Agencia agencia, Form1 form1)
         {
             InitializeComponent();
@@ -108,6 +109,7 @@ namespace tpAgencia_Gpo_2
             DateTime fechaEgreso = fechaHasta.Value;
             bool disponibilidad = false;
             dataGridViewHotel.Rows.Clear();
+            //se genera los datos de la grilla a traves de la disponibilidad generada
             foreach (var itemHotel in Agencia.TraerDisponibilidadHotel(ciudadSeleccionada, fechaIngreso, fechaEgreso, "1"))
             {
                 dataGridViewHotel.Rows.Add(new string[] { Convert.ToString(itemHotel.id), itemHotel.ubicacion.nombre, Convert.ToString(calcularDisponibilidad(itemHotel)), Convert.ToString(calcularCosto(fechaEgreso, fechaIngreso, itemHotel.costo)), itemHotel.nombre, fechaIngreso.ToShortDateString(), fechaEgreso.ToShortDateString() });
@@ -115,12 +117,12 @@ namespace tpAgencia_Gpo_2
             }
             return disponibilidad;
         }
-
+        //Si la capacidad del hotel es distinta a la que se registra agregame la disponibilidad corroborada si no, agrega sobre la capacidad del hotel
         private int calcularDisponibilidad(Hotel itemHotel)
         {
             return itemHotel.capacidad != itemHotel.disponibilidad ? itemHotel.disponibilidad : itemHotel.capacidad;
         }
-
+        //se calcula el costo verificando la cantidad de dias por rango de fechas, multiplicando por el valor del hotel por dia
         private double calcularCosto(DateTime fechaEgreso, DateTime fechaIngreso, double itemCosto)
         {
             TimeSpan ts = fechaEgreso.Date.Subtract(fechaIngreso.Date);
@@ -152,7 +154,7 @@ namespace tpAgencia_Gpo_2
         {
 
         }
-
+        //al apretar el boton de ir a comprar, redirecciona al formulario para confirmar la compra
         private void irAreservar(ReservaHotel reservaHotel)
         {
             this.MdiParent = Form1;
@@ -181,6 +183,7 @@ namespace tpAgencia_Gpo_2
 
             if (!string.IsNullOrEmpty(labelIdComprar.Text) && !string.IsNullOrEmpty(TextMonto.Text) && monto >= Convert.ToDouble(TextMonto.Text) && !string.IsNullOrEmpty(TextMonto.Text))
             {
+                // se crea una reserva para pasarcela al formulario de confirmacion de la reserva
                 Hotel? hotelSeleccionado = Agencia.getHoteles().Where(x => x.id == Convert.ToInt32(labelIdComprar.Text)).FirstOrDefault();
                 ReservaHotel reservaHotel = new ReservaHotel(hotelSeleccionado, Agencia.getUsuarioActual(), fechaDesde.Value, fechaHasta.Value, Convert.ToInt32(TextMonto.Text));
                 this.irAreservar(reservaHotel);
@@ -189,8 +192,7 @@ namespace tpAgencia_Gpo_2
 
         private void Volver_desde_usuario_Click(object sender, EventArgs e)
         {
-
-
+            //si es admin vuelve al menu administrador si no vuelve al menu usuario
             this.Close();
             if (Agencia.getUsuarioActual().esAdmin)
             {

@@ -17,6 +17,7 @@ namespace tpAgencia_Gpo_2
         public TransfDelegadoFormAltaReserva transfDelegadoFormAltaReserva;
         private Agencia Agencia;
         private Form1 Form1;
+        //Inicializo el formulario
         public FormReservaHotel(Agencia agencia, Form1 form1, ReservaHotel? reservaHotel)
         {
             InitializeComponent();
@@ -31,13 +32,16 @@ namespace tpAgencia_Gpo_2
                 fechaDesde.Value = reservaHotel.fechaDesde;
                 fechaHasta.Value = reservaHotel.fechaHasta;
                 textBoxMonto.Text = Convert.ToString(reservaHotel.pagado);
-                TimeSpan ts = fechaHasta.Value.Date.Subtract(fechaDesde.Value.Date);
-                double costo = ((ts.Days + 1) * reservaHotel.miHotel.costo);
-                dataGridViewHotel.Rows.Add(new string[] { reservaHotel.miHotel.nombre, Convert.ToString(costo), Convert.ToString(reservaHotel.miHotel.capacidad), reservaHotel.fechaDesde.ToLongDateString(), reservaHotel.fechaHasta.ToLongDateString() });
+                dataGridViewHotel.Rows.Add(new string[] { reservaHotel.miHotel.nombre, Convert.ToString(CalcularCosto(reservaHotel)), Convert.ToString(reservaHotel.miHotel.capacidad), reservaHotel.fechaDesde.ToLongDateString(), reservaHotel.fechaHasta.ToLongDateString() });
             }
 
+        } 
+        //Calcula el costo por rango de fechas, sobre el costo que sale el hotel lo multiplica por cantidad de dias
+        private double CalcularCosto(ReservaHotel reservaHotel)
+        {
+            TimeSpan ts = fechaHasta.Value.Date.Subtract(fechaDesde.Value.Date);
+            return ((ts.Days + 1) * reservaHotel.miHotel.costo);
         }
-
 
         public delegate void TransfDelegadoFormAltaReserva();
         private void buttonComprar_Click(object sender, EventArgs e)
@@ -89,6 +93,7 @@ namespace tpAgencia_Gpo_2
         private bool validaciones()
         {
             Hotel hotelSeleccionado = Agencia.getHotelesByHotel(boxHoteles.Text);
+            //Calcula el costo por rango de fechas, sobre el costo que sale el hotel lo multiplica por cantidad de dias
             TimeSpan ts = fechaHasta.Value.Date.Subtract(fechaDesde.Value.Date);
             double costo = ((ts.Days + 1) * hotelSeleccionado.costo);
             if (costo > Convert.ToDouble(textBoxMonto.Text))
@@ -113,7 +118,7 @@ namespace tpAgencia_Gpo_2
         {
 
         }
-
+        //si es admin retorna al menu admin si no al menu que no es admin
         private void Volver_desde_usuario_Click(object sender, EventArgs e)
         {
             this.Close();
