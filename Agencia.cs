@@ -1069,20 +1069,21 @@ public class Agencia
         {
             if (itemHotel.ubicacion.nombre.Trim().ToUpper() == ciudadSeleccionada.Trim().ToUpper())
             {
+                difCantPer = itemHotel.capacidad;
                 foreach (var itemReserva in itemHotel?.listMisReservas)
                 {
                     //Verifica si esta en rango de fecha seleccionada con respecto a la fechas de las reservas que hay en el hotel
                     estaRango = this.verificacionRango(itemReserva, itemHotel, fechaIngreso, fechaEgreso);
                     if (estaRango)
                     {
-                        difCantPer = itemHotel.capacidad - itemReserva.cantidadPersonas;
+                        difCantPer = difCantPer - itemReserva.cantidadPersonas;
                     }
                     else
                     {
                         difCantPer = itemHotel.capacidad;
                     }
                 }
-                if (itemHotel.capacidad <= difCantPer)
+                if (itemHotel.capacidad >= difCantPer)
                     hotelesDisponibles.Add(itemHotel);
             }
         }

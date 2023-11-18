@@ -89,7 +89,7 @@ namespace tpAgencia_Gpo_2
                 MessageBox.Show("Se debe ingresar ciudad");
                 ingresar = true;
             }
-            if (cantPerstext.Text == null)
+            if (string.IsNullOrEmpty(cantPerstext.Text))
             {
                 MessageBox.Show("Se debe ingresar cantidad de personas");
                 ingresar = true;
