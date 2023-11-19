@@ -1125,7 +1125,7 @@ public class Agencia
     public void eliminarRerservaHotel(Int32 idReservaHotel, double costo)
     {
         //elimina el hotel de la base
-        this.elimiarReservaHotelContext(idReservaHotel); 
+        this.elimiarReservaHotelContext(idReservaHotel);
         //Trae el usuario actual y le suma a su credito el valor de la reserva eliminada
         Usuario usuarioActual = this.getUsuarioActual();
         usuarioActual.credito = usuarioActual.credito + costo;
@@ -1224,6 +1224,30 @@ public class Agencia
     public List<Hotel> traerMisHoteles(Int32 idUsuario)
     {
         return this.misHotelesQueVisiteContext(idUsuario);
+    }
+    //Calcula el costo directamente con datos de fecha, verifica cuantos dias hay entre fechas y lo multiplica por lo que sale el hotel por dia
+    public double CalcularCostoParaEdicion(DateTime fechaDesde, DateTime fechaHasta, Int32 idHotel)
+    {
+        Hotel miHotel = this.getHoteles().FirstOrDefault(x => x.id == idHotel);
+        TimeSpan ts = fechaHasta.Date.Subtract(fechaDesde.Date);
+        return (ts.Days + 1) * miHotel.costo;
+    }
+
+    //Calcula el costo desde la reserva, verifica cuantos dias hay entre fechas y lo multiplica por lo que sale el hotel por dia
+    public double CalcularCosto(DateTime fechaHasta, DateTime fechaDesde, double costo)
+    {
+        TimeSpan ts = fechaHasta.Date.Subtract(fechaDesde.Date);
+        return ((ts.Days + 1) * costo);
+    }
+    //Si la capacidad del hotel es distinta a la que se registra agregame la disponibilidad corroborada si no, agrega sobre la capacidad del hotel
+    public int calcularDisponibilidad(Hotel itemHotel)
+    {
+        int difCantPer = itemHotel.capacidad;
+        foreach (var itemMiReserva in itemHotel.listMisReservas)
+        {
+            difCantPer = difCantPer - itemMiReserva.cantidadPersonas;
+        }
+        return difCantPer;
     }
 
     #endregion

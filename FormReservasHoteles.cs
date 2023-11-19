@@ -49,16 +49,10 @@ namespace tpAgencia_Gpo_2
                     dataGridView1.Rows.Add(
                         reservas.idReservaHotel,
                         reservas.miHotel.ubicacion.nombre,
-                        CalcularCosto(reservas),
+                        agencia.CalcularCosto(reservas.fechaHasta, reservas.fechaDesde, reservas.miHotel.costo),
                        reservas.miHotel.nombre, reservas.miHotel.capacidad, reservas.fechaDesde, reservas.fechaHasta, reservas.miHotel.id, reservas.miHotel.costo);
                 }
             }
-        }
-        //Calcula el costo desde la reserva, verifica cuantos dias hay entre fechas y lo multiplica por lo que sale el hotel por dia
-        private double CalcularCosto(ReservaHotel reservas)
-        {
-            TimeSpan ts = reservas.fechaHasta.Date.Subtract(reservas.fechaDesde.Date);
-            return ((ts.Days + 1) * reservas.miHotel.costo);
         }
 
         private void MostrarHoteles()
@@ -124,14 +118,6 @@ namespace tpAgencia_Gpo_2
             dateTimePickerFechaDesde.Enabled = false;
             dateTimePickerFechaHasta.Enabled = false;
         }
-        //Calcula el costo directamente con datos de fecha, verifica cuantos dias hay entre fechas y lo multiplica por lo que sale el hotel por dia
-        private double CalcularCostoParaEdicion(DateTime fechaDesde, DateTime fechaHasta)
-        {
-            Hotel miHotel = agencia.getHoteles().FirstOrDefault(x => x.id == Convert.ToInt32(textBoxidHotel.Text));
-            TimeSpan ts = fechaHasta.Date.Subtract(fechaDesde.Date);
-            return (ts.Days + 1) * miHotel.costo;
-        }
-
         private void button2_Click(object sender, EventArgs e)
         {
             Int32 idReservaHotel = Convert.ToInt32(textBox_id.Text);
@@ -140,7 +126,7 @@ namespace tpAgencia_Gpo_2
 
             if (agencia.TraerDisponibilidadHotelParaEdicion(Convert.ToInt32(textBoxidHotel.Text), fechaDesde, fechaHasta, 1))
             {
-                agencia.editarReservaHotel(fechaDesde, fechaHasta, CalcularCostoParaEdicion(fechaDesde, fechaHasta), idReservaHotel, Convert.ToInt32(textBoxidHotel.Text));
+                agencia.editarReservaHotel(fechaDesde, fechaHasta, agencia.CalcularCostoParaEdicion(fechaDesde, fechaHasta, Convert.ToInt32(textBoxidHotel.Text)), idReservaHotel, Convert.ToInt32(textBoxidHotel.Text));
                 refrescar();
                 textBox_id.Text = "";
                 textCosto.Text = "";
@@ -157,15 +143,15 @@ namespace tpAgencia_Gpo_2
 
         private void dateTimePickerFechaHasta_ValueChanged(object sender, EventArgs e)
         {
-            caluclarCostoParaFecha();
+            calcularCostoParaFecha();
         }
 
         private void dateTimePickerFechaDesde_ValueChanged(object sender, EventArgs e)
         {
-            caluclarCostoParaFecha();
+            calcularCostoParaFecha();
         }
 
-        private void caluclarCostoParaFecha()
+        private void calcularCostoParaFecha()
         {
 
             if (dateTimePickerFechaHasta.Value.Date < dateTimePickerFechaDesde.Value.Date)
@@ -176,7 +162,7 @@ namespace tpAgencia_Gpo_2
             }
             else
             {
-                textCosto.Text = Convert.ToString(CalcularCostoParaEdicion(dateTimePickerFechaDesde.Value.Date, dateTimePickerFechaHasta.Value.Date));
+                textCosto.Text = Convert.ToString(agencia.CalcularCostoParaEdicion(dateTimePickerFechaDesde.Value.Date, dateTimePickerFechaHasta.Value.Date, Convert.ToInt32(textBoxidHotel.Text)));
                 button1.Enabled = true;
                 button2.Enabled = true;
                 dateTimePickerFechaDesde.Enabled = true;

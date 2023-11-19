@@ -33,15 +33,9 @@ namespace tpAgencia_Gpo_2
                 fechaHasta.Value = reservaHotel.fechaHasta;
                 textBoxMonto.Text = Convert.ToString(reservaHotel.pagado);
                 cantPerstext.Text = reservaHotel.cantidadPersonas.ToString();
-                dataGridViewHotel.Rows.Add(new string[] { reservaHotel.miHotel.nombre, Convert.ToString(CalcularCosto(reservaHotel)), Convert.ToString(reservaHotel.miHotel.capacidad), reservaHotel.fechaDesde.ToLongDateString(), reservaHotel.fechaHasta.ToLongDateString(), reservaHotel.cantidadPersonas.ToString() });
+                dataGridViewHotel.Rows.Add(new string[] { reservaHotel.miHotel.nombre, Convert.ToString(agencia.CalcularCosto(reservaHotel.fechaHasta,reservaHotel.fechaDesde, reservaHotel.miHotel.costo)), Convert.ToString(reservaHotel.miHotel.capacidad), reservaHotel.fechaDesde.ToLongDateString(), reservaHotel.fechaHasta.ToLongDateString(), reservaHotel.cantidadPersonas.ToString() });
             }
 
-        }
-        //Calcula el costo por rango de fechas, sobre el costo que sale el hotel lo multiplica por cantidad de dias
-        private double CalcularCosto(ReservaHotel reservaHotel)
-        {
-            TimeSpan ts = fechaHasta.Value.Date.Subtract(fechaDesde.Value.Date);
-            return ((ts.Days + 1) * reservaHotel.miHotel.costo);
         }
 
         public delegate void TransfDelegadoFormAltaReserva();

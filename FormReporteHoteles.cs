@@ -117,29 +117,12 @@ namespace tpAgencia_Gpo_2
             //se genera los datos de la grilla a traves de la disponibilidad generada
             foreach (var itemHotel in Agencia.TraerDisponibilidadHotel(ciudadSeleccionada, fechaIngreso, fechaEgreso))
             {
-                dataGridViewHotel.Rows.Add(new string[] { Convert.ToString(itemHotel.id), itemHotel.ubicacion.nombre, Convert.ToString(calcularDisponibilidad(itemHotel)), Convert.ToString(calcularCosto(fechaEgreso, fechaIngreso, itemHotel.costo)), itemHotel.nombre, fechaIngreso.ToShortDateString(), fechaEgreso.ToShortDateString() });
+                dataGridViewHotel.Rows.Add(new string[] { Convert.ToString(itemHotel.id), itemHotel.ubicacion.nombre, Convert.ToString(Agencia.calcularDisponibilidad(itemHotel)), Convert.ToString(Agencia.CalcularCosto(fechaEgreso, fechaIngreso, itemHotel.costo)), itemHotel.nombre, fechaIngreso.ToShortDateString(), fechaEgreso.ToShortDateString() });
                 disponibilidad = true;
             }
             return disponibilidad;
         }
-        //Si la capacidad del hotel es distinta a la que se registra agregame la disponibilidad corroborada si no, agrega sobre la capacidad del hotel
-        private int calcularDisponibilidad(Hotel itemHotel)
-        {
-            int difCantPer = itemHotel.capacidad;
-            foreach (var itemMiReserva in itemHotel.listMisReservas)
-            {
-                difCantPer = difCantPer - itemMiReserva.cantidadPersonas;
-            }
-            return difCantPer;
-        }
-        //se calcula el costo verificando la cantidad de dias por rango de fechas, multiplicando por el valor del hotel por dia
-        private double calcularCosto(DateTime fechaEgreso, DateTime fechaIngreso, double itemCosto)
-        {
-            TimeSpan ts = fechaEgreso.Date.Subtract(fechaIngreso.Date);
-            double costo = ((ts.Days + 1) * itemCosto);
-            return costo;
-        }
-
+  
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             try
