@@ -47,7 +47,7 @@ namespace tpAgencia_Gpo_2
             {
                 if (double.TryParse(textBox_MiCredito.Text, out double nuevoCredito))
                 {
-                    if (refAgencia.AgregarCreditoDal(usuarioActual.id, nuevoCredito))
+                    if (refAgencia.AgregarCreditoContexto(usuarioActual.id, nuevoCredito))
                     {
                         MessageBox.Show("Modificado con éxito");
                     }
@@ -79,7 +79,7 @@ namespace tpAgencia_Gpo_2
                 if (refAgencia.getUsuarioActual().password.Trim() != textBox_pass_nuevo.Text.Trim())
                 {
 
-                    if (refAgencia.modificarUsuarioDal(usuarioActual.id,usuarioActual.name,usuarioActual.apellido,int.Parse(usuarioActual.dni),usuarioActual.mail, textBox_pass_nuevo.Text))
+                    if (refAgencia.modificarUsuariocontexto(usuarioActual.id,usuarioActual.name,usuarioActual.apellido,usuarioActual.dni,usuarioActual.mail, textBox_pass_nuevo.Text,usuarioActual.esAdmin,usuarioActual.bloqueado))
                     {
 
                         MessageBox.Show("Modificado con éxito");
@@ -129,7 +129,7 @@ namespace tpAgencia_Gpo_2
                     !string.IsNullOrEmpty(textBox_dni.Text) && !string.IsNullOrEmpty(textBox_email.Text))
                 {
                     //id    nombre  apellido    dni     email
-                    if (refAgencia.modificarUsuarioDal(usuarioActual.id, textBox_nombre.Text, textBox_apellido.Text, int.Parse(textBox_dni.Text), textBox_email.Text,textBox_pass_nuevo.Text))
+                    if (refAgencia.modificarUsuariocontexto(usuarioActual.id, textBox_nombre.Text, textBox_apellido.Text, textBox_dni.Text, textBox_email.Text,textBox_pass_nuevo.Text,usuarioActual.esAdmin,usuarioActual.bloqueado))
                     {
                         MessageBox.Show("Modificado con éxito");
                     }
