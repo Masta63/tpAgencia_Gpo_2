@@ -1239,13 +1239,22 @@ public class Agencia
         TimeSpan ts = fechaHasta.Date.Subtract(fechaDesde.Date);
         return ((ts.Days + 1) * costo);
     }
-    //Si la capacidad del hotel es distinta a la que se registra agregame la disponibilidad corroborada si no, agrega sobre la capacidad del hotel
-    public int calcularDisponibilidad(Hotel itemHotel)
+    //Verifica si esta en rango de fecha seleccionada, si esta en rango resta sobre la cantidad de personas que esta en la reserva sobre la capasidad que existe en ese rengo de fechas
+    public int calcularDisponibilidad(Hotel itemHotel, DateTime fechaIngreso, DateTime fechaEgreso)
     {
         int difCantPer = itemHotel.capacidad;
+        bool estaRango;
         foreach (var itemMiReserva in itemHotel.listMisReservas)
         {
-            difCantPer = difCantPer - itemMiReserva.cantidadPersonas;
+            estaRango = this.verificacionRango(itemMiReserva, itemHotel, fechaIngreso, fechaEgreso);
+            if (estaRango)
+            {
+                difCantPer = difCantPer - itemMiReserva.cantidadPersonas;
+            }
+            else
+            {
+                difCantPer = itemHotel.capacidad;
+            }
         }
         return difCantPer;
     }
