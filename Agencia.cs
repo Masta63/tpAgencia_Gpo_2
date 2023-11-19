@@ -195,54 +195,51 @@ public class Agencia
     }
 
 
-    public bool eliminarUsuarioDal(int Id)
+    public bool eliminarUsuarioContext(int Id)
     {
-        DB.eliminarUsuarioHotel(Id);
-        DB.eliminarReservaHoteldeUsuario(Id);
-        //primero me aseguro que lo pueda eliminar en la base
-        if (DB.eliminarUsuario(Id) == 1)
+        Usuario u = contexto.usuarios.Where(u => u.id == Id).FirstOrDefault();
+        if (u != null)
         {
+
             try
             {
-                //Ahora sí lo elimino en la lista
-                foreach (Usuario u in listUsuarios)
-                    if (u.id == Id)
-                    {
-                        listUsuarios.Remove(u);
-                        return true;
-                    }
-                return false;
+                contexto.usuarios.Remove(u);
+                contexto.SaveChanges();
+                return true;
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 return false;
+                throw;
             }
+
         }
         else
         {
-            //algo salió mal con la query porque no generó 1 registro
+            //algo salió mal con la query porque no generó 
             return false;
         }
+
+        
     }
 
 
-    public bool modificarUsuarioDal(int Id, string Nombre, string Apellido, int Dni, string Mail, string pass)
+    public bool modificarUsuariocontexto(int Id, string Nombre, string Apellido, string Dni, string Mail, string pass, bool admin, bool bloqueado)
     {
-        //primero me aseguro que lo pueda agregar a la base
-        //int Id, string Nombre, string Apellido, string Dni, string Mail
-        if (DB.modificarUsuarioConContraseña(Id, Nombre, Apellido, Dni, Mail, pass) == 1)
+        //busco usuario y lo asocio a la variable
+        Usuario u = contexto.usuarios.Where(u =>u.id == Id).FirstOrDefault();
+        if (u != null )
         {
             try
             {
-                //Ahora sí lo MODIFICO en la lista
-                for (int i = 0; i < listUsuarios.Count; i++)
-                    if (listUsuarios[i].id == Id)
-                    {
-                        listUsuarios[i].name = Nombre;
-                        listUsuarios[i].apellido = Apellido;
-                        listUsuarios[i].mail = Mail;
-                        listUsuarios[i].dni = Dni.ToString();
-                    }
+                u.name = Nombre;
+                u.apellido = Apellido;
+                u.dni = Dni.ToString(); 
+                u.mail = Mail;
+                u.password = pass;
+                u.esAdmin = admin;
+                u.bloqueado = bloqueado;
+                
                 return true;
             }
             catch (Exception)
@@ -257,11 +254,16 @@ public class Agencia
         }
     }
     //modifico el creidto del usuario en ABM
-    public bool modificarCreditoDal(int id, double monto)
+    public bool modificarCreditoContexto(int id, double monto)
     {
-        if (DB.modificarCreditoUsuario(id, monto) == 1)
+        Usuario u = contexto.usuarios.Where(u => u.id == id).FirstOrDefault();
+        if (u != null)
         {
-            return modificarCredito(id, monto);//reutilizo metodo anterior
+            u.credito = monto;
+            
+            contexto.usuarios.Update(u);
+            contexto.SaveChanges();
+            return true;
         }
         else
         {
@@ -269,13 +271,18 @@ public class Agencia
         }
     }
     //agrego credito en el ABM
-    public bool AgregarCreditoDal(int id, double monto)
+    public bool AgregarCreditoContexto(int id, double monto)
     {
-        try
+        try     
         {
-            if (DB.agregoCreditoUsuario(id, monto) == 1)
+            Usuario u = contexto.usuarios.Where(u => u.id == id).FirstOrDefault();
+            if (u != null)
+            
             {
-                return agregarCredito(id, monto);//reutilizo metodo anterior
+                u.credito += monto;
+                contexto.usuarios.Update(u);
+                contexto.SaveChanges();
+                return true;
             }
             else
             {
@@ -289,13 +296,17 @@ public class Agencia
         }
     }
 
-    public bool modificarPasswordDal(int id, string text)
+    public bool modificarPasswordContexto(int id, string text)
     {
         try
         {
-            if (DB.modificarPassword(id, text) == 1)
+            Usuario u = contexto.usuarios.Where(u => u.id == id).FirstOrDefault();
+            if (u != null)
             {
-                return modificarPassword(id, text);
+                u.password = text;
+                contexto.usuarios.Update(u);
+                contexto.SaveChanges();
+                return true;
             }
             else
             {
@@ -308,95 +319,6 @@ public class Agencia
             throw;
         }
     }
-
-
-    //metodo anterior
-    public bool modificarCredito(int id, double monto)
-    {
-        foreach (Usuario user in listUsuarios)
-        {
-            if (user.id == id)
-            {
-                user.credito = monto;
-                return true;
-            }
-        }
-        return false;
-    }
-
-    //metodo anterior
-    public bool agregarCredito(int id, double monto)
-    {
-        try
-        {
-            foreach (Usuario user in listUsuarios)
-            {
-                if (user.id == id)
-                {
-                    user.credito += monto;
-                    return true;
-                }
-            }
-            return false;
-        }
-        catch (Exception)
-        {
-
-            throw;
-        }
-    }
-
-
-    public bool agregarUsuario(string name, string apellido, string dni, string mail)
-    {
-        Usuario usuario = new Usuario(cantUsuarios, name, apellido, dni, mail);
-        cantUsuarios++;
-        usuario.id = listUsuarios != null ? listUsuarios.OrderByDescending(x => x.id).FirstOrDefault().id + 1 : 1;
-        listUsuarios.Add(usuario);
-        return true;
-    }
-
-    //metodo del formRegistro de Usuario
-    /*
-    public bool agregarUsuario(string name, string apellido, string dni, string mail, string pass)
-    {
-        Usuario usuario = new Usuario(cantUsuarios, name, apellido, dni, mail);
-        cantUsuarios++;
-        usuario.id = listUsuarios != null ? listUsuarios.OrderByDescending(x => x.id).FirstOrDefault().id + 1 : 1;
-        listUsuarios.Add(usuario);
-        return true;
-    }
-    */
-    public bool modificarUsuario(int id, string name, string apellido, string dni, string mail)
-    {
-        foreach (Usuario user in listUsuarios)
-        {
-            if (user.id == id)
-            {
-                user.name = name;
-                user.apellido = apellido;
-                user.dni = dni;
-                user.mail = mail;
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public bool eliminarUsuario(int id)
-    {
-        foreach (Usuario user in listUsuarios)
-        {
-            if (user.id == id)
-            {
-                listUsuarios.Remove(user);
-                return true;
-            }
-        }
-        return false;
-    }
-
-
 
 
 
@@ -405,19 +327,6 @@ public class Agencia
         return this.usuarioActual?.name;
     }
 
-    public bool modificarPassword(int id, string pass)
-    {
-        foreach (Usuario user in listUsuarios)
-        {
-            if (user.id == id)
-            {
-                user.password = pass;
-                return true;
-            }
-        }
-        return false;
-
-    }
     //verificar si ya existe un usuario con ese mail o dni
     //devuelve true si encuentra
     public bool existeUsuarioConDniOMail(string dni, string mail)
@@ -1125,7 +1034,7 @@ public class Agencia
     public void eliminarRerservaHotel(Int32 idReservaHotel, double costo)
     {
         //elimina el hotel de la base
-        this.elimiarReservaHotelContext(idReservaHotel); 
+        this.elimiarReservaHotelContext(idReservaHotel);
         //Trae el usuario actual y le suma a su credito el valor de la reserva eliminada
         Usuario usuarioActual = this.getUsuarioActual();
         usuarioActual.credito = usuarioActual.credito + costo;

@@ -96,7 +96,7 @@ namespace tpAgencia_Gpo_2
 
                     //Dni, Nombre, apellido, Mail,pass, EsADM, Bloqueado);
                     // int Id, string Nombre, string Apellido, string Dni, string Mail
-                    if (refAgencia.modificarUsuarioDal(usuarioSeleccionado, textBox_nombre.Text, textBox_apellido.Text, int.Parse(textBox_dni.Text), textBox_email.Text, textBox_pass.Text))
+                    if (refAgencia.modificarUsuariocontexto(usuarioSeleccionado, textBox_nombre.Text, textBox_apellido.Text, textBox_dni.Text, textBox_email.Text, textBox_pass.Text,checkBox_admin.Checked,checkBox_bloqueado.Checked))
                     {
                         MessageBox.Show("Modificado con éxito");
                     }
@@ -121,7 +121,7 @@ namespace tpAgencia_Gpo_2
         {
             if (usuarioSeleccionado != -1)
             {
-                if (refAgencia.eliminarUsuarioDal(usuarioSeleccionado))
+                if (refAgencia.eliminarUsuarioContext(usuarioSeleccionado))
                     MessageBox.Show("Eliminado con éxito");
                 else
                     MessageBox.Show("Problemas al eliminar");
@@ -221,7 +221,7 @@ namespace tpAgencia_Gpo_2
             {
                 if (double.TryParse(textBox_credito.Text, out double nuevoCredito))
                 {
-                    if (refAgencia.AgregarCreditoDal(usuarioSeleccionado, nuevoCredito))
+                    if (refAgencia.AgregarCreditoContexto(usuarioSeleccionado, nuevoCredito))
                     {
                         MessageBox.Show("Modificado con éxito");
                         actualizarDatos();
@@ -249,7 +249,7 @@ namespace tpAgencia_Gpo_2
             {
                 if (double.TryParse(textBox_credito.Text, out double nuevoCredito))
                 {
-                    if (refAgencia.modificarCreditoDal(usuarioSeleccionado, nuevoCredito))
+                    if (refAgencia.modificarCreditoContexto(usuarioSeleccionado, nuevoCredito))
                     {
                         MessageBox.Show("Modificado con éxito");
                         actualizarDatos();
