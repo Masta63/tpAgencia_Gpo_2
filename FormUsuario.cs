@@ -154,6 +154,8 @@ namespace tpAgencia_Gpo_2
                 textBox_apellido.Text = " ";
                 textBox_email.Text = " ";
                 textBox_dni.Text = " ";
+                checkBox_admin.Checked = false;
+                checkBox_bloqueado.Checked = false;
                 //textBox_resHotel.Text = " ";
                 //textBox_resVuelo.Text = " ";
 
@@ -289,8 +291,9 @@ namespace tpAgencia_Gpo_2
                 if (us.dni == dni)
                 {
                     dataGridView_usuarios.Rows.Clear();
-                    dataGridView_usuarios.Rows.Add(new string[] { us.id.ToString(), us.name, us.apellido, us.dni.ToString(), us.credito.ToString(), us.mail });
-
+                    dataGridView_usuarios.Rows.Add(new string[] { us.id.ToString(), us.name, us.apellido, us.dni.ToString(), us.credito.ToString(), us.mail, us.esAdmin.ToString(),us.bloqueado.ToString() });
+                    //checkBox_admin.Checked = bool.Parse(admin);
+                    //checkBox_bloqueado.Checked = bool.Parse(bloqueado);
                     usuarioEncontrado = true;
                     break; // Como se encontró el usuario, podemos salir del bucle.
                 }
