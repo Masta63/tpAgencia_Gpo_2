@@ -239,7 +239,8 @@ public class Agencia
                 u.password = pass;
                 u.esAdmin = admin;
                 u.bloqueado = bloqueado;
-                
+                contexto.usuarios.Update(u);
+                contexto.SaveChanges() ;
                 return true;
             }
             catch (Exception)
