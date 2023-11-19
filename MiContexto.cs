@@ -353,6 +353,19 @@ namespace tpAgencia_Gpo_2
                  }
                  );
 
+            //carga hotel modelo
+
+            modelBuilder.Entity<Hotel>().HasData(
+                new
+                {
+                    id = 1,
+                    capacidad = 10,
+                    costo = 32000,
+                    nombre = "Faena"
+
+                }) ;
+
+
         }
     }
 }
