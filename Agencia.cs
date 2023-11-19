@@ -890,7 +890,7 @@ public class Agencia
 
 
 
-    //INICIO METODOS DE HOTEL
+    //INICIO METODOS DE HOTEL.
     #region Metodos hotel
 
     public bool agregarHotel(int ubicacionHotel, Int32 capacidad, float costo, string nombre)
