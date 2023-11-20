@@ -160,6 +160,12 @@ namespace tpAgencia_Gpo_2
                         case "credito":
                             MessageBox.Show("No tenes suficiente credito para comprar");
                             break;
+                        case "fecha":
+                            MessageBox.Show("No podes modificar esta reserva porque ya fue usada");
+                            break;
+                        case "nomodifica":
+                            MessageBox.Show("La cantidad es la misma que tu reserva original");
+                            break;
                         case "error":
                             MessageBox.Show("Ocurrió un problema al querer modificar el vuelo");
                             break;

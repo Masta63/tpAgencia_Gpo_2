@@ -145,13 +145,13 @@ namespace tpAgencia_Gpo_2
                             case "exito":
                                 Vuelo vueloSeleccionado = agencia.getVuelos().FirstOrDefault(v => v.id == vueloId);
 
-                                if (vueloSeleccionado != null)
-                                {
-                                    vueloSeleccionado.capacidad -= cantidad;
-                                }
+                                //if (vueloSeleccionado != null)
+                                //{
+                                //    vueloSeleccionado.capacidad -= cantidad;
+                                //}
                                 int rowIndex = e.RowIndex;
                                 int asientosDisponibles = vueloSeleccionado.capacidad;
-                                dataGridView1.Rows[rowIndex].Cells["Cantidad"].Value = asientosDisponibles;
+                                dataGridView1.Rows[rowIndex].Cells["Cantidad"].Value = asientosDisponibles -= cantidad;
                                 MessageBox.Show("Reserva realiza con éxito");
                                 break;
 

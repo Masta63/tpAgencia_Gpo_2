@@ -96,7 +96,7 @@ namespace tpAgencia_Gpo_2
 
                     //Dni, Nombre, apellido, Mail,pass, EsADM, Bloqueado);
                     // int Id, string Nombre, string Apellido, string Dni, string Mail
-                    if (refAgencia.modificarUsuarioDal(usuarioSeleccionado, textBox_nombre.Text, textBox_apellido.Text, int.Parse(textBox_dni.Text), textBox_email.Text, textBox_pass.Text))
+                    if (refAgencia.modificarUsuariocontexto(usuarioSeleccionado, textBox_nombre.Text, textBox_apellido.Text, textBox_dni.Text, textBox_email.Text, textBox_pass.Text,checkBox_admin.Checked,checkBox_bloqueado.Checked))
                     {
                         MessageBox.Show("Modificado con éxito");
                     }
@@ -121,7 +121,7 @@ namespace tpAgencia_Gpo_2
         {
             if (usuarioSeleccionado != -1)
             {
-                if (refAgencia.eliminarUsuarioDal(usuarioSeleccionado))
+                if (refAgencia.eliminarUsuarioContext(usuarioSeleccionado))
                     MessageBox.Show("Eliminado con éxito");
                 else
                     MessageBox.Show("Problemas al eliminar");
@@ -145,7 +145,7 @@ namespace tpAgencia_Gpo_2
             foreach (Usuario us in refAgencia.getUsuarios())//para cada usuario en el clon de listado de usuarios de mi referencia de agencia
             {
 
-                dataGridView_usuarios.Rows.Add(new string[] { us.id.ToString(), us.name, us.apellido, us.dni.ToString(), us.credito.ToString(), us.mail, us.esAdmin.ToString(), us.bloqueado.ToString(), us.listMisReservasHoteles.ToString(), us.listMisReservasVuelo.ToString() });
+                dataGridView_usuarios.Rows.Add(new string[] { us.id.ToString(), us.name, us.apellido, us.dni.ToString(), us.credito.ToString(), us.mail, us.esAdmin.ToString(), us.bloqueado.ToString() });
 
 
                 textBox_id.Text = " ";
@@ -154,6 +154,8 @@ namespace tpAgencia_Gpo_2
                 textBox_apellido.Text = " ";
                 textBox_email.Text = " ";
                 textBox_dni.Text = " ";
+                checkBox_admin.Checked = false;
+                checkBox_bloqueado.Checked = false;
                 //textBox_resHotel.Text = " ";
                 //textBox_resVuelo.Text = " ";
 
@@ -183,6 +185,8 @@ namespace tpAgencia_Gpo_2
                 string? admin = dataGridView_usuarios[6, e.RowIndex]?.Value?.ToString().Trim();
                 string? bloqueado = dataGridView_usuarios[7, e.RowIndex]?.Value?.ToString().Trim();
 
+                
+
                 textBox_id.Text = id;
                 textBox_nombre.Text = nombre;
                 textBox_apellido.Text = apellido;
@@ -191,7 +195,7 @@ namespace tpAgencia_Gpo_2
                 textBox_credito.Text = credito;
                 checkBox_admin.Checked = bool.Parse(admin);
                 checkBox_bloqueado.Checked = bool.Parse(bloqueado);
-
+                
                 //textBox_resHotel.Text = resHotel;
                 //textBox_resVuelo.Text = resVuelo;
 
@@ -219,7 +223,7 @@ namespace tpAgencia_Gpo_2
             {
                 if (double.TryParse(textBox_credito.Text, out double nuevoCredito))
                 {
-                    if (refAgencia.AgregarCreditoDal(usuarioSeleccionado, nuevoCredito))
+                    if (refAgencia.AgregarCreditoContexto(usuarioSeleccionado, nuevoCredito))
                     {
                         MessageBox.Show("Modificado con éxito");
                         actualizarDatos();
@@ -247,7 +251,7 @@ namespace tpAgencia_Gpo_2
             {
                 if (double.TryParse(textBox_credito.Text, out double nuevoCredito))
                 {
-                    if (refAgencia.modificarCreditoDal(usuarioSeleccionado, nuevoCredito))
+                    if (refAgencia.modificarCreditoContexto(usuarioSeleccionado, nuevoCredito))
                     {
                         MessageBox.Show("Modificado con éxito");
                         actualizarDatos();
@@ -287,8 +291,9 @@ namespace tpAgencia_Gpo_2
                 if (us.dni == dni)
                 {
                     dataGridView_usuarios.Rows.Clear();
-                    dataGridView_usuarios.Rows.Add(new string[] { us.id.ToString(), us.name, us.apellido, us.dni.ToString(), us.credito.ToString(), us.mail, us.listMisReservasHoteles.ToString(), us.listMisReservasVuelo.ToString() });
-
+                    dataGridView_usuarios.Rows.Add(new string[] { us.id.ToString(), us.name, us.apellido, us.dni.ToString(), us.credito.ToString(), us.mail, us.esAdmin.ToString(),us.bloqueado.ToString() });
+                    //checkBox_admin.Checked = bool.Parse(admin);
+                    //checkBox_bloqueado.Checked = bool.Parse(bloqueado);
                     usuarioEncontrado = true;
                     break; // Como se encontró el usuario, podemos salir del bucle.
                 }

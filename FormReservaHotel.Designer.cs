@@ -37,6 +37,7 @@
             capacidad = new DataGridViewTextBoxColumn();
             Fdesde = new DataGridViewTextBoxColumn();
             FHasta = new DataGridViewTextBoxColumn();
+            Cantidad_personas = new DataGridViewTextBoxColumn();
             label4 = new Label();
             label3 = new Label();
             label1 = new Label();
@@ -45,6 +46,8 @@
             textBoxMonto = new TextBox();
             label5 = new Label();
             Volver_desde_usuario = new Button();
+            label2 = new Label();
+            cantPerstext = new TextBox();
             ((System.ComponentModel.ISupportInitialize)dataGridViewHotel).BeginInit();
             SuspendLayout();
             // 
@@ -80,7 +83,7 @@
             // dataGridViewHotel
             // 
             dataGridViewHotel.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewHotel.Columns.AddRange(new DataGridViewColumn[] { nombre, Monto, capacidad, Fdesde, FHasta });
+            dataGridViewHotel.Columns.AddRange(new DataGridViewColumn[] { nombre, Monto, capacidad, Fdesde, FHasta, Cantidad_personas });
             dataGridViewHotel.Location = new Point(26, 279);
             dataGridViewHotel.Name = "dataGridViewHotel";
             dataGridViewHotel.RowTemplate.Height = 25;
@@ -112,6 +115,11 @@
             // 
             FHasta.HeaderText = "FechaHasta";
             FHasta.Name = "FHasta";
+            // 
+            // Cantidad_personas
+            // 
+            Cantidad_personas.HeaderText = "cantidadPersonas";
+            Cantidad_personas.Name = "Cantidad_personas";
             // 
             // label4
             // 
@@ -183,11 +191,30 @@
             Volver_desde_usuario.UseVisualStyleBackColor = false;
             Volver_desde_usuario.Click += Volver_desde_usuario_Click;
             // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Location = new Point(440, 77);
+            label2.Name = "label2";
+            label2.Size = new Size(105, 15);
+            label2.TabIndex = 52;
+            label2.Text = "Cantidad Personas";
+            // 
+            // cantPerstext
+            // 
+            cantPerstext.Enabled = false;
+            cantPerstext.Location = new Point(440, 112);
+            cantPerstext.Name = "cantPerstext";
+            cantPerstext.Size = new Size(100, 23);
+            cantPerstext.TabIndex = 51;
+            // 
             // FormReservaHotel
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 469);
+            Controls.Add(label2);
+            Controls.Add(cantPerstext);
             Controls.Add(Volver_desde_usuario);
             Controls.Add(label5);
             Controls.Add(textBoxMonto);
@@ -222,11 +249,14 @@
         private DateTimePicker fechaHasta;
         private TextBox textBoxMonto;
         private Label label5;
+        private Button Volver_desde_usuario;
         private DataGridViewTextBoxColumn nombre;
         private DataGridViewTextBoxColumn Monto;
         private DataGridViewTextBoxColumn capacidad;
         private DataGridViewTextBoxColumn Fdesde;
         private DataGridViewTextBoxColumn FHasta;
-        private Button Volver_desde_usuario;
+        private DataGridViewTextBoxColumn Cantidad_personas;
+        private Label label2;
+        private TextBox cantPerstext;
     }
 }

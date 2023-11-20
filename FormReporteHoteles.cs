@@ -20,6 +20,7 @@ namespace tpAgencia_Gpo_2
         private Agencia Agencia;
         private Form1 Form1;
         private FormReservaHotel FormReservaHotel;
+        //se inicializan los componentes
         public FormReporteHoteles(Agencia agencia, Form1 form1)
         {
             InitializeComponent();
@@ -88,6 +89,11 @@ namespace tpAgencia_Gpo_2
                 MessageBox.Show("Se debe ingresar ciudad");
                 ingresar = true;
             }
+            if (string.IsNullOrEmpty(cantPerstext.Text))
+            {
+                MessageBox.Show("Se debe ingresar cantidad de personas");
+                ingresar = true;
+            }
             return ingresar;
         }
 
@@ -106,24 +112,17 @@ namespace tpAgencia_Gpo_2
             string ciudadSeleccionada = boxCiudades.SelectedItem.ToString();
             DateTime fechaIngreso = fechaDesde.Value;
             DateTime fechaEgreso = fechaHasta.Value;
-            List<Hotel> hotelesDisponibles = Agencia.TraerDisponibilidadHotel(ciudadSeleccionada, fechaIngreso, fechaEgreso, "1");
             bool disponibilidad = false;
             dataGridViewHotel.Rows.Clear();
-            if (hotelesDisponibles.Count > 0)
+            //se genera los datos de la grilla a traves de la disponibilidad generada
+            foreach (var itemHotel in Agencia.TraerDisponibilidadHotel(ciudadSeleccionada, fechaIngreso, fechaEgreso))
             {
-                foreach (var itemHotel in hotelesDisponibles)
-                {
-                    TimeSpan ts = fechaEgreso.Date.Subtract(fechaIngreso.Date);
-                    double costo = ((ts.Days + 1) * itemHotel.costo);
-                    int disp = itemHotel.capacidad != itemHotel.disponibilidad ? itemHotel.disponibilidad : itemHotel.capacidad;
-                    dataGridViewHotel.Rows.Add(new string[] { Convert.ToString(itemHotel.id), itemHotel.ubicacion.nombre, Convert.ToString(disp), Convert.ToString(costo), itemHotel.nombre, fechaIngreso.ToShortDateString(), fechaEgreso.ToShortDateString() });
-                    disponibilidad = true;
-                }
+                dataGridViewHotel.Rows.Add(new string[] { Convert.ToString(itemHotel.id), itemHotel.ubicacion.nombre, Convert.ToString(Agencia.calcularDisponibilidad(itemHotel,fechaIngreso, fechaEgreso)), Convert.ToString(Agencia.CalcularCosto(fechaEgreso, fechaIngreso, itemHotel.costo)), itemHotel.nombre, fechaIngreso.ToShortDateString(), fechaEgreso.ToShortDateString() });
+                disponibilidad = true;
             }
-
             return disponibilidad;
         }
-
+  
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             try
@@ -148,7 +147,7 @@ namespace tpAgencia_Gpo_2
         {
 
         }
-
+        //al apretar el boton de ir a comprar, redirecciona al formulario para confirmar la compra
         private void irAreservar(ReservaHotel reservaHotel)
         {
             this.MdiParent = Form1;
@@ -174,19 +173,21 @@ namespace tpAgencia_Gpo_2
 
             if (string.IsNullOrEmpty(TextMonto.Text))
                 MessageBox.Show("Debe seleccionar una monto para comprar");
+            if (string.IsNullOrEmpty(cantPerstext.Text))
+                MessageBox.Show("Debe ingresar cantidad de personas");
 
-            if (!string.IsNullOrEmpty(labelIdComprar.Text) && !string.IsNullOrEmpty(TextMonto.Text) && monto >= Convert.ToDouble(TextMonto.Text) && !string.IsNullOrEmpty(TextMonto.Text))
+            if (!string.IsNullOrEmpty(cantPerstext.Text) && !string.IsNullOrEmpty(labelIdComprar.Text) && !string.IsNullOrEmpty(TextMonto.Text) && monto >= Convert.ToDouble(TextMonto.Text) && !string.IsNullOrEmpty(TextMonto.Text))
             {
+                // se crea una reserva para pasarcela al formulario de confirmacion de la reserva
                 Hotel? hotelSeleccionado = Agencia.getHoteles().Where(x => x.id == Convert.ToInt32(labelIdComprar.Text)).FirstOrDefault();
-                ReservaHotel reservaHotel = new ReservaHotel(hotelSeleccionado, Agencia.getUsuarioActual(), fechaDesde.Value, fechaHasta.Value, Convert.ToInt32(TextMonto.Text));
+                ReservaHotel reservaHotel = new ReservaHotel(hotelSeleccionado, Agencia.getUsuarioActual(), fechaDesde.Value, fechaHasta.Value, Convert.ToInt32(TextMonto.Text), Convert.ToInt32(cantPerstext.Text));
                 this.irAreservar(reservaHotel);
             }
         }
 
         private void Volver_desde_usuario_Click(object sender, EventArgs e)
         {
-
-
+            //si es admin vuelve al menu administrador si no vuelve al menu usuario
             this.Close();
             if (Agencia.getUsuarioActual().esAdmin)
             {

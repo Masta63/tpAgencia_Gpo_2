@@ -17,6 +17,7 @@ namespace tpAgencia_Gpo_2
         public TransfDelegadoFormAltaReserva transfDelegadoFormAltaReserva;
         private Agencia Agencia;
         private Form1 Form1;
+        //Inicializo el formulario
         public FormReservaHotel(Agencia agencia, Form1 form1, ReservaHotel? reservaHotel)
         {
             InitializeComponent();
@@ -31,13 +32,11 @@ namespace tpAgencia_Gpo_2
                 fechaDesde.Value = reservaHotel.fechaDesde;
                 fechaHasta.Value = reservaHotel.fechaHasta;
                 textBoxMonto.Text = Convert.ToString(reservaHotel.pagado);
-                TimeSpan ts = fechaHasta.Value.Date.Subtract(fechaDesde.Value.Date);
-                double costo = ((ts.Days + 1) * reservaHotel.miHotel.costo);
-                dataGridViewHotel.Rows.Add(new string[] { reservaHotel.miHotel.nombre, Convert.ToString(costo), Convert.ToString(reservaHotel.miHotel.capacidad), reservaHotel.fechaDesde.ToLongDateString(), reservaHotel.fechaHasta.ToLongDateString() });
+                cantPerstext.Text = reservaHotel.cantidadPersonas.ToString();
+                dataGridViewHotel.Rows.Add(new string[] { reservaHotel.miHotel.nombre, Convert.ToString(agencia.CalcularCosto(reservaHotel.fechaHasta,reservaHotel.fechaDesde, reservaHotel.miHotel.costo)), Convert.ToString(reservaHotel.miHotel.capacidad), reservaHotel.fechaDesde.ToLongDateString(), reservaHotel.fechaHasta.ToLongDateString(), reservaHotel.cantidadPersonas.ToString() });
             }
 
         }
-
 
         public delegate void TransfDelegadoFormAltaReserva();
         private void buttonComprar_Click(object sender, EventArgs e)
@@ -59,13 +58,12 @@ namespace tpAgencia_Gpo_2
             DateTime fechaIngreso = fechaDesde.Value;
             DateTime fechaEgreso = fechaHasta.Value;
             bool disponibilidad = false;
-            Hotel? hotelSeleccionado = Agencia.getHotelesByHotel(boxHoteles.Text);
-            if (validaciones(hotelSeleccionado))
+            if (validaciones())
             {
                 dataGridViewHotel.Rows.Clear();
-                if (Agencia.GenerarReserva(hotelSeleccionado, fechaIngreso, fechaEgreso, textBoxMonto.Text) != null)
+                if (Agencia.GenerarReserva(boxHoteles.Text, fechaIngreso, fechaEgreso, textBoxMonto.Text, cantPerstext.Text) != null)
                 {
-                    dataGridViewHotel.Rows.Add(new string[] { hotelSeleccionado.nombre, textBoxMonto.Text, Convert.ToString(hotelSeleccionado.capacidad), fechaIngreso.ToShortDateString(), fechaEgreso.ToShortDateString() });
+                    dataGridViewHotel.Rows.Add(new string[] { Agencia.getHotelesByHotel(boxHoteles.Text).nombre, textBoxMonto.Text, Convert.ToString(Agencia.getHotelesByHotel(boxHoteles.Text).capacidad), fechaIngreso.ToShortDateString(), fechaEgreso.ToShortDateString() });
                     disponibilidad = true;
                 }
             }
@@ -87,8 +85,10 @@ namespace tpAgencia_Gpo_2
             }
             return true;
         }
-        private bool validaciones(Hotel? hotelSeleccionado)
+        private bool validaciones()
         {
+            Hotel hotelSeleccionado = Agencia.getHotelesByHotel(boxHoteles.Text);
+            //Calcula el costo por rango de fechas, sobre el costo que sale el hotel lo multiplica por cantidad de dias
             TimeSpan ts = fechaHasta.Value.Date.Subtract(fechaDesde.Value.Date);
             double costo = ((ts.Days + 1) * hotelSeleccionado.costo);
             if (costo > Convert.ToDouble(textBoxMonto.Text))
@@ -113,7 +113,7 @@ namespace tpAgencia_Gpo_2
         {
 
         }
-
+        //si es admin retorna al menu admin si no al menu que no es admin
         private void Volver_desde_usuario_Click(object sender, EventArgs e)
         {
             this.Close();

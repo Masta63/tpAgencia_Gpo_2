@@ -1037,7 +1037,7 @@ namespace tpAgencia_Gpo_2
                         Hotel hotel = new Hotel(reader.GetInt32(5), ciudad, reader.GetInt32(18), reader.GetFloat(19), reader.GetString(20));
                         Usuario usuario = this.traerUsuarioPorId(reader.GetInt32(1));
                         //leo la fila, la carga en la variable aux y la agrega a mis usuarios para trabajar en tiempo de ejecucion 
-                        aux = new ReservaHotel(hotel, usuario, reader.GetDateTime(2), reader.GetDateTime(3), reader.GetDouble(4));
+                        aux = new ReservaHotel(hotel, usuario, reader.GetDateTime(2), reader.GetDateTime(3), reader.GetDouble(4), reader.GetInt32(5));
                         aux.idReservaHotel = reader.GetInt32(0);
                         reservaHotels.Add(aux);
                     }
@@ -1067,7 +1067,7 @@ namespace tpAgencia_Gpo_2
                     while (reader.Read())
                     {
                         Usuario miUsuario = new Usuario(reader.GetInt32(6), reader.GetInt32(7), reader.GetString(8), reader.GetString(9), reader.GetString(10), reader.GetString(11), reader.GetInt32(12), reader.GetBoolean(13), reader.GetDouble(14), reader.GetBoolean(15));
-                        ReservaHotel reserva = new ReservaHotel(hotel, miUsuario, reader.GetDateTime(2), reader.GetDateTime(3), reader.GetDouble(4));
+                        ReservaHotel reserva = new ReservaHotel(hotel, miUsuario, reader.GetDateTime(2), reader.GetDateTime(3), reader.GetDouble(4), reader.GetInt32(5));
                         reserva.idReservaHotel = reader.GetInt32(0);
                         reservasPorHotel.Add(reserva);
                     }
@@ -1127,7 +1127,7 @@ namespace tpAgencia_Gpo_2
                         ReservaHotel? reserva = null;
                         foreach (var item in traerReservasPorHotel(aux))
                         {
-                            reserva = new ReservaHotel(item.miHotel, item.miUsuario, item.fechaDesde, item.fechaHasta, item.pagado);
+                            reserva = new ReservaHotel(item.miHotel, item.miUsuario, item.fechaDesde, item.fechaHasta, item.pagado, item.cantidadPersonas);
                             reserva.idReservaHotel = item.idReservaHotel;
                             aux.listMisReservas.Add(reserva);
                         }

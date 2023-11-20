@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using tpAgencia_Gpo_2;
 
@@ -11,9 +12,11 @@ using tpAgencia_Gpo_2;
 namespace tpAgencia_Gpo_2.Migrations
 {
     [DbContext(typeof(MiContexto))]
-    partial class MiContextoModelSnapshot : ModelSnapshot
+    [Migration("20231118184746_add_campoNuevoReservaHotel")]
+    partial class add_campoNuevoReservaHotel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -82,17 +85,6 @@ namespace tpAgencia_Gpo_2.Migrations
                     b.HasIndex("idCiudad");
 
                     b.ToTable("Hotel", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            id = 1,
-                            capacidad = 10,
-                            costo = 123.44999694824219,
-                            disponibilidad = 10,
-                            idCiudad = 1,
-                            nombre = "Faena"
-                        });
                 });
 
             modelBuilder.Entity("tpAgencia_Gpo_2.HotelUsuario", b =>
