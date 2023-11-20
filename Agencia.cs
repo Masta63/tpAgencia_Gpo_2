@@ -634,10 +634,10 @@ public class Agencia
                     v.listMisReservas.Remove(reservaVuelo);
                     usuarioActual.listMisReservasVuelo.Remove(reservaVuelo);
                     //
-                    contexto.vueloUsuarios
-                    .Where(vus => vus.idUsuario == usuarioActual.id && vus.idVuelo == reservaVuelo.idVuelo)
-                    .ToList()
-                    .ForEach(vus => contexto.vueloUsuarios.Remove(vus));
+                    var vueloUsuarioAEliminar = contexto.vueloUsuarios
+                    .Where(vus => vus.idUsuario == usuarioActual.id && vus.idVuelo == reservaVuelo.idVuelo);
+
+                    contexto.vueloUsuarios.RemoveRange(vueloUsuarioAEliminar);
                     //
                     contexto.reservaVuelos.Remove(reservaVuelo);
                     contexto.SaveChanges();
