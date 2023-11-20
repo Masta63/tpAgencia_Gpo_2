@@ -986,7 +986,7 @@ public class Agencia
 
         return hayDisponibilidad;
     }
-    public List<Hotel> TraerDisponibilidadHotel(string ciudadSeleccionada, DateTime fechaIngreso, DateTime fechaEgreso)
+    public List<Hotel> TraerDisponibilidadHotel(string ciudadSeleccionada, DateTime fechaIngreso, DateTime fechaEgreso, Int32 cantPersonas)
     {
         bool estaRango;
         int difCantPer = 0;
@@ -1005,12 +1005,9 @@ public class Agencia
                     {
                         difCantPer = difCantPer - itemReserva.cantidadPersonas;
                     }
-                    else
-                    {
-                        difCantPer = itemHotel.capacidad;
-                    }
                 }
-                if (itemHotel.capacidad >= difCantPer)
+                int total = difCantPer - cantPersonas;
+                if (itemHotel.capacidad >= total && total >= 0)
                     hotelesDisponibles.Add(itemHotel);
             }
         }
@@ -1177,10 +1174,6 @@ public class Agencia
             if (estaRango)
             {
                 difCantPer = difCantPer - itemMiReserva.cantidadPersonas;
-            }
-            else
-            {
-                difCantPer = itemHotel.capacidad;
             }
         }
         return difCantPer;

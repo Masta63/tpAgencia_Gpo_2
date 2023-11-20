@@ -115,7 +115,7 @@ namespace tpAgencia_Gpo_2
             bool disponibilidad = false;
             dataGridViewHotel.Rows.Clear();
             //se genera los datos de la grilla a traves de la disponibilidad generada
-            foreach (var itemHotel in Agencia.TraerDisponibilidadHotel(ciudadSeleccionada, fechaIngreso, fechaEgreso))
+            foreach (var itemHotel in Agencia.TraerDisponibilidadHotel(ciudadSeleccionada, fechaIngreso, fechaEgreso, Convert.ToInt32(cantPerstext.Text)))
             {
                 dataGridViewHotel.Rows.Add(new string[] { Convert.ToString(itemHotel.id), itemHotel.ubicacion.nombre, Convert.ToString(Agencia.calcularDisponibilidad(itemHotel,fechaIngreso, fechaEgreso)), Convert.ToString(Agencia.CalcularCosto(fechaEgreso, fechaIngreso, itemHotel.costo)), itemHotel.nombre, fechaIngreso.ToShortDateString(), fechaEgreso.ToShortDateString() });
                 disponibilidad = true;

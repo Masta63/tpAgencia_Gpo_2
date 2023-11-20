@@ -120,45 +120,46 @@ namespace tpAgencia_Gpo_2
         }
         private void button2_Click(object sender, EventArgs e)
         {
-            Int32 idReservaHotel = Convert.ToInt32(textBox_id.Text);
-            DateTime fechaDesde = dateTimePickerFechaDesde.Value;
-            DateTime fechaHasta = dateTimePickerFechaHasta.Value;
+            if (calcularCostoParaFecha())
+            {
+                Int32 idReservaHotel = Convert.ToInt32(textBox_id.Text);
+                DateTime fechaDesde = dateTimePickerFechaDesde.Value;
+                DateTime fechaHasta = dateTimePickerFechaHasta.Value;
 
-            if (agencia.TraerDisponibilidadHotelParaEdicion(Convert.ToInt32(textBoxidHotel.Text), fechaDesde, fechaHasta, 1))
-            {
-                agencia.editarReservaHotel(fechaDesde, fechaHasta, agencia.CalcularCostoParaEdicion(fechaDesde, fechaHasta, Convert.ToInt32(textBoxidHotel.Text)), idReservaHotel, Convert.ToInt32(textBoxidHotel.Text));
-                refrescar();
-                textBox_id.Text = "";
-                textCosto.Text = "";
-                button1.Enabled = false;
-                button2.Enabled = false;
-                dateTimePickerFechaDesde.Enabled = false;
-                dateTimePickerFechaHasta.Enabled = false;
-            }
-            else
-            {
-                MessageBox.Show("No hay disponibilidad");
+                if (agencia.TraerDisponibilidadHotelParaEdicion(Convert.ToInt32(textBoxidHotel.Text), fechaDesde, fechaHasta, 1))
+                {
+                    agencia.editarReservaHotel(fechaDesde, fechaHasta, agencia.CalcularCostoParaEdicion(fechaDesde, fechaHasta, Convert.ToInt32(textBoxidHotel.Text)), idReservaHotel, Convert.ToInt32(textBoxidHotel.Text));
+                    refrescar();
+                    textBox_id.Text = "";
+                    textCosto.Text = "";
+                    button1.Enabled = false;
+                    button2.Enabled = false;
+                    dateTimePickerFechaDesde.Enabled = false;
+                    dateTimePickerFechaHasta.Enabled = false;
+                }
+                else
+                {
+                    MessageBox.Show("No hay disponibilidad");
+                }
             }
         }
 
         private void dateTimePickerFechaHasta_ValueChanged(object sender, EventArgs e)
         {
-            calcularCostoParaFecha();
         }
 
         private void dateTimePickerFechaDesde_ValueChanged(object sender, EventArgs e)
         {
-            calcularCostoParaFecha();
         }
 
-        private void calcularCostoParaFecha()
+        private bool calcularCostoParaFecha()
         {
-
             if (dateTimePickerFechaHasta.Value.Date < dateTimePickerFechaDesde.Value.Date)
             {
                 MessageBox.Show("La fecha desde no puede ser mayor a fecha hasta");
                 button1.Enabled = false;
                 button2.Enabled = false;
+                return false;
             }
             else
             {
@@ -167,12 +168,17 @@ namespace tpAgencia_Gpo_2
                 button2.Enabled = true;
                 dateTimePickerFechaDesde.Enabled = true;
                 dateTimePickerFechaHasta.Enabled = true;
+                return true;
             }
         }
 
         private void textBoxidHotel_TextChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
         }
     }
 }
