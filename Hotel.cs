@@ -14,8 +14,7 @@ namespace tpAgencia_Gpo_2
         public int id { get; set; }
         public Ciudad ubicacion { get; set; }
         public int capacidad { get; set; }
-        public int disponibilidad { get; set; }
-        public float costo { get; set; }
+        public double costo { get; set; }
         public List<Usuario> listHuespedes { get; set; }//ICollection?
 
         public string nombre { get; set; }
@@ -28,13 +27,13 @@ namespace tpAgencia_Gpo_2
         //fereing key
         public int idCiudad { get; set; }
 
-       // public int idUsuario {  get; set; }
+        // public int idUsuario {  get; set; }
 
 
 
         //metodos constructores
         public Hotel() { }
-        public Hotel(int id, Ciudad ubicacion, int capacidad, float costo, string nombre, List<Usuario> listHuespedes, List<ReservaHotel> listMisReservas)
+        public Hotel(int id, Ciudad ubicacion, int capacidad, double costo, string nombre, List<Usuario> listHuespedes, List<ReservaHotel> listMisReservas)
         {
             this.id = id;
             this.ubicacion = ubicacion;
@@ -45,7 +44,7 @@ namespace tpAgencia_Gpo_2
             this.nombre = nombre;
         }
 
-        public Hotel(int id,Ciudad ubicacion, int capacidad, float costo, string nombre)
+        public Hotel(int id, Ciudad ubicacion, int capacidad, double costo, string nombre)
         {
             this.id = id;
             this.ubicacion = ubicacion;
@@ -56,7 +55,7 @@ namespace tpAgencia_Gpo_2
             this.nombre = nombre;
         }
 
-        public Hotel(Ciudad ubicacion, Int32 capacidad, float costo, string nombre)
+        public Hotel(Ciudad ubicacion, Int32 capacidad, double costo, string nombre)
         {
             this.ubicacion = ubicacion;
             this.capacidad = capacidad;
