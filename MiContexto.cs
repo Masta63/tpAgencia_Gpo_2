@@ -360,9 +360,13 @@ namespace tpAgencia_Gpo_2
                 {
                     id = 1,
                     capacidad = 10,
-                    costo = 32000,
-                    nombre = "Faena"
+                    costo = 123.45f,
+                    nombre = "Faena",
+                    disponibilidad = 10, 
+                    idCiudad = 1,
+                    idEsAdmin = true,
 
+                    
                 }) ;
 
 

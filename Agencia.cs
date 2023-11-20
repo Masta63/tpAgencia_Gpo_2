@@ -917,11 +917,16 @@ public class Agencia
 
         Ciudad nuevaUbicacion = contexto.ciudades.FirstOrDefault(ciudad => ciudad.id == ubicacionHotel);
 
+        if (nuevaUbicacion == null)
+        {
+            return "fallo1";
+        }
+
         if (nuevaUbicacion != null)
         {
             try
             {
-                Hotel hotelAModificar = hoteles.FirstOrDefault(hotel => hotel.id == idHotel);
+                Hotel hotelAModificar = contexto.hoteles.FirstOrDefault(hotel => hotel.id == idHotel);
 
                 if (hotelAModificar != null)
                 {

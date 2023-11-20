@@ -1034,7 +1034,7 @@ namespace tpAgencia_Gpo_2
                     while (reader.Read())//metodo devuelve true mientras siga leyendo una fila sigue el bucle
                     {
                         Ciudad ciudad = traerCiudadPorId(reader.GetInt32(17));
-                        Hotel hotel = new Hotel(reader.GetInt32(5), ciudad, reader.GetInt32(18), reader.GetDouble(19), reader.GetString(20));
+                        Hotel hotel = new Hotel(reader.GetInt32(5), ciudad, reader.GetInt32(18), reader.GetFloat(19), reader.GetString(20));
                         Usuario usuario = this.traerUsuarioPorId(reader.GetInt32(1));
                         //leo la fila, la carga en la variable aux y la agrega a mis usuarios para trabajar en tiempo de ejecucion 
                         aux = new ReservaHotel(hotel, usuario, reader.GetDateTime(2), reader.GetDateTime(3), reader.GetDouble(4));
@@ -1123,7 +1123,7 @@ namespace tpAgencia_Gpo_2
                     while (reader.Read())
                     {
                         Ciudad auxCiudad = new Ciudad(reader.GetInt32(5), reader.GetString(6));
-                        aux = new Hotel(reader.GetInt32(0), auxCiudad, reader.GetInt32(2), reader.GetDouble(3), reader.GetString(4));
+                        aux = new Hotel(reader.GetInt32(0), auxCiudad, reader.GetInt32(2), reader.GetFloat(3), reader.GetString(4));
                         ReservaHotel? reserva = null;
                         foreach (var item in traerReservasPorHotel(aux))
                         {
@@ -1511,7 +1511,7 @@ namespace tpAgencia_Gpo_2
                     while (reader.Read())
                     {
                         Ciudad ciudad = new Ciudad(reader.GetInt32(8), reader.GetString(9));
-                        Hotel h = new Hotel(reader.GetInt32(0), ciudad, reader.GetInt32(5), reader.GetDouble(6), reader.GetString(7));
+                        Hotel h = new Hotel(reader.GetInt32(0), ciudad, reader.GetInt32(5), reader.GetFloat(6), reader.GetString(7));
                         hoteles.Add(h);
                     }
                     reader.Close();
