@@ -147,7 +147,7 @@ namespace tpAgencia_Gpo_2
                 {
                     MessageBox.Show("El costo debe tener dos decimales");
                 }
-
+                //FALTA
                 if (agencia.agregarHotel(ubicacion, capacidad, costo, nombre))
                 {
                     MessageBox.Show("Hotel agregado exitosamente");

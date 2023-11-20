@@ -837,29 +837,36 @@ public class Agencia
     }
 
 
-
     public string modificarHotel(int idHotel, int ubicacionHotel, int capacidad, float costo, string nombre)
     {
 
-        Ciudad nuevaUbicacion = ciudades.FirstOrDefault(ciudad => ciudad.id == ubicacionHotel);
-        if (DB.modificarHotel(idHotel, ubicacionHotel, capacidad, costo, nombre) == 1)
+        Ciudad nuevaUbicacion = contexto.ciudades.FirstOrDefault(ciudad => ciudad.id == ubicacionHotel);
+
+        if (nuevaUbicacion == null)
+        {
+            return "fallo1";
+        }
+
+        if (nuevaUbicacion != null)
         {
             try
             {
-                foreach (Hotel hotel in hoteles)
+                Hotel hotelAModificar = contexto.hoteles.FirstOrDefault(hotel => hotel.id == idHotel);
+
+                if (hotelAModificar != null)
                 {
-                    if (hotel.id == idHotel)
-                    {
-                        hotel.ubicacion = nuevaUbicacion;
-                        hotel.capacidad = capacidad;
-                        hotel.costo = costo;
-                        hotel.nombre = nombre;
+                    hotelAModificar.ubicacion = nuevaUbicacion;
+                    hotelAModificar.capacidad = capacidad;
+                    hotelAModificar.costo = costo;
+                    hotelAModificar.nombre = nombre;
+                    contexto.hoteles.Update(hotelAModificar);
+                    contexto.SaveChanges();
 
-                        return "exito";
-
-
-                    }
-
+                    return "exito";
+                }
+                else
+                {
+                    return "fallo2";
                 }
             }
             catch (Exception e)
@@ -867,36 +874,43 @@ public class Agencia
                 return "fallo2";
             }
         }
+
         return "fallo3";
-
-
     }
 
     public bool eliminarHotel(int idHotel)
     {
-        DB.eliminarReservaHotel(idHotel);
-        DB.eliminarHotelUsuario(idHotel);
-        if (DB.eliminarHotel(idHotel) == 1)
+
+        try
         {
-            try
+            var hotelAEliminar = contexto.hoteles.FirstOrDefault(hotel => hotel.id == idHotel);
+
+            if (hotelAEliminar != null)
             {
-                foreach (Hotel h in hoteles)
-                    if (h.id == idHotel)
-                    {
-                        hoteles.Remove(h);
-                        return true;
-                    }
-                return false;
+
+                var reservasRelacionadas = contexto.reservaHoteles.Where(rh => rh.idReservaHotel == idHotel).ToList();
+                var usuarioActual = this.getUsuarioActual();
+
+                foreach (var reservaHotel in reservasRelacionadas)
+                {
+                    usuarioActual.credito += hotelAEliminar.costo;
+                    reservaHotel.miUsuario.credito += hotelAEliminar.costo;
+                }
+
+                contexto.reservaHoteles.RemoveRange(reservasRelacionadas);
+                contexto.hoteles.Remove(hotelAEliminar);
+                contexto.SaveChanges();
+
+                return true;
+
             }
-            catch (Exception)
-            {
-                return false;
-            }
+            return false; //no se encontró el id del hotel
         }
-        else
+        catch (Exception)
         {
-            return false;
+            return false; //excepcion al eliminar el hotel
         }
+
     }
 
 
