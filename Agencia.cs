@@ -628,12 +628,12 @@ public class Agencia
                 {
                     double costoTotalReserva = reservaVuelo.pagado;
                     usuarioActual.credito += costoTotalReserva;
-
+                    //calculo la cant de reservas para luego eliminarlo de la lista de reservas del vuelo y del usuario
                     int cantReservas = (int)(reservaVuelo.pagado / v.costo);
                     v.vendido -= cantReservas;
                     v.listMisReservas.Remove(reservaVuelo);
                     usuarioActual.listMisReservasVuelo.Remove(reservaVuelo);
-                    //
+                    //elimino la relacion vuelo usuario
                     var vueloUsuarioAEliminar = contexto.vueloUsuarios
                     .Where(vus => vus.idUsuario == usuarioActual.id && vus.idVuelo == reservaVuelo.idVuelo);
 
@@ -692,16 +692,10 @@ public class Agencia
     // Reporte de vuelos
     public List<Vuelo> buscarVuelos(Ciudad origen, Ciudad destino, DateTime fecha, int cantidadPax)
     {
-        List<Vuelo> vuelosDisponibles = new List<Vuelo>();
-        foreach (Vuelo vuelo in contexto.vuelos)
-        {
+        
 
-            if (vuelo.origen.nombre == origen.nombre && vuelo.destino.nombre == destino.nombre && vuelo.fecha.Date == fecha.Date && vuelo.capacidad >= cantidadPax + vuelo.vendido)
-            {
-                vuelosDisponibles.Add(vuelo);
-            }
-
-        }
+        var vuelosDisponibles = contexto.vuelos.Where(vuelo => vuelo.origen.nombre == origen.nombre && vuelo.destino.nombre == destino.nombre && vuelo.fecha.Date == fecha.Date && vuelo.capacidad >= cantidadPax + vuelo.vendido).ToList();
+       
         return vuelosDisponibles;
 
     }
@@ -766,8 +760,7 @@ public class Agencia
 
                 ReservaVuelo reserva = new ReservaVuelo(vuelo, usuarioActual, costoTotal);
                 contexto.reservaVuelos.Add(reserva);
-                //esta linea revisar
-                usuarioActual.listVuelosTomados.Add(vuelo);
+                
                 vincularVueloUsuarios(vueloId, usuarioActual.id, cantidad);
 
                 contexto.SaveChanges();
@@ -782,21 +775,21 @@ public class Agencia
     }
 
 
-    public List<Vuelo> misVuelos(Usuario usuarioActual)
-    {
+    //public List<Vuelo> misVuelos(Usuario usuarioActual)
+    //{
 
-        //List<ReservaVuelo> reservasVuelo = contexto.reservaVuelos.Where(rv => rv.idUsuario == usuarioActual.id).ToList();
-        //return usuarioActual.listVuelosTomados = reservasVuelo.Select(reserva => reserva.miVuelo).ToList();
+    //    //List<ReservaVuelo> reservasVuelo = contexto.reservaVuelos.Where(rv => rv.idUsuario == usuarioActual.id).ToList();
+    //    //return usuarioActual.listVuelosTomados = reservasVuelo.Select(reserva => reserva.miVuelo).ToList();
 
-        List<VueloUsuario> vueloUsuario = contexto.vueloUsuarios.Where(vu => vu.idUsuario == usuarioActual.id).ToList();
+    //    List<VueloUsuario> vueloUsuario = contexto.vueloUsuarios.Where(vu => vu.idUsuario == usuarioActual.id).ToList();
 
-        List<Vuelo> misVuelos = vueloUsuario.Select(vu => vu.vuelo).ToList();
+    //    List<Vuelo> misVuelos = vueloUsuario.Select(vu => vu.vuelo).ToList();
 
-        return misVuelos;
-    }
+    //    return misVuelos;
+    //}
 
 
-   
+
     public List<Vuelo> misReservasVuelos(Usuario usuario)
     {
         DateTime fechaActual = DateTime.Now;
