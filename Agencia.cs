@@ -220,27 +220,27 @@ public class Agencia
             return false;
         }
 
-        
+
     }
 
 
     public bool modificarUsuariocontexto(int Id, string Nombre, string Apellido, string Dni, string Mail, string pass, bool admin, bool bloqueado)
     {
         //busco usuario y lo asocio a la variable
-        Usuario u = contexto.usuarios.Where(u =>u.id == Id).FirstOrDefault();
-        if (u != null )
+        Usuario u = contexto.usuarios.Where(u => u.id == Id).FirstOrDefault();
+        if (u != null)
         {
             try
             {
                 u.name = Nombre;
                 u.apellido = Apellido;
-                u.dni = Dni.ToString(); 
+                u.dni = Dni.ToString();
                 u.mail = Mail;
                 u.password = pass;
                 u.esAdmin = admin;
                 u.bloqueado = bloqueado;
                 contexto.usuarios.Update(u);
-                contexto.SaveChanges() ;
+                contexto.SaveChanges();
                 return true;
             }
             catch (Exception)
@@ -261,7 +261,7 @@ public class Agencia
         if (u != null)
         {
             u.credito = monto;
-            
+
             contexto.usuarios.Update(u);
             contexto.SaveChanges();
             return true;
@@ -274,11 +274,11 @@ public class Agencia
     //agrego credito en el ABM
     public bool AgregarCreditoContexto(int id, double monto)
     {
-        try     
+        try
         {
             Usuario u = contexto.usuarios.Where(u => u.id == id).FirstOrDefault();
             if (u != null)
-            
+
             {
                 u.credito += monto;
                 contexto.usuarios.Update(u);
@@ -586,7 +586,7 @@ public class Agencia
                             contexto.SaveChanges();
                             return "reservaModificada";
                         }
-                        if(nuevoMonto == 0)
+                        if (nuevoMonto == 0)
                         {
                             return "nomodifica";
                         }
@@ -678,7 +678,7 @@ public class Agencia
             return 0;
         }
     }
- 
+
     public List<Vuelo> getVuelos()
     {
         return contexto.vuelos.ToList();
@@ -692,10 +692,10 @@ public class Agencia
     // Reporte de vuelos
     public List<Vuelo> buscarVuelos(Ciudad origen, Ciudad destino, DateTime fecha, int cantidadPax)
     {
-        
+
 
         var vuelosDisponibles = contexto.vuelos.Where(vuelo => vuelo.origen.nombre == origen.nombre && vuelo.destino.nombre == destino.nombre && vuelo.fecha.Date == fecha.Date && vuelo.capacidad >= cantidadPax + vuelo.vendido).ToList();
-       
+
         return vuelosDisponibles;
 
     }
@@ -760,7 +760,7 @@ public class Agencia
 
                 ReservaVuelo reserva = new ReservaVuelo(vuelo, usuarioActual, costoTotal);
                 contexto.reservaVuelos.Add(reserva);
-                
+
                 vincularVueloUsuarios(vueloId, usuarioActual.id, cantidad);
 
                 contexto.SaveChanges();
@@ -818,16 +818,13 @@ public class Agencia
     #region Metodos hotel
 
     public bool agregarHotel(int ubicacionHotel, Int32 capacidad, float costo, string nombre)
-
     {
-        Ciudad ubicacion = ciudades.FirstOrDefault(ciudad => ciudad.id == ubicacionHotel);
-        int idNuevoHotel;
-        idNuevoHotel = DB.agregarHotel(ubicacionHotel, capacidad, costo, nombre);
-        if (idNuevoHotel != -1)
+        Ciudad ubicacion = contexto.ciudades.FirstOrDefault(ciudad => ciudad.id == ubicacionHotel);
+        if (ubicacion != null)
         {
-            Hotel nuevo = new Hotel(ubicacion, capacidad, costo, nombre);
-            nuevo.id = idNuevoHotel;
-            hoteles.Add(nuevo);
+            Hotel nuevoHotel = new Hotel(ubicacion, capacidad, costo, nombre);
+            contexto.hoteles.Add(nuevoHotel);
+            contexto.SaveChanges();
             return true;
         }
         else
