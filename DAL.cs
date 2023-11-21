@@ -946,7 +946,7 @@ namespace tpAgencia_Gpo_2
         }
 
 
-
+        //Hace referencia a metodos del mismo archivo DAL. Para el tp3 no se esta usando
         public Usuario? traerUsuarioPorId(Int32 idUsuario)
         {
             Usuario? aux = null;
@@ -977,7 +977,7 @@ namespace tpAgencia_Gpo_2
             }
             return aux;
         }
-
+        //Hace referencia a metodos del mismo archivo DAL. Para el tp3 no se esta usando
         public Ciudad? traerCiudadPorId(Int32 idCiudad)
         {
             Ciudad? aux = null;
@@ -1052,7 +1052,7 @@ namespace tpAgencia_Gpo_2
             return reservaHotels;
 
         }
-
+        //Hace referencia a metodos del mismo archivo DAL. Para el tp3 no se esta usando
         public List<ReservaHotel> traerReservasPorHotel(Hotel hotel)
         {
             List<ReservaHotel> reservasPorHotel = new List<ReservaHotel>();
@@ -1080,7 +1080,7 @@ namespace tpAgencia_Gpo_2
             }
             return reservasPorHotel;
         }
-
+        //Hace referencia a metodos del mismo archivo DAL. Para el tp3 no se esta usando
         public List<Usuario> traerMisHuespedesPorHotel(Hotel hotel)
         {
             List<Usuario> huespedes = new List<Usuario>();
@@ -1226,7 +1226,7 @@ namespace tpAgencia_Gpo_2
             }
 
         }
-
+        //Hace referencia a metodos del mismo archivo DAL. Para el tp3 no se esta usando
         public int traerCantidadDeUsuarioHotel(Int32 idUsuario, Int32 idHotel)
         {
             Int32 cantidad = 0;
