@@ -48,10 +48,7 @@ public class Agencia
 
     }//conexion
     #region conexion y carga
-    public void cerrarContexto()
-    {
-        contexto.Dispose();//continuar
-    }
+
     private void inicializarAtributos()
     {
 
