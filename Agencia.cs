@@ -878,14 +878,14 @@ public class Agencia
         try
         {
             var hotelAEliminar = contexto.hoteles.FirstOrDefault(hotel => hotel.id == idHotel);
-            var miUsuario = contexto.usuarios.FirstOrDefault(x  => x.id == getUsuarioActual().id);
+            var miUsuario = contexto.usuarios.FirstOrDefault(x => x.id == getUsuarioActual().id);
             if (hotelAEliminar != null)
             {
                 double monto = 0;
 
                 foreach (var reservaHotel in hotelAEliminar.listMisReservas)
                 {
-                
+
                     monto += reservaHotel.pagado;
                     contexto.reservaHoteles.RemoveRange(reservaHotel);
                 }
@@ -1184,19 +1184,14 @@ public class Agencia
     #region reservaHoteles Context
 
 
-    public List<Hotel> misHotelesQueVisiteContext(Int32 idUsuario)
+    public List<Hotel>? misHotelesQueVisiteContext(Int32 idUsuario)
     {
         try
         {
-            List<Hotel> hotels = new List<Hotel>();
-            List<HotelUsuario> HotelUsuario = contexto.HotelUsuario.Where(x => x.idUsuario == idUsuario).ToList();
-
-            foreach (var itemHotelUsuario in HotelUsuario)
-            {
-                Hotel hotel = contexto.hoteles.FirstOrDefault(x => x.id == itemHotelUsuario.idHotel);
-                hotels.Add(hotel);
-            }
-            return hotels;
+            var listHoteles = from hu in contexto.HotelUsuario
+                              join h in contexto.hoteles on hu.idHotel equals h.id where hu.idUsuario == idUsuario 
+                              select new { h }.h;
+            return listHoteles.ToList();
         }
         catch (Exception)
         {
