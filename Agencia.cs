@@ -347,40 +347,35 @@ public class Agencia
 
     public bool eliminarCiudad(int id)
     {
-        if (DB.eliminarCiudad(id) == 1)
+        try
         {
-            try
+            Ciudad ciudadAEliminar = contexto.ciudades.Where(c => c.id == id).FirstOrDefault();
+            if (ciudadAEliminar != null)
             {
-                foreach (Ciudad itemCiudad in ciudades)
-                {
-                    if (itemCiudad.id == id)
-                    {
-                        ciudades.Remove(itemCiudad);
+                contexto.ciudades.Remove(ciudadAEliminar);
+                contexto.SaveChanges();
+                return true;
 
-                        return true;
-                    }
-                }
             }
-            catch (Exception)
-            {
-                return false;
-            }
+           
+            return false;
         }
-        return false;
+        catch (Exception e)
+        {
+            return false;
+        }
     }
 
     public bool agregarCiudad(string nombre)
     {
-
-        int idNuevoCiudad;
-        idNuevoCiudad = DB.agregarCiudad(nombre);
-        if (idNuevoCiudad != -1)
+        try
         {
-            Ciudad nuevo = new Ciudad(idNuevoCiudad, nombre);
-            ciudades.Add(nuevo);
+            Ciudad city = new Ciudad(nombre);
+            contexto.ciudades.Add(city);
+            contexto.SaveChanges();
             return true;
         }
-        else
+        catch (Exception e)
         {
             return false;
         }
@@ -389,20 +384,19 @@ public class Agencia
 
     public int modificarCiudad(int id, string nombre)
     {
-        if (DB.modificarCiudad(id, nombre) == 1)
-        {
-            foreach (Ciudad c in ciudades)
+       
+            Ciudad ciudadAModificar = contexto.ciudades.Where(ciudad => ciudad.id == id).FirstOrDefault();
+            if(ciudadAModificar != null)
             {
-                if (c.id == id)
-                {
-                    c.nombre = nombre;
-
-                    return 1;
-                }
+                ciudadAModificar.nombre = nombre;
+                contexto.ciudades.Update(ciudadAModificar);
+                contexto.SaveChanges();
+                return 1;
             }
-            return 1;
-        }
-        return -1;
+            else
+            {
+                return -1;
+            }
     }
 
     #endregion
