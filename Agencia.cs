@@ -881,20 +881,22 @@ public class Agencia
         try
         {
             var hotelAEliminar = contexto.hoteles.FirstOrDefault(hotel => hotel.id == idHotel);
-
+            var miUsuario = contexto.usuarios.FirstOrDefault(x  => x.id == getUsuarioActual().id);
             if (hotelAEliminar != null)
             {
+                double monto = 0;
 
-                var reservasRelacionadas = contexto.reservaHoteles.Where(rh => rh.idReservaHotel == idHotel).ToList();
-                var usuarioActual = this.getUsuarioActual();
-
-                foreach (var reservaHotel in reservasRelacionadas)
+                foreach (var reservaHotel in hotelAEliminar.listMisReservas)
                 {
-                    usuarioActual.credito += hotelAEliminar.costo;
-                    reservaHotel.miUsuario.credito += hotelAEliminar.costo;
+                
+                    monto += reservaHotel.pagado;
+                    contexto.reservaHoteles.RemoveRange(reservaHotel);
                 }
 
-                contexto.reservaHoteles.RemoveRange(reservasRelacionadas);
+                double total = miUsuario.credito + monto;
+                miUsuario.credito = total;
+                this.getUsuarioActual().credito = total;
+                contexto.usuarios.Update(miUsuario);
                 contexto.hoteles.Remove(hotelAEliminar);
                 contexto.SaveChanges();
 
