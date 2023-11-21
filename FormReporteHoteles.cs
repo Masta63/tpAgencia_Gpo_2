@@ -114,7 +114,7 @@ namespace tpAgencia_Gpo_2
             DateTime fechaEgreso = fechaHasta.Value;
             bool disponibilidad = false;
             dataGridViewHotel.Rows.Clear();
-            //se genera los datos de la grilla a traves de la disponibilidad generada
+            //se genera los datos de la grilla a traves de la disponibilidad generada, tambien se ve reflejado en la grilla la disponibilidad del hotel, si no hay disponibilidad directamente no aparece el registro para seleccionar
             foreach (var itemHotel in Agencia.TraerDisponibilidadHotel(ciudadSeleccionada, fechaIngreso, fechaEgreso, Convert.ToInt32(cantPerstext.Text)))
             {
                 dataGridViewHotel.Rows.Add(new string[] { Convert.ToString(itemHotel.id), itemHotel.ubicacion.nombre, Convert.ToString(Agencia.calcularDisponibilidad(itemHotel,fechaIngreso, fechaEgreso)), Convert.ToString(Agencia.CalcularCosto(fechaEgreso, fechaIngreso, itemHotel.costo)), itemHotel.nombre, fechaIngreso.ToShortDateString(), fechaEgreso.ToShortDateString() });

@@ -52,6 +52,8 @@
             dateTimePickerFechaHasta = new DateTimePicker();
             button2 = new Button();
             textBoxidHotel = new TextBox();
+            label3 = new Label();
+            cantPerstext = new TextBox();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
             // 
@@ -158,7 +160,7 @@
             // textBox_id
             // 
             textBox_id.Enabled = false;
-            textBox_id.Location = new Point(944, 176);
+            textBox_id.Location = new Point(959, 151);
             textBox_id.Name = "textBox_id";
             textBox_id.Size = new Size(161, 23);
             textBox_id.TabIndex = 28;
@@ -166,7 +168,7 @@
             // label_id
             // 
             label_id.AutoSize = true;
-            label_id.Location = new Point(920, 185);
+            label_id.Location = new Point(935, 160);
             label_id.Name = "label_id";
             label_id.Size = new Size(18, 15);
             label_id.TabIndex = 29;
@@ -175,7 +177,7 @@
             // label4
             // 
             label4.AutoSize = true;
-            label4.Location = new Point(900, 223);
+            label4.Location = new Point(915, 198);
             label4.Name = "label4";
             label4.Size = new Size(38, 15);
             label4.TabIndex = 32;
@@ -184,7 +186,7 @@
             // textCosto
             // 
             textCosto.Enabled = false;
-            textCosto.Location = new Point(944, 215);
+            textCosto.Location = new Point(959, 190);
             textCosto.Name = "textCosto";
             textCosto.Size = new Size(161, 23);
             textCosto.TabIndex = 33;
@@ -252,18 +254,36 @@
             // textBoxidHotel
             // 
             textBoxidHotel.Enabled = false;
-            textBoxidHotel.Location = new Point(944, 133);
+            textBoxidHotel.Location = new Point(959, 108);
             textBoxidHotel.Name = "textBoxidHotel";
             textBoxidHotel.Size = new Size(161, 23);
             textBoxidHotel.TabIndex = 46;
             textBoxidHotel.Visible = false;
             textBoxidHotel.TextChanged += textBoxidHotel_TextChanged;
             // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Location = new Point(848, 227);
+            label3.Name = "label3";
+            label3.Size = new Size(105, 15);
+            label3.TabIndex = 48;
+            label3.Text = "Cantidad Personas";
+            // 
+            // cantPerstext
+            // 
+            cantPerstext.Location = new Point(959, 224);
+            cantPerstext.Name = "cantPerstext";
+            cantPerstext.Size = new Size(161, 23);
+            cantPerstext.TabIndex = 47;
+            // 
             // FormReservasHoteles
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1150, 490);
+            Controls.Add(label3);
+            Controls.Add(cantPerstext);
             Controls.Add(textBoxidHotel);
             Controls.Add(button2);
             Controls.Add(dateTimePickerFechaHasta);
@@ -314,5 +334,7 @@
         private DataGridViewTextBoxColumn fechaHasta;
         private DataGridViewTextBoxColumn idHotel;
         private DataGridViewTextBoxColumn Costo;
+        private Label label3;
+        private TextBox cantPerstext;
     }
 }

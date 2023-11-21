@@ -357,7 +357,7 @@ public class Agencia
                 return true;
 
             }
-           
+
             return false;
         }
         catch (Exception e)
@@ -384,19 +384,19 @@ public class Agencia
 
     public int modificarCiudad(int id, string nombre)
     {
-       
-            Ciudad ciudadAModificar = contexto.ciudades.Where(ciudad => ciudad.id == id).FirstOrDefault();
-            if(ciudadAModificar != null)
-            {
-                ciudadAModificar.nombre = nombre;
-                contexto.ciudades.Update(ciudadAModificar);
-                contexto.SaveChanges();
-                return 1;
-            }
-            else
-            {
-                return -1;
-            }
+
+        Ciudad ciudadAModificar = contexto.ciudades.Where(ciudad => ciudad.id == id).FirstOrDefault();
+        if(ciudadAModificar != null)
+        {
+            ciudadAModificar.nombre = nombre;
+            contexto.ciudades.Update(ciudadAModificar);
+            contexto.SaveChanges();
+            return 1;
+        }
+        else
+        {
+            return -1;
+        }
     }
 
     #endregion
@@ -952,29 +952,46 @@ public class Agencia
     {
         return contexto.reservaHoteles.ToList();
     }
-    //
-    public bool TraerDisponibilidadHotelParaEdicion(Int32 idhotel, DateTime fechaIngreso, DateTime fechaEgreso, Int32 cantReserva)
+    //al modificar la fecha verifica la disponibilidad para ese rango de fecha nuevo
+    public bool TraerDisponibilidadHotelParaEdicion(Int32 idhotel, DateTime fechaIngreso, DateTime fechaEgreso, Int32 cantPersonas, Int32 idReservaHotel)
     {
         Hotel miHotel = this.getHoteles().FirstOrDefault(x => x.id == Convert.ToInt32(idhotel));
         bool estaRango = false;
-        int difcantPer = 0;
+        bool entrorango = false;
+        int difcantPer = miHotel.capacidad;
         bool hayDisponibilidad = false;
-
+        int total = 0;
+        // recorre sobre el hotel, las reservas de ese hotel
         foreach (var itemReserva in miHotel.listMisReservas)
-        {
+        {   // verifica si la fecha seleccionada esta en el rango de las fechas reservadas
             estaRango = this.verificacionRango(itemReserva, miHotel, fechaIngreso, fechaEgreso);
-
+            //si esta en rango, resta la capacidad del hotel sobre la cantidad de personas que reservaron esa fecha
             if (estaRango)
             {
-                difcantPer = miHotel.capacidad - itemReserva.cantidadPersonas;
-            }
-            else
-            {
-                difcantPer = miHotel.capacidad;
+                // si es la reserva que estoy editando
+                if (itemReserva.idReservaHotel == idReservaHotel)
+                {
+                    //le pasa la nueva cantidad de personas y se la resta a la capacidad
+                    itemReserva.cantidadPersonas = cantPersonas;
+                    difcantPer = difcantPer - itemReserva.cantidadPersonas;
+                }
+                else
+                {                   
+                    difcantPer = difcantPer - itemReserva.cantidadPersonas;
+                }
+                entrorango = true;
             }
         }
+        //si entro dentro de rango, significa que esta validando sobre un rango de fecha de reserva, estoy quiere 
+        //decir que la resta de la cantidad de personas elejidas para la edicion ya esta contemplada por lo tanto solo se le pasa el monto, si la nueva edicion
+        //no esta dentro de un rango la resta se realiza
+        if (entrorango)
+            total = difcantPer;
+        else
+            total = difcantPer - cantPersonas;
 
-        if (cantReserva <= difcantPer)
+        //si la cantidad de personas contabilizadas por cada reserva y las nuevas ingresadas, "total" es menor siginifica que hay capacidad ya que total es menos a capacidad del hotel
+        if (miHotel.capacidad >= total && total >= 0)
             hayDisponibilidad = true;
 
         return hayDisponibilidad;
@@ -984,7 +1001,7 @@ public class Agencia
         bool estaRango;
         int difCantPer = 0;
         List<Hotel> hotelesDisponibles = new List<Hotel>();
-
+        //recorre por cada hotel las reservas
         foreach (var itemHotel in this.getHoteles())
         {
             if (itemHotel.ubicacion.nombre.Trim().ToUpper() == ciudadSeleccionada.Trim().ToUpper())
@@ -996,10 +1013,13 @@ public class Agencia
                     estaRango = this.verificacionRango(itemReserva, itemHotel, fechaIngreso, fechaEgreso);
                     if (estaRango)
                     {
+                        //si esta en rango, le va restando la cantidad de personas por reserva a la capacidad total sobre ese rango de fecha que debe coincidir con el rango de fecha seleccionado
                         difCantPer = difCantPer - itemReserva.cantidadPersonas;
                     }
                 }
+                //a esa resta que se le hizo de la capacidad total, se le resta tamb la cantidad de personas que se ingreso en esa alta de reserva
                 int total = difCantPer - cantPersonas;
+                //se agrega a la lista si el hotel esta disponible, si hay disponibilidad en esa fecha.
                 if (itemHotel.capacidad >= total && total >= 0)
                     hotelesDisponibles.Add(itemHotel);
             }
@@ -1066,14 +1086,14 @@ public class Agencia
         this.modificarCreditoContext(this.getUsuarioActual());
     }
 
-    public void editarReservaHotel(DateTime fechaDesde, DateTime fechaHasta, double pagado, Int32 idReservaHotel, Int32 idHotel)
+    public void editarReservaHotel(DateTime fechaDesde, DateTime fechaHasta, double pagado, Int32 idReservaHotel, Int32 idHotel, Int32 cantPers)
     {
         //Trae el hotel buscandolo en el contexto por id hotel
         Hotel miHotel = this.getHoteles().FirstOrDefault(x => x.id == idHotel);
         //si la fecha es mayor a la editada, suma el costo a lo que tenia, si es menor se lo resta 
         this.devolverDineroOsumarDinero(fechaDesde, fechaHasta, this.getUsuarioActual().listMisReservasHoteles, idReservaHotel, miHotel);
         //Modifica la reserva en la base
-        this.modificarReservaHotelContext(fechaDesde, fechaHasta, pagado, idReservaHotel);
+        this.modificarReservaHotelContext(fechaDesde, fechaHasta, pagado, idReservaHotel, cantPers);
         ReservaHotel reservaHotelUsuarioActual = this.getUsuarioActual().listMisReservasHoteles.FirstOrDefault(x => x.idReservaHotel == idReservaHotel);
         //Modifica la reserva en la reserva del usuario actual
         Usuario usuarioActual = this.getUsuarioActual();
@@ -1081,6 +1101,7 @@ public class Agencia
         {
             if (itemreserva.idReservaHotel == reservaHotelUsuarioActual.idReservaHotel)
             {
+                itemreserva.cantidadPersonas = cantPers;
                 itemreserva.fechaDesde = fechaDesde;
                 itemreserva.fechaHasta = fechaHasta;
                 itemreserva.pagado = pagado;
@@ -1183,7 +1204,8 @@ public class Agencia
         try
         {
             var listHoteles = from hu in contexto.HotelUsuario
-                              join h in contexto.hoteles on hu.idHotel equals h.id where hu.idUsuario == idUsuario 
+                              join h in contexto.hoteles on hu.idHotel equals h.id
+                              where hu.idUsuario == idUsuario
                               select new { h }.h;
             return listHoteles.ToList();
         }
@@ -1255,7 +1277,7 @@ public class Agencia
         }
     }
 
-    public bool modificarReservaHotelContext(DateTime fechaDesde, DateTime fechaHasta, double pagado, Int32 idReservaHotel)
+    public bool modificarReservaHotelContext(DateTime fechaDesde, DateTime fechaHasta, double pagado, Int32 idReservaHotel, Int32 cantPers)
     {
         try
         {
@@ -1263,6 +1285,7 @@ public class Agencia
             reservaHotel.fechaDesde = fechaDesde;
             reservaHotel.fechaHasta = fechaHasta;
             reservaHotel.pagado = pagado;
+            reservaHotel.cantidadPersonas = cantPers;
             contexto.reservaHoteles.Update(reservaHotel);
             contexto.SaveChanges();
             return true;

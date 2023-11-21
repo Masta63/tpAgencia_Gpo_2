@@ -44,13 +44,16 @@ namespace tpAgencia_Gpo_2
 
             if (usuarioActual != null)
             {
-                foreach (var reservas in agencia.getUsuarioActual().listMisReservasHoteles)
+                if (agencia.getUsuarioActual().listMisReservasHoteles != null)
                 {
-                    dataGridView1.Rows.Add(
-                        reservas.idReservaHotel,
-                        reservas.miHotel.ubicacion.nombre,
-                        agencia.CalcularCosto(reservas.fechaHasta, reservas.fechaDesde, reservas.miHotel.costo),
-                       reservas.miHotel.nombre, reservas.miHotel.capacidad, reservas.fechaDesde, reservas.fechaHasta, reservas.miHotel.id, reservas.miHotel.costo);
+                    foreach (var reservas in agencia.getUsuarioActual().listMisReservasHoteles)
+                    {
+                        dataGridView1.Rows.Add(
+                            reservas.idReservaHotel,
+                            reservas.miHotel.ubicacion.nombre,
+                            agencia.CalcularCosto(reservas.fechaHasta, reservas.fechaDesde, reservas.miHotel.costo),
+                           reservas.miHotel.nombre, reservas.miHotel.capacidad, reservas.fechaDesde, reservas.fechaHasta, reservas.miHotel.id, reservas.miHotel.costo);
+                    }
                 }
             }
         }
@@ -120,27 +123,34 @@ namespace tpAgencia_Gpo_2
         }
         private void button2_Click(object sender, EventArgs e)
         {
-            if (calcularCostoParaFecha())
+            if (!string.IsNullOrEmpty(cantPerstext.Text))
             {
-                Int32 idReservaHotel = Convert.ToInt32(textBox_id.Text);
-                DateTime fechaDesde = dateTimePickerFechaDesde.Value;
-                DateTime fechaHasta = dateTimePickerFechaHasta.Value;
+                if (calcularCostoParaFecha())
+                {
+                    Int32 idReservaHotel = Convert.ToInt32(textBox_id.Text);
+                    DateTime fechaDesde = dateTimePickerFechaDesde.Value;
+                    DateTime fechaHasta = dateTimePickerFechaHasta.Value;
 
-                if (agencia.TraerDisponibilidadHotelParaEdicion(Convert.ToInt32(textBoxidHotel.Text), fechaDesde, fechaHasta, 1))
-                {
-                    agencia.editarReservaHotel(fechaDesde, fechaHasta, agencia.CalcularCostoParaEdicion(fechaDesde, fechaHasta, Convert.ToInt32(textBoxidHotel.Text)), idReservaHotel, Convert.ToInt32(textBoxidHotel.Text));
-                    refrescar();
-                    textBox_id.Text = "";
-                    textCosto.Text = "";
-                    button1.Enabled = false;
-                    button2.Enabled = false;
-                    dateTimePickerFechaDesde.Enabled = false;
-                    dateTimePickerFechaHasta.Enabled = false;
+                    if (agencia.TraerDisponibilidadHotelParaEdicion(Convert.ToInt32(textBoxidHotel.Text), fechaDesde, fechaHasta, Convert.ToInt32(cantPerstext.Text), idReservaHotel))
+                    {
+                        agencia.editarReservaHotel(fechaDesde, fechaHasta, agencia.CalcularCostoParaEdicion(fechaDesde, fechaHasta, Convert.ToInt32(textBoxidHotel.Text)), idReservaHotel, Convert.ToInt32(textBoxidHotel.Text), Convert.ToInt32(cantPerstext.Text));
+                        refrescar();
+                        textBox_id.Text = "";
+                        textCosto.Text = "";
+                        button1.Enabled = false;
+                        button2.Enabled = false;
+                        dateTimePickerFechaDesde.Enabled = false;
+                        dateTimePickerFechaHasta.Enabled = false;
+                    }
+                    else
+                    {
+                        MessageBox.Show("No hay disponibilidad");
+                    }
                 }
-                else
-                {
-                    MessageBox.Show("No hay disponibilidad");
-                }
+            }
+            else
+            {
+                MessageBox.Show("Debe ingresar cantidad de personas");
             }
         }
 
@@ -151,7 +161,7 @@ namespace tpAgencia_Gpo_2
         private void dateTimePickerFechaDesde_ValueChanged(object sender, EventArgs e)
         {
         }
-
+        //valida fecha desde con fecha hasta, en tal caso que cumpla con la condicion calcula costo y habilita
         private bool calcularCostoParaFecha()
         {
             if (dateTimePickerFechaHasta.Value.Date < dateTimePickerFechaDesde.Value.Date)
