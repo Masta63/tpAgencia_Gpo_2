@@ -1353,4 +1353,8 @@ public class Agencia
 
 
 
+    public void cerrar()
+    {
+        contexto.Dispose();
+    }
 }

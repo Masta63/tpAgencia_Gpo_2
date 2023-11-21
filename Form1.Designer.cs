@@ -17,7 +17,7 @@
             {
                 components.Dispose();
             }
-            
+            Agencia.cerrar();
             base.Dispose(disposing);
         }
 
