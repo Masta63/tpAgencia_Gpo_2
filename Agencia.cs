@@ -49,6 +49,11 @@ public class Agencia
     }//conexion
     #region conexion y carga
 
+    public void cerrar()
+    {
+        contexto.Dispose();
+    }
+
     private void inicializarAtributos()
     {
 
@@ -386,7 +391,7 @@ public class Agencia
     {
 
         Ciudad ciudadAModificar = contexto.ciudades.Where(ciudad => ciudad.id == id).FirstOrDefault();
-        if(ciudadAModificar != null)
+        if (ciudadAModificar != null)
         {
             ciudadAModificar.nombre = nombre;
             contexto.ciudades.Update(ciudadAModificar);
@@ -976,7 +981,7 @@ public class Agencia
                     difcantPer = difcantPer - itemReserva.cantidadPersonas;
                 }
                 else
-                {                   
+                {
                     difcantPer = difcantPer - itemReserva.cantidadPersonas;
                 }
                 entrorango = true;
@@ -1362,11 +1367,5 @@ public class Agencia
     }
 
     #endregion
-
-
-
-    public void cerrar()
-    {
-        contexto.Dispose();
-    }
 }
+
