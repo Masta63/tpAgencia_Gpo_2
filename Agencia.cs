@@ -166,14 +166,8 @@ public class Agencia
     public bool agregarUsuarioContexto(string Dni, string Nombre, string apellido, string Mail, string Password, bool EsADM, bool Bloqueado)
     {
         //comprobación para que no me agreguen usuarios con DNI duplicado
-        bool esValido = true;
-        foreach (Usuario u in listUsuarios)
-        {
-            if (u.dni == Dni)
-            {
-                esValido = false;
-            }
-        }
+        bool esValido = existeUsuarioConDniOMail(Dni,Mail);
+        
         try
         {
             if (esValido)
@@ -184,7 +178,11 @@ public class Agencia
                 return true;
             }
             else
+            {
+                MessageBox.Show("ya existe un usuario registrado con ese mail o Dni");
                 return false;
+            }
+                
         }
         catch (Exception)
         {
