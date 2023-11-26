@@ -50,25 +50,27 @@ namespace tpAgencia_Gpo_2
                 
                 List<ReservaVuelo> misReservasVuelo = agencia.getUsuarioActual().listMisReservasVuelo;
 
-               
-                int cantidadReservas = misReservasVuelo.Count;
+                //si no tiene reservas rompe por lo que verifico que no sea null y de serlo le asigne 0
+                int cantidadReservas = misReservasVuelo?.Count ?? 0;
 
-
-
-                foreach (var vuelos in misReservasVuelo)
+                //si es  distinto de cero quiere decir que hay reserva por lo que ingresa y carga datos
+                if (cantidadReservas !=0)
                 {
+                    foreach (var vuelos in misReservasVuelo)
+                    {
 
-                    dataGridView1.Rows.Add(
-                        vuelos.idReservaVuelo,
-                        vuelos.miVuelo.id,
-                        vuelos.miVuelo.origen.nombre,
-                        vuelos.miVuelo.destino.nombre,
-                      vuelos.pagado,
-                        vuelos.miVuelo.fecha.ToString("dd/MM/yyyy"),
-                        vuelos.miVuelo.aerolinea,
-                        vuelos.miVuelo.avion);
+                        dataGridView1.Rows.Add(
+                            vuelos.idReservaVuelo,
+                            vuelos.miVuelo.id,
+                            vuelos.miVuelo.origen.nombre,
+                            vuelos.miVuelo.destino.nombre,
+                          vuelos.pagado,
+                            vuelos.miVuelo.fecha.ToString("dd/MM/yyyy"),
+                            vuelos.miVuelo.aerolinea,
+                            vuelos.miVuelo.avion);
 
 
+                    } 
                 }
 
             }
