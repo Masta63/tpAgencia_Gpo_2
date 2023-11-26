@@ -76,10 +76,10 @@ namespace tpAgencia_Gpo_2
 
             if (usuarioActual != null)
             {
-                if (refAgencia.getUsuarioActual().password.Trim() != textBox_pass_nuevo.Text.Trim())
+                if (refAgencia.getUsuarioActual().password.Trim() == textBox_pass_viejo.Text.Trim())
                 {
-
-                    if (refAgencia.modificarUsuariocontexto(usuarioActual.id,usuarioActual.name,usuarioActual.apellido,usuarioActual.dni,usuarioActual.mail, textBox_pass_nuevo.Text,usuarioActual.esAdmin,usuarioActual.bloqueado))
+                    
+                    if (refAgencia.modificarPasswordContexto(usuarioActual.id,textBox_pass_nuevo.Text))
                     {
 
                         MessageBox.Show("Modificado con éxito");
@@ -87,8 +87,12 @@ namespace tpAgencia_Gpo_2
 
                     else
                     {
-                        MessageBox.Show("Problemas al modificar");//corregir problema de porque entra aca
+                        MessageBox.Show("Problemas al modificar");
                     }
+                }
+                else
+                {
+                    MessageBox.Show(" Debe coincidir su clave anterior en el campo mencionado");
                 }
 
             }

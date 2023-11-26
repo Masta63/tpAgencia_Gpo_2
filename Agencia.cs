@@ -236,7 +236,7 @@ public class Agencia
                 u.apellido = Apellido;
                 u.dni = Dni.ToString();
                 u.mail = Mail;
-                u.password = pass;
+                u.password = u.password;
                 u.esAdmin = admin;
                 u.bloqueado = bloqueado;
                 contexto.usuarios.Update(u);
