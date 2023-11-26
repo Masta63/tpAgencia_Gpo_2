@@ -105,10 +105,7 @@ public class Agencia
     }
 
 
-    public void setUsuario(Usuario usuario)
-    {
-        listUsuarios.Add(usuario);
-    }
+  
 
     public Usuario? getUsuarioActual()
     {
@@ -199,6 +196,7 @@ public class Agencia
 
     public bool eliminarUsuarioContext(int Id)
     {
+        
         Usuario u = contexto.usuarios.Where(u => u.id == Id).FirstOrDefault();
         if (u != null)
         {
