@@ -1075,11 +1075,19 @@ public class Agencia
 
     public void devolverDineroOsumarDinero(DateTime fechaDesde, DateTime fechaHasta, List<ReservaHotel> misReservas, Int32 idReservaHotel, Hotel miHotel)
     {
-        double costo = 0;
+        double costo = 0; 
+        //Consulta la reserva que se esta editando
         ReservaHotel miReserva = misReservas.FirstOrDefault(x => x.idReservaHotel == idReservaHotel);
+        //Se obtiene la diferencia de dias de la seleccion de fechas del menu
         TimeSpan tsseleccion = fechaHasta.Date.Subtract(fechaDesde.Date);
+        //Se obtiene la diferencia de dias de la reserva
         TimeSpan tsBase = miReserva.fechaHasta.Date.Subtract(miReserva.fechaDesde.Date);
+        //Se resta la diferencia  de fechas de la seleccion de menu con la seleccion de fechas de la reserva para
+        //obtener la cantidad de dias que suma a la reserva o que resta a la reserva
         Int32 sumarCostoPorDia = (tsseleccion.Days + 1) - (tsBase.Days + 1);
+        //Se multiplica la diferencia de dias por lo que sale el hotel por dia, si fuera que en ves de agregar dias
+        //Saco dias de reserva, se resta por el costo al multiplicar un numero negativo por un valor, al dar numero negativo
+        // y ser credito + - total del resultado de la multiplicacion, estaria restandole al credito que tiene el usuario
         //si da positivo la  suma de  (sumarCostoPorDia * miHotel.costo) va a sumar si da negativo va a restar porque + * - es menos
         costo = this.usuarioActual.credito + (sumarCostoPorDia * miHotel.costo);
         this.getUsuarioActual().credito = costo;
