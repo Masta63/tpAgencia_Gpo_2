@@ -155,7 +155,7 @@ namespace tpAgencia_Gpo_2
             FormReservaHotel = new FormReservaHotel(Agencia, Form1, reservaHotel);
             FormReservaHotel.Show();
         }
-
+        //buttonComprar
         private void buttonComprar_Click(object sender, EventArgs e)
         {
             double monto = Agencia.getUsuarioActual().credito;

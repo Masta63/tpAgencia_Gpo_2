@@ -38,12 +38,12 @@ namespace tpAgencia_Gpo_2
                 {
                     string nombreCiudad = txtNombre.Text;
 
-                  
+
                     bool resultado = Agencia.agregarCiudad(nombreCiudad);
 
                     if (resultado)
                     {
-                       
+
                         string mensaje = $"Ciudad: {nombreCiudad}";
                         MessageBox.Show(mensaje, "Información de Ciudad");
                     }
@@ -63,7 +63,7 @@ namespace tpAgencia_Gpo_2
             }
             finally
             {
-               
+
                 MostrarDGV();
             }
 
@@ -145,7 +145,7 @@ namespace tpAgencia_Gpo_2
                 int.Parse(id);
                 ciudadSeleccionada = int.Parse(id);
             }
-            catch(Exception)
+            catch (Exception)
             {
 
             }
@@ -171,6 +171,11 @@ namespace tpAgencia_Gpo_2
                 MenuAgencia.MdiParent = form1;
                 MenuAgencia.Show();
             }
+        }
+
+        private void txtNombre_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
