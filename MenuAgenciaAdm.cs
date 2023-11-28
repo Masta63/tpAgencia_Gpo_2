@@ -221,7 +221,7 @@ namespace tpAgencia_Gpo_2
         {
             this.MdiParent = Form1;
             this.Close();
-            FormReporteCiudad = new  FormReporteCiudad(Agencia, Form1);
+            FormReporteCiudad = new FormReporteCiudad(Agencia, Form1);
             FormReporteCiudad.Show();
         }
         private void TransfDelegadoReservasVuelos()

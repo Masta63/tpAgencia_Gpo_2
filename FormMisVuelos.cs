@@ -71,6 +71,10 @@ namespace tpAgencia_Gpo_2
             }
         }
 
+      
+       
+       
+
         private void Volver_desde_usuario_Click(object sender, EventArgs e)
         {
             this.Close();

@@ -13,11 +13,11 @@
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
-           if (disposing && (components != null))
-           {
+            if (disposing && (components != null))
+            {
                 components.Dispose();
             }
-           base.Dispose(disposing);
+            base.Dispose(disposing);
         }
 
         #region Windows Form Designer generated code
@@ -58,7 +58,8 @@
             menuStrip1.Items.AddRange(new ToolStripItem[] { altasToolStripMenuItem, opcionesUsuarioComunToolStripMenuItem, cerrarSesionToolStripMenuItem });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
-            menuStrip1.Size = new Size(959, 24);
+            menuStrip1.Padding = new Padding(9, 3, 0, 3);
+            menuStrip1.Size = new Size(1370, 35);
             menuStrip1.TabIndex = 1;
             menuStrip1.Text = "menuStrip1";
             menuStrip1.ItemClicked += menuStrip1_ItemClicked;
@@ -67,28 +68,28 @@
             // 
             altasToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { hotelesToolStripMenuItem, personasToolStripMenuItem, ciudadesToolStripMenuItem });
             altasToolStripMenuItem.Name = "altasToolStripMenuItem";
-            altasToolStripMenuItem.Size = new Size(132, 20);
+            altasToolStripMenuItem.Size = new Size(197, 29);
             altasToolStripMenuItem.Text = "Consultas - Opciones";
             altasToolStripMenuItem.Click += altasToolStripMenuItem_Click;
             // 
             // hotelesToolStripMenuItem
             // 
             hotelesToolStripMenuItem.Name = "hotelesToolStripMenuItem";
-            hotelesToolStripMenuItem.Size = new Size(123, 22);
+            hotelesToolStripMenuItem.Size = new Size(187, 34);
             hotelesToolStripMenuItem.Text = "Hoteles";
             hotelesToolStripMenuItem.Click += hotelesToolStripMenuItem_Click;
             // 
             // personasToolStripMenuItem
             // 
             personasToolStripMenuItem.Name = "personasToolStripMenuItem";
-            personasToolStripMenuItem.Size = new Size(123, 22);
+            personasToolStripMenuItem.Size = new Size(187, 34);
             personasToolStripMenuItem.Text = "Vuelos";
             personasToolStripMenuItem.Click += personasToolStripMenuItem_Click;
             // 
             // ciudadesToolStripMenuItem
             // 
             ciudadesToolStripMenuItem.Name = "ciudadesToolStripMenuItem";
-            ciudadesToolStripMenuItem.Size = new Size(123, 22);
+            ciudadesToolStripMenuItem.Size = new Size(187, 34);
             ciudadesToolStripMenuItem.Text = "Ciudades";
             ciudadesToolStripMenuItem.Click += ciudadesToolStripMenuItem_Click;
             // 
@@ -96,7 +97,7 @@
             // 
             opcionesUsuarioComunToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { miCreditoToolStripMenuItem, misreservashotelesToolStripMenuItem, misreservasvuelosToolStripMenuItem, misvuelosencualviajeToolStripMenuItem, misHotelesquevisiteToolStripMenuItem });
             opcionesUsuarioComunToolStripMenuItem.Name = "opcionesUsuarioComunToolStripMenuItem";
-            opcionesUsuarioComunToolStripMenuItem.Size = new Size(171, 20);
+            opcionesUsuarioComunToolStripMenuItem.Size = new Size(255, 29);
             opcionesUsuarioComunToolStripMenuItem.Text = "Opciones - Usuario - Comun";
             opcionesUsuarioComunToolStripMenuItem.Click += opcionesUsuarioComunToolStripMenuItem_Click;
             // 
@@ -104,58 +105,59 @@
             // 
             miCreditoToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { cargarCreditoToolStripMenuItem });
             miCreditoToolStripMenuItem.Name = "miCreditoToolStripMenuItem";
-            miCreditoToolStripMenuItem.Size = new Size(203, 22);
+            miCreditoToolStripMenuItem.Size = new Size(303, 34);
             miCreditoToolStripMenuItem.Text = "Mi credito";
             // 
             // cargarCreditoToolStripMenuItem
             // 
             cargarCreditoToolStripMenuItem.Name = "cargarCreditoToolStripMenuItem";
-            cargarCreditoToolStripMenuItem.Size = new Size(149, 22);
+            cargarCreditoToolStripMenuItem.Size = new Size(270, 34);
             cargarCreditoToolStripMenuItem.Text = "Cargar credito";
             cargarCreditoToolStripMenuItem.Click += cargarCreditoToolStripMenuItem_Click;
             // 
             // misreservashotelesToolStripMenuItem
             // 
             misreservashotelesToolStripMenuItem.Name = "misreservashotelesToolStripMenuItem";
-            misreservashotelesToolStripMenuItem.Size = new Size(203, 22);
+            misreservashotelesToolStripMenuItem.Size = new Size(303, 34);
             misreservashotelesToolStripMenuItem.Text = "Mis reservas hoteles";
             misreservashotelesToolStripMenuItem.Click += misreservashotelesToolStripMenuItem_Click;
             // 
             // misreservasvuelosToolStripMenuItem
             // 
             misreservasvuelosToolStripMenuItem.Name = "misreservasvuelosToolStripMenuItem";
-            misreservasvuelosToolStripMenuItem.Size = new Size(203, 22);
+            misreservasvuelosToolStripMenuItem.Size = new Size(303, 34);
             misreservasvuelosToolStripMenuItem.Text = "Mis reservas vuelos";
             misreservasvuelosToolStripMenuItem.Click += misreservasvuelosToolStripMenuItem_Click;
             // 
             // misvuelosencualviajeToolStripMenuItem
             // 
             misvuelosencualviajeToolStripMenuItem.Name = "misvuelosencualviajeToolStripMenuItem";
-            misvuelosencualviajeToolStripMenuItem.Size = new Size(203, 22);
+            misvuelosencualviajeToolStripMenuItem.Size = new Size(303, 34);
             misvuelosencualviajeToolStripMenuItem.Text = "Mis vuelos(en cual viaje)";
             misvuelosencualviajeToolStripMenuItem.Click += misvuelosencualviajeToolStripMenuItem_Click;
             // 
             // misHotelesquevisiteToolStripMenuItem
             // 
             misHotelesquevisiteToolStripMenuItem.Name = "misHotelesquevisiteToolStripMenuItem";
-            misHotelesquevisiteToolStripMenuItem.Size = new Size(203, 22);
+            misHotelesquevisiteToolStripMenuItem.Size = new Size(303, 34);
             misHotelesquevisiteToolStripMenuItem.Text = "Mis Hoteles(que visite)";
             misHotelesquevisiteToolStripMenuItem.Click += misHotelesquevisiteToolStripMenuItem_Click;
             // 
             // cerrarSesionToolStripMenuItem
             // 
             cerrarSesionToolStripMenuItem.Name = "cerrarSesionToolStripMenuItem";
-            cerrarSesionToolStripMenuItem.Size = new Size(87, 20);
+            cerrarSesionToolStripMenuItem.Size = new Size(130, 29);
             cerrarSesionToolStripMenuItem.Text = "Cerrar sesion";
             cerrarSesionToolStripMenuItem.Click += cerrarSesionToolStripMenuItem_Click;
             // 
             // MenuAgencia
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(959, 449);
+            ClientSize = new Size(1370, 748);
             Controls.Add(menuStrip1);
             MainMenuStrip = menuStrip1;
+            Margin = new Padding(4, 5, 4, 5);
             Name = "MenuAgencia";
             Text = "MenuAgencia";
             Load += MenuAgencia_Load;

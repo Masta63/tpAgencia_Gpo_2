@@ -33,7 +33,7 @@ namespace tpAgencia_Gpo_2
                 fechaHasta.Value = reservaHotel.fechaHasta;
                 textBoxMonto.Text = Convert.ToString(reservaHotel.pagado);
                 cantPerstext.Text = reservaHotel.cantidadPersonas.ToString();
-                dataGridViewHotel.Rows.Add(new string[] { reservaHotel.miHotel.nombre, Convert.ToString(agencia.CalcularCosto(reservaHotel.fechaHasta,reservaHotel.fechaDesde, reservaHotel.miHotel.costo)), Convert.ToString(reservaHotel.miHotel.capacidad), reservaHotel.fechaDesde.ToLongDateString(), reservaHotel.fechaHasta.ToLongDateString(), reservaHotel.cantidadPersonas.ToString() });
+                dataGridViewHotel.Rows.Add(new string[] { reservaHotel.miHotel.nombre, Convert.ToString(agencia.CalcularCosto(reservaHotel.fechaHasta, reservaHotel.fechaDesde, reservaHotel.miHotel.costo)), Convert.ToString(reservaHotel.miHotel.capacidad), reservaHotel.fechaDesde.ToLongDateString(), reservaHotel.fechaHasta.ToLongDateString(), reservaHotel.cantidadPersonas.ToString() });
             }
 
         }
@@ -130,6 +130,16 @@ namespace tpAgencia_Gpo_2
                 MenuAgencia.MdiParent = Form1;
                 MenuAgencia.Show();
             }
+
+        }
+
+        private void boxHoteles_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBoxMonto_TextChanged(object sender, EventArgs e)
+        {
 
         }
     }

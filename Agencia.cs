@@ -25,7 +25,7 @@ public class Agencia
     private int cantUsuarios = 0;
     private int cantHoteles = 0;
     private int cantIdHoteles = 0;
-    private DAL DB; //clase adicional para intercambio con base de datos // esta clase se debe remover
+    //private DAL DB; //clase adicional para intercambio con base de datos // esta clase se debe remover
 
 
     private MiContexto contexto; //Agrego la clase con el contexto de entity
