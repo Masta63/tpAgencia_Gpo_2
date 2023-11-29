@@ -200,6 +200,17 @@ public class Agencia
 
             try
             {
+                u.listMisReservasVuelo.Where(rv => rv.idUsuario == Id).ToList();
+                foreach (ReservaVuelo rv in u.listMisReservasVuelo)
+                {
+
+                    int cantReservas = (int)(rv.pagado / rv.miVuelo.costo);
+
+                    rv.miVuelo.vendido -= cantReservas;
+
+
+                    contexto.vuelos.Update(rv.miVuelo);
+                }
                 contexto.usuarios.Remove(u);
                 contexto.SaveChanges();
                 return true;
@@ -350,7 +361,14 @@ public class Agencia
         try
         {
             Ciudad ciudadAEliminar = contexto.ciudades.Where(c => c.id == id).FirstOrDefault();
-            if (ciudadAEliminar != null)
+            if (ciudadAEliminar.listHoteles.Count() > 0 || ciudadAEliminar.listVuelosDestino.Count() > 0 || ciudadAEliminar.listVuelosOrigen.Count() > 0)
+            {
+                return false;
+
+            }
+            else
+            {
+                if (ciudadAEliminar != null)
             {
                 contexto.ciudades.Remove(ciudadAEliminar);
                 contexto.SaveChanges();
