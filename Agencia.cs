@@ -20,7 +20,7 @@ public class Agencia
     private List<Ciudad> ciudades;
     private List<ReservaHotel> reservasHotel;
     private List<ReservaVuelo> reservasVuelo;
-    private Usuario? usuarioActual { get; set; }
+    private Usuario? reservaVuelo.miUsuario { get; set; }
     private int cantVuelos;
     private int cantUsuarios = 0;
     private int cantHoteles = 0;
@@ -107,12 +107,12 @@ public class Agencia
 
     public Usuario? getUsuarioActual()
     {
-        return this.usuarioActual;
+        return this.reservaVuelo.miUsuario;
     }
 
     public void cerrarSesion()
     {
-        usuarioActual = null;
+        reservaVuelo.miUsuario = null;
     }
 
     public string iniciarSesion(Usuario? usuarioSeleccionados, string inputMail, string inputpass)
@@ -126,7 +126,7 @@ public class Agencia
         else if (usuarioSeleccionados.mail.Trim().Equals(inputMail) && usuarioSeleccionados.password.Trim() == inputpass && !usuarioSeleccionados.bloqueado)
         {
             codigoReturn = "OK";
-            this.usuarioActual = usuarioSeleccionados;
+            this.reservaVuelo.miUsuario = usuarioSeleccionados;
         }
         else
         {
@@ -322,7 +322,7 @@ public class Agencia
 
     public string? nombreLogueado()
     {
-        return this.usuarioActual?.name;
+        return this.reservaVuelo.miUsuario?.name;
     }
 
     //verificar si ya existe un usuario con ese mail o dni
@@ -520,8 +520,8 @@ public class Agencia
         {
             ReservaVuelo rv = contexto.reservaVuelos.Where(rv => rv.idReservaVuelo == idReserva).FirstOrDefault();
             Vuelo v = contexto.vuelos.Where(v => v.id == idVuelo).FirstOrDefault();
-            Usuario u = contexto.usuarios.Where(u => u.id == usuarioActual.id).FirstOrDefault();
-            VueloUsuario vueloUsuarioSelected = contexto.vueloUsuarios.Where(vus => vus.idUsuario == usuarioActual.id && vus.idVuelo == idVuelo).FirstOrDefault();
+            Usuario u = contexto.usuarios.Where(u => u.id == reservaVuelo.miUsuario.id).FirstOrDefault();
+            VueloUsuario vueloUsuarioSelected = contexto.vueloUsuarios.Where(vus => vus.idUsuario == reservaVuelo.miUsuario.id && vus.idVuelo == idVuelo).FirstOrDefault();
 
             if (rv != null)
             {
@@ -541,7 +541,7 @@ public class Agencia
                             if (u.credito > nuevoMonto)
                             {
                                 //le cobro la diferencia 
-                                usuarioActual.credito = usuarioActual.credito - nuevoMonto;
+                                reservaVuelo.miUsuario.credito = reservaVuelo.miUsuario.credito - nuevoMonto;
                                 //actualizo el valor pagado de la nueva reserva 
                                 rv.pagado = rv.pagado + nuevoMonto;
                                 //sumo vendido de la diferencia a vuelo
@@ -568,7 +568,7 @@ public class Agencia
                         if (nuevoMonto > 0)
                         {
                             //devuelvo el dinero al usuario
-                            usuarioActual.credito = usuarioActual.credito + nuevoMonto;
+                            reservaVuelo.miUsuario.credito = reservaVuelo.miUsuario.credito + nuevoMonto;
                             //actualizo el valor pagado en reserva
                             rv.pagado = rv.pagado - nuevoMonto;
                             //resto vendido a vuelo
@@ -607,9 +607,10 @@ public class Agencia
     {
         try
         {
-            ReservaVuelo reservaVuelo = contexto.reservaVuelos.SingleOrDefault(rv => rv.idReservaVuelo == reservaVueloId);
-            Vuelo v = contexto.vuelos.Where(v => v.id == reservaVuelo.idVuelo).FirstOrDefault();
-            VueloUsuario vueloUsuarioSelected = contexto.vueloUsuarios.Where(vus => vus.idUsuario == usuarioActual.id && vus.idVuelo == reservaVuelo.idVuelo).FirstOrDefault();
+            ReservaVuelo reservaVuelo = contexto.reservaVuelos.Where(rv => rv.idReservaVuelo == reservaVueloId).First();
+            Vuelo v = reservaVuelo.miVuelo;//acceder por referencia
+
+            VueloUsuario vueloUsuarioSelected = contexto.vueloUsuarios.Where(vus => vus.idUsuario == reservaVuelo.miUsuario.id && vus.idVuelo == reservaVuelo.idVuelo).FirstOrDefault();
 
             if (reservaVuelo != null)
             {
@@ -618,17 +619,14 @@ public class Agencia
                 if (v.fecha >= fechaActual)
                 {
                     double costoTotalReserva = reservaVuelo.pagado;
-                    usuarioActual.credito += costoTotalReserva;
+                    reservaVuelo.miUsuario.credito += costoTotalReserva;
                     //calculo la cant de reservas para luego eliminarlo de la lista de reservas del vuelo y del usuario
                     int cantReservas = (int)(reservaVuelo.pagado / v.costo);
                     v.vendido -= cantReservas;
                     v.listMisReservas.Remove(reservaVuelo);
-                    usuarioActual.listMisReservasVuelo.Remove(reservaVuelo);
+                    reservaVuelo.miUsuario.listMisReservasVuelo.Remove(reservaVuelo);
                     //elimino la relacion vuelo usuario
-                    var vueloUsuarioAEliminar = contexto.vueloUsuarios
-                    .Where(vus => vus.idUsuario == usuarioActual.id && vus.idVuelo == reservaVuelo.idVuelo);
-
-                    contexto.vueloUsuarios.RemoveRange(vueloUsuarioAEliminar);
+                    contexto.vueloUsuarios.Remove(vueloUsuarioSelected);
                     //
                     contexto.reservaVuelos.Remove(reservaVuelo);
                     contexto.SaveChanges();
@@ -766,13 +764,13 @@ public class Agencia
     }
 
 
-    //public List<Vuelo> misVuelos(Usuario usuarioActual)
+    //public List<Vuelo> misVuelos(Usuario reservaVuelo.miUsuario)
     //{
 
-    //    //List<ReservaVuelo> reservasVuelo = contexto.reservaVuelos.Where(rv => rv.idUsuario == usuarioActual.id).ToList();
-    //    //return usuarioActual.listVuelosTomados = reservasVuelo.Select(reserva => reserva.miVuelo).ToList();
+    //    //List<ReservaVuelo> reservasVuelo = contexto.reservaVuelos.Where(rv => rv.idUsuario == reservaVuelo.miUsuario.id).ToList();
+    //    //return reservaVuelo.miUsuario.listVuelosTomados = reservasVuelo.Select(reserva => reserva.miVuelo).ToList();
 
-    //    List<VueloUsuario> vueloUsuario = contexto.vueloUsuarios.Where(vu => vu.idUsuario == usuarioActual.id).ToList();
+    //    List<VueloUsuario> vueloUsuario = contexto.vueloUsuarios.Where(vu => vu.idUsuario == reservaVuelo.miUsuario.id).ToList();
 
     //    List<Vuelo> misVuelos = vueloUsuario.Select(vu => vu.vuelo).ToList();
 
@@ -783,19 +781,8 @@ public class Agencia
 
     public List<Vuelo> misReservasVuelos(Usuario usuario)
     {
-        DateTime fechaActual = DateTime.Now;
-        List<Vuelo> vuelosReservados = new List<Vuelo>();
-
-
-        foreach (ReservaVuelo reserva in usuario.listMisReservasVuelo)
-        {
-
-            vuelosReservados.Add(reserva.miVuelo);
-
-
-
-        }
-        return vuelosReservados;
+        //devolvemos reservas desde usuario
+        return usuario.listVuelosTomados.ToList();
     }
 
     #endregion
@@ -814,7 +801,13 @@ public class Agencia
         if (ubicacion != null)
         {
             Hotel nuevoHotel = new Hotel(ubicacion, capacidad, costo, nombre);
+            
+            
             contexto.hoteles.Add(nuevoHotel);
+            ubicacion.listHoteles.Add(nuevoHotel);
+
+            contexto.ciudades.Update(ubicacion);
+            //contexto.ciudades.Update();
             contexto.SaveChanges();
             return true;
         }
@@ -848,8 +841,8 @@ public class Agencia
                     hotelAModificar.costo = costo;
                     hotelAModificar.nombre = nombre;
                     contexto.hoteles.Update(hotelAModificar);
+                    contexto.ciudades.Update(hotelAModificar.ubicacion);
                     contexto.SaveChanges();
-
                     return "exito";
                 }
                 else
@@ -1089,7 +1082,7 @@ public class Agencia
         //Saco dias de reserva, se resta por el costo al multiplicar un numero negativo por un valor, al dar numero negativo
         // y ser credito + - total del resultado de la multiplicacion, estaria restandole al credito que tiene el usuario
         //si da positivo la  suma de  (sumarCostoPorDia * miHotel.costo) va a sumar si da negativo va a restar porque + * - es menos
-        costo = this.usuarioActual.credito + (sumarCostoPorDia * miHotel.costo);
+        costo = this.reservaVuelo.miUsuario.credito + (sumarCostoPorDia * miHotel.costo);
         this.getUsuarioActual().credito = costo;
         this.modificarCreditoContext(this.getUsuarioActual());
     }
@@ -1164,7 +1157,7 @@ public class Agencia
 
     public void modificarUsuarioActual(Usuario usuario)
     {
-        this.usuarioActual = usuario;
+        this.reservaVuelo.miUsuario = usuario;
     }
 
     public List<Hotel> traerMisHoteles(Int32 idUsuario)

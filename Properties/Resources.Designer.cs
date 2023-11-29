@@ -61,7 +61,9 @@ namespace tpAgencia_Gpo_2.Properties {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Data Source=DESKTOP-MLJL964\SQLEXPRESS;Initial Catalog=BaseFinal;Integrated Security=True;TrustServerCertificate=True.
+
+        ///   Busca una cadena traducida similar a Data Source=DESKTOP-M5PF5S9\SQLEXPRESS;Initial Catalog=agencia;Integrated Security=True;Encrypt=True;Trust Server Certificate=True. ///   Busca una cadena traducida similar a Data Source=DESKTOP-MLJL964\SQLEXPRESS;Initial Catalog=BaseFinal;Integrated Security=True;TrustServerCertificate=True.
+
         /// </summary>
         internal static string conexion {
             get {
@@ -70,7 +72,9 @@ namespace tpAgencia_Gpo_2.Properties {
         }
         
         /// <summary>
+
         ///   Busca una cadena traducida similar a Data Source=DESKTOP-MLJL964\SQLEXPRESS;Initial Catalog=sistema;Integrated Security=True.
+
         /// </summary>
         internal static string ConnectionStr {
             get {

@@ -73,6 +73,7 @@ namespace tpAgencia_Gpo_2
         private bool validacionesInput()
         {
 
+
             if (boxHoteles.Text == string.Empty)
             {
                 MessageBox.Show("Debe seleccionar un hotel");
