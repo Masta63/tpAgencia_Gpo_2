@@ -840,17 +840,23 @@ public class Agencia
     {
 
         Ciudad nuevaUbicacion = contexto.ciudades.FirstOrDefault(ciudad => ciudad.id == ubicacionHotel);
+        Hotel hotelAModificar = contexto.hoteles.FirstOrDefault(hotel => hotel.id == idHotel);
 
         if (nuevaUbicacion == null)
         {
             return "fallo1";
         }
 
+        if (capacidad > hotelAModificar.capacidad)
+        {
+            return "fallo";
+        }
+
         if (nuevaUbicacion != null)
         {
             try
             {
-                Hotel hotelAModificar = contexto.hoteles.FirstOrDefault(hotel => hotel.id == idHotel);
+                //Hotel hotelAModificar = contexto.hoteles.FirstOrDefault(hotel => hotel.id == idHotel);
 
                 if (hotelAModificar != null)
                 {
@@ -859,8 +865,8 @@ public class Agencia
                     hotelAModificar.costo = costo;
                     hotelAModificar.nombre = nombre;
                     contexto.hoteles.Update(hotelAModificar);
-                    contexto.ciudades.Update(hotelAModificar.ubicacion);
                     contexto.SaveChanges();
+
                     return "exito";
                 }
                 else
@@ -883,22 +889,18 @@ public class Agencia
         try
         {
             var hotelAEliminar = contexto.hoteles.FirstOrDefault(hotel => hotel.id == idHotel);
-            var miUsuario = contexto.usuarios.FirstOrDefault(x => x.id == getUsuarioActual().id);
+            DateTime fechaActual = DateTime.Now;
             if (hotelAEliminar != null)
             {
                 double monto = 0;
 
-                foreach (var reservaHotel in hotelAEliminar.listMisReservas)
+                foreach (var reservaHotel in hotelAEliminar.listMisReservas.Where(u => u.fechaDesde > fechaActual))
                 {
-
-                    monto += reservaHotel.pagado;
-                    contexto.reservaHoteles.RemoveRange(reservaHotel);
+                    reservaHotel.miUsuario.credito += reservaHotel.pagado;
+                    contexto.reservaHoteles.Remove(reservaHotel);
+                    contexto.usuarios.Update(reservaHotel.miUsuario);
                 }
 
-                double total = miUsuario.credito + monto;
-                miUsuario.credito = total;
-                this.getUsuarioActual().credito = total;
-                contexto.usuarios.Update(miUsuario);
                 contexto.hoteles.Remove(hotelAEliminar);
                 contexto.SaveChanges();
 
