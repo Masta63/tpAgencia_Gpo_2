@@ -20,7 +20,7 @@ public class Agencia
     private List<Ciudad> ciudades;
     private List<ReservaHotel> reservasHotel;
     private List<ReservaVuelo> reservasVuelo;
-    private Usuario? reservaVuelo.miUsuario { get; set; }
+    private Usuario? usuarioActual { get; set; }
     private int cantVuelos;
     private int cantUsuarios = 0;
     private int cantHoteles = 0;
@@ -107,12 +107,12 @@ public class Agencia
 
     public Usuario? getUsuarioActual()
     {
-        return this.reservaVuelo.miUsuario;
+        return this.usuarioActual;
     }
 
     public void cerrarSesion()
     {
-        reservaVuelo.miUsuario = null;
+        usuarioActual = null;
     }
 
     public string iniciarSesion(Usuario? usuarioSeleccionados, string inputMail, string inputpass)
@@ -126,7 +126,7 @@ public class Agencia
         else if (usuarioSeleccionados.mail.Trim().Equals(inputMail) && usuarioSeleccionados.password.Trim() == inputpass && !usuarioSeleccionados.bloqueado)
         {
             codigoReturn = "OK";
-            this.reservaVuelo.miUsuario = usuarioSeleccionados;
+            this.usuarioActual = usuarioSeleccionados;
         }
         else
         {
@@ -333,7 +333,7 @@ public class Agencia
 
     public string? nombreLogueado()
     {
-        return this.reservaVuelo.miUsuario?.name;
+        return this.usuarioActual?.name;
     }
 
     //verificar si ya existe un usuario con ese mail o dni
@@ -369,14 +369,15 @@ public class Agencia
             else
             {
                 if (ciudadAEliminar != null)
-            {
-                contexto.ciudades.Remove(ciudadAEliminar);
-                contexto.SaveChanges();
-                return true;
+                {
+                    contexto.ciudades.Remove(ciudadAEliminar);
+                    contexto.SaveChanges();
+                    return true;
 
+                }
+
+                return false;
             }
-
-            return false;
         }
         catch (Exception e)
         {
@@ -537,10 +538,10 @@ public class Agencia
         try
         {
             ReservaVuelo rv = contexto.reservaVuelos.Where(rv => rv.idReservaVuelo == idReserva).FirstOrDefault();
-            Vuelo v = contexto.vuelos.Where(v => v.id == idVuelo).FirstOrDefault();
-            Usuario u = contexto.usuarios.Where(u => u.id == reservaVuelo.miUsuario.id).FirstOrDefault();
-            VueloUsuario vueloUsuarioSelected = contexto.vueloUsuarios.Where(vus => vus.idUsuario == reservaVuelo.miUsuario.id && vus.idVuelo == idVuelo).FirstOrDefault();
+            Vuelo v = rv.miVuelo;
+            Usuario u = rv.miUsuario;
 
+            VueloUsuario vueloUsuarioSelected = contexto.vueloUsuarios.Where(vus => vus.idUsuario == usuarioActual.id && vus.idVuelo == idVuelo).FirstOrDefault();
             if (rv != null)
             {
                 if (v.fecha >= fechaActual)
@@ -550,7 +551,13 @@ public class Agencia
                     {
                         //Calculo la diferencia
                         int diferencia = cantidad - cantReservas;
-                        double nuevoMonto = diferencia * v.costo;
+
+                        double nuevoMonto = 0;
+                        if (costo != rv.pagado)
+                            nuevoMonto = diferencia * v.costo;
+                        else
+                            nuevoMonto = costo;
+
                         int disponibilidad = v.capacidad - v.vendido;
                         if (disponibilidad > diferencia)
                         {
@@ -559,7 +566,7 @@ public class Agencia
                             if (u.credito > nuevoMonto)
                             {
                                 //le cobro la diferencia 
-                                reservaVuelo.miUsuario.credito = reservaVuelo.miUsuario.credito - nuevoMonto;
+                                rv.miUsuario.credito = rv.miUsuario.credito - nuevoMonto;
                                 //actualizo el valor pagado de la nueva reserva 
                                 rv.pagado = rv.pagado + nuevoMonto;
                                 //sumo vendido de la diferencia a vuelo
@@ -586,7 +593,7 @@ public class Agencia
                         if (nuevoMonto > 0)
                         {
                             //devuelvo el dinero al usuario
-                            reservaVuelo.miUsuario.credito = reservaVuelo.miUsuario.credito + nuevoMonto;
+                            rv.miUsuario.credito = rv.miUsuario.credito + nuevoMonto;
                             //actualizo el valor pagado en reserva
                             rv.pagado = rv.pagado - nuevoMonto;
                             //resto vendido a vuelo
@@ -819,8 +826,8 @@ public class Agencia
         if (ubicacion != null)
         {
             Hotel nuevoHotel = new Hotel(ubicacion, capacidad, costo, nombre);
-            
-            
+
+
             contexto.hoteles.Add(nuevoHotel);
             ubicacion.listHoteles.Add(nuevoHotel);
 
@@ -989,7 +996,7 @@ public class Agencia
                     difcantPer = difcantPer - itemReserva.cantidadPersonas;
                 }
                 else
-                {                   
+                {
                     difcantPer = difcantPer - itemReserva.cantidadPersonas;
                 }
                 entrorango = true;
@@ -1088,7 +1095,7 @@ public class Agencia
 
     public void devolverDineroOsumarDinero(DateTime fechaDesde, DateTime fechaHasta, List<ReservaHotel> misReservas, Int32 idReservaHotel, Hotel miHotel)
     {
-        double costo = 0; 
+        double costo = 0;
         //Consulta la reserva que se esta editando
         ReservaHotel miReserva = misReservas.FirstOrDefault(x => x.idReservaHotel == idReservaHotel);
         //Se obtiene la diferencia de dias de la seleccion de fechas del menu
@@ -1102,7 +1109,7 @@ public class Agencia
         //Saco dias de reserva, se resta por el costo al multiplicar un numero negativo por un valor, al dar numero negativo
         // y ser credito + - total del resultado de la multiplicacion, estaria restandole al credito que tiene el usuario
         //si da positivo la  suma de  (sumarCostoPorDia * miHotel.costo) va a sumar si da negativo va a restar porque + * - es menos
-        costo = this.reservaVuelo.miUsuario.credito + (sumarCostoPorDia * miHotel.costo);
+        costo = this.usuarioActual.credito + (sumarCostoPorDia * miHotel.costo);
         this.getUsuarioActual().credito = costo;
         this.modificarCreditoContext(this.getUsuarioActual());
     }
@@ -1177,7 +1184,7 @@ public class Agencia
 
     public void modificarUsuarioActual(Usuario usuario)
     {
-        this.reservaVuelo.miUsuario = usuario;
+        this.usuarioActual = usuario;
     }
 
     public List<Hotel> traerMisHoteles(Int32 idUsuario)
