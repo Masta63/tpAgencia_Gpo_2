@@ -546,7 +546,9 @@ public class Agencia
             {
                 if (v.fecha >= fechaActual)
                 {
-                    int cantReservas = (int)(rv.pagado / v.costo);
+
+                    int cantReservas = vueloUsuarioSelected.cantidad;
+
                     if (cantidad > cantReservas)
                     {
                         //Calculo la diferencia
